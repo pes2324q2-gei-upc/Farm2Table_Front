@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "farm2table",
+    "slug": "farm2table",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "farm2table"
+}
