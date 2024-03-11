@@ -1,37 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { COLORS, SIZES} from './constants/theme';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
-import { useFonts } from 'expo-font';
-import Footer from './navigation/footer';
-
-
-const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [fontsLoaded] = useFonts({
-    regular: require("./assets/fonts/Poppins-Regular.ttf"),
-    light: require("./assets/fonts/Poppins-Light.ttf"),
-    bold: require("./assets/fonts/Poppins-Bold.ttf"),
-    semibold: require("./assets/fonts/Poppins-SemiBold.ttf"),
-    medium: require("./assets/fonts/Poppins-Medium.ttf"),
-    extraBold: require("./assets/fonts/Poppins-ExtraBold.ttf"),
-    black: require("./assets/fonts/Poppins-Black.ttf"),
-    thin: require("./assets/fonts/Poppins-Thin.ttf"),
-  });
-  
-  if(!fontsLoaded) return null;
-
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Footer" component={Footer} options={{headerShown: false}} 
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <View style={styles.container}>
+      <Text>Open up App.js to start working on your app!</Text>
+      <StatusBar style="auto" />
+    </View>
   );
 }
 
@@ -42,15 +18,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-
-  text_regular: {
-    textAlign: 'center',
-    color: 'black',
-    fontSize: 30, 
-    fontFamily: 'regular'
-  },
-
 });
-
-
-export { COLORS, SIZES };
