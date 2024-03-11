@@ -8,10 +8,6 @@ const Chat = () => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
 
-  const changeMessage = (text) => {
-    setMessage(text);
-  };
-
   const sendMessage = () => {
     if(message.trim() !== "") {
       const newMessage = {text: message, remit: 'user'};
@@ -35,7 +31,7 @@ const Chat = () => {
           <TextInput
               style={styles.entrance}
               placeholder="Put a message"
-              onChangeText={changeMessage}
+              onChangeText={setMessage}
               value={message}
               multiline={true}
               autoFocus={true}
