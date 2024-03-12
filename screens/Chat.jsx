@@ -1,7 +1,8 @@
 import React, {useState} from "react";
-import {ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {ScrollView, StyleSheet, Text, TextInput, TouchableOpacity} from "react-native";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 
 const Chat = () => {
@@ -17,17 +18,17 @@ const Chat = () => {
   };
 
   return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.containerMessage}>
           {messages.map((msg, index) => {
             return (
-                <View key={index} style={[styles.bubbleMessage, msg.remit === 'user' ? styles.messageUser : styles.otherMessage]}>
+                <SafeAreaView key={index} style={[styles.bubbleMessage, msg.remit === 'user' ? styles.messageUser : styles.otherMessage]}>
                   <Text style={styles.textMessage}>{msg.text}</Text>
-                </View>
+                </SafeAreaView>
             );
           })}
         </ScrollView>
-        <View style={styles.containerEntrance}>
+        <SafeAreaView style={styles.containerEntrance}>
           <TextInput
               style={styles.entrance}
               placeholder="Put a message"
@@ -44,8 +45,8 @@ const Chat = () => {
                 style={styles.icon}
             />
           </TouchableOpacity>
-        </View>
-      </View>
+        </SafeAreaView>
+      </SafeAreaView>
   );
 };
 
