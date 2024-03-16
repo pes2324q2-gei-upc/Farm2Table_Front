@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
 
     name: {
         fontFamily: "bold",
-        fontSize: SIZES.xlarge,
+        fontSize: SIZES.large,
         marginRight: 30,
     },
 
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.highlighter,
         maxHeight: 25,
         borderRadius: 10,
-        padding: 1
+        padding:3
     },
 
 

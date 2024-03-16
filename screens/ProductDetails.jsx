@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image, SafeAreaView } from 'react-native'
+import { View, Text, TouchableOpacity, Image, SafeAreaView, ScrollView } from 'react-native'
 import React from 'react'
 import styles from '../Products/productDetails.style'
 import { Ionicons } from '@expo/vector-icons'
@@ -16,7 +16,7 @@ const ProductDetails = ({navigation}) => {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
         <View style={styles.upperRow}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Ionicons name="arrow-back" size={33} color="black" />
@@ -35,9 +35,9 @@ const ProductDetails = ({navigation}) => {
             <View style={styles.priceStyle}><Text style={styles.price}>4,99 €/kg</Text></View>
           </View>
 
-          <View style={styles.description_row}>
+          <ScrollView style={styles.description_row}>
             <Text style={styles.description}>Descobreix les maduixes del Maresme: vermelles, sucoses i irresistibles. Cultivades amb cura per garantir la millor qualitat. Amb una explosió de sabor en cada mossegada, aquestes maduixes captivaran els teus sentits. Embolcallades amb cura i enviades fresques a la teva porta, una experiència gastronòmica inoblidable.</Text>              
-          </View>
+          </ScrollView>
 
           <View style={styles.quanity_row}>
             <View style={styles.user_info_container}>
@@ -60,11 +60,11 @@ const ProductDetails = ({navigation}) => {
 
           <View style={styles.button_row}>
             <TouchableOpacity style={styles.button}>
-              <Text style={styles.button_text}>Afegir a la cistella</Text>
+              <Text style={styles.button_text}>Afegir {count} a la cistella</Text>
             </TouchableOpacity>
           </View>
           </View>
-    </SafeAreaView>
+    </View>
   )
 }
 
