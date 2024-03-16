@@ -5,7 +5,6 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 const Map = () => {
   return (
     <SafeAreaView>
-      <Text>Map</Text>
     </SafeAreaView>
   )
 }

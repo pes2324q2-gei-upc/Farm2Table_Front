@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import {COLORS, SIZES} from "../constants/theme";
+import { ScrollView } from 'react-native-gesture-handler';
 
 const Consultar_Usuario = () => {
     const [activeButton, setActiveButton] = useState('Productes');
@@ -17,7 +18,7 @@ const Consultar_Usuario = () => {
     return (
         <View style={styles.container}>
             <View>
-                <Text>Info de la persona</Text>
+                <Text>Info de la persona Esto ciona muy bien</Text>
             </View>
             {/* Horizontal container for the buttons */}
             <View style={styles.buttonContainer}>
@@ -46,7 +47,7 @@ const Consultar_Usuario = () => {
                 </TouchableOpacity>
             </View>
             <View style={styles.container2}>
-
+               
             </View>
         </View>
     );
@@ -55,11 +56,12 @@ const Consultar_Usuario = () => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: COLORS.secondary,
-        paddingTop: '30%' // Apply padding at the top
+        flex: 1, 
+        paddingTop: (SIZES.height/100) * 20, // Apply padding at the top
     },
     container2: {
         flex: 1,
-        paddingBottom: '200%',
+        paddingBottom: SIZES.height,
         backgroundColor: COLORS.primary,
     },
     buttonContainer: {
