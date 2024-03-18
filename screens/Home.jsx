@@ -81,6 +81,7 @@ const Home = () => {
             if (response.ok) {
                 console.log('Product added successfully:', data);
                 Alert.alert('Success', 'Product added successfully');
+                resetForm();
             } else {
                 console.error('API call error:', data);
                 Alert.alert('Error', 'Failed to add the product');
