@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Alert, Image, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { SelectList } from 'react-native-dropdown-select-list';
@@ -7,15 +7,73 @@ import { faCamera, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const Home = () => {
     const [selected, setSelected] = useState('');
+    const [data, setData] = useState([]);
     const [imageUri, setImageUri] = useState(null);
 
-    const data = [
-        { key: '1', value: 'Jammu & Kashmir' },
-        { key: '2', value: 'Gujrat' },
-        { key: '3', value: 'Maharashtra' },
-        { key: '4', value: 'Goa' },
-    ];
+    const [productName, setProductName] = useState('');
+    const [productDescription, setProductDescription] = useState('');
+    const [quantity, setQuantity] = useState('');
+    const [price, setPrice] = useState('');
 
+    const resetForm = () => {
+        setSelected('');
+        setImageUri(null);
+        setProductName('');
+        setProductDescription('');
+        setQuantity('');
+        setPrice('');
+    };
+
+    useEffect(() => {
+        // Get Values from database
+        fetch('http://13.39.109.155/products/types/')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json(); // Parse the JSON data
+            })
+            .then(data => {
+                // Store Values in Temporary Array
+                let newArray = data.map(item => {
+                    return { key: item.id, value: item.name };
+                });
+                // Set Data Variable
+                setData(newArray);
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    }, []);
+
+    const handleAddProduct = () => {
+        const productData = {
+            name: productName,
+            description: productDescription,
+            type: selected,
+            quantity: quantity,
+            price: price,
+            imageUri: imageUri,
+        };
+
+        fetch('http://13.39.109.155/products/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(productData),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                Alert.alert('Producte afegit', 'El producte afegit correctament');
+                resetForm();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                Alert.alert('Error', 'Hi ha hagut un problema en afegir el producte');
+            });
+    };
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -40,16 +98,16 @@ const Home = () => {
         <SafeAreaView style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollView}>
                 <Text style={styles.title}>Afegir Producte</Text>
-                <InputField label="Nom del producte:" />
-                <InputField label="Descripció:" multiline numberOfLines={4} />
+                <InputField label="Nom del producte:" value={productName} onChangeText={setProductName} />
+                <InputField label="Descripció:" multiline numberOfLines={4} value={productDescription} onChangeText={setProductDescription} />
                 <View style={styles.inputContainer}>
                     <Text style={styles.label}>Tipus:</Text>
                     <SelectList setSelected={setSelected} data={data} boxStyles={styles.dropdown} dropdownStyles={styles.dropdown} search={true} />
                 </View>
-                <InputField label="Quantitat disponible:" keyboardType="numeric" />
-                <InputField label="Preu per kg:" keyboardType="numeric" />
+                <InputField label="Quantitat disponible:" keyboardType="numeric" value={quantity} onChangeText={setQuantity} />
+                <InputField label="Preu per kg:" keyboardType="numeric" value={price} onChangeText={setPrice} />
                 <ImagePickerComponent imageUri={imageUri} pickImage={pickImage} removeImage={removeImage} />
-                <TouchableOpacity style={styles.submitButton}>
+                <TouchableOpacity style={styles.submitButton} onPress={handleAddProduct}>
                     <Text style={styles.buttonText}>Afegir producte</Text>
                 </TouchableOpacity>
             </ScrollView>
@@ -145,6 +203,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         paddingHorizontal: 10,
         backgroundColor: '#FFFFFF',
+        maxHeight: 140,
     },
     imagePickerContainer: {
         marginBottom: 20,
