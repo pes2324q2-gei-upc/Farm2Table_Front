@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, SafeAreaView} from "react-native";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
@@ -17,7 +17,7 @@ const Chat = () => {
   };
 
   return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.containerMessage}>
           {messages.map((msg, index) => {
             return (
@@ -45,7 +45,7 @@ const Chat = () => {
             />
           </TouchableOpacity>
         </View>
-      </View>
+      </SafeAreaView>
   );
 };
 
@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginVertical: 5,
     marginRight: 10,
+    paddingHorizontal: 15,
   },
   messageUser: {
     alignSelf: 'flex-end',
@@ -82,6 +83,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 10,
     borderRadius: 20,
+    marginHorizontal: 10,
+    marginBottom: 5,
   },
   entrance: {
     flex: 1,
