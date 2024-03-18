@@ -3,17 +3,30 @@ import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity } from 'reac
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import logo from '../assets/Farm2Table.png';
 import google from '../assets/Google.png';
+import Registre from './Registre';
 
 const InicioSesion = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [secure_text_entry, setSecureTextEntry] = useState(true); 
-  const [recordar_contrasenya, setRecordarContrasenya] = useState(true); 
+  const [recordar_contrasenya, setRecordarContrasenya] = useState(true);
+  const [pagina_registro, setRegistro] = useState(false);
   
   
-  const handleLogin = () => {
+  const handleLogin = async () => {
     console.log('Username:', username);
     console.log('Password:', password);
+
+    try {
+      const DIRECCION = 'http://13.39.109.155/users/login/?email='+username+'&password='+password;
+      console.log(DIRECCION);
+      const response = await fetch(DIRECCION);
+      data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+
   };
 
   const contrasenyaVisible = () => {
@@ -34,6 +47,7 @@ const InicioSesion = () => {
 
   const registrarse = () => {
     console.log("Registrar-se");
+    setRegistro(true);
   };
 
   const STYLES = StyleSheet.create({
@@ -119,6 +133,8 @@ const InicioSesion = () => {
       alignItems: 'center',
       backgroundColor: "white",
       borderRadius: 20,
+      borderColor: 'black',
+      borderWidth: 1,
     },
     google: {
       //la relacion es 1 a 1
@@ -147,65 +163,71 @@ const InicioSesion = () => {
   return (
     <View style={STYLES.container}>
 
-      <Image source={logo} style={STYLES.logo} />
+      {!pagina_registro &&
+        <>
+          <Image source={logo} style={STYLES.logo} />
 
-      <View style={STYLES.correo}>
-        <Icon name="email" size={20} color="#bc6c25" style={{ marginRight: 7 }} />
-        <TextInput
-          style={STYLES.texto_correo}
-          placeholder="Correu electrònic"
-          value={username}
-          onChangeText={setUsername}
-        />
-      </View>
+          <View style={STYLES.correo}>
+            <Icon name="email" size={20} color="#bc6c25" style={{ marginRight: 7 }} />
+            <TextInput
+              style={STYLES.texto_correo}
+              placeholder="Correu electrònic"
+              value={username}
+              onChangeText={setUsername}
+            />
+          </View>
 
-      <View style={STYLES.contrasenya}>
-        <Icon name="lock" size={20} color ="black" style={{marginRight: 7}}/>
-        <TextInput 
-          style={STYLES.texto_contrasenya}
-          placeholder="Contrasenya"
-          secureTextEntry={secure_text_entry}
-          value={password}
-          onChangeText={setPassword}
-        />
-        <TouchableOpacity onPress={contrasenyaVisible} style={STYLES.visibilidad}>
-          <Icon name={secure_text_entry ? "visibility-off" : "visibility"} size={20} color="black" />
-        </TouchableOpacity>
-      </View>
+          <View style={STYLES.contrasenya}>
+            <Icon name="lock" size={20} color ="black" style={{marginRight: 7}}/>
+            <TextInput 
+              style={STYLES.texto_contrasenya}
+              placeholder="Contrasenya"
+              secureTextEntry={secure_text_entry}
+              value={password}
+              onChangeText={setPassword}
+            />
+            <TouchableOpacity onPress={contrasenyaVisible} style={STYLES.visibilidad}>
+              <Icon name={secure_text_entry ? "visibility-off" : "visibility"} size={20} color="black" />
+            </TouchableOpacity>
+          </View>
 
-      <View style={STYLES.recuerdate}>
+          <View style={STYLES.recuerdate}>
 
-        <TouchableOpacity onPress={recordarContrasenya}>
-          <Icon name={recordar_contrasenya ? "check-box-outline-blank" : "check-box"} size={20} color="black" />
-        </TouchableOpacity>
+            <TouchableOpacity onPress={recordarContrasenya}>
+              <Icon name={recordar_contrasenya ? "check-box-outline-blank" : "check-box"} size={20} color="black" />
+            </TouchableOpacity>
 
-        <Text style={{position: 'absolute', marginLeft: 30, fontSize: 14}}>
-          Enrecorda't
-        </Text>
-      </View>
+            <Text style={{position: 'absolute', marginLeft: 30, fontSize: 14}}>
+              Enrecorda't
+            </Text>
+          </View>
 
-      <TouchableOpacity onPress={contrasenyaOlvidada}>
-        <Text style={STYLES.contrasenya_olvidada}>He oblida't la meva contrasenya</Text>
-      </TouchableOpacity>
+          <TouchableOpacity onPress={contrasenyaOlvidada}>
+            <Text style={STYLES.contrasenya_olvidada}>He oblida't la meva contrasenya</Text>
+          </TouchableOpacity>
 
-      <TouchableOpacity onPress={handleLogin} style={STYLES.inicio_sesion}>
-        <Text style={STYLES.inicio_sesion_texto}>INICIA SESSIÓ</Text>
-      </TouchableOpacity>
+          <TouchableOpacity onPress={handleLogin} style={STYLES.inicio_sesion}>
+            <Text style={STYLES.inicio_sesion_texto}>INICIA SESSIÓ</Text>
+          </TouchableOpacity>
 
 
-      <Text style={STYLES.o}>o</Text>
+          <Text style={STYLES.o}>o</Text>
 
-      <TouchableOpacity onPress={inicioConGoogle} style={STYLES.inicio_google}>
-        <Image source={google} style={STYLES.google}/>
-        <Text style={STYLES.inicio_google_texto}>Continua amb google</Text>
-      </TouchableOpacity>
+          <TouchableOpacity onPress={inicioConGoogle} style={STYLES.inicio_google}>
+            <Image source={google} style={STYLES.google}/>
+            <Text style={STYLES.inicio_google_texto}>Continua amb google</Text>
+          </TouchableOpacity>
 
-      <View style={STYLES.crear_cuenta}>
-        <Text style={{fontSize: 14}}>No tens compte?</Text>
-        <TouchableOpacity onPress={registrarse} style={STYLES.crear_cuenta_boton}>
-          <Text style={{fontSize: 14, color: "#bc6c25"}}>Crea un nou compte</Text>
-        </TouchableOpacity>
-      </View>
+          <View style={STYLES.crear_cuenta}>
+            <Text style={{fontSize: 14}}>No tens compte?</Text>
+            <TouchableOpacity onPress={registrarse} style={STYLES.crear_cuenta_boton}>
+              <Text style={{fontSize: 14, color: "#bc6c25"}}>Crea un nou compte</Text>
+            </TouchableOpacity>
+          </View>
+        </>
+      }
+      
+      {pagina_registro && <Registre />}
 
     </View>
   );
