@@ -2,19 +2,18 @@ import { View, Text, StyleSheet, FlatList, Image } from 'react-native'
 import React,  { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { COLORS, SIZES} from '../App'
-import { AntDesign } from '@expo/vector-icons'
 import { TextInput } from 'react-native'
 import { TouchableOpacity } from 'react-native'
-import { useTheme } from '@react-navigation/native'
+import { AntDesign } from "@expo/vector-icons"
 
 const API_ENDPOINT = 'https://randomuser.me/api/?results=30';
 
 
-const TouchableElement = ({ title, isSelected, onPress, index, color, borderColor }) => {
+const TouchableElement = ({ title, isSelected, onPress, index, color,  backgroundColor, borderColor }) => {
 
     return (
       <TouchableOpacity
-      style={[styles.boton, isSelected && { borderColor }]}
+      style={[styles.boton, isSelected && {  backgroundColor }, isSelected && { borderColor }]}
         onPress={() => {
           onPress(index);
         }}
@@ -33,7 +32,7 @@ const Buscador = () => {
 
     useEffect(() => {
         setIsLoading(true);
-        fetchData(API_ENDPOINT);
+        //fetchData(API_ENDPOINT);
     }, []);
 
     const fetchData = async(url) => {
@@ -61,7 +60,17 @@ const Buscador = () => {
     return (
         <SafeAreaView style = {styles.info}>
             <View style={styles.top}>
-
+                <AntDesign 
+                    name='setting'
+                    size={styles.top.height/100 * 60} 
+                    color = 'white'
+                    style={{
+                        position: 'absolute',
+                        top: 10,
+                        right: 10,
+                        backgroundColor: 'transparent'
+                    }}
+                />
             </View>
             <View style={styles.bottom}>
                 <TextInput
@@ -81,8 +90,9 @@ const Buscador = () => {
                             title={item.title}
                             isSelected={item.index === selectedIndex}
                             onPress={() => handleItemPress(item.index)}
-                            color={item.index === selectedIndex ? 'orange' : 'black'}
-                            borderColor={item.index === selectedIndex ? 'orange' : 'gray'}
+                            color= {item.index === selectedIndex ? 'white' : 'black'}
+                            borderColor={item.index === selectedIndex ? 'white' : 'black'}
+                            backgroundColor = {item.index === selectedIndex ? 'orange' : 'gray'}
                         />
                         ))}
                     </View>
@@ -123,6 +133,9 @@ const styles = StyleSheet.create({
         width: '100%',
         backgroundColor: COLORS.secondary,
         height: (SIZES.height/100)*10,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     bottom: {
         width: '100%',
@@ -184,6 +197,6 @@ const styles = StyleSheet.create({
         fontSize: SIZES.large,
         marginLeft: 10,
         color: "grey"
-    }
+    },
 })
 export default Buscador
