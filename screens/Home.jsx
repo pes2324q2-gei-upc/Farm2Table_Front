@@ -36,7 +36,7 @@ const Home = () => {
             .then(data => {
                 // Store Values in Temporary Array
                 let newArray = data.map(item => {
-                    return { key: item.id, value: item.name };
+                    return { key: item.id.toString(), value: item.name };
                 });
                 // Set Data Variable
                 setData(newArray);
@@ -46,33 +46,49 @@ const Home = () => {
             });
     }, []);
 
-    const handleAddProduct = () => {
-        const productData = {
-            name: productName,
-            description: productDescription,
-            type: selected,
-            quantity: quantity,
-            price: price,
-            imageUri: imageUri,
-        };
+    const handleAddProduct = async () => {
+        const formData = new FormData();
+        formData.append('id', '1');
+        formData.append('name', productName);
+        formData.append('description', productDescription);
+        formData.append('type', selected);
+        formData.append('unit', 'Kg');
+        formData.append('price', price.toString());
+        formData.append('quantity', quantity.toString());
 
-        fetch('http://13.39.109.155/products/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(productData),
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-                Alert.alert('Producte afegit', 'El producte afegit correctament');
-                resetForm();
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                Alert.alert('Error', 'Hi ha hagut un problema en afegir el producte');
+        if (imageUri) {
+            const uriParts = imageUri.split('.');
+            const fileType = uriParts[uriParts.length - 1];
+
+            formData.append('image', {
+                uri: imageUri,
+                name: `photo.${fileType}`,
+                type: `image/${fileType}`,
             });
+        }
+
+        try {
+            const response = await fetch('http://13.39.109.155/products/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+                body: formData,
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                console.log('Product added successfully:', data);
+                Alert.alert('Success', 'Product added successfully');
+            } else {
+                console.error('API call error:', data);
+                Alert.alert('Error', 'Failed to add the product');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            Alert.alert('Error', 'An error occurred while adding the product');
+        }
     };
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -144,7 +160,7 @@ const ImagePickerComponent = ({ imageUri, pickImage, removeImage }) => (
         {!imageUri ? (
             <TouchableOpacity onPress={pickImage} style={styles.imageButton}>
                 <FontAwesomeIcon icon={faCamera} size={20} color="#FFFFFF" />
-                <Text style={styles.buttonText}>Insertar imatge</Text>
+                <Text style={styles.buttonText}>Inserir imatge</Text>
             </TouchableOpacity>
         ) : (
             <View style={styles.imagePreviewContainer}>
@@ -216,13 +232,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         padding: 10,
         borderRadius: 5,
+        marginVertical: 20,
     },
     submitButton: {
         backgroundColor: '#bc6c25',
         padding: 15,
         borderRadius: 5,
         alignItems: 'center',
-        marginTop: 20,
         marginBottom: 70,
     },
     buttonText: {
@@ -244,6 +260,7 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
         borderRadius: 5,
+        marginTop: 5,
     },
 });
 export default Home;
