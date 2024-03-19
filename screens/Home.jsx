@@ -1,146 +1,60 @@
-import React from 'react';
-import { StyleSheet, View, ScrollView, SafeAreaView } from 'react-native';
-import ShopFeed from '../products/ShopProducts'; // Import the ShopFeed component
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View, ScrollView, SafeAreaView, Text } from 'react-native';
 import { COLORS } from '../constants/theme';
 import Header from '../navigation/header';
-
-const shopData = [
-  {
-    shopName: 'Fruit Haven',
-    products: [
-      {
-        name: 'Apple',
-        price: 1.99,
-        image: 'https://media.istockphoto.com/id/184276818/photo/red-apple.jpg?s=612x612&w=0&k=20&c=NvO-bLsG0DJ_7Ii8SSVoKLurzjmV0Qi4eGfn6nW3l5w='
-      },
-      {
-        name: 'Banana',
-        price: 0.99,
-        image: 'https://www.bama.no/siteassets/fotoware/2023/9/bendit_bananklase-2_bama.jpg?height=620&mode=pad'
-      },
-      {
-        name: 'Apple',
-        price: 1.99,
-        image: 'https://media.istockphoto.com/id/184276818/photo/red-apple.jpg?s=612x612&w=0&k=20&c=NvO-bLsG0DJ_7Ii8SSVoKLurzjmV0Qi4eGfn6nW3l5w='
-      },
-      {
-        name: 'Banana',
-        price: 0.99,
-        image: 'https://www.bama.no/siteassets/fotoware/2023/9/bendit_bananklase-2_bama.jpg?height=620&mode=pad'
-      },
-      {
-        name: 'Apple',
-        price: 1.99,
-        image: 'https://media.istockphoto.com/id/184276818/photo/red-apple.jpg?s=612x612&w=0&k=20&c=NvO-bLsG0DJ_7Ii8SSVoKLurzjmV0Qi4eGfn6nW3l5w='
-      },
-      {
-        name: 'Banana',
-        price: 0.99,
-        image: 'https://www.bama.no/siteassets/fotoware/2023/9/bendit_bananklase-2_bama.jpg?height=620&mode=pad'
-      },
-      {
-        name: 'Apple',
-        price: 1.99,
-        image: 'https://media.istockphoto.com/id/184276818/photo/red-apple.jpg?s=612x612&w=0&k=20&c=NvO-bLsG0DJ_7Ii8SSVoKLurzjmV0Qi4eGfn6nW3l5w='
-      },
-      {
-        name: 'Banana',
-        price: 0.99,
-        image: 'https://www.bama.no/siteassets/fotoware/2023/9/bendit_bananklase-2_bama.jpg?height=620&mode=pad'
-      },
-      {
-        name: 'Apple',
-        price: 1.99,
-        image: 'https://media.istockphoto.com/id/184276818/photo/red-apple.jpg?s=612x612&w=0&k=20&c=NvO-bLsG0DJ_7Ii8SSVoKLurzjmV0Qi4eGfn6nW3l5w='
-      },
-      {
-        name: 'Banana',
-        price: 0.99,
-        image: 'https://www.bama.no/siteassets/fotoware/2023/9/bendit_bananklase-2_bama.jpg?height=620&mode=pad'
-      },
-      {
-        name: 'Apple',
-        price: 1.99,
-        image: 'https://media.istockphoto.com/id/184276818/photo/red-apple.jpg?s=612x612&w=0&k=20&c=NvO-bLsG0DJ_7Ii8SSVoKLurzjmV0Qi4eGfn6nW3l5w='
-      },
-      {
-        name: 'Banana',
-        price: 0.99,
-        image: 'https://www.bama.no/siteassets/fotoware/2023/9/bendit_bananklase-2_bama.jpg?height=620&mode=pad'
-      },
-      {
-        name: 'Apple',
-        price: 1.99,
-        image: 'https://media.istockphoto.com/id/184276818/photo/red-apple.jpg?s=612x612&w=0&k=20&c=NvO-bLsG0DJ_7Ii8SSVoKLurzjmV0Qi4eGfn6nW3l5w='
-      },
-
-      // Add more products as needed
-    ]
-  },
-  {
-    shopName: 'Veggie Mart',
-    products: [
-      {
-        name: 'Carrot',
-        price: 0.79,
-        image: 'https://static.vecteezy.com/system/resources/previews/027/216/290/original/red-carrot-red-carrot-transparent-background-ai-generated-free-png.png'
-      },
-      {
-        name: 'Broccoli',
-        price: 1.49,
-        image: 'https://www.simplyrecipes.com/thmb/JE0zLzqyJ_z1HbJ0ayAonYp1NAw=/1800x1012/smart/filters:no_upscale()/Broccoli-6-e825c2143fd5413fbbc2dbaf2984a122.jpg'
-      },
-      // Add more products as needed
-    ]
-  },
-  {
-    shopName: 'Veggie Mart',
-    products: [
-      {
-        name: 'Carrot',
-        price: 0.79,
-        image: 'https://static.vecteezy.com/system/resources/previews/027/216/290/original/red-carrot-red-carrot-transparent-background-ai-generated-free-png.png'
-      },
-      {
-        name: 'Broccoli',
-        price: 1.49,
-        image: 'https://www.simplyrecipes.com/thmb/JE0zLzqyJ_z1HbJ0ayAonYp1NAw=/1800x1012/smart/filters:no_upscale()/Broccoli-6-e825c2143fd5413fbbc2dbaf2984a122.jpg'
-      },
-      // Add more products as needed
-    ]
-  },
-  {
-    shopName: 'Veggie Mart',
-    products: [
-      {
-        name: 'Carrot',
-        price: 0.79,
-        image: 'https://static.vecteezy.com/system/resources/previews/027/216/290/original/red-carrot-red-carrot-transparent-background-ai-generated-free-png.png'
-      },
-      {
-        name: 'Broccoli',
-        price: 1.49,
-        image: 'https://www.simplyrecipes.com/thmb/JE0zLzqyJ_z1HbJ0ayAonYp1NAw=/1800x1012/smart/filters:no_upscale()/Broccoli-6-e825c2143fd5413fbbc2dbaf2984a122.jpg'
-      },
-      // Add more products as needed
-    ]
-  },
-  // Add more shops as needed
-];
-
+import ShopFeed from '../products/ShopProducts';
 
 const MainFeed = () => {
+  const [shopData, setShopData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://13.39.109.155/users/productors/products');
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+        const data = await response.json();
+        setShopData(data.data);
+        console.log(data);
+        setLoading(false);
+      } catch (error) {
+        setError(error.message);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={styles.errorContainer}>
+        <Text>Error: {error}</Text>
+      </View>
+    );
+  }
+
   return (
-    
-    <SafeAreaView style={styles.container}>  
-    <Header/ >
-    <SafeAreaView style={styles.containerIn}>
-      <ScrollView contentContainerStyle={styles.feedContainer}>
-      {shopData.map((shop, index) => (
-        <ShopFeed key={index} shopName={shop.shopName} products={shop.products} />
-      ))}
-    </ScrollView>
-    </SafeAreaView>
+    <SafeAreaView style={styles.container}>
+      <Header />
+      <SafeAreaView style={styles.containerIn}>
+        <ScrollView contentContainerStyle={styles.feedContainer}>
+          {shopData.map((shop, index) => (
+            <ShopFeed key={index} shopName={shop.username} products={shop.products_info} />
+          ))}
+        </ScrollView>
+      </SafeAreaView>
     </SafeAreaView>
   );
 };
@@ -151,19 +65,26 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
   },
-
   containerIn: {
-    
     backgroundColor: COLORS.primary,
     flex: 1,
   },
-
   feedContainer: {
-    alignItems: "center",
-    justifyContent: "flex-start",
+    alignItems: 'center',
+    justifyContent: 'flex-start',
     marginLeft: 29,
     marginTop: 15,
     justifyContent: 'space-between',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

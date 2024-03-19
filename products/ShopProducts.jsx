@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
   },
   shopName: {
     fontSize: 18,
+    color: COLORS.secondary,
     fontWeight: 'bold',
     marginBottom: 10,
   },

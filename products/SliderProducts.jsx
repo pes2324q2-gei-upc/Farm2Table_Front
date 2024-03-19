@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
         //flexGrow: 1,
         minWidth: SIZES.width - 75,
         maxHeight: 175,
-        borderColor: COLORS.sec,
+        borderColor: COLORS.secondary,
         borderRadius: 20,
         borderWidth: 2,
       },
