@@ -3,7 +3,7 @@ import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity } from 'reac
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import logo from '../assets/Farm2Table.png';
 import EscollirUsuari from './EscollirUsuari';
-import { setUserId, userId } from '../informacion/User';
+import { setEmail, setUserId, userId } from '../informacion/User';
 
 const Registre = () => {
   const [username, setUsername] = useState('');
@@ -49,6 +49,7 @@ const Registre = () => {
         console.log(data);
         console.log("dataCoso:", data.data.user_id);
         setUserId(data.data.user_id);
+        setEmail(username);
         console.log("UserId", userId());
 
         setEscollirUsuari(true);
