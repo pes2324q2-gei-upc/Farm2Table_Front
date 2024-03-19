@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import logo from '../assets/Farm2Table.png';
 import google from '../assets/Google.png';
 import Registre from './Registre';
+import { setUserId, setUserType, userId, userType } from '../informacion/User';
 
 const InicioSesion = () => {
   const [username, setUsername] = useState('');
@@ -17,15 +18,43 @@ const InicioSesion = () => {
     console.log('Username:', username);
     console.log('Password:', password);
 
-    try {
-      const DIRECCION = 'http://13.39.109.155/users/login/?email='+username+'&password='+password;
-      console.log(DIRECCION);
-      const response = await fetch(DIRECCION);
-      data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.error(error);
-    }
+
+    const data = {
+        email: username,
+        password: password,
+    };
+    
+    const csrfToken = '';
+    
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'accept': 'application/json',
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken
+          },
+        body: JSON.stringify(data)
+    };
+    
+    const url = 'http://13.39.109.155/users/login/';
+    
+    fetch(url, requestOptions)
+        .then(response => {
+          
+        return response.json();
+        })
+        .then(data => {
+        console.log(data);
+        console.log("dataId:", data.data.user_id);
+        setUserId(data.data.user_id);
+        setUserType(data.data.user_type);
+        console.log("UserId", userId());
+        console.log("Type", userType())
+
+        })
+        .catch(error => {
+        console.error('There was a problem with your fetch operation:', error);
+        });
 
   };
 
