@@ -26,6 +26,9 @@ const styles = StyleSheet.create({
     image: {
         aspectRatio: 1,
         resizeMode: 'cover',
+        alignContent: "center",
+        alignItems: "center",
+        height: SIZES.height * 0.45,
     },
 
     card: {
@@ -34,6 +37,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 40,
         borderTopLeftRadius: 40,
         width: SIZES.width,
+        flex: 1,
     },
 
     name_price: {
@@ -68,7 +72,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "flex-start",
-        marginHorizontal: 20,
+        marginHorizontal: 5,
         marginTop: 20,
     },
 
@@ -122,39 +126,39 @@ const styles = StyleSheet.create({
 
     quanity_row: {
         flexDirection: "row",
-        justifyContent: "space-between",
+        justifyContent: "space-between", // Distribute items evenly along the row
+        alignItems: "center", // Vertically align the items
         marginHorizontal: 20,
-        textAlignVertical: "center",
         marginTop: 10,
         width: SIZES.width - 40,
-    },
-
-    user_info_container: {
+      },
+    
+      user_info_container: {
         flexDirection: "row",
         justifyContent: "space-between",
         width: "100%",
         flexWrap: "wrap",
-    },
-
-    rating_row: {
+      },
+    
+      rating_row: {
         flexDirection: "row",
         justifyContent: "space-between",
+        alignItems: "center", // Vertically align the items
         textAlignVertical: "center",
         marginTop: 20,
         width: 80,
-    },
-
-    quantity: {
+      },
+    
+      quantity: {
         fontFamily: "regular",
         fontSize: SIZES.large,
-    },
-
-    quantity_button: {
+      },
+    
+      quantity_button: {
         backgroundColor: COLORS.highlighter,
-        maxHeight: 25,
         borderRadius: 10,
-        padding:3
-    },
+        padding: 3,
+      },
 
 
     
