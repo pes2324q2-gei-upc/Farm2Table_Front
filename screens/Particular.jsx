@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput } from 'react-native';
 import logo from '../assets/Farm2Table.png';
 import { SelectList } from 'react-native-dropdown-select-list';
+import { userId } from '../informacion/User';
 
 const STYLES = StyleSheet.create({
     container: {
@@ -54,15 +55,6 @@ const STYLES = StyleSheet.create({
         textAlign: 'center',
         marginTop: 8,
     },
-    desplegable: {
-        top: 120,
-        left: 24,
-        position: 'absolute',
-        bottom: 100,
-        width: 140,
-        height: 100,
-        elevation: -1
-    },
     desplegable2: {
         top: 180,
         left: 24,
@@ -91,17 +83,69 @@ const STYLES = StyleSheet.create({
         color: '#749969',
         fontWeight: 'bold',
     },
+    fondo_abast: {    
+        marginTop: 25,
+        width: 280,
+        height: 40,
+        justifyContent: 'top',
+        alignItems: 'center',
+        backgroundColor: 'white',
+        borderRadius: 10,
+    },
+    abast: {
+        fontSize: 20,
+        color: '#749969',
+        fontWeight: 'bold',
+        right: 20,
+        width: 220,
+        height: 40
+    },
   });
 
 const Particular = () => {
 
-  const [sector, setDesplegable] = useState("");
-  const [productes, setDesplegable2] = useState([]);
-  const [abast, setDesplegable3] = useState("");
-  const [interessos, setDesplegable4] = useState("");
+  const [productes, setProductes] = useState([]);
+  const [abast, setAbast] = useState();
 
-  const SECTORES = ['Agricultura','Ramaderia', 'Ambdues'];
   const PRODUCTES = ['Fruita', 'Verdura', 'Hortalisses', 'Carn', 'Peix', 'Formatge', 'Altres'];
+
+  const handleRegister = () => {
+    console.log("Abast:", abast);
+    console.log("Productes:", productes);
+    console.log("UserId", userId());
+
+    const data = {
+        reach: abast,
+        products: productes,
+    };
+    
+    const csrfToken = 'OR0rNAyWkt1wFBqiIft5QrP6yxxiAzcbgKzp7PbQkjG6Ueq7jgNb8jnQrFUnZCL5';
+    
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'accept': 'application/json',
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken
+          },
+        body: JSON.stringify(data)
+    };
+    
+    const url = 'http://13.39.109.155/users/register/Consumer/'+userId()+'/';
+    
+    fetch(url, requestOptions)
+        .then(response => {
+            
+        return response.json();
+        })
+        .then(data => {
+        console.log(data);
+
+        })
+        .catch(error => {
+        console.error('There was a problem with your fetch operation:', error);
+        });
+  };
 
   return (
     <View style={STYLES.container}>
@@ -118,39 +162,22 @@ const Particular = () => {
                 Emplena les següents dades per millorar la teva experència
             </Text>
 
-            <View style={STYLES.desplegable2}>
-                <SelectList
-                    placeholder = 'Els teus productes'
-                    boxStyles={STYLES.desplegable1}
-                    inputStyles={STYLES.sector_texto}   
-                    setSelected={(val) => setDesplegable2(val)} 
-                    data={PRODUCTES} 
-                    save="value"     
-                    dropdownStyles={{backgroundColor: 'white' , maxHeight: 140, maxWidth: 280 }}
-                    dropdownTextStyles={STYLES.sector_textos}
-                    search={false}
-                    label='Productes'
-                    labelStyles={{color: '#749969', fontSize: 16}}
-                />
-            </View>
+            <View style={STYLES.fondo_abast}>
 
-            <View style={STYLES.desplegable}>
-                <SelectList 
-                    placeholder = 'El teu sector'
-                    boxStyles={STYLES.desplegable1}
-                    inputStyles={STYLES.sector_texto}
-                    setSelected={ (placeholder) => setDesplegable(placeholder)}
-                    data={SECTORES} 
-                    save="value"     
-                    dropdownStyles={{backgroundColor: 'white' , maxHeight: 140, maxWidth: 280}}
-                    dropdownTextStyles={STYLES.sector_textos}
-                    search={false}
-                />
+                <TextInput 
+                    style={STYLES.abast}
+                    placeholder='El teu abast (kilometres)'
+                    value={abast}
+                    onChangeText={setAbast}
+                >
+                
+                </TextInput>
+                    
             </View>
 
         </View>
         
-        <TouchableOpacity style={STYLES.comensa}>
+        <TouchableOpacity style={STYLES.comensa} onPress={handleRegister}>
             <Text style={STYLES.texto_comensa}>
                 COMENÇA    
             </Text>           

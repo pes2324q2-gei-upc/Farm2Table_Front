@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, } from 'react-native';
 import logo from '../assets/Farm2Table.png';
-import { SelectList } from 'react-native-dropdown-select-list';
+import { userId } from '../informacion/User';
 
 const STYLES = StyleSheet.create({
     container: {
@@ -109,20 +109,70 @@ const STYLES = StyleSheet.create({
         color: '#749969',
         fontWeight: 'bold',
     },
+    fondo_nif: {    
+        marginTop: 25,
+        width: 280,
+        height: 40,
+        justifyContent: 'top',
+        alignItems: 'center',
+        backgroundColor: 'white',
+        borderRadius: 10,
+    },
+    nif: {
+        fontSize: 20,
+        color: '#749969',
+        fontWeight: 'bold',
+        right: 20,
+        width: 220,
+        height: 40
+    },
   });
 
 const Productor = () => {
 
-  const [sector, setDesplegable] = useState("");
-  const [productes, setDesplegable2] = useState([]);
-  const [abast, setDesplegable3] = useState("");
-  const [interessos, setDesplegable4] = useState("");
-  const [comensa, setComensa] = useState(false);
+  const [nif, setNif] = useState("");
+  const [num_acreditation, setAcreditation] = useState("");
+  const [name, setName] = useState("");
 
-  const SECTORES = ['Agricultura','Ramaderia', 'Ambdues'];
-  const PRODUCTES = ['Fruita', 'Verdura', 'Hortalisses', 'Carn', 'Peix', 'Formatge', 'Altres'];
-  const ABAST = ['PruebaAbast'];
-  const INTERESSOS = ['PruebaInteressos'];
+  const handleRegister = () => {
+    console.log("NIF:", nif);
+    console.log("Num acreditacio:", num_acreditation);
+    console.log("Nombre:", name);
+    console.log("UserId", userId())
+
+    const data = {
+        nif: nif,
+        num_acreditation: num_acreditation,
+        name_productor: name
+    };
+    
+    const csrfToken = 'OR0rNAyWkt1wFBqiIft5QrP6yxxiAzcbgKzp7PbQkjG6Ueq7jgNb8jnQrFUnZCL5';
+    
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'accept': 'application/json',
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken
+          },
+        body: JSON.stringify(data)
+    };
+    
+    const url = 'http://13.39.109.155/users/register/Productor/'+userId()+'/';
+    
+    fetch(url, requestOptions)
+        .then(response => {
+
+        return response.json();
+        })
+        .then(data => {
+        console.log(data);
+
+        })
+        .catch(error => {
+        console.error('There was a problem with your fetch operation:', error);
+        });
+  };
 
   return (
     <View style={STYLES.container}>
@@ -139,92 +189,52 @@ const Productor = () => {
                 Emplena les següents dades per millorar la teva experència
             </Text>
 
-            <View style={STYLES.desplegable4}>
-                <SelectList
-                    placeholder = 'Els teus interessos'
-                    boxStyles={STYLES.desplegable1}
-                    inputStyles={STYLES.sector_texto}   
-                    setSelected={(val) => setDesplegable2(val)} 
-                    onSelect={ () => {if (!comensa) setComensa(true);}}
-                    data={INTERESSOS} 
-                    save="value"     
-                    dropdownStyles={{backgroundColor: 'white' , maxHeight: 140, maxWidth: 280 }}
-                    dropdownTextStyles={STYLES.sector_textos}
-                    search={false}
-                    label='Productes'
-                    labelStyles={{color: '#749969', fontSize: 16}}
-                />
+            <View style={STYLES.fondo_nif}>
+
+                <TextInput 
+                    style={STYLES.nif}
+                    placeholder='Nombre'
+                    value={name}
+                    onChangeText={setName}
+                >
+                
+                </TextInput>
+
             </View>
 
-            <View style={STYLES.desplegable3}>
-                <SelectList
-                    placeholder = 'El teu abast'
-                    boxStyles={STYLES.desplegable1}
-                    inputStyles={STYLES.sector_texto}   
-                    setSelected={(val) => setDesplegable2(val)} 
-                    data={ABAST} 
-                    save="value"     
-                    dropdownStyles={{backgroundColor: 'white' , maxHeight: 140, maxWidth: 280 }}
-                    dropdownTextStyles={STYLES.sector_textos}
-                    search={false}
-                    labelStyles={{color: '#749969', fontSize: 16}}
-                />
+            <View style={STYLES.fondo_nif}>
+
+                <TextInput 
+                    style={STYLES.nif}
+                    placeholder='NIF'
+                    value={nif}
+                    onChangeText={setNif}
+                >
+                
+                </TextInput>
+
             </View>
+            
+            <View style={STYLES.fondo_nif}>
 
-
-
-            <View style={STYLES.desplegable2}>
-                <SelectList
-                    placeholder = 'Els teus productes'
-                    boxStyles={STYLES.desplegable1}
-                    inputStyles={STYLES.sector_texto}   
-                    setSelected={(val) => setDesplegable2(val)} 
-                    data={PRODUCTES} 
-                    save="value"     
-                    dropdownStyles={{backgroundColor: 'white' , maxHeight: 140, maxWidth: 280 }}
-                    dropdownTextStyles={STYLES.sector_textos}
-                    search={false}
-                    label='Productes'
-                    labelStyles={{color: '#749969', fontSize: 16}}
-                />
-            </View>
-
-            <View style={STYLES.desplegable}>
-                <SelectList 
-                    placeholder = 'El teu sector'
-                    boxStyles={STYLES.desplegable1}
-                    inputStyles={STYLES.sector_texto}
-                    setSelected={ (placeholder) => setDesplegable(placeholder)}
-                    data={SECTORES} 
-                    save="value"     
-                    dropdownStyles={{backgroundColor: 'white' , maxHeight: 140, maxWidth: 280}}
-                    dropdownTextStyles={STYLES.sector_textos}
-                    search={false}
-                />
+                <TextInput 
+                    style={STYLES.nif}
+                    placeholder='Numero de acreditacion'
+                    value={num_acreditation}
+                    onChangeText={setAcreditation}
+                >
+                
+                </TextInput>
+                    
             </View>
 
         </View>
-        
-        {!comensa &&
-            <>
-                <View style={STYLES.comensa}>
-                    <Text style={STYLES.texto_comensa}>
-                        COMENÇA    
-                    </Text>           
-                </View>
-            </>
-            
-        }
-        {comensa && 
-            <>
-                <TouchableOpacity style={STYLES.comensa}>
-                    <Text style={STYLES.texto_comensa}>
-                        COMENÇA    
-                    </Text>           
-                </TouchableOpacity>
-            </>
-            
-        }
+
+        <TouchableOpacity style={STYLES.comensa} onPress={handleRegister}>
+            <Text style={STYLES.texto_comensa}>
+                COMENÇA    
+            </Text>           
+        </TouchableOpacity>
         
     </View>
   );

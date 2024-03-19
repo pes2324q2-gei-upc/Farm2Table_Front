@@ -3,6 +3,7 @@ import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity } from 'reac
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import logo from '../assets/Farm2Table.png';
 import EscollirUsuari from './EscollirUsuari';
+import { setUserId, userId } from '../informacion/User';
 
 const Registre = () => {
   const [username, setUsername] = useState('');
@@ -12,7 +13,6 @@ const Registre = () => {
   const [secure_text_entry_2, setSecureTextEntry2] = useState(true);
   const [recordar_contrasenya, setRecordarContrasenya] = useState(true);
   const [escollir_usuari, setEscollirUsuari] = useState(false);
-  
   
   const handleRegister = async () => {
     console.log('Username:', username);
@@ -26,7 +26,7 @@ const Registre = () => {
         repeat_password: confirm_password,
     };
     
-    const csrfToken = 'EvverUyTqKOrQsI0xnHnd3FVzYXswpnq6o4cL9bNqAt155IP8o1tvVdFs6kxVsWk';
+    const csrfToken = '';
     
     const requestOptions = {
         method: 'POST',
@@ -42,22 +42,22 @@ const Registre = () => {
     
     fetch(url, requestOptions)
         .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
+          
         return response.json();
         })
         .then(data => {
         console.log(data);
+        console.log("dataCoso:", data.data.user_id);
+        setUserId(data.data.user_id);
+        console.log("UserId", userId());
+
         setEscollirUsuari(true);
         })
         .catch(error => {
         console.error('There was a problem with your fetch operation:', error);
         });
-  
-      
 
-    setEscollirUsuari(true);
+    //setEscollirUsuari(true);
   };
 
   const contrasenyaVisible = () => {
