@@ -4,6 +4,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { SelectList } from 'react-native-dropdown-select-list';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCamera, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { Picker } from '@react-native-picker/picker';
 
 const Home = () => {
     const [selected, setSelected] = useState('');
@@ -14,6 +15,7 @@ const Home = () => {
     const [productDescription, setProductDescription] = useState('');
     const [quantity, setQuantity] = useState('');
     const [price, setPrice] = useState('');
+    const [unit, setUnit] = useState('Kg');
 
     const resetForm = () => {
         setSelected('');
@@ -22,6 +24,7 @@ const Home = () => {
         setProductDescription('');
         setQuantity('');
         setPrice('');
+        setUnit('Kg');
     };
 
     useEffect(() => {
@@ -47,12 +50,17 @@ const Home = () => {
     }, []);
 
     const handleAddProduct = async () => {
+        if (!productName.trim() || !productDescription.trim() || !selected || !quantity.trim() || !price.trim() || !unit.trim()) {
+            Alert.alert('Error', 'Omple tots els camps.');
+            return;
+        }
+
         const formData = new FormData();
         formData.append('id', '1');
         formData.append('name', productName);
         formData.append('description', productDescription);
         formData.append('type', selected);
-        formData.append('unit', 'Kg');
+        formData.append('unit', unit);
         formData.append('price', price.toString());
         formData.append('quantity', quantity.toString());
 
@@ -121,7 +129,28 @@ const Home = () => {
                     <Text style={styles.label}>Tipus:</Text>
                     <SelectList setSelected={setSelected} data={data} boxStyles={styles.dropdown} dropdownStyles={styles.dropdown} search={true} />
                 </View>
-                <InputField label="Quantitat disponible:" keyboardType="numeric" value={quantity} onChangeText={setQuantity} />
+                <View style={styles.quantityUnitContainer}>
+                    <View style={styles.quantityContainer}>
+                        <Text style={styles.label}>Quantitat disponible:</Text>
+                        <TextInput
+                            style={styles.input}
+                            keyboardType="numeric"
+                            value={quantity}
+                            onChangeText={setQuantity}
+                        />
+                    </View>
+                    <View style={styles.unitPickerContainer}>
+                        <Picker
+                            selectedValue={unit}
+                            style={styles.picker}
+                            onValueChange={(itemValue, itemIndex) =>
+                                setUnit(itemValue)
+                            }>
+                            <Picker.Item label="Kg" value="Kg" />
+                            <Picker.Item label="g" value="grams" />
+                        </Picker>
+                    </View>
+                </View>
                 <InputField label="Preu per kg:" keyboardType="numeric" value={price} onChangeText={setPrice} />
                 <ImagePickerComponent imageUri={imageUri} pickImage={pickImage} removeImage={removeImage} />
                 <TouchableOpacity style={styles.submitButton} onPress={handleAddProduct}>
@@ -262,6 +291,24 @@ const styles = StyleSheet.create({
         height: 100,
         borderRadius: 5,
         marginTop: 5,
+    },
+    quantityUnitContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 15,
+    },
+    quantityContainer: {
+        flex: 1,
+        marginRight: 10,
+    },
+    unitPickerContainer: {
+        flex: 0.5,
+        marginTop: 20,
+    },
+    picker: {
+        width: 100,
+        height: 40,
     },
 });
 export default Home;
