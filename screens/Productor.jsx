@@ -1,28 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, } from 'react-native';
 import logo from '../assets/Farm2Table.png';
-import { MultipleSelectList, SelectList } from 'react-native-dropdown-select-list';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { SelectList } from 'react-native-dropdown-select-list';
 
-const Productor = () => {
-
-  const [sector, setDesplegable] = useState("");
-  const [productes, setDesplegable2] = useState([]);
-  const [abast, setDesplegable3] = useState("");
-  const [interessos, setDesplegable4] = useState("");
-
-  const SECTORES = ['Agricultura','Ramaderia', 'Ambdues'];
-  const PRODUCTES = ['Fruita', 'Verdura', 'Hortalisses', 'Carn', 'Peix', 'Formatge', 'Altres'];
-  const ABAST = [];
-  const INTERESSOS = [];
-
-
-  const STYLES = StyleSheet.create({
+const STYLES = StyleSheet.create({
     container: {
       flex: 1,
       justifyContent: 'top',
       alignItems: 'center',
       backgroundColor: '#fefae0',
+      position: 'relative',
     },
     logo: {
       //la relacion es 498width/322height
@@ -33,7 +20,7 @@ const Productor = () => {
         flexDirection: 'column',
         marginTop: 25,
         width: 325,
-        height: 350,
+        height: 370,
         justifyContent: 'top',
         alignItems: 'center',
         backgroundColor: '#6d9461',
@@ -58,6 +45,7 @@ const Productor = () => {
         width: 250,
         height: 45,
         borderRadius: 10,
+        elevation: -1,
     },
     texto_comensa: {
         fontSize: 22,
@@ -66,17 +54,49 @@ const Productor = () => {
         textAlign: 'center',
         marginTop: 8,
     },
+    desplegable: {
+        top: 120,
+        left: 24,
+        position: 'absolute',
+        bottom: 100,
+        width: 140,
+        height: 100,
+        elevation: -1
+    },
+    desplegable2: {
+        top: 180,
+        left: 24,
+        position: 'absolute',
+        bottom: 100,
+        width: 140,
+        height: 100,
+        elevation: -1,
+    },
+    desplegable3: {
+        top: 240,
+        left: 24,
+        position: 'absolute',
+        bottom: 100,
+        width: 140,
+        height: 100,
+        elevation: -1,
+    },
+    desplegable4: {
+        top: 300,
+        left: 24,
+        position: 'absolute',
+        bottom: 100,
+        width: 140,
+        height: 100,
+        elevation: -1,
+    },
     desplegable1: {
-        marginTop: 10,
         width: 280,
         height: 55,
         justifyContent: 'top',
         backgroundColor: 'white',
         borderRadius: 10,
-    },
-    flecha: {
-        fontWeight: 'bold',
-        color: '#749969'
+        elevation: 1,
     },
     sector_texto: {
         fontSize: 20,
@@ -90,8 +110,19 @@ const Productor = () => {
         fontWeight: 'bold',
     },
   });
-  
 
+const Productor = () => {
+
+  const [sector, setDesplegable] = useState("");
+  const [productes, setDesplegable2] = useState([]);
+  const [abast, setDesplegable3] = useState("");
+  const [interessos, setDesplegable4] = useState("");
+  const [comensa, setComensa] = useState(false);
+
+  const SECTORES = ['Agricultura','Ramaderia', 'Ambdues'];
+  const PRODUCTES = ['Fruita', 'Verdura', 'Hortalisses', 'Carn', 'Peix', 'Formatge', 'Altres'];
+  const ABAST = ['PruebaAbast'];
+  const INTERESSOS = ['PruebaInteressos'];
 
   return (
     <View style={STYLES.container}>
@@ -108,41 +139,93 @@ const Productor = () => {
                 Emplena les següents dades per millorar la teva experència
             </Text>
 
-            <SelectList 
-                placeholder = 'El teu sector'
-                boxStyles={STYLES.desplegable1}
-                inputStyles={STYLES.sector_texto}
-                setSelected={(val) => setDesplegable(val)} 
-                data={SECTORES} 
-                save="value"     
-                dropdownStyles={{backgroundColor: 'white' , maxHeight: 140, maxWidth: 280}}
-                dropdownTextStyles={STYLES.sector_textos}
-                search={false}
-            />
+            <View style={STYLES.desplegable4}>
+                <SelectList
+                    placeholder = 'Els teus interessos'
+                    boxStyles={STYLES.desplegable1}
+                    inputStyles={STYLES.sector_texto}   
+                    setSelected={(val) => setDesplegable2(val)} 
+                    onSelect={ () => {if (!comensa) setComensa(true);}}
+                    data={INTERESSOS} 
+                    save="value"     
+                    dropdownStyles={{backgroundColor: 'white' , maxHeight: 140, maxWidth: 280 }}
+                    dropdownTextStyles={STYLES.sector_textos}
+                    search={false}
+                    label='Productes'
+                    labelStyles={{color: '#749969', fontSize: 16}}
+                />
+            </View>
+
+            <View style={STYLES.desplegable3}>
+                <SelectList
+                    placeholder = 'El teu abast'
+                    boxStyles={STYLES.desplegable1}
+                    inputStyles={STYLES.sector_texto}   
+                    setSelected={(val) => setDesplegable2(val)} 
+                    data={ABAST} 
+                    save="value"     
+                    dropdownStyles={{backgroundColor: 'white' , maxHeight: 140, maxWidth: 280 }}
+                    dropdownTextStyles={STYLES.sector_textos}
+                    search={false}
+                    labelStyles={{color: '#749969', fontSize: 16}}
+                />
+            </View>
 
 
 
-            <MultipleSelectList
-                placeholder = 'Els teus productes'
-                boxStyles={STYLES.desplegable1}
-                inputStyles={STYLES.sector_texto}   
-                setSelected={(val) => setDesplegable2(val)} 
-                data={PRODUCTES} 
-                save="value"     
-                dropdownStyles={{backgroundColor: 'white' , maxHeight: 140, maxWidth: 280 }}
-                dropdownTextStyles={STYLES.sector_textos}
-                search={false}
-                label='Productes'
-                labelStyles={{color: '#749969', fontSize: 16}}
-            />
+            <View style={STYLES.desplegable2}>
+                <SelectList
+                    placeholder = 'Els teus productes'
+                    boxStyles={STYLES.desplegable1}
+                    inputStyles={STYLES.sector_texto}   
+                    setSelected={(val) => setDesplegable2(val)} 
+                    data={PRODUCTES} 
+                    save="value"     
+                    dropdownStyles={{backgroundColor: 'white' , maxHeight: 140, maxWidth: 280 }}
+                    dropdownTextStyles={STYLES.sector_textos}
+                    search={false}
+                    label='Productes'
+                    labelStyles={{color: '#749969', fontSize: 16}}
+                />
+            </View>
+
+            <View style={STYLES.desplegable}>
+                <SelectList 
+                    placeholder = 'El teu sector'
+                    boxStyles={STYLES.desplegable1}
+                    inputStyles={STYLES.sector_texto}
+                    setSelected={ (placeholder) => setDesplegable(placeholder)}
+                    data={SECTORES} 
+                    save="value"     
+                    dropdownStyles={{backgroundColor: 'white' , maxHeight: 140, maxWidth: 280}}
+                    dropdownTextStyles={STYLES.sector_textos}
+                    search={false}
+                />
+            </View>
 
         </View>
         
-        <TouchableOpacity style={STYLES.comensa}>
-            <Text style={STYLES.texto_comensa}>
-                COMENÇA    
-            </Text>           
-        </TouchableOpacity>
+        {!comensa &&
+            <>
+                <View style={STYLES.comensa}>
+                    <Text style={STYLES.texto_comensa}>
+                        COMENÇA    
+                    </Text>           
+                </View>
+            </>
+            
+        }
+        {comensa && 
+            <>
+                <TouchableOpacity style={STYLES.comensa}>
+                    <Text style={STYLES.texto_comensa}>
+                        COMENÇA    
+                    </Text>           
+                </TouchableOpacity>
+            </>
+            
+        }
+        
     </View>
   );
 

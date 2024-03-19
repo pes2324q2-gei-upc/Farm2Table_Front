@@ -14,15 +14,50 @@ const Registre = () => {
   const [escollir_usuari, setEscollirUsuari] = useState(false);
   
   
-  const handleRegister = () => {
+  const handleRegister = async () => {
     console.log('Username:', username);
     console.log('Password:', password);
     console.log('Confirm_Password', confirm_password);
     console.log('Me acuerdo', recordar_contrasenya ? "no": "si");
-    if (password == confirm_password) {
+
+    const data = {
+        email: username,
+        password: password,
+        repeat_password: confirm_password,
+    };
+    
+    const csrfToken = 'EvverUyTqKOrQsI0xnHnd3FVzYXswpnq6o4cL9bNqAt155IP8o1tvVdFs6kxVsWk';
+    
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'accept': 'application/json',
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken
+          },
+        body: JSON.stringify(data)
+    };
+    
+    const url = 'http://13.39.109.155/users/register/';
+    
+    fetch(url, requestOptions)
+        .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+        })
+        .then(data => {
+        console.log(data);
         setEscollirUsuari(true);
-    }
-    else console.log("mal");
+        })
+        .catch(error => {
+        console.error('There was a problem with your fetch operation:', error);
+        });
+  
+      
+
+    setEscollirUsuari(true);
   };
 
   const contrasenyaVisible = () => {
