@@ -16,7 +16,7 @@ const Header = () => {
                 <TouchableOpacity>
                     <Ionicons
                         name="settings"
-                        size={24}
+                        size={35}
                         color="white"
                         style={styles.settingsIcon}
                     />
@@ -42,12 +42,13 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40,
         borderRadius: 20,
+        marginLeft: 10,
     },
     logo: {
         marginLeft: 20,
     },
     settingsIcon: {
-        marginRight: 20,
+        marginRight: 10,
     },
 });
 
