@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 id = null;
 user_type = null;
+correo = null;
 
 export const setUserId = (idd) => {
     id = idd;
@@ -17,6 +18,14 @@ export const setUserType = (type) => {
 
 export const userType = () => {
     return user_type;
+}
+
+export const setEmail = (email) => {
+    correo = email;
+}
+
+export const email = () => {
+    return correo;
 }
 
 const User = () => {
