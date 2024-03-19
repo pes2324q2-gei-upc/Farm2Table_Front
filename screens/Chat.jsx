@@ -3,14 +3,13 @@ import {ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, SafeAre
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
-
 const Chat = () => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
 
   const sendMessage = () => {
-    if(message.trim() !== "") {
-      const newMessage = {text: message, remit: 'user'};
+    if (message.trim() !== "") {
+      const newMessage = { text: message, sender: 'user' };
       setMessages([...messages, newMessage]);
       setMessage('');
     }
@@ -18,46 +17,42 @@ const Chat = () => {
 
   return (
       <SafeAreaView style={styles.container}>
-        <ScrollView contentContainerStyle={styles.containerMessage}>
-          {messages.map((msg, index) => {
-            return (
-                <View key={index} style={[styles.bubbleMessage, msg.remit === 'user' ? styles.messageUser : styles.otherMessage]}>
-                  <Text style={styles.textMessage}>{msg.text}</Text>
-                </View>
-            );
-          })}
+        <ScrollView contentContainerStyle={styles.messagesContainer}>
+          {messages.map((msg, index) => (
+              <SafeAreaView key={index} style={[styles.messageBubble, msg.sender === 'user' ? styles.userMessage : styles.otherMessage]}>
+                <Text style={styles.messageText}>{msg.text}</Text>
+              </SafeAreaView>
+          ))}
         </ScrollView>
-        <View style={styles.containerEntrance}>
+
+        <SafeAreaView style={styles.inputContainer}>
           <TextInput
-              style={styles.entrance}
-              placeholder="Put a message"
+              style={styles.input}
+              placeholder="Escriu un missatge"
               onChangeText={setMessage}
               value={message}
               multiline={true}
               autoFocus={true}
           />
           <TouchableOpacity onPress={sendMessage}>
-            <FontAwesomeIcon
-                icon={faPaperPlane}
-                size={35}
-                color="#245414"
-                style={styles.icon}
-            />
+            <FontAwesomeIcon icon={faPaperPlane} size={35} color="#245414" />
           </TouchableOpacity>
-        </View>
+        </SafeAreaView>
       </SafeAreaView>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginBottom: 75,
   },
-  containerMessage: {
+  messagesContainer: {
     flexGrow: 1,
+    marginTop: 30,
   },
-  bubbleMessage: {
+  messageBubble: {
     maxWidth: '80%',
     padding: 10,
     borderRadius: 20,
@@ -65,7 +60,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
     paddingHorizontal: 15,
   },
-  messageUser: {
+  userMessage: {
     alignSelf: 'flex-end',
     backgroundColor: '#249050',
   },
@@ -73,10 +68,10 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     backgroundColor: '#E5E5EA',
   },
-  textMessage: {
+  messageText: {
     fontSize: 18,
   },
-  containerEntrance: {
+  inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#18E19A',
@@ -86,15 +81,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginBottom: 5,
   },
-  entrance: {
+  input: {
     flex: 1,
     fontSize: 18,
     paddingVertical: 10,
     paddingHorizontal: 5,
   },
-
-  icon: {
-    marginHorizontal: 5,
-  }
 });
-export default Chat
+
+export default Chat;
