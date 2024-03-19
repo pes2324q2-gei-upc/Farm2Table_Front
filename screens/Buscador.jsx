@@ -6,7 +6,8 @@ import { TextInput } from 'react-native'
 import { TouchableOpacity } from 'react-native'
 import { AntDesign } from "@expo/vector-icons"
 
-const API_ENDPOINT = 'https://randomuser.me/api/?results=30';
+const API_ENDPOINT = 'http://13.39.109.155/users/productor/';
+const API_PRODUCTES = 'http://13.39.109.155/products/';
 
 
 const TouchableElement = ({ title, isSelected, onPress, index, color,  backgroundColor, borderColor }) => {
@@ -25,36 +26,94 @@ const TouchableElement = ({ title, isSelected, onPress, index, color,  backgroun
 
 const Buscador = () => {
     const [selectedIndex, setSelectedIndex] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [data, setData] = useState([]);
+    const [selectedData, setselectedData] = useState([]);
+    const [data1, setData1] = useState([]);
+    const [data2, setData2] = useState([]);
     const [error, setError] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
 
     useEffect(() => {
-        setIsLoading(true);
-        //fetchData(API_ENDPOINT);
+        fetchData(API_ENDPOINT, 0);
+        fetchData(API_PRODUCTES, 1);
     }, []);
 
-    const fetchData = async(url) => {
+    const keyExtractor1 = (item) => item.username;
+    
+    const keyExtractor2 = (item) => item.name;
+
+    const renderItem1 = ({ item }) => (
+        <View style={styles.lista}>
+            <Image source = {{uri: item.avatar}} style={styles.image} />
+            <View>
+                <Text style={styles.textName}>
+                {item.username}
+                </Text>
+                <Text style={styles.textEmail}>{item.username}</Text>
+            </View>
+        </View>
+    );
+    
+    const renderItem2 = ({ item }) => (
+        <View style={styles.lista}>
+            <Image source = {{uri: item.image}} style={styles.image} />
+            <View>
+                <Text style={styles.textName}>
+                {item.name}
+                </Text>
+                <Text style={styles.textEmail}>{item.username}</Text>
+            </View>
+        </View>
+    );
+
+    const fetchData = async(url, value) => {
         try {
             const response = await fetch(url);
             const json = await response.json();
-            setData(json.results);
-            //console.log(json.results);
+            if(json.results = null) console.log("hola")
+            if(value === 0) {
+                setData1(json.data);
+                data1.forEach(item => {
+                    console.log(item.username);
+                });
+            }
+            else if(value === 1){
+                setData2(json)
+                data2.forEach(item => {
+                    console.log(item.name);
+                });
+                /*
+                console.log(json)
+                datap.forEach(item => {
+                    console.log(item.name);
+                });
+                */
+            }
+            //console.log(json.data[0].username);
         }catch (error) {
             setError(error);
             console.log(error);
         }
     };
 
-    const handleItemPress= (index) => {
+    const handleItemPress = (index) => {
         setSelectedIndex(index);
     };
 
+    const handleData = (index) => {
+        if(index === 1) {
+            selectedData.filter(item => 
+                item.username.toLowerCase().includes(searchQuery.toLowerCase()))
+        }else if(index === 2) {
+            selectedData.filter(item => 
+                item.name.toLowerCase().includes(searchQuery.toLowerCase()))
+        }else{
+
+        }
+    };
     const items = [
-        { title: 'Pagès', index: 0 },
-        { title: 'Producte', index: 1 },
-        { title: 'Restaurant', index: 2 },
+        { title: 'Pagès', index: 1 },
+        { title: 'Productes', index: 2 },
+        { title: 'Restaurants', index: 3 },
     ];
 
     return (
@@ -89,7 +148,15 @@ const Buscador = () => {
                             key={index}
                             title={item.title}
                             isSelected={item.index === selectedIndex}
-                            onPress={() => handleItemPress(item.index)}
+                            onPress={() => {
+                                const index = item.index;
+                                handleItemPress(index);
+                                if (index === 1) {
+                                    setselectedData(data1);
+                                }else if(index === 2) {
+                                    setselectedData(data2);
+                                }
+                              }}
                             color= {item.index === selectedIndex ? 'white' : 'black'}
                             borderColor={item.index === selectedIndex ? 'white' : 'black'}
                             backgroundColor = {item.index === selectedIndex ? 'orange' : 'gray'}
@@ -97,25 +164,30 @@ const Buscador = () => {
                         ))}
                     </View>
                 </View>
-                <FlatList 
-                    data= {data.filter(item => 
-                        item.login.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                        item.name.first.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                        item.name.last.toLowerCase().includes(searchQuery.toLowerCase())
-                    )}
-                    keyExtractor={(item) => item.login.username}
+                
+                <FlatList   
+                    data={selectedIndex === 1 ? data1 : data2.filter(item => 
+                        item.name.toLowerCase().includes(searchQuery.toLowerCase()))}
+                        /*
+                        selectedData.filter(item => 
+                        item.name.toLowerCase().includes(searchQuery.toLowerCase()))}
+                        */
+                    keyExtractor={selectedIndex === 1  ? keyExtractor1 : keyExtractor2}
+                    renderItem={selectedIndex === 1 ? renderItem1 : renderItem2}
+                    /*
                     renderItem={({item}) => (
                         <View style={styles.lista}>
-                            <Image source = {{uri: item.picture.thumbnail}} style={styles.image} />
+                            <Image source = {{uri: item.image}} style={styles.image} />
                             <View>
                                 <Text style={styles.textName}>
-                                    {item.name.first} {item.name.last}
+                                {item.name}
                                 </Text>
-                                <Text style={styles.textEmail}>{item.login.username}</Text>
+                                <Text style={styles.textEmail}>{item.name}</Text>
                             </View>
                         </View>
-                    )
-                }
+                        )
+                    }
+                    */
                 />
             </View>
         </SafeAreaView>
@@ -123,6 +195,15 @@ const Buscador = () => {
 }
 
 const styles = StyleSheet.create({
+    lista:{
+        flexDirection:"row",
+        alignItems: "center",
+        marginLeft: 10,
+        marginTop: 10,
+        width: (SIZES.width/100) *90,
+        height: 100,
+        backgroundColor: 'transparent'
+    },
     info: {
         width: '100%',
         backgroundColor: COLORS.secondary,
@@ -177,16 +258,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     image: {
-        width: 50,
-        height: 50,
+        width: 70,
+        height: 70,
         borderRadius: 25,
-    },
-    lista:{
-        flexDirection:"row",
-        alignItems: "center",
-        marginLeft: 10,
-        marginTop: 10,
-        width: (SIZES.width/100) *90
     },
     textName: {
         fontSize: SIZES.xlarge,
