@@ -9,7 +9,6 @@ import Products from '../screens/Products'
 import Chat from '../screens/Chat'
 import Product from '../products/Product2'
 import SliderProducts from '../products/SliderProducts'
-
 import { COLORS, SIZES } from '../constants/theme'
 
 const Tab = createBottomTabNavigator();
