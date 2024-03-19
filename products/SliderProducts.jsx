@@ -1,22 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { StyleSheet, View, FlatList, TouchableOpacity, Image, Text } from 'react-native';
 import { COLORS, SIZES } from '../constants/theme';
-import Product from './Product2';
 
 const SliderProducts = ({ productData }) => {
     const [activeIndex, setActiveIndex] = useState(0);
+    const flatListRef = useRef(null);
 
     const handleScroll = (event) => {
         const contentOffsetX = event.nativeEvent.contentOffset.x;
-        const index = Math.round(contentOffsetX / SIZES.width);
+        const index = Math.floor(contentOffsetX / (SIZES.width - 60)); // Adjusted width considering padding
+        setActiveIndex(index);
+    };
+
+    const scrollToIndex = (index) => {
+        flatListRef.current.scrollToIndex({ animated: true, index });
         setActiveIndex(index);
     };
 
     return (
         <View style={styles.container}>
             <FlatList
+                ref={flatListRef}
                 data={productData}
-                style= {styles.flatlist}
+                style={styles.flatlist}
                 horizontal
                 pagingEnabled
                 showsHorizontalScrollIndicator={false}
@@ -48,7 +54,7 @@ const SliderProducts = ({ productData }) => {
                             styles.paginationDot,
                             index === activeIndex && styles.activeDot,
                         ]}
-                        onPress={() => console.log('Navigate to page:', index)}
+                        onPress={() => scrollToIndex(index)}
                     />
                 ))}
             </View>
@@ -84,53 +90,44 @@ const styles = StyleSheet.create({
     activeDot: {
         backgroundColor: COLORS.secondary,
     },
-
     image: {
         width: 100,
         height: 100,
     },
-    
     title: {
         fontSize: 16,
         fontWeight: 'bold',
         color: COLORS.secondary,
-      },
-      price: {
+    },
+    price: {
         fontSize: 14,
-      },
-    
-      imageContainer: {
+    },
+    imageContainer: {
         alignItems: 'center',
         justifyContent: 'center',
         marginBottom: 5,
-      },
-    
-      textContainer: {
+    },
+    textContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-      },
-    
-      capsule: {
+    },
+    capsule: {
         backgroundColor: 'white',
         paddingHorizontal: 10,
         paddingVertical: 10,
         borderRadius: 20,
         marginBottom: 5,
-        //flexGrow: 1,
         minWidth: SIZES.width - 75,
         maxHeight: 175,
         borderColor: COLORS.secondary,
         borderRadius: 20,
         borderWidth: 2,
-      },
-
-      flatlist: {
+    },
+    flatlist: {
         flex: 1,
         width: SIZES.width - 60,
     },
-
-
 });
 
 export default SliderProducts;
