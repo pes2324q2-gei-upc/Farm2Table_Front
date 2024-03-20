@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCamera, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Picker } from '@react-native-picker/picker';
 import HeaderBack from '../navigation/header_back';
-import { COLORS } from '../App';
+import { COLORS } from '../constants/theme';
 import { useNavigation } from '@react-navigation/native';
 
 

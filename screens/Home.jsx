@@ -3,7 +3,7 @@ import { StyleSheet, View, ScrollView, SafeAreaView, Text } from 'react-native';
 import { COLORS } from '../constants/theme';
 import Header from '../navigation/header';
 import ShopFeed from '../products/ShopProducts';
-import AddButton from '../components/addButton'; // Adjust import path
+import AddButton from '../components/AddButton'; // Adjust import path
 import { useNavigation } from '@react-navigation/native';
 
 const MainFeed = () => {

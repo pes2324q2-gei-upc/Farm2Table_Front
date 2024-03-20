@@ -36,22 +36,4 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  text_regular: {
-    textAlign: 'center',
-    color: 'black',
-    fontSize: 30, 
-    fontFamily: 'regular'
-  },
-
-});
-
-
 export { COLORS, SIZES };
