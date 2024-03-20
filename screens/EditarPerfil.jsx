@@ -4,14 +4,48 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { COLORS, SIZES } from '../constants/theme'
 import { TextInput } from 'react-native'
 import { TouchableOpacity } from 'react-native'
+import { useNavigation } from '@react-navigation/native';
+const Avatar = "https://pes-deploy.s3.amazonaws.com/avatars/Captura_de_pantalla_2024-03-14_161349_Ncq98p1.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA47CR2W7N4B54HLQW%2F20240320%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20240320T150448Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=22d8e4044cbb6ef63747e712f4ad40b100990b1f320ce3d95f5d3316c369baaa"
 
-const Avatar = 'https://pes-deploy.s3.amazonaws.com/avatars/Captura_de_pantalla_2024-03-14_161349_Ncq98p1.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA47CR2W7N4B54HLQW%2F20240319%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20240319T151714Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=000ebc1d05040debb5e62ec9e5c3b64d0c26aa38fb582617d5f264d0d0a95b91'
 
-const Products = () => { 
+const Products = ({navigation}) => { 
   const[username, setusername] = useState('');
   const[descripcio, setdescripcio] = useState('');
   const[resum, setresum] = useState('');
   const[number, setnumber] = useState('');
+
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch('http://13.39.109.155/users/profile/1', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          "username": username,
+          "brief_description": descripcio,
+          "about_me": resum,
+          "telephone": number,
+          "avatar": "string"
+        }),
+      });
+      //console.log(response);
+
+      if (!response.ok) {
+        throw new Error('Something went wrong');
+      }
+      setusername('');
+      setdescripcio('');
+      setresum('');
+      setnumber('');
+      // Handle the response here
+      const data = await response.json();
+      //console.log(data);
+    } catch (error) {
+      // Handle the error here
+      console.log(error.message);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.top}>
@@ -75,6 +109,16 @@ const Products = () => {
           <Text style={styles.buttontext}>Torna</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
+          <Text 
+          style={styles.buttontext} 
+          onPress={() => {
+            navigation.navigate('OtherView');
+          }}
+          >
+              Edita Productes
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
           <Text style={styles.buttontext}>Accepta</Text>
         </TouchableOpacity>
       </View>
@@ -102,7 +146,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     borderColor: COLORS.secondary,
     borderWidth: 2.5,
-    width:'34%',
+    width:'25%',
     height: '20%',
     //paddingHorizontal: 10,
     //paddingVertical: 10,
@@ -148,7 +192,6 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 14,
     fontWeight: '500',
-    textColor:'blue'
   },
   profileImage: {
     marginTop: 10,
