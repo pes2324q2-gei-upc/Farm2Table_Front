@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
 
     container :{
         flex: 1,
-        backgroundColor: COLORS.primary
+        backgroundColor: COLORS.secondary
     },
 
     upperRow: {
@@ -24,11 +24,11 @@ const styles = StyleSheet.create({
     },
 
     image: {
-        aspectRatio: 1,
         resizeMode: 'cover',
         alignContent: "center",
         alignItems: "center",
         height: SIZES.height * 0.45,
+        width: SIZES.width,
     },
 
     card: {
@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 40,
         width: SIZES.width,
         flex: 1,
+        height: SIZES.height * 0.6,
     },
 
     name_price: {

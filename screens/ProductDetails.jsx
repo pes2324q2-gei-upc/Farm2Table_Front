@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import styles from '../Products/productDetails.style';
+import styles from '../products/productDetails.style';
 
 const ProductDetails = ({ navigation, id }) => {
   const [product, setProduct] = useState(null);
