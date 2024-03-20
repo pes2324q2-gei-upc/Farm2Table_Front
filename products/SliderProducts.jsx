@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { StyleSheet, View, FlatList, TouchableOpacity, Image, Text } from 'react-native';
 import { COLORS, SIZES } from '../constants/theme';
+import { useNavigation } from '@react-navigation/native';
 
 const SliderProducts = ({ productData }) => {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -17,6 +18,8 @@ const SliderProducts = ({ productData }) => {
         setActiveIndex(index);
     };
 
+    const navigation = useNavigation();
+
     return (
         <View style={styles.container}>
             <FlatList
@@ -28,20 +31,22 @@ const SliderProducts = ({ productData }) => {
                 showsHorizontalScrollIndicator={false}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) => (
-                    <View style={styles.page}>
-                        <View style={styles.capsule}>
-                            <View style={styles.imageContainer}>
-                                <Image
-                                    source={{ uri: item.image }}
-                                    style={styles.image}
-                                />
-                            </View>
-                            <View style={styles.textContainer}>
-                                <Text style={styles.title}>{item.name}</Text>
-                                <Text style={styles.price}>{item.price} €/kg</Text>
+                    <TouchableOpacity onPress={() => navigation.navigate('ProductDetails', { id: item.id })}>
+                        <View style={styles.page}>
+                            <View style={styles.capsule}>
+                                <View style={styles.imageContainer}>
+                                    <Image
+                                        source={{ uri: item.image }}
+                                        style={styles.image}
+                                    />
+                                </View>
+                                <View style={styles.textContainer}>
+                                    <Text style={styles.title}>{item.name}</Text>
+                                    <Text style={styles.price}>{item.price} €/kg</Text>
+                                </View>
                             </View>
                         </View>
-                    </View>
+                    </TouchableOpacity>
                 )}
                 onScroll={handleScroll}
                 scrollEventThrottle={16} // Adjust scroll event frequency

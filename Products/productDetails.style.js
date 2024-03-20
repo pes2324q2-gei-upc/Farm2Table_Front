@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
         alignContent: "center",
         alignItems: "center",
-        height: SIZES.height * 0.45,
+        height: SIZES.height * 0.4,
         width: SIZES.width,
     },
 
@@ -38,7 +38,8 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 40,
         width: SIZES.width,
         flex: 1,
-        height: SIZES.height * 0.6,
+        height: SIZES.height * 0.5,
+        bottom: 10
     },
 
     name_price: {
@@ -95,7 +96,7 @@ const styles = StyleSheet.create({
     description_row: {
         marginHorizontal: 20,
         marginTop: 20,
-        maxHeight: 150,
+        maxHeight: 0,
     },
 
     description: {

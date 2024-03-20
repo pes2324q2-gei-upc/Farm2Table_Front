@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, Image, ScrollView, SafeAreaView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import styles from '../products/productDetails.style';
+import Footer from '../navigation/footer';
+import HeaderBack from '../navigation/header_back';
 
-const ProductDetails = ({ navigation, id }) => {
+const ProductDetails = ({ navigation, route }) => {
   const [product, setProduct] = useState(null);
   const [userAvatar, setUserAvatar] = useState(null);
   const [count, setCount] = useState(1);
 
+  const { id } = route.params;
+
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
-        const response = await fetch(`http://13.39.109.155/products/${1}`);
+        const response = await fetch(`http://13.39.109.155/products/${id}`);
         if (!response.ok) {
           throw new Error('Failed to fetch product details');
         }
@@ -41,20 +45,13 @@ const ProductDetails = ({ navigation, id }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <HeaderBack />
       <ScrollView>
         {product && (
           <>
-            <View style={styles.upperRow}>
-              <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Ionicons name="arrow-back" size={33} color="black" />
-              </TouchableOpacity>
-
-              <TouchableOpacity onPress={() => {}}>
-                <Ionicons name="heart" size={33} color="black" />
-              </TouchableOpacity>
-            </View>
-
+          <SafeAreaView style={styles.container}>
+        
             <Image source={{ uri: product.image }} style={styles.image} />
 
             <View style={styles.card}>
@@ -94,10 +91,11 @@ const ProductDetails = ({ navigation, id }) => {
                 </TouchableOpacity>
               </View>
             </View>
+          </SafeAreaView>
           </>
         )}
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 
