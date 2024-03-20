@@ -7,6 +7,10 @@ const COLORS = {
     secondary: "#315220", //Color verde oscuro tematico -- Cal Poly Pomona Green 
     tertiary: "#bc6c25", //Marron anaranjado -- Tiger's Eye
 
+
+    highlighter: "#90ee90",
+
+
     white: "#ffffff",
     black: "#000000",
 

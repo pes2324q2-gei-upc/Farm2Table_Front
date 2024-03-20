@@ -6,6 +6,7 @@ import {Ionicons} from "@expo/vector-icons"
 import Home from '../screens/Home'
 import Map from '../screens/Map'
 import Products from '../screens/Products'
+import ProductDetails from '../screens/ProductDetails'
 import Chat from '../screens/Chat'
 import Product from '../products/Product2'
 import SliderProducts from '../products/SliderProducts'
