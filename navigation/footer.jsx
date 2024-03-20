@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text} from 'react-native'
 import React from 'react'
 import { createBottomTabNavigator }from '@react-navigation/bottom-tabs'
 import {Ionicons} from "@expo/vector-icons"
@@ -8,6 +8,8 @@ import Map from '../screens/Map'
 import Products from '../screens/Products'
 import ProductDetails from '../screens/ProductDetails'
 import Chat from '../screens/Chat'
+import Product from '../products/Product2'
+import SliderProducts from '../products/SliderProducts'
 
 import { COLORS, SIZES } from '../constants/theme'
 
@@ -54,7 +56,7 @@ const Footer = () => {
                 );
             }
         }} />
-        <Tab.Screen name="Products" component={ProductDetails} options={{
+        <Tab.Screen name="Product" component={Product} options={{
             tabBarIcon: ({ focused }) => {
                 return (
                     <Ionicons
