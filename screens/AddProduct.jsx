@@ -227,7 +227,9 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.secondary,
     },
     scrollView: {
-        padding: 20,
+        paddingRight: 20,
+        paddingLeft: 20,
+        paddingTop: 5,
     },
     title: {
         fontSize: 24,
