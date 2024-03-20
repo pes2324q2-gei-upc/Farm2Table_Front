@@ -5,6 +5,10 @@ import { SelectList } from 'react-native-dropdown-select-list';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCamera, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Picker } from '@react-native-picker/picker';
+import HeaderBack from '../navigation/header_back';
+import { COLORS } from '../constants/theme';
+import { useNavigation } from '@react-navigation/native';
+
 
 const AddProduct = () => {
     const [selected, setSelected] = useState('');
@@ -16,6 +20,9 @@ const AddProduct = () => {
     const [quantity, setQuantity] = useState('');
     const [price, setPrice] = useState('');
     const [unit, setUnit] = useState('Kg');
+
+    const navigation = useNavigation();
+
 
     const resetForm = () => {
         setSelected('');
@@ -98,6 +105,7 @@ const AddProduct = () => {
             console.error('Error:', error);
             Alert.alert('Error', 'An error occurred while adding the product');
         }
+        navigation.goBack();
     };
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -121,6 +129,8 @@ const AddProduct = () => {
 
     return (
         <SafeAreaView style={styles.container}>
+            <HeaderBack />
+            <ScrollView style={styles.background}>
             <ScrollView contentContainerStyle={styles.scrollView}>
                 <Text style={styles.title}>Afegir Producte</Text>
                 <InputField label="Nom del producte:" value={productName} onChangeText={setProductName} />
@@ -156,6 +166,7 @@ const AddProduct = () => {
                 <TouchableOpacity style={styles.submitButton} onPress={handleAddProduct}>
                     <Text style={styles.buttonText}>Afegir producte</Text>
                 </TouchableOpacity>
+            </ScrollView>
             </ScrollView>
         </SafeAreaView>
     );
@@ -207,6 +218,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fefae0',
+    },
+    background: {
+        backgroundColor: '#fefae0',
+    },
+    container: {
+        flex: 1,
+        backgroundColor: COLORS.secondary,
     },
     scrollView: {
         padding: 20,
