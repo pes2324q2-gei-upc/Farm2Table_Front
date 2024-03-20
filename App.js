@@ -8,6 +8,7 @@ import MainFeed from './screens/Home';
 import AddProduct from './screens/AddProduct';
 import { COLORS, SIZES } from './constants/theme';
 import { StyleSheet, Text, View } from 'react-native';
+import Registre from "./screens/Registre";
 import InicioSesion from "./screens/InicioSesion";
 
 const Stack = createNativeStackNavigator();
