@@ -8,6 +8,7 @@ import { Picker } from '@react-native-picker/picker';
 import HeaderBack from '../navigation/header_back';
 import { COLORS } from '../constants/theme';
 import { useNavigation } from '@react-navigation/native';
+import User from "../informacion/User";
 
 
 const AddProduct = () => {
@@ -63,7 +64,7 @@ const AddProduct = () => {
         }
 
         const formData = new FormData();
-        formData.append('id', '1');
+        formData.append('id', User.userId.toString());
         formData.append('name', productName);
         formData.append('description', productDescription);
         formData.append('type', selected);
@@ -215,10 +216,6 @@ const ImagePickerComponent = ({ imageUri, pickImage, removeImage }) => (
 );
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fefae0',
-    },
     background: {
         backgroundColor: '#fefae0',
     },
@@ -317,14 +314,16 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         marginBottom: 15,
+        width: '90%',
     },
     quantityContainer: {
         flex: 1,
         marginRight: 10,
+        width: '70%',
     },
     unitPickerContainer: {
-        flex: 0.5,
-        marginTop: 20,
+        width: '30%',
+        height: '300%',
     },
     picker: {
         width: 100,
