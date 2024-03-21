@@ -78,6 +78,19 @@ const Footer = () => {
                 );
             }
         }} />
+        
+        <Tab.Screen name="Usuarios" component={Consultar_Usuario} options={{
+            tabBarIcon: ({ focused }) => {
+                return (
+                    <Ionicons
+                        name={focused ? "search" : "search-outline"}
+                        size={30}
+                        color={focused ? COLORS.tertiary : COLORS.white}
+                    />
+                );
+            }
+        }} />
+    
     </Tab.Navigator>
   )
 }
