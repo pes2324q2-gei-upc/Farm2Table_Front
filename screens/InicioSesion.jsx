@@ -3,16 +3,16 @@ import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity } from 'reac
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import logo from '../assets/Farm2Table.png';
 import google from '../assets/Google.png';
-import Registre from './Registre';
 import { setUserId, setUserType, userId, userType } from '../informacion/User';
+import { getIP } from '../informacion/Constants';
+import { useNavigation } from '@react-navigation/native';
 
 const InicioSesion = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [secure_text_entry, setSecureTextEntry] = useState(true); 
   const [recordar_contrasenya, setRecordarContrasenya] = useState(true);
-  const [pagina_registro, setRegistro] = useState(false);
-  
+  const NAVIGATOR = useNavigation();
   
   const handleLogin = async () => {
     console.log('Username:', username);
@@ -36,7 +36,8 @@ const InicioSesion = () => {
         body: JSON.stringify(data)
     };
     
-    const url = 'http://13.39.109.155/users/login/';
+    const url = 'http://'+getIP()+'/users/login/';
+    console.log(url);
     
     fetch(url, requestOptions)
         .then(response => {
@@ -49,7 +50,8 @@ const InicioSesion = () => {
         setUserId(data.data.user_id);
         setUserType(data.data.user_type);
         console.log("UserId", userId());
-        console.log("Type", userType())
+        console.log("Type", userType());
+        NAVIGATOR.navigate('Footer');
 
         })
         .catch(error => {
@@ -76,7 +78,7 @@ const InicioSesion = () => {
 
   const registrarse = () => {
     console.log("Registrar-se");
-    setRegistro(true);
+    NAVIGATOR.navigate('Registre');
   };
 
   const STYLES = StyleSheet.create({
@@ -192,71 +194,65 @@ const InicioSesion = () => {
   return (
     <View style={STYLES.container}>
 
-      {!pagina_registro &&
-        <>
-          <Image source={logo} style={STYLES.logo} />
+      <Image source={logo} style={STYLES.logo} />
 
-          <View style={STYLES.correo}>
-            <Icon name="email" size={20} color="#bc6c25" style={{ marginRight: 7 }} />
-            <TextInput
-              style={STYLES.texto_correo}
-              placeholder="Correu electrònic"
-              value={username}
-              onChangeText={setUsername}
-            />
-          </View>
+      <View style={STYLES.correo}>
+        <Icon name="email" size={20} color="#bc6c25" style={{ marginRight: 7 }} />
+        <TextInput
+          style={STYLES.texto_correo}
+          placeholder="Correu electrònic"
+          value={username}
+          onChangeText={setUsername}
+        />
+      </View>
 
-          <View style={STYLES.contrasenya}>
-            <Icon name="lock" size={20} color ="black" style={{marginRight: 7}}/>
-            <TextInput 
-              style={STYLES.texto_contrasenya}
-              placeholder="Contrasenya"
-              secureTextEntry={secure_text_entry}
-              value={password}
-              onChangeText={setPassword}
-            />
-            <TouchableOpacity onPress={contrasenyaVisible} style={STYLES.visibilidad}>
-              <Icon name={secure_text_entry ? "visibility-off" : "visibility"} size={20} color="black" />
-            </TouchableOpacity>
-          </View>
+      <View style={STYLES.contrasenya}>
+        <Icon name="lock" size={20} color ="black" style={{marginRight: 7}}/>
+        <TextInput 
+          style={STYLES.texto_contrasenya}
+          placeholder="Contrasenya"
+          secureTextEntry={secure_text_entry}
+          value={password}
+          onChangeText={setPassword}
+        />
+        <TouchableOpacity onPress={contrasenyaVisible} style={STYLES.visibilidad}>
+          <Icon name={secure_text_entry ? "visibility-off" : "visibility"} size={20} color="black" />
+        </TouchableOpacity>
+      </View>
 
-          <View style={STYLES.recuerdate}>
+      <View style={STYLES.recuerdate}>
 
-            <TouchableOpacity onPress={recordarContrasenya}>
-              <Icon name={recordar_contrasenya ? "check-box-outline-blank" : "check-box"} size={20} color="black" />
-            </TouchableOpacity>
+        <TouchableOpacity onPress={recordarContrasenya}>
+          <Icon name={recordar_contrasenya ? "check-box-outline-blank" : "check-box"} size={20} color="black" />
+        </TouchableOpacity>
 
-            <Text style={{position: 'absolute', marginLeft: 30, fontSize: 14}}>
-              Enrecorda't
-            </Text>
-          </View>
+        <Text style={{position: 'absolute', marginLeft: 30, fontSize: 14}}>
+          Enrecorda't
+        </Text>
+      </View>
 
-          <TouchableOpacity onPress={contrasenyaOlvidada}>
-            <Text style={STYLES.contrasenya_olvidada}>He oblida't la meva contrasenya</Text>
-          </TouchableOpacity>
+      <TouchableOpacity onPress={contrasenyaOlvidada}>
+        <Text style={STYLES.contrasenya_olvidada}>He oblida't la meva contrasenya</Text>
+      </TouchableOpacity>
 
-          <TouchableOpacity onPress={handleLogin} style={STYLES.inicio_sesion}>
-            <Text style={STYLES.inicio_sesion_texto}>INICIA SESSIÓ</Text>
-          </TouchableOpacity>
+      <TouchableOpacity onPress={handleLogin} style={STYLES.inicio_sesion}>
+        <Text style={STYLES.inicio_sesion_texto}>INICIA SESSIÓ</Text>
+      </TouchableOpacity>
 
 
-          <Text style={STYLES.o}>o</Text>
+      <Text style={STYLES.o}>o</Text>
 
-          <TouchableOpacity onPress={inicioConGoogle} style={STYLES.inicio_google}>
-            <Image source={google} style={STYLES.google}/>
-            <Text style={STYLES.inicio_google_texto}>Continua amb google</Text>
-          </TouchableOpacity>
+      <TouchableOpacity onPress={inicioConGoogle} style={STYLES.inicio_google}>
+        <Image source={google} style={STYLES.google}/>
+        <Text style={STYLES.inicio_google_texto}>Continua amb google</Text>
+      </TouchableOpacity>
 
-          <View style={STYLES.crear_cuenta}>
-            <Text style={{fontSize: 14}}>No tens compte?</Text>
-            <TouchableOpacity onPress={registrarse} style={STYLES.crear_cuenta_boton}>
-              <Text style={{fontSize: 14, color: "#bc6c25"}}>Crea un nou compte</Text>
-            </TouchableOpacity>
-          </View>
-        </>
-      }
-      
-      {pagina_registro && <Registre />}
+      <View style={STYLES.crear_cuenta}>
+        <Text style={{fontSize: 14}}>No tens compte?</Text>
+        <TouchableOpacity onPress={registrarse} style={STYLES.crear_cuenta_boton}>
+          <Text style={{fontSize: 14, color: "#bc6c25"}}>Crea un nou compte</Text>
+        </TouchableOpacity>
+      </View>
 
     </View>
   );

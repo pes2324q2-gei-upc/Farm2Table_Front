@@ -3,6 +3,9 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput } from 'reac
 import logo from '../assets/Farm2Table.png';
 import { SelectList } from 'react-native-dropdown-select-list';
 import { userId } from '../informacion/User';
+import { getIP } from '../informacion/Constants';
+import { useNavigation } from '@react-navigation/native';
+
 
 const STYLES = StyleSheet.create({
     container: {
@@ -106,8 +109,8 @@ const Particular = () => {
 
   const [productes, setProductes] = useState([]);
   const [abast, setAbast] = useState();
-
   const PRODUCTES = ['Fruita', 'Verdura', 'Hortalisses', 'Carn', 'Peix', 'Formatge', 'Altres'];
+  const NAVIGATOR = useNavigation();
 
   const handleRegister = () => {
     console.log("Abast:", abast);
@@ -119,7 +122,7 @@ const Particular = () => {
         products: productes,
     };
     
-    const csrfToken = 'OR0rNAyWkt1wFBqiIft5QrP6yxxiAzcbgKzp7PbQkjG6Ueq7jgNb8jnQrFUnZCL5';
+    const csrfToken = '';
     
     const requestOptions = {
         method: 'POST',
@@ -131,7 +134,7 @@ const Particular = () => {
         body: JSON.stringify(data)
     };
     
-    const url = 'http://13.39.109.155/users/register/Consumer/'+userId()+'/';
+    const url = 'http://'+getIP()+'/users/register/Consumer/'+userId()+'/';
     
     fetch(url, requestOptions)
         .then(response => {
@@ -140,7 +143,8 @@ const Particular = () => {
         })
         .then(data => {
         console.log(data);
-
+        NAVIGATOR.navigate('Footer');
+        
         })
         .catch(error => {
         console.error('There was a problem with your fetch operation:', error);

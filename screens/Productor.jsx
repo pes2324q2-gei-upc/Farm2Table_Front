@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, } from 'react-native';
 import logo from '../assets/Farm2Table.png';
 import { userId } from '../informacion/User';
+import { getIP } from '../informacion/Constants';
+import { useNavigation } from '@react-navigation/native';
 
 const STYLES = StyleSheet.create({
     container: {
@@ -133,6 +135,7 @@ const Productor = () => {
   const [nif, setNif] = useState("");
   const [num_acreditation, setAcreditation] = useState("");
   const [name, setName] = useState("");
+  const NAVIGATOR = useNavigation();
 
   const handleRegister = () => {
     console.log("NIF:", nif);
@@ -146,7 +149,7 @@ const Productor = () => {
         name_productor: name
     };
     
-    const csrfToken = 'OR0rNAyWkt1wFBqiIft5QrP6yxxiAzcbgKzp7PbQkjG6Ueq7jgNb8jnQrFUnZCL5';
+    const csrfToken = '';
     
     const requestOptions = {
         method: 'POST',
@@ -158,7 +161,7 @@ const Productor = () => {
         body: JSON.stringify(data)
     };
     
-    const url = 'http://13.39.109.155/users/register/Productor/'+userId()+'/';
+    const url = 'http://'+getIP()+'/users/register/Productor/'+userId()+'/';
     
     fetch(url, requestOptions)
         .then(response => {
@@ -167,6 +170,7 @@ const Productor = () => {
         })
         .then(data => {
         console.log(data);
+        NAVIGATOR.navigate('Footer');
 
         })
         .catch(error => {
