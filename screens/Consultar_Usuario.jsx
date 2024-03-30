@@ -2,9 +2,13 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image} from 'react-native';
 import {COLORS, SIZES} from "../constants/theme";
 import {MaterialIcons, AntDesign} from '@expo/vector-icons';
-
+import { useRoute, useNavigation } from '@react-navigation/native';
+import { Foundation } from '@expo/vector-icons';
+import ShopFeed from '../Products/ShopFeed';
+import ProductDetails from './ProductDetails';
 const Consultar_Usuario = () => {
     const [activeButton, setActiveButton] = useState('Productes');
+    const navigation = useNavigation();
 
     const onPress = (buttonName) => {
         setActiveButton(buttonName === activeButton ? '' : buttonName);
@@ -15,20 +19,25 @@ const Consultar_Usuario = () => {
 
     const buttonWidth = Dimensions.get('window').width / 3;
 
+    const route = useRoute();
+
+    // Extract item from route params
+    const { item } = route.params;
+
     return (
         <View style={styles.container}>
             <View style = {styles.infoContainer}>
                 <View style={styles.imageContainer}>
                     <Image 
-                        source={require('./descarga.jpg')} 
+                        source={require('./descarga.png')} 
                         style={styles.image}
                     />
                 </View>
                 <View style={styles.info}>
-                    <Text style= {styles.nombre}> Fernando Alonso</Text>
+                    <Text style= {styles.nombre}>{item.username}</Text>
                     <View style={styles.locationInfo}>
-                        <MaterialIcons name="location-pin" size={(SIZES.width/100)*8} color="white" />
-                        <Text style={styles.locationText}> Ubicació: Madrid</Text>
+                        <Foundation name="telephone" size={24} color="white" />
+                        <Text style={styles.locationText}>{" "+ item.telephone}</Text>
                     </View>
                 </View>
                 <View style={styles.ajustes}>
@@ -61,7 +70,16 @@ const Consultar_Usuario = () => {
                 </TouchableOpacity>
             </View>
             <View style={styles.container2}>
-               
+                {isButtonActive('Productes') && (
+                    <View>
+                       <ProductDetails navigation={navigation} route={route} />
+                    </View>
+                )}
+                {isButtonActive('Sobre mí') && (
+                    <View>
+                        <Text>{item.about_me}</Text>
+                    </View>
+                )}
             </View>
         </View>
     );
@@ -74,14 +92,14 @@ const styles = StyleSheet.create({
         paddingTop: (SIZES.height/100) * 8, // Apply padding at the top
     },
     container2: {
-        flex: 1,
-        paddingBottom: SIZES.height,
-        backgroundColor: COLORS.primary,
+        paddingBottom: (SIZES.height/100)*80,
+        backgroundColor:COLORS.primary,
     },
     buttonContainer: {
         flexDirection: 'row', // Aligns items horizontally
         justifyContent: 'space-between', // Distributes items evenly along the main axis
-        paddingHorizontal: SIZES.padding // Apply horizontal padding
+        paddingHorizontal: SIZES.padding, // Apply horizontal padding
+        backgroundColor: 'transparent'
     },
     button: {
         //paddingVertical: 10,

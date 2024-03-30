@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, ScrollView, SafeAreaView, Text } from 'react-native';
-import { COLORS } from '../constants/theme';
+import { COLORS, URL } from '../constants/theme';
 import Header from '../navigation/header';
-import ShopFeed from '../products/ShopProducts';
+import ShopFeed from '../Products/ShopFeed';
 import AddButton from '../components/addButton'; // Adjust import path
 import { useNavigation } from '@react-navigation/native';
 
@@ -15,7 +15,7 @@ const MainFeed = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://13.39.109.155/users/productors/products');
+        const response = await fetch('http://' +URL + '/users/productors/products');
         if (!response.ok) {
           throw new Error('Failed to fetch data');
         }

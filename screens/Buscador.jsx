@@ -1,13 +1,16 @@
 import { View, Text, StyleSheet, FlatList, Image } from 'react-native'
 import React,  { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { COLORS, SIZES} from '../App'
+import { COLORS, SIZES, URL} from '../constants/theme'
 import { TextInput } from 'react-native'
 import { TouchableOpacity } from 'react-native'
 import { AntDesign } from "@expo/vector-icons"
+import Header from '../navigation/header'
+import { useNavigation } from '@react-navigation/native';
+import Consultar_Usuario from './Consultar_Usuario'
 
-const API_ENDPOINT = 'http://13.39.109.155/users/productor/';
-const API_PRODUCTES = 'http://13.39.109.155/products/';
+const API_ENDPOINT = "http://"+URL+"/users/productor/";
+const API_PRODUCTES = "http://"+ URL +"/products/";
 
 
 const TouchableElement = ({ title, isSelected, onPress, index, color,  backgroundColor, borderColor }) => {
@@ -33,24 +36,32 @@ const Buscador = () => {
     const [searchQuery, setSearchQuery] = useState("");
 
     useEffect(() => {
+        //console.log(URL);
         fetchData(API_ENDPOINT, 0);
         fetchData(API_PRODUCTES, 1);
+        setSelectedIndex(1);
     }, []);
+
+    const navigation = useNavigation();
+
+    const handlePress = (item) => {
+        navigation.navigate('Consultar_Usuario', { item });
+      };
 
     const keyExtractor1 = (item) => item.username;
     
     const keyExtractor2 = (item) => item.name;
 
     const renderItem1 = ({ item }) => (
+        <TouchableOpacity onPress={() => handlePress(item)}>
         <View style={styles.lista}>
-            <Image source = {{uri: item.avatar}} style={styles.image} />
-            <View>
-                <Text style={styles.textName}>
-                {item.username}
-                </Text>
-                <Text style={styles.textEmail}>{item.username}</Text>
-            </View>
+          <Image source={{ uri: item.avatar }} style={styles.image} />
+          <View>
+            <Text style={styles.textName}>{item.username}</Text>
+            <Text style={styles.textEmail}>{item.email}</Text>
+          </View>
         </View>
+      </TouchableOpacity>
     );
     
     const renderItem2 = ({ item }) => (
@@ -69,19 +80,24 @@ const Buscador = () => {
         try {
             const response = await fetch(url);
             const json = await response.json();
+            //console.log(API_ENDPOINT)
             if(json.results = null) console.log("hola")
             if(value === 0) {
                 setData1(json.data);
+                //console.log(data1)
                 data1.forEach(item => {
-                    console.log(item.username);
+                    console.log(item);
                 });
+                
+                
             }
             else if(value === 1){
                 setData2(json)
+                /*
                 data2.forEach(item => {
                     console.log(item.name);
                 });
-                /*
+                
                 console.log(json)
                 datap.forEach(item => {
                     console.log(item.name);
@@ -118,6 +134,8 @@ const Buscador = () => {
 
     return (
         <SafeAreaView style = {styles.info}>
+            <Header></Header>
+            {/*}
             <View style={styles.top}>
                 <AntDesign 
                     name='setting'
@@ -131,6 +149,7 @@ const Buscador = () => {
                     }}
                 />
             </View>
+                */}
             <View style={styles.bottom}>
                 <TextInput
                     placeholder= 'Search by username' 
@@ -202,7 +221,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         width: (SIZES.width/100) *90,
         height: 100,
-        backgroundColor: 'transparent'
+        backgroundColor: 'transparent',
     },
     info: {
         width: '100%',
@@ -221,7 +240,7 @@ const styles = StyleSheet.create({
     bottom: {
         width: '100%',
         backgroundColor: COLORS.primary,
-        height: (SIZES.height/100)*78,
+        height: (SIZES.height)/100*80,
         paddingTop: 30,
         alignItems: 'center',
         //justifyContent: 'center,'

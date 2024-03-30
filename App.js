@@ -8,10 +8,13 @@ import MainFeed from './screens/Home';
 import AddProduct from './screens/AddProduct';
 import { COLORS, SIZES } from './constants/theme';
 import ProductDetails from './screens/ProductDetails';
+import Consultar_Usuario from './screens/Consultar_Usuario';
+/*
 import SliderProducts from './products/SliderProducts';
 import { StyleSheet, Text, View } from 'react-native';
 import Registre from "./screens/Registre";
 import InicioSesion from "./screens/InicioSesion";
+*/
 
 
 const Stack = createNativeStackNavigator();
@@ -37,6 +40,7 @@ export default function App() {
         <Stack.Screen name="MainFeed" component={MainFeed} options={{headerShown: false}} />
         <Stack.Screen name="AddProduct" component={AddProduct} options={{headerShown: false}} />
         <Stack.Screen name="ProductDetails" component={ProductDetails} options={{headerShown: false}} />
+        <Stack.Screen name="Consultar_Usuario" component={Consultar_Usuario} options={{headerShown: false}} />
       </Stack.Navigator>
     </NavigationContainer>
   );
