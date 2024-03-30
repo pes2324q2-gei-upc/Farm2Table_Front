@@ -4,6 +4,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import logo from '../assets/Farm2Table.png';
 import EscollirUsuari from './EscollirUsuari';
 import { setEmail, setUserId, userId } from '../informacion/User';
+import { getIP } from '../informacion/Constants';
+import { useNavigation } from '@react-navigation/native';
 
 const Registre = () => {
   const [username, setUsername] = useState('');
@@ -13,6 +15,7 @@ const Registre = () => {
   const [secure_text_entry_2, setSecureTextEntry2] = useState(true);
   const [recordar_contrasenya, setRecordarContrasenya] = useState(true);
   const [escollir_usuari, setEscollirUsuari] = useState(false);
+  const NAVIGATOR = useNavigation();
   
   const handleRegister = async () => {
     console.log('Username:', username);
@@ -38,7 +41,7 @@ const Registre = () => {
         body: JSON.stringify(data)
     };
     
-    const url = 'http://13.39.109.155/users/register/';
+    const url = 'http://'+getIP()+'/users/register/';
     
     fetch(url, requestOptions)
         .then(response => {
@@ -51,8 +54,8 @@ const Registre = () => {
         setUserId(data.data.user_id);
         setEmail(username);
         console.log("UserId", userId());
+        NAVIGATOR.navigate("EscollirUsuari");
 
-        setEscollirUsuari(true);
         })
         .catch(error => {
         console.error('There was a problem with your fetch operation:', error);

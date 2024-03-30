@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, } from 'react-native';
 import logo from '../assets/Farm2Table.png';
 import { SelectList } from 'react-native-dropdown-select-list';
 import { userId } from '../informacion/User';
+import { getIP } from '../informacion/Constants';
+import { useNavigation } from '@react-navigation/native';
 
 const STYLES = StyleSheet.create({
     container: {
@@ -87,8 +89,8 @@ const STYLES = StyleSheet.create({
 const Minorista = () => {
 
   const [tipus, setTipus] = useState("");
-
   const TIPUS = ['Restaurant','Mercat'];
+  const NAVIGATOR = useNavigation();
 
   const handleRegister = () => {
     console.log("Tipus:", tipus);
@@ -98,7 +100,7 @@ const Minorista = () => {
         service: tipus,
     };
     
-    const csrfToken = 'OR0rNAyWkt1wFBqiIft5QrP6yxxiAzcbgKzp7PbQkjG6Ueq7jgNb8jnQrFUnZCL5';
+    const csrfToken = '';
     
     const requestOptions = {
         method: 'POST',
@@ -110,7 +112,7 @@ const Minorista = () => {
         body: JSON.stringify(data)
     };
     
-    const url = 'http://13.39.109.155/users/register/Minorista/'+userId()+'/';
+    const url = 'http://'+getIP()+'/users/register/Minorista/'+userId()+'/';
     
     fetch(url, requestOptions)
         .then(response => {
@@ -119,6 +121,7 @@ const Minorista = () => {
         })
         .then(data => {
         console.log(data);
+        NAVIGATOR.navigate('Footer');
 
         })
         .catch(error => {
