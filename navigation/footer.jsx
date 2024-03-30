@@ -5,11 +5,9 @@ import {Ionicons} from "@expo/vector-icons"
 
 import Home from '../screens/Home'
 import Map from '../screens/Map'
-import Products from '../screens/Products'
-import ProductDetails from '../screens/ProductDetails'
 import Chat from '../screens/Chat'
-import Product from '../products/Product2'
-import SliderProducts from '../products/SliderProducts'
+import Product from '../Products/Product'
+import Buscador from '../screens/Buscador'
 import { COLORS, SIZES } from '../constants/theme'
 
 const Tab = createBottomTabNavigator();
@@ -25,7 +23,7 @@ const screenOptions = {
         right: 0,
         left: 0, 
         elevation: 0,
-        height: 70,
+        height: '9%',
         paddingTop: 10,
     }
 }
@@ -56,7 +54,7 @@ const Footer = () => {
                 );
             }
         }} />
-        <Tab.Screen name="Product" component={Product} options={{
+        <Tab.Screen name="Product" component={Buscador} options={{
             tabBarIcon: ({ focused }) => {
                 return (
                     <Ionicons
@@ -78,8 +76,8 @@ const Footer = () => {
                 );
             }
         }} />
-        
-        <Tab.Screen name="Usuarios" component={Consultar_Usuario} options={{
+            
+       {/* <Tab.Screen name="Usuarios" component={Buscador} options={{
             tabBarIcon: ({ focused }) => {
                 return (
                     <Ionicons
@@ -89,7 +87,7 @@ const Footer = () => {
                     />
                 );
             }
-        }} />
+        }} /> */}
     
     </Tab.Navigator>
   )

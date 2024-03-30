@@ -2,6 +2,8 @@ import { Dimensions } from "react-native";
 
 const {height, width} = Dimensions.get("window");
 
+export const URL= "51.44.17.164";
+
 const COLORS = {
     primary: "#fefae0", //Color pastel de fondo -- Cornsilk
     secondary: "#315220", //Color verde oscuro tematico -- Cal Poly Pomona Green 
