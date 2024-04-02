@@ -6,6 +6,7 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import { Foundation } from '@expo/vector-icons';
 import ShopFeed from '../Products/ShopFeed';
 import ProductDetails from './ProductDetails';
+import EditarPerfil from './EditarPerfil';
 const Consultar_Usuario = () => {
     const [activeButton, setActiveButton] = useState('Productes');
     const navigation = useNavigation();
@@ -13,6 +14,11 @@ const Consultar_Usuario = () => {
     const onPress = (buttonName) => {
         setActiveButton(buttonName === activeButton ? '' : buttonName);
     }
+
+    const goToEditarPerfil = () => {
+        navigation.navigate('EditarPerfil');
+    };
+    
     const isButtonActive = (buttonName) => {
         return buttonName === activeButton;
     }
@@ -41,7 +47,7 @@ const Consultar_Usuario = () => {
                     </View>
                 </View>
                 <View style={styles.ajustes}>
-                    <AntDesign name = "setting" size= {(SIZES.width/100)*10} color = "white" />
+                    <AntDesign name = "setting" size= {(SIZES.width/100)*10} color = "white" onPress={goToEditarPerfil} />
                 </View>
             </View>
             <View style={styles.buttonContainer}>
@@ -72,7 +78,7 @@ const Consultar_Usuario = () => {
             <View style={styles.container2}>
                 {isButtonActive('Productes') && (
                     <View>
-                       <ProductDetails navigation={navigation} route={route} />
+                       {/*<ProductDetails navigation={navigation} route={route} />*/}
                     </View>
                 )}
                 {isButtonActive('Sobre mí') && (

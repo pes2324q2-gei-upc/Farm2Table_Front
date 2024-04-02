@@ -65,6 +65,7 @@ const Buscador = () => {
     );
     
     const renderItem2 = ({ item }) => (
+        <TouchableOpacity onPress={() => navigation.navigate('ProductDetails', { id: item.id })}>
         <View style={styles.lista}>
             <Image source = {{uri: item.image}} style={styles.image} />
             <View>
@@ -74,6 +75,7 @@ const Buscador = () => {
                 <Text style={styles.textEmail}>{item.username}</Text>
             </View>
         </View>
+        </TouchableOpacity>
     );
 
     const fetchData = async(url, value) => {

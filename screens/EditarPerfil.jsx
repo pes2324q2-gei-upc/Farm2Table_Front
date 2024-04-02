@@ -1,22 +1,23 @@
 import { View, Text, StyleSheet, Image } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { COLORS, SIZES } from '../constants/theme'
+import { COLORS, SIZES,URL } from '../constants/theme'
 import { TextInput } from 'react-native'
 import { TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 const Avatar = "https://pes-deploy.s3.amazonaws.com/avatars/Captura_de_pantalla_2024-03-14_161349_Ncq98p1.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA47CR2W7N4B54HLQW%2F20240320%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20240320T150448Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=22d8e4044cbb6ef63747e712f4ad40b100990b1f320ce3d95f5d3316c369baaa"
 
 
-const Products = ({navigation}) => { 
+const EditarPerfil = () => { 
   const[username, setusername] = useState('');
   const[descripcio, setdescripcio] = useState('');
   const[resum, setresum] = useState('');
   const[number, setnumber] = useState('');
+  const navigation = useNavigation();
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch('http://13.39.109.155/users/profile/1', {
+      const response = await fetch('http://' +URL+'/users/profile/1', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -68,7 +69,8 @@ const Products = ({navigation}) => {
         <View style={styles.v1}>
           <Text style={styles.titulo1}>Descripció</Text>
           <TextInput
-            placeholder='Breu descripció'
+            placeholder='
+                        Breu descripció'
             placeholderTextColor={'gray'}
             value={descripcio}
             onChangeText={(txt)=>setdescripcio(txt)}
@@ -105,7 +107,7 @@ const Products = ({navigation}) => {
         </View>
       </View>
       <View style ={styles.bottom}>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
           <Text style={styles.buttontext}>Torna</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
@@ -202,4 +204,4 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
 })
-export default Products
+export default EditarPerfil

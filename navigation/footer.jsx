@@ -1,6 +1,7 @@
 import { View, Text} from 'react-native'
 import React from 'react'
 import { createBottomTabNavigator }from '@react-navigation/bottom-tabs'
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {Ionicons} from "@expo/vector-icons"
 
 import Home from '../screens/Home'
@@ -8,8 +9,10 @@ import Map from '../screens/Map'
 import Chat from '../screens/Chat'
 import Product from '../Products/Product'
 import Buscador from '../screens/Buscador'
+import Consultar_Usuario from '../screens/Consultar_Usuario';
 import { COLORS, SIZES } from '../constants/theme'
-
+import EditarPerfil from '../screens/EditarPerfil';
+const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const screenOptions = {
@@ -27,7 +30,27 @@ const screenOptions = {
         paddingTop: 10,
     }
 }
-
+const BuscadorStackScreen = () => {
+    return (
+      <Stack.Navigator 
+        initialRouteName="Buscador"
+        screenOptions={{
+            headerStyle: {
+              backgroundColor: '#f4511e',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+            headerShown: false
+          }}
+      >
+        <Stack.Screen name="Buscador" component={Buscador} />
+        <Stack.Screen name="Consultar_Usuario" component={Consultar_Usuario} />
+        <Stack.Screen name="EditarPerfil" component={EditarPerfil} /> 
+      </Stack.Navigator>
+    );
+}
 
 const Footer = () => {
   return (
@@ -54,7 +77,7 @@ const Footer = () => {
                 );
             }
         }} />
-        <Tab.Screen name="Product" component={Buscador} options={{
+        <Tab.Screen name="Buscador" component={BuscadorStackScreen} options={{
             tabBarIcon: ({ focused }) => {
                 return (
                     <Ionicons
