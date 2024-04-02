@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2c62d708-8ebc-49fc-9632-855ec1f91a3c" name="Changes" comment="Errors amb els node_modules">
+    <list default="true" id="2c62d708-8ebc-49fc-9632-855ec1f91a3c" name="Changes" comment="Modificar fetch">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/AddProduct.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/AddProduct.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/ProductDetails.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/ProductDetails.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +72,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711550882392</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Modificar fetch">
+      <option name="closed" value="true" />
+      <created>1712044133998</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1712044133998</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -93,6 +99,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Errors amb els node_modules" />
-    <option name="LAST_COMMIT_MESSAGE" value="Errors amb els node_modules" />
+    <MESSAGE value="Modificar fetch" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modificar fetch" />
   </component>
 </project>

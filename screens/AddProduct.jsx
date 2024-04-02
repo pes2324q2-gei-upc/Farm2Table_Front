@@ -8,7 +8,7 @@ import { Picker } from '@react-native-picker/picker';
 import HeaderBack from '../navigation/header_back';
 import { COLORS, URL } from '../constants/theme';
 import { useNavigation } from '@react-navigation/native';
-import {userId} from "../informacion/User";
+//import {userId} from "../informacion/User";
 
 
 const AddProduct = () => {
@@ -64,7 +64,7 @@ const AddProduct = () => {
         }
 
         const formData = new FormData();
-        formData.append('id', userId);
+        formData.append('id', '1');
         formData.append('name', productName);
         formData.append('description', productDescription);
         formData.append('type', selected);
