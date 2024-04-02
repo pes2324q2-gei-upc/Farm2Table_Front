@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import styles from '../Products/productDetails.style';
 import Footer from '../navigation/footer';
 import HeaderBack from '../navigation/header_back';
+import { URL } from '../constants/theme';
 
 const ProductDetails = ({ navigation, route }) => {
   const [product, setProduct] = useState(null);
@@ -15,7 +16,7 @@ const ProductDetails = ({ navigation, route }) => {
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
-        const response = await fetch(`http://13.39.109.155/products/${id}`);
+        const response = await fetch(`http://` + URL + `/products/${id}`);
         if (!response.ok) {
           throw new Error('Failed to fetch product details');
         }
@@ -23,7 +24,7 @@ const ProductDetails = ({ navigation, route }) => {
         setProduct(productData);
 
         // Fetch user avatar
-        const userResponse = await fetch(`http://13.39.109.155/users/profile/${productData.productor_info.id}`);
+        const userResponse = await fetch(`http://` + URL + `/users/profile/${productData.productor_info.id}`);
         if (!userResponse.ok) {
           throw new Error('Failed to fetch user details');
         }

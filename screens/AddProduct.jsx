@@ -6,9 +6,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCamera, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Picker } from '@react-native-picker/picker';
 import HeaderBack from '../navigation/header_back';
-import { COLORS } from '../constants/theme';
+import { COLORS, URL } from '../constants/theme';
 import { useNavigation } from '@react-navigation/native';
-import User from "../informacion/User";
+import {userId} from "../informacion/User";
 
 
 const AddProduct = () => {
@@ -37,7 +37,7 @@ const AddProduct = () => {
 
     useEffect(() => {
         // Get Values from database
-        fetch('http://13.39.109.155/products/types/')
+        fetch('http://' + URL + '/products/types/')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -64,7 +64,7 @@ const AddProduct = () => {
         }
 
         const formData = new FormData();
-        formData.append('id', User.userId.toString());
+        formData.append('id', userId);
         formData.append('name', productName);
         formData.append('description', productDescription);
         formData.append('type', selected);
@@ -84,7 +84,7 @@ const AddProduct = () => {
         }
 
         try {
-            const response = await fetch('http://13.39.109.155/products/', {
+            const response = await fetch('http://' + URL + '/products/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'multipart/form-data',
