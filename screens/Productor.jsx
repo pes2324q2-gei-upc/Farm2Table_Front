@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, } from 'react-native';
 import logo from '../assets/Farm2Table.png';
-import { userId } from '../informacion/User';
+import { userId, getPalabra } from '../informacion/User';
 import { getIP } from '../informacion/Constants';
 import { useNavigation } from '@react-navigation/native';
 
@@ -186,18 +186,18 @@ const Productor = () => {
         <View style={STYLES.productor}>
 
             <Text style={STYLES.titulo}>
-                Productor
+                {getPalabra("producer")}
             </Text>
 
             <Text style={STYLES.texto}>
-                Emplena les següents dades per millorar la teva experència
+                {getPalabra("fill_data")}
             </Text>
 
             <View style={STYLES.fondo_nif}>
 
                 <TextInput 
                     style={STYLES.nif}
-                    placeholder='Nombre'
+                    placeholder={getPalabra("name_producer")}
                     value={name}
                     onChangeText={setName}
                 >
@@ -210,7 +210,7 @@ const Productor = () => {
 
                 <TextInput 
                     style={STYLES.nif}
-                    placeholder='NIF'
+                    placeholder={getPalabra("nif")}
                     value={nif}
                     onChangeText={setNif}
                 >
@@ -223,7 +223,7 @@ const Productor = () => {
 
                 <TextInput 
                     style={STYLES.nif}
-                    placeholder='Numero de acreditacion'
+                    placeholder={getPalabra("acreditation_number")}
                     value={num_acreditation}
                     onChangeText={setAcreditation}
                 >
@@ -236,7 +236,7 @@ const Productor = () => {
 
         <TouchableOpacity style={STYLES.comensa} onPress={handleRegister}>
             <Text style={STYLES.texto_comensa}>
-                COMENÇA    
+                {getPalabra("start_button")}    
             </Text>           
         </TouchableOpacity>
         

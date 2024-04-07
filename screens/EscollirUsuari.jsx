@@ -4,6 +4,7 @@ import logo from '../assets/Farm2Table.png';
 import Productor from './Productor';
 import Minorista from './Minorista';
 import Particular from './Particular';
+import { getPalabra } from '../informacion/User';
 
 const EscollirUsuari = () => {
 
@@ -100,40 +101,22 @@ const EscollirUsuari = () => {
                 <Image source={logo} style={STYLES.logo} />
 
                 <Text style={STYLES.escollir_usuari}>
-                    Escull el teu usuari
+                    {getPalabra("choose_user")}
                 </Text>
 
                 <TouchableOpacity onPress={handleProductor} style={STYLES.productor}> 
-
-                    <Text style={STYLES.titulo}>
-                        Productor
-                    </Text>
-
-                    <Text style={STYLES.texto}>
-                        Pensat per productors locals
-                    </Text>
+                    <Text style={STYLES.titulo}>{getPalabra("producer")}</Text>
+                    <Text style={STYLES.texto}>{getPalabra("producer_text")}</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={handleMinorista} style={STYLES.minorista}> 
-
-                    <Text style={STYLES.titulo}>
-                        Minorista
-                    </Text>
-
-                    <Text style={STYLES.texto}>
-                        Pensat per a petits comerços
-                    </Text>
+                    <Text style={STYLES.titulo}>{getPalabra("retail")}</Text>
+                    <Text style={STYLES.texto}>{getPalabra("retail_text")}</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={handleParticular} style={STYLES.particular}> 
-
-                    <Text style={STYLES.titulo}>
-                        Particular
-                    </Text>
-
-                    <Text style={STYLES.texto}>
-                        Pensat per a consumidors individuals
-                    </Text>
+                    <Text style={STYLES.titulo}>{getPalabra("particular")}</Text>
+                    <Text style={STYLES.texto}>{getPalabra("particular_text")}</Text>
                 </TouchableOpacity>
                 </>
             )}
