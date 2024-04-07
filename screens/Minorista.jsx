@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, } from 'react-native';
 import logo from '../assets/Farm2Table.png';
 import { SelectList } from 'react-native-dropdown-select-list';
-import { userId } from '../informacion/User';
+import { getPalabra, userId } from '../informacion/User';
 import { getIP } from '../informacion/Constants';
 import { useNavigation } from '@react-navigation/native';
 
@@ -89,7 +89,7 @@ const STYLES = StyleSheet.create({
 const Minorista = () => {
 
   const [tipus, setTipus] = useState("");
-  const TIPUS = ['Restaurant','Mercat'];
+  const TIPUS = [getPalabra("restaurant"),getPalabra("market")];
   const NAVIGATOR = useNavigation();
 
   const handleRegister = () => {
@@ -137,16 +137,16 @@ const Minorista = () => {
         <View style={STYLES.productor}>
 
             <Text style={STYLES.titulo}>
-                Minorista
+                {getPalabra("retail")}
             </Text>
 
             <Text style={STYLES.texto}>
-                Emplena les següents dades per millorar la teva experència
+                {getPalabra("fill_data")}
             </Text>     
 
             <View style={STYLES.desplegable}>
                 <SelectList 
-                    placeholder = 'Tipus de servei'
+                    placeholder = {getPalabra("service_type")}
                     boxStyles={STYLES.desplegable1}
                     inputStyles={STYLES.sector_texto}
                     setSelected={ (val) => setTipus(val)}
@@ -162,7 +162,7 @@ const Minorista = () => {
 
         <TouchableOpacity style={STYLES.comensa} onPress={handleRegister}>
             <Text style={STYLES.texto_comensa}>
-                COMENÇA    
+                {getPalabra("start_button")}    
             </Text>           
          </TouchableOpacity>
     

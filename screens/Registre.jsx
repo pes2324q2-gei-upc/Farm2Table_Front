@@ -3,7 +3,7 @@ import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity } from 'reac
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import logo from '../assets/Farm2Table.png';
 import EscollirUsuari from './EscollirUsuari';
-import { setEmail, setUserId, userId } from '../informacion/User';
+import { getPalabra, setEmail, setUserId, userId } from '../informacion/User';
 import { getIP } from '../informacion/Constants';
 import { useNavigation } from '@react-navigation/native';
 
@@ -156,7 +156,7 @@ const Registre = () => {
             <Icon name="email" size={20} color="#bc6c25" style={{ marginRight: 7 }} />
             <TextInput
                 style={STYLES.texto_correo}
-                placeholder="Correu electrònic"
+                placeholder={getPalabra("email")}
                 value={username}
                 onChangeText={setUsername}
             />
@@ -166,7 +166,7 @@ const Registre = () => {
             <Icon name="lock" size={20} color ="black" style={{marginRight: 7}}/>
             <TextInput 
                 style={STYLES.texto_contrasenya}
-                placeholder="Contrasenya"
+                placeholder={getPalabra("password")}
                 secureTextEntry={secure_text_entry}
                 value={password}
                 onChangeText={setPassword}
@@ -180,7 +180,7 @@ const Registre = () => {
             <Icon name="lock" size={20} color ="black" style={{marginRight: 7}}/>
             <TextInput 
                 style={STYLES.texto_contrasenya}
-                placeholder="Confirma la contrasenya"
+                placeholder={getPalabra("confirm_password")}
                 secureTextEntry={secure_text_entry_2}
                 value={confirm_password}
                 onChangeText={setConfirmPassword}
@@ -197,12 +197,12 @@ const Registre = () => {
             </TouchableOpacity>
 
             <Text style={{position: 'absolute', marginLeft: 30, fontSize: 14}}>
-                Enrecorda't
+              {getPalabra("remember_password")}
             </Text>
             </View>
 
             <TouchableOpacity onPress={handleRegister} style={STYLES.registro}>
-            <Text style={STYLES.registro_texto}>REGISTRA'T</Text>
+            <Text style={STYLES.registro_texto}>{getPalabra("register_button")}</Text>
             </TouchableOpacity>
         </>
       )}

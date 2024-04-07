@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput } from 'react-native';
 import logo from '../assets/Farm2Table.png';
 import { SelectList } from 'react-native-dropdown-select-list';
-import { userId } from '../informacion/User';
+import { getPalabra, userId } from '../informacion/User';
 import { getIP } from '../informacion/Constants';
 import { useNavigation } from '@react-navigation/native';
-
 
 const STYLES = StyleSheet.create({
     container: {
@@ -159,18 +158,18 @@ const Particular = () => {
         <View style={STYLES.productor}>
 
             <Text style={STYLES.titulo}>
-                Particular
+                {getPalabra("particular")}
             </Text>
 
             <Text style={STYLES.texto}>
-                Emplena les següents dades per millorar la teva experència
+                {getPalabra("fill_data")}
             </Text>
 
             <View style={STYLES.fondo_abast}>
 
                 <TextInput 
                     style={STYLES.abast}
-                    placeholder='El teu abast (kilometres)'
+                    placeholder={getPalabra("reach")}
                     value={abast}
                     onChangeText={setAbast}
                 >
@@ -183,7 +182,7 @@ const Particular = () => {
         
         <TouchableOpacity style={STYLES.comensa} onPress={handleRegister}>
             <Text style={STYLES.texto_comensa}>
-                COMENÇA    
+                {getPalabra("start_button")}    
             </Text>           
         </TouchableOpacity>
 
