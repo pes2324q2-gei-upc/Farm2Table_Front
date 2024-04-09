@@ -1,42 +1,72 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image} from 'react-native';
-import {COLORS, SIZES} from "../constants/theme";
+import React, {useEffect, useState, useCallback } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image, FlatList, RefreshControl} from 'react-native';
+import {COLORS, SIZES, URL} from "../constants/theme";
 import {MaterialIcons, AntDesign} from '@expo/vector-icons';
-import { useRoute, useNavigation } from '@react-navigation/native';
+import { useRoute, useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Foundation } from '@expo/vector-icons';
 import ShopFeed from '../Products/ShopFeed';
 import ProductDetails from './ProductDetails';
 import EditarPerfil from './EditarPerfil';
+import SliderProducts from '../Products/SliderProducts';
+import { head } from 'lodash';
+
+const API_ENDPOINT = "http://"+URL+"/users/productor/";
+
 const Consultar_Usuario = () => {
     const [activeButton, setActiveButton] = useState('Productes');
+    const [shopData, setShopData] = useState([]);
     const navigation = useNavigation();
+    const route = useRoute();
 
+    // Extract item from route params
+    const { item } = route.params;
+    useEffect(() => {
+        //console.log(API_ENDPOINT+item.id+"/products");
+        fetchData(API_ENDPOINT+item.id+"/products");
+    }, []);
+    const fetchData = async(url) => {
+        try {
+            const response = await fetch(url);
+            const json = await response.json();
+            //console.log(API_ENDPOINT)
+            if(json.results = null) console.log("hola")
+
+            setShopData(json.data);
+            //console.log(shopData)
+            /*
+            shopData.forEach(item => {
+                console.log(item);
+            });
+            ^*/
+                
+        }catch (error) {
+            setError(error);
+            console.log(error);
+        }
+    };
     const onPress = (buttonName) => {
-        setActiveButton(buttonName === activeButton ? '' : buttonName);
+        if(buttonName !== activeButton) {
+            setActiveButton(buttonName === activeButton ? '' : buttonName);
+        }
     }
 
     const goToEditarPerfil = () => {
-        navigation.navigate('EditarPerfil');
+        navigation.navigate('EditarPerfil', {item});
     };
     
     const isButtonActive = (buttonName) => {
         return buttonName === activeButton;
     }
-
+    
     const buttonWidth = Dimensions.get('window').width / 3;
-
-    const route = useRoute();
-
-    // Extract item from route params
-    const { item } = route.params;
 
     return (
         <View style={styles.container}>
             <View style = {styles.infoContainer}>
                 <View style={styles.imageContainer}>
                     <Image 
-                        source={require('./descarga.png')} 
-                        style={styles.image}
+                        source={{ uri: item.avatar }} 
+                        style={styles.image_profile}
                     />
                 </View>
                 <View style={styles.info}>
@@ -77,9 +107,27 @@ const Consultar_Usuario = () => {
             </View>
             <View style={styles.container2}>
                 {isButtonActive('Productes') && (
-                    <View>
-                       {/*<ProductDetails navigation={navigation} route={route} />*/}
-                    </View>
+                        <FlatList   
+                            data={shopData}
+                            keyExtractor={(item) => item.id}
+                            renderItem={({item}) => (     
+                                <View style={styles.lista}>
+                                    <TouchableOpacity>
+                                    <View style={styles.capsule}>
+                                        <View style={styles.vista_imagen}>
+                                            <Image source = {{uri: item.image}} style={styles.image} />
+                                        </View>
+                                        <View style={styles.infoProducto}>
+                                        <Text style={styles.productName}>{item.name}</Text>
+                                        <Text style={styles.productPrice}>{item.price} €/kg</Text>
+                                            {/** <Text>Hola</Text>*/}
+                                        </View>
+                                        {/*<Image source = {{uri: item.image}} style={styles.image} />*/}
+                                    </View>
+                                    </TouchableOpacity>
+                                </View>
+                            )}
+                        />
                 )}
                 {isButtonActive('Sobre mí') && (
                     <View>
@@ -98,8 +146,9 @@ const styles = StyleSheet.create({
         paddingTop: (SIZES.height/100) * 8, // Apply padding at the top
     },
     container2: {
-        paddingBottom: (SIZES.height/100)*80,
-        backgroundColor:COLORS.primary,
+        height: (SIZES.height/100)*64.5,
+        backgroundColor: COLORS.primary,
+        width:'100%',
     },
     buttonContainer: {
         flexDirection: 'row', // Aligns items horizontally
@@ -129,48 +178,104 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: (SIZES.height/100) * 0,
         left:(SIZES.width/100) * 5,
-      },
-      image: {
+    },
+    image_profile: {
         width: '100%',
         height: '100%',
         resizeMode: 'cover',
-      },
-      infoContainer: {
+    },
+    infoContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         height: (SIZES.height/100) * 14,
-      },
-      info: {
+    },
+    info: {
         position: 'absolute',
         right: 20,
         width: '60%',
         height: '100%',
         backgroundColor: 'transparent',
-      },
-      ajustes: {
+    },
+    ajustes: {
         position: 'absolute',
         right:(SIZES.width/100) * 7,
         top: (SIZES.height/100) * -1,
         width: '10%',
         height: '35%',
         backgroundColor: 'transparent',
-      },
-      nombre: {
+    },
+    nombre: {
         color: 'white',
         fontSize:  (SIZES.height/100) * 2,
         fontWeight: 'bold',
         paddingBottom:  (SIZES.height/100) * 1,
-      },
-      locationInfo: {
+    },
+    locationInfo: {
         flexDirection: 'row', // Aligns icon and text horizontally
         alignItems: 'center', // Vertically centers the icon
-      },
-      locationText: {
+    },
+    locationText: {
         color: 'white',
         fontSize:  (SIZES.height/100) * 2, // Adjust the font size as needed
         marginLeft: 1,
-      },
+    },
+    width:{
+        width: SIZES.width - 20,
+    },
+    lista:{
+        marginTop: 12,
+        width:(SIZES.width/100)*100,
+        height: (SIZES.height/100)*20,  
+        justifyContent: 'center',
+        alignItems: 'center',
+        //backgroundColor:'blue'
+    },
+    image: {
+        width: '100%', // adjust as needed
+        height: '100%',
+        resizeMode: 'contain',
+        position: 'absolute', 
+    },
+    capsule: {
+        maxWidth: '75%',
+        maxHeight: '95%',
+        justifyContent: 'center',
+        borderColor: COLORS.secondary,
+        borderWidth: 3,
+        backgroundColor: 'white',
+        alignItems: 'center',
+        borderRadius: 20,
+    },
+    infoProducto: {
+        width: '100%',
+        height: '25%',
+        //backgroundColor: 'yellow',
+        flexDirection: 'row',
+        justifyContent: 'space-between', // Aligns text elements to the left and right sides
+        alignItems: 'center',
+        bottom: 0,
+    },
+    productName: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: COLORS.secondary,
+        paddingHorizontal: 10
+    },
+    productPrice: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        textAlign: 'right',
+        color: COLORS.secondary, // Aligns text to the right side
+        paddingHorizontal: 10
+    },
+    vista_imagen: {
+        width: '100%', // adjust as needed
+        height: '75%',
+       // backgroundColor:'pink',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
 });
 
 export default Consultar_Usuario;
