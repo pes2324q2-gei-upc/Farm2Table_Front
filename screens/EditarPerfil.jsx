@@ -1,23 +1,90 @@
 import { View, Text, StyleSheet, Image } from 'react-native'
+import FormData from "form-data"
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { COLORS, SIZES,URL } from '../constants/theme'
-import { TextInput } from 'react-native'
+import { Alert, TextInput } from 'react-native'
 import { TouchableOpacity } from 'react-native'
-import { useNavigation } from '@react-navigation/native';
-const Avatar = "https://pes-deploy.s3.amazonaws.com/avatars/Captura_de_pantalla_2024-03-14_161349_Ncq98p1.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA47CR2W7N4B54HLQW%2F20240320%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20240320T150448Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=22d8e4044cbb6ef63747e712f4ad40b100990b1f320ce3d95f5d3316c369baaa"
+import { useRoute, useNavigation } from '@react-navigation/native';
+import { Picker } from '@react-native-picker/picker';
+import * as ImagePicker from 'expo-image-picker';
 
+
+const API_ENDPOINT = "http://"+URL+"/users/profile/";
 
 const EditarPerfil = () => { 
-  const[username, setusername] = useState('');
-  const[descripcio, setdescripcio] = useState('');
-  const[resum, setresum] = useState('');
-  const[number, setnumber] = useState('');
+  const route = useRoute();
+  const { item } = route.params;
+  const[username, setusername] = useState(item.username);
+  const[descripcio, setdescripcio] = useState(item.about_me);
+  const[resum, setresum] = useState(item.brief_description);
+  const[number, setnumber] = useState(item.telephone);
+  const [imageUri, setImageUri] = useState(item.avatar);
   const navigation = useNavigation();
 
-  const handleSubmit = async () => {
+  const handleAccepta = async () => {
+    if(!username.trim() || !descripcio.trim() || !resum.trim() || !number.trim()) {
+      Alert.alert('Error', 'Omple tots els camps.');
+      return;
+    }
+    console.log(API_ENDPOINT+item.id);
+    const formData = new FormData();
+    formData.append("username", username);
+    formData.append("brief_description", descripcio);
+    formData.append("about_me", resum);
+    formData.append("telephone", number);
+
+    if(imageUri) {
+      const uriParts = imageUri.split('.');
+      const fileType = uriParts[uriParts.length - 1];
+
+      formData.append("avatar", {
+        uri: imageUri,
+        name: `photo.${fileType}`,
+        type: `image/${fileType}`,
+      });
+    }
     try {
-      const response = await fetch('http://' +URL+'/users/profile/1', {
+      const response = await fetch(API_ENDPOINT+item.id, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: formData,
+      });
+      //console.log(response);
+      const data = await response.json();
+      if (!response.ok) {
+        console.log('Product added successfully:', data);
+        throw new Error('Something went wrong');
+      }else{
+        console.log('Product added successfully:', data);
+        Alert.alert('Success', 'Profile changed successfully');
+      }
+    } catch (error) {
+      console.log("hola");
+      Alert.alert('Error', 'An error occurred while adding the product');
+      console.log(error.message);
+    }
+  }
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+    });
+
+    if (!result.cancelled) {
+      setImageUri(result.uri);
+    }
+};
+  /*
+  const handleSubmit = async () => {
+    console.log(API_ENDPOINT+item.id)
+    console.log(username + ' ' + descripcio)
+    try {
+      const response = await fetch(API_ENDPOINT+item.id, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -27,7 +94,7 @@ const EditarPerfil = () => {
           "brief_description": descripcio,
           "about_me": resum,
           "telephone": number,
-          "avatar": "string"
+          "avatar": image,
         }),
       });
       //console.log(response);
@@ -35,26 +102,30 @@ const EditarPerfil = () => {
       if (!response.ok) {
         throw new Error('Something went wrong');
       }
+      /*
       setusername('');
       setdescripcio('');
       setresum('');
       setnumber('');
       // Handle the response here
       const data = await response.json();
+      console.log(response);
       //console.log(data);
     } catch (error) {
       // Handle the error here
       console.log(error.message);
     }
   };
-
+  */
   return (
     <SafeAreaView style={styles.top}>
       <View style={styles.vista}>
-        <Image
-          source={require('../assets/images/149071.png')}
-          style={styles.profileImage}
-        />
+        <TouchableOpacity onPress={pickImage}>
+          <Image
+            source={{ uri: imageUri }}
+            style={styles.profileImage}
+          />
+        </TouchableOpacity>
         <View style={styles.v1}>
           <Text style={styles.titulo1}>Nom</Text>
           <TextInput
@@ -114,13 +185,13 @@ const EditarPerfil = () => {
           <Text 
           style={styles.buttontext} 
           onPress={() => {
-            navigation.navigate('OtherView');
+            console.log(imageUri)
           }}
           >
               Edita Productes
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+        <TouchableOpacity style={styles.button} onPress={handleAccepta}>
           <Text style={styles.buttontext}>Accepta</Text>
         </TouchableOpacity>
       </View>
@@ -171,7 +242,7 @@ const styles = StyleSheet.create({
     //backgroundColor: 'red',
     width: '90%',
     alignSelf: 'center',
-    height: '11%',
+    height: '11.6%',
     borderTopColor: COLORS.secondary,
     borderTopWidth: '0.5',
     borderBottomColor: COLORS.secondary,
