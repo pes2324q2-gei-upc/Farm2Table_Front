@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+/*import { useEffect } from 'react';
 
 const SERVER_URL = 'ws://localhost:8000/ws/chat/messages/';
 
@@ -37,3 +37,5 @@ const WebSocket = () => {
 };
 
 export default WebSocket;
+*/
+

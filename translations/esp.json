@@ -25,6 +25,12 @@
     "retail": "Minorista",
     "service_type": "Tipo de servicio",
     "particular": "Particular",
-    "reach": "Tu alcance (kilómetros)"
-
+    "reach": "Tu alcance (kilómetros)",
+    "afegirProducte": "Añadir Producto",
+    "nomProducte": "Nombre del producto",
+    "descripcio": "Descripción:",
+    "tipus": "Tipo:",
+    "quantitat": "Cantidad disponible:",
+    "preuperkg": "Precio por kg:",
+    "inserirImatge": "Inserir imagen"
 }

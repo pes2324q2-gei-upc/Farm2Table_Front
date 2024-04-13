@@ -9,6 +9,7 @@ import HeaderBack from '../navigation/header_back';
 import { COLORS, URL } from '../constants/theme';
 import { useNavigation } from '@react-navigation/native';
 //import {userId} from "../informacion/User";
+import { getPalabra } from '../informacion/User';
 
 
 const AddProduct = () => {
@@ -133,16 +134,16 @@ const AddProduct = () => {
             <HeaderBack />
             <ScrollView style={styles.background}>
             <ScrollView contentContainerStyle={styles.scrollView}>
-                <Text style={styles.title}>Afegir Producte</Text>
-                <InputField label="Nom del producte:" value={productName} onChangeText={setProductName} />
-                <InputField label="Descripció:" multiline numberOfLines={4} value={productDescription} onChangeText={setProductDescription} />
+                <Text style={styles.title}>{getPalabra("afegirProducte")}</Text>
+                <InputField label={getPalabra("nomProducte")} value={productName} onChangeText={setProductName} />
+                <InputField label={getPalabra("descripcio")} multiline numberOfLines={4} value={productDescription} onChangeText={setProductDescription} />
                 <View style={styles.inputContainer}>
-                    <Text style={styles.label}>Tipus:</Text>
+                    <Text style={styles.label}>{getPalabra("tipus")}</Text>
                     <SelectList setSelected={setSelected} data={data} boxStyles={styles.dropdown} dropdownStyles={styles.dropdown} search={true} />
                 </View>
                 <View style={styles.quantityUnitContainer}>
                     <View style={styles.quantityContainer}>
-                        <Text style={styles.label}>Quantitat disponible:</Text>
+                        <Text style={styles.label}>{getPalabra("quantitat")}</Text>
                         <TextInput
                             style={styles.input}
                             keyboardType="numeric"
@@ -162,10 +163,10 @@ const AddProduct = () => {
                         </Picker>
                     </View>
                 </View>
-                <InputField label="Preu per kg:" keyboardType="numeric" value={price} onChangeText={setPrice} />
+                <InputField label={getPalabra("preuperkg")} keyboardType="numeric" value={price} onChangeText={setPrice} />
                 <ImagePickerComponent imageUri={imageUri} pickImage={pickImage} removeImage={removeImage} />
                 <TouchableOpacity style={styles.submitButton} onPress={handleAddProduct}>
-                    <Text style={styles.buttonText}>Afegir producte</Text>
+                    <Text style={styles.buttonText}>{getPalabra("afegirProducte")}</Text>
                 </TouchableOpacity>
             </ScrollView>
             </ScrollView>
@@ -202,7 +203,7 @@ const ImagePickerComponent = ({ imageUri, pickImage, removeImage }) => (
         {!imageUri ? (
             <TouchableOpacity onPress={pickImage} style={styles.imageButton}>
                 <FontAwesomeIcon icon={faCamera} size={20} color="#FFFFFF" />
-                <Text style={styles.buttonText}>Inserir imatge</Text>
+                <Text style={styles.buttonText}>{getPalabra("inserirImatge")}</Text>
             </TouchableOpacity>
         ) : (
             <View style={styles.imagePreviewContainer}>

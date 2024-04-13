@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 import { View, Text } from 'react-native';
 import WebSocket from './WebSocket'; // Asegúrate de importar desde la ubicación correcta
 
@@ -13,3 +13,5 @@ const ChatComponent = () => {
 };
 
 export default ChatComponent;
+
+ */

@@ -25,5 +25,12 @@
     "retail": "Retail",
     "service_type": "Service type",
     "particular": "Particular",
-    "reach": "Your reach (kilometers)"
+    "reach": "Your reach (kilometers)",
+    "afegirProducte": "Add Product",
+    "nomProducte": "Product name",
+    "descripcio": "Description:",
+    "tipus": "Type:",
+    "quantitat": "Quantity available:",
+    "preuperkg": "Price per kg:",
+    "inserirImatge": "Insert image"
 }

@@ -4,10 +4,16 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2c62d708-8ebc-49fc-9632-855ec1f91a3c" name="Changes" comment="Modificar afegir producte">
-      <change afterPath="$PROJECT_DIR$/screens/OpenXat.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/screens/WebSocket.jsx" afterDir="false" />
+    <list default="true" id="2c62d708-8ebc-49fc-9632-855ec1f91a3c" name="Changes" comment="Obrir xat">
+      <change afterPath="$PROJECT_DIR$/screens/MensajesChat.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/AddProduct.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/AddProduct.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/Chat.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/Chat.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/OpenXat.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/OpenXat.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/WebSocket.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/WebSocket.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/cat.json" beforeDir="false" afterPath="$PROJECT_DIR$/translations/cat.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/engl.json" beforeDir="false" afterPath="$PROJECT_DIR$/translations/engl.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/esp.json" beforeDir="false" afterPath="$PROJECT_DIR$/translations/esp.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +74,7 @@
       <workItem from="1712045472549" duration="494000" />
       <workItem from="1712048987488" duration="1116000" />
       <workItem from="1712847465191" duration="638000" />
-      <workItem from="1713003274072" duration="588000" />
+      <workItem from="1713003274072" duration="7244000" />
     </task>
     <task id="LOCAL-00001" summary="Errors amb els node_modules">
       <option name="closed" value="true" />
@@ -94,7 +100,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712045886122</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Obrir xat">
+      <option name="closed" value="true" />
+      <created>1713004432442</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1713004432442</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -115,6 +129,7 @@
     <MESSAGE value="Errors amb els node_modules" />
     <MESSAGE value="Modificar fetch" />
     <MESSAGE value="Modificar afegir producte" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modificar afegir producte" />
+    <MESSAGE value="Obrir xat" />
+    <option name="LAST_COMMIT_MESSAGE" value="Obrir xat" />
   </component>
 </project>
