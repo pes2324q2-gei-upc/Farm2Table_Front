@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, ScrollView, SafeAreaView, Text } from 'react-native';
 import { COLORS, URL } from '../constants/theme';
 import Header from '../navigation/header';
-import ShopFeed from '../products/ShopFeed';
+import ShopFeed from '../Products/ShopFeed';
 import AddButton from '../components/addButton'; // Adjust import path
 import { useNavigation } from '@react-navigation/native';
 

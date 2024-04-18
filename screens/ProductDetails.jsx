@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, ScrollView, SafeAreaView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import styles from '../products/productDetails.style';
+import styles from '../Products/productDetails.style';
 import Footer from '../navigation/footer';
 import HeaderBack from '../navigation/header_back';
 import { URL } from '../constants/theme';
