@@ -6,6 +6,7 @@ import google from '../assets/Google.png';
 import { setUserId, setUserType, userId, userType, getPalabra } from '../informacion/User';
 import { getIP } from '../informacion/Constants';
 import { useNavigation } from '@react-navigation/native';
+import { loginService } from '../api_service/ApiInicioSesion';
 
 const InicioSesion = () => {
   const [username, setUsername] = useState('');
@@ -19,54 +20,22 @@ const InicioSesion = () => {
     console.log('Username:', username);
     console.log('Password:', password);
 
-
-    const data = {
-        email: username,
-        password: password,
-    };
+    try {
+      const data = await loginService(username, password);
+      if (data.error) {
+        setError(data.error)
+        console.log(error_message);
+      }
+      else {
+        console.log("dataId:", data.data.user_id);
+        setUserId(data.data.user_id);
+        setUserType(data.data.user_type);
+        console.log("UserId", userId());
+        console.log("Type", userType());
+        NAVIGATOR.navigate('Footer');
+      }
+    } catch (err) {console.log(err.message);}
     
-    const csrfToken = '';
-    
-    const requestOptions = {
-        method: 'POST',
-        headers: {
-            'accept': 'application/json',
-            'Content-Type': 'application/json',
-            'X-CSRFToken': csrfToken
-          },
-        body: JSON.stringify(data)
-    };
-    
-    const url = 'http://'+getIP()+'/users/login/';
-    console.log(url);
-    
-    fetch(url, requestOptions)
-        .then(response => {
-          
-        return response.json();
-        })
-        .then(data => {
-          
-        console.log(data);
-        if (data.error) {
-          setError(data.error)
-          console.log(error_message);
-          setIsModalVisible(true);
-        }
-          
-        else {
-          console.log("dataId:", data.data.user_id);
-          setUserId(data.data.user_id);
-          setUserType(data.data.user_type);
-          console.log("UserId", userId());
-          console.log("Type", userType());
-          NAVIGATOR.navigate('Footer');
-        }
-
-        })
-        .catch(error => {
-        console.error('There was a problem with your fetch operation:', error);
-        });
 
   };
 
