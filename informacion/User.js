@@ -49,6 +49,10 @@ export const getPalabra = (palabra) => {
     }
 }
 
+export const getPalabraEng = (palabra) => {
+    return eng[palabra] || palabra;
+}
+
 const User = () => {
   
 }

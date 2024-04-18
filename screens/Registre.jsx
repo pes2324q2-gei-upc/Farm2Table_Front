@@ -40,9 +40,6 @@ const Registre = () => {
       }
     } catch (err) {console.log(err.message)}
 
-    
-
-    //setEscollirUsuari(true);
   };
 
   const contrasenyaVisible = () => {
@@ -57,12 +54,25 @@ const Registre = () => {
     setRecordarContrasenya(!recordar_contrasenya);
   };
 
+  const handleGoBack = () => {
+    NAVIGATOR.navigate("InicioSesion");
+  };
+
   const STYLES = StyleSheet.create({
     container: {
       flex: 1,
       justifyContent: 'top',
       alignItems: 'center',
       backgroundColor: '#fefae0',
+    },
+    flecha_posicion: {
+      position: 'absolute',
+      left: 10,
+      top: 20,
+    },
+    flecha: {
+      color: "#bc6c25",
+      fontSize: 45,
     },
     logo: {
       //la relacion es 498width/322height
@@ -136,62 +146,68 @@ const Registre = () => {
     <View style={STYLES.container}>
       {!escollir_usuari && (
         <>
-            <Image source={logo} style={STYLES.logo} />
+          
+          <Image source={logo} style={STYLES.logo} />
 
-            <Text style={STYLES.error_message}>{error_message}</Text>
+          <TouchableOpacity style={STYLES.flecha_posicion} onPress={handleGoBack}>
+            <Icon  name="arrow-back" style={STYLES.flecha} />  
+          </TouchableOpacity>
+          
 
-            <View style={STYLES.correo}>
-            <Icon name="email" size={20} color="#bc6c25" style={{ marginRight: 7 }} />
-            <TextInput
-                style={STYLES.texto_correo}
-                placeholder={getPalabra("email")}
-                value={username}
-                onChangeText={setUsername}
-            />
-            </View>
+          <Text style={STYLES.error_message}>{error_message}</Text>
 
-            <View style={STYLES.contrasenya}>
-            <Icon name="lock" size={20} color ="black" style={{marginRight: 7}}/>
-            <TextInput 
-                style={STYLES.texto_contrasenya}
-                placeholder={getPalabra("password")}
-                secureTextEntry={secure_text_entry}
-                value={password}
-                onChangeText={setPassword}
-            />
-            <TouchableOpacity onPress={contrasenyaVisible} style={STYLES.visibilidad}>
-                <Icon name={secure_text_entry ? "visibility-off" : "visibility"} size={20} color="black" />
-            </TouchableOpacity>
-            </View>
+          <View style={STYLES.correo}>
+          <Icon name="email" size={20} color="#bc6c25" style={{ marginRight: 7 }} />
+          <TextInput
+              style={STYLES.texto_correo}
+              placeholder={getPalabra("email")}
+              value={username}
+              onChangeText={setUsername}
+          />
+          </View>
 
-            <View style={STYLES.contrasenya}>
-            <Icon name="lock" size={20} color ="black" style={{marginRight: 7}}/>
-            <TextInput 
-                style={STYLES.texto_contrasenya}
-                placeholder={getPalabra("confirm_password")}
-                secureTextEntry={secure_text_entry_2}
-                value={confirm_password}
-                onChangeText={setConfirmPassword}
-            />
-            <TouchableOpacity onPress={contrasenyaVisible2} style={STYLES.visibilidad}>
-                <Icon name={secure_text_entry_2 ? "visibility-off" : "visibility"} size={20} color="black" />
-            </TouchableOpacity>
-            </View>
+          <View style={STYLES.contrasenya}>
+          <Icon name="lock" size={20} color ="black" style={{marginRight: 7}}/>
+          <TextInput 
+              style={STYLES.texto_contrasenya}
+              placeholder={getPalabra("password")}
+              secureTextEntry={secure_text_entry}
+              value={password}
+              onChangeText={setPassword}
+          />
+          <TouchableOpacity onPress={contrasenyaVisible} style={STYLES.visibilidad}>
+              <Icon name={secure_text_entry ? "visibility-off" : "visibility"} size={20} color="black" />
+          </TouchableOpacity>
+          </View>
 
-            <View style={STYLES.recuerdate}>
+          <View style={STYLES.contrasenya}>
+          <Icon name="lock" size={20} color ="black" style={{marginRight: 7}}/>
+          <TextInput 
+              style={STYLES.texto_contrasenya}
+              placeholder={getPalabra("confirm_password")}
+              secureTextEntry={secure_text_entry_2}
+              value={confirm_password}
+              onChangeText={setConfirmPassword}
+          />
+          <TouchableOpacity onPress={contrasenyaVisible2} style={STYLES.visibilidad}>
+              <Icon name={secure_text_entry_2 ? "visibility-off" : "visibility"} size={20} color="black" />
+          </TouchableOpacity>
+          </View>
 
-            <TouchableOpacity onPress={recordarContrasenya}>
-                <Icon name={recordar_contrasenya ? "check-box-outline-blank" : "check-box"} size={20} color="black" />
-            </TouchableOpacity>
+          <View style={STYLES.recuerdate}>
 
-            <Text style={{position: 'absolute', marginLeft: 30, fontSize: 14}}>
-              {getPalabra("remember_password")}
-            </Text>
-            </View>
+          <TouchableOpacity onPress={recordarContrasenya}>
+              <Icon name={recordar_contrasenya ? "check-box-outline-blank" : "check-box"} size={20} color="black" />
+          </TouchableOpacity>
 
-            <TouchableOpacity onPress={handleRegister} style={STYLES.registro}>
-            <Text style={STYLES.registro_texto}>{getPalabra("register_button")}</Text>
-            </TouchableOpacity>
+          <Text style={{position: 'absolute', marginLeft: 30, fontSize: 14}}>
+            {getPalabra("remember_password")}
+          </Text>
+          </View>
+
+          <TouchableOpacity onPress={handleRegister} style={STYLES.registro}>
+          <Text style={STYLES.registro_texto}>{getPalabra("register_button")}</Text>
+          </TouchableOpacity>
         </>
       )}
 

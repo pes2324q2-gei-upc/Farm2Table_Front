@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import logo from '../assets/Farm2Table.png';
 import { userId, getPalabra } from '../informacion/User';
-import { getIP } from '../informacion/Constants';
 import { useNavigation } from '@react-navigation/native';
+import { registerProductorService } from '../api_service/ApiRegistroProductor';
 
 const STYLES = StyleSheet.create({
     container: {
@@ -13,14 +14,28 @@ const STYLES = StyleSheet.create({
       backgroundColor: '#fefae0',
       position: 'relative',
     },
+    flecha_posicion: {
+      position: 'absolute',
+      left: 10,
+      top: 20,
+    },
+    flecha: {
+      color: "#bc6c25",
+      fontSize: 45,
+    },
     logo: {
       //la relacion es 498width/322height
       width: 393,
       height: 254,
     },
+    error_message: {
+      fontSize: 19,
+      marginTop: 10,
+      color: "#ff0000"
+    },
     productor: {
         flexDirection: 'column',
-        marginTop: 25,
+        marginTop: 5,
         width: 325,
         height: 370,
         justifyContent: 'top',
@@ -135,53 +150,43 @@ const Productor = () => {
   const [nif, setNif] = useState("");
   const [num_acreditation, setAcreditation] = useState("");
   const [name, setName] = useState("");
+  const [error_message, setError] = useState('');
   const NAVIGATOR = useNavigation();
 
-  const handleRegister = () => {
+  const handleGoBack = () => {
+    NAVIGATOR.goBack();
+  };
+
+  const handleRegister = async () => {
+    console.log("Nombre:", name);
     console.log("NIF:", nif);
     console.log("Num acreditacio:", num_acreditation);
-    console.log("Nombre:", name);
     console.log("UserId", userId())
 
-    const data = {
-        nif: nif,
-        num_acreditation: num_acreditation,
-        name_productor: name
-    };
+    try {
+        const data = await registerProductorService(nif, num_acreditation, name);
+        if (data.error) {
+          setError(data.error)
+          console.log(error_message);
+        }
+        else {
+            console.log(data);
+            NAVIGATOR.navigate('Footer');
+        }
+      } catch (err) {console.log("Error:",err.message);}
     
-    const csrfToken = '';
-    
-    const requestOptions = {
-        method: 'POST',
-        headers: {
-            'accept': 'application/json',
-            'Content-Type': 'application/json',
-            'X-CSRFToken': csrfToken
-          },
-        body: JSON.stringify(data)
-    };
-    
-    const url = 'http://'+getIP()+'/users/register/Productor/'+userId()+'/';
-    
-    fetch(url, requestOptions)
-        .then(response => {
-
-        return response.json();
-        })
-        .then(data => {
-        console.log(data);
-        NAVIGATOR.navigate('Footer');
-
-        })
-        .catch(error => {
-        console.error('There was a problem with your fetch operation:', error);
-        });
   };
 
   return (
     <View style={STYLES.container}>
-
+            
         <Image source={logo} style={STYLES.logo} />
+
+        <TouchableOpacity style={STYLES.flecha_posicion} onPress={handleGoBack}>
+            <Icon  name="arrow-back" style={STYLES.flecha} />  
+        </TouchableOpacity>
+
+        <Text style={STYLES.error_message}>{error_message}</Text>
 
         <View style={STYLES.productor}>
 
