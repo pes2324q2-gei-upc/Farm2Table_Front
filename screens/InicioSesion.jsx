@@ -13,7 +13,8 @@ const InicioSesion = () => {
   const [secure_text_entry, setSecureTextEntry] = useState(true); 
   const [recordar_contrasenya, setRecordarContrasenya] = useState(true);
   const NAVIGATOR = useNavigation();
-  
+  const [error_message, setError] = useState('');
+
   const handleLogin = async () => {
     console.log('Username:', username);
     console.log('Password:', password);
@@ -45,13 +46,22 @@ const InicioSesion = () => {
         return response.json();
         })
         .then(data => {
+          
         console.log(data);
-        console.log("dataId:", data.data.user_id);
-        setUserId(data.data.user_id);
-        setUserType(data.data.user_type);
-        console.log("UserId", userId());
-        console.log("Type", userType());
-        NAVIGATOR.navigate('Footer');
+        if (data.error) {
+          setError(data.error)
+          console.log(error_message);
+          setIsModalVisible(true);
+        }
+          
+        else {
+          console.log("dataId:", data.data.user_id);
+          setUserId(data.data.user_id);
+          setUserType(data.data.user_type);
+          console.log("UserId", userId());
+          console.log("Type", userType());
+          NAVIGATOR.navigate('Footer');
+        }
 
         })
         .catch(error => {
@@ -93,8 +103,13 @@ const InicioSesion = () => {
       width: 393,
       height: 254,
     },
+    error_message: {
+      fontSize: 19,
+      marginTop: 25,
+      color: "#ff0000"
+    },
     correo: {
-      marginTop: 60,
+      marginTop: 30,
       flexDirection: 'row', 
       alignItems: 'center', 
       borderWidth: 2, 
@@ -195,6 +210,8 @@ const InicioSesion = () => {
     <View style={STYLES.container}>
 
       <Image source={logo} style={STYLES.logo} />
+
+      <Text style={STYLES.error_message}>{error_message}</Text>
 
       <View style={STYLES.correo}>
         <Icon name="email" size={20} color="#bc6c25" style={{ marginRight: 7 }} />
