@@ -2,12 +2,12 @@ import { View, Text} from 'react-native'
 import React from 'react'
 import { createBottomTabNavigator }from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import {Ionicons} from "@expo/vector-icons"
+import {Ionicons, Entypo} from "@expo/vector-icons"
+
 
 import Home from '../screens/Home'
 import Map from '../screens/Map'
 import Chat from '../screens/Chat'
-import Product from '../Products/Product'
 import Buscador from '../screens/Buscador'
 import Consultar_Usuario from '../screens/Consultar_Usuario';
 import { COLORS, SIZES } from '../constants/theme'
@@ -58,8 +58,8 @@ const Footer = () => {
         <Tab.Screen name="Home" component={Home} options={{
             tabBarIcon: ({ focused }) => {
                 return (
-                    <Ionicons
-                        name={focused ? "home" : "home-outline"}
+                    <Entypo
+                        name={"shop"}
                         size={30}
                         color={focused ? COLORS.tertiary : COLORS.white}
                     />
