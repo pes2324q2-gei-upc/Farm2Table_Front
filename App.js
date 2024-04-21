@@ -31,6 +31,7 @@ export default function App() {
     extraBold: require("./assets/fonts/Poppins-ExtraBold.ttf"),
     black: require("./assets/fonts/Poppins-Black.ttf"),
     thin: require("./assets/fonts/Poppins-Thin.ttf"),
+    ticket: require("./assets/fonts/Ticketing.ttf")
   });
   
   if(!fontsLoaded) return null;
