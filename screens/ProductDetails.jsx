@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, ScrollView, SafeAreaView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import styles from '../Products/productDetails.style';
+import styles from '../styles/productDetails.style';
 import Footer from '../navigation/footer';
 import HeaderBack from '../navigation/header_back';
 import { URL } from '../constants/theme';
+import CartPopUp from '../PopUps/addedCart';
 
 const ProductDetails = ({ navigation, route }) => {
   const [product, setProduct] = useState(null);
   const [userAvatar, setUserAvatar] = useState(null);
   const [count, setCount] = useState(1);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const { id } = route.params;
 
@@ -43,6 +45,10 @@ const ProductDetails = ({ navigation, route }) => {
 
   const decrement = () => {
     if (count > 1) setCount(count - 1);
+  };
+
+  const addToCart = () => {
+    setModalVisible(true);
   };
 
   return (
@@ -87,7 +93,7 @@ const ProductDetails = ({ navigation, route }) => {
               </View>
 
               <View style={styles.button_row}>
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={addToCart}>
                   <Text style={styles.button_text}>Afegir {count} a la cistella</Text>
                 </TouchableOpacity>
               </View>
@@ -96,6 +102,14 @@ const ProductDetails = ({ navigation, route }) => {
           </>
         )}
       </ScrollView>
+      <CartPopUp
+        isVisible={modalVisible}
+        onContinueShopping={() => setModalVisible(false)}
+        onGoToCart={() => {
+          setModalVisible(false);
+          navigation.navigate('AddProduct'); // Make sure 'Cart' is the correct route name
+        }}
+      />
     </SafeAreaView>
   );
 };
