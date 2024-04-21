@@ -8,7 +8,7 @@ import { AntDesign } from "@expo/vector-icons"
 import Header from '../navigation/header'
 import { useNavigation } from '@react-navigation/native';
 import Consultar_Usuario from './Consultar_Usuario'
-
+import { fetchData2 } from '../api_service/ApiBuscador'
 const API_ENDPOINT = "http://"+URL+"/users/productor/";
 const API_PRODUCTES = "http://"+ URL +"/products/";
 
@@ -37,9 +37,10 @@ const Buscador = () => {
 
     useEffect(() => {
         //console.log(URL);
-        fetchData(API_ENDPOINT, 0);
-        fetchData(API_PRODUCTES, 1);
+        fetchData2(API_ENDPOINT, 0, setData1);
+        fetchData2(API_PRODUCTES, 1,setData2);
         setSelectedIndex(1);
+        console.log(data1);
     }, []);
 
     const navigation = useNavigation();
