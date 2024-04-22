@@ -7,9 +7,10 @@ import { faCamera, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Picker } from '@react-native-picker/picker';
 import HeaderBack from '../navigation/header_back';
 import { COLORS, URL } from '../constants/theme';
-import { useNavigation } from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 //import {userId} from "../informacion/User";
 import { getPalabra } from '../informacion/User';
+import { fetchProductTypes, addNewProduct } from '../api_service/ApiAddProduct';
 
 
 const AddProduct = () => {
@@ -22,7 +23,6 @@ const AddProduct = () => {
     const [quantity, setQuantity] = useState('');
     const [price, setPrice] = useState('');
     const [unit, setUnit] = useState('Kg');
-
     const navigation = useNavigation();
 
 
@@ -37,30 +37,18 @@ const AddProduct = () => {
     };
 
     useEffect(() => {
-        // Get Values from database
-        fetch('http://' + URL + '/products/types/')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json(); // Parse the JSON data
-            })
-            .then(data => {
-                // Store Values in Temporary Array
-                let newArray = data.map(item => {
-                    return { key: item.id.toString(), value: item.name };
-                });
-                // Set Data Variable
-                setData(newArray);
-            })
+        // Get Values from database using the new service
+        fetchProductTypes()
+            .then(setData)
             .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
+                Alert.alert('Error', 'Unable to fetch product types');
             });
     }, []);
 
     const handleAddProduct = async () => {
         if (!productName.trim() || !productDescription.trim() || !selected || !quantity.trim() || !price.trim() || !unit.trim()) {
-            Alert.alert('Error', 'Omple tots els camps.');
+            Alert.alert('Error', 'Please fill all fields.');
             return;
         }
 
@@ -76,7 +64,6 @@ const AddProduct = () => {
         if (imageUri) {
             const uriParts = imageUri.split('.');
             const fileType = uriParts[uriParts.length - 1];
-
             formData.append('image', {
                 uri: imageUri,
                 name: `photo.${fileType}`,
@@ -85,29 +72,13 @@ const AddProduct = () => {
         }
 
         try {
-            const response = await fetch('http://' + URL + '/products/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-                body: formData,
-            });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                console.log('Product added successfully:', data);
-                Alert.alert('Success', 'Product added successfully');
-                resetForm();
-            } else {
-                console.error('API call error:', data);
-                Alert.alert('Error', 'Failed to add the product');
-            }
+            const data = await addNewProduct(formData);
+            Alert.alert('Success', 'Product added successfully');
+            resetForm();
+            navigation.goBack({ productAdded: true });
         } catch (error) {
-            console.error('Error:', error);
-            Alert.alert('Error', 'An error occurred while adding the product');
+            Alert.alert('Error', error.message);
         }
-        navigation.goBack();
     };
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
