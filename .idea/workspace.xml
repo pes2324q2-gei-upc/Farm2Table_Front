@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2c62d708-8ebc-49fc-9632-855ec1f91a3c" name="Changes" comment="Es veu pantalla principal xats">
-      <change afterPath="$PROJECT_DIR$/api_service/ApiAddProduct.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/AddProduct.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/AddProduct.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/Home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/Home.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +67,8 @@
       <workItem from="1712048987488" duration="1116000" />
       <workItem from="1712847465191" duration="638000" />
       <workItem from="1713003274072" duration="12324000" />
-      <workItem from="1713772243442" duration="6089000" />
+      <workItem from="1713772243442" duration="6862000" />
+      <workItem from="1713780171500" duration="321000" />
     </task>
     <task id="LOCAL-00001" summary="Errors amb els node_modules">
       <option name="closed" value="true" />
