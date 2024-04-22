@@ -4,8 +4,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import logo from '../assets/Farm2Table.png';
 import EscollirUsuari from './EscollirUsuari';
 import { getPalabra, setEmail, setUserId, userId } from '../informacion/User';
-import { getIP } from '../informacion/Constants';
 import { useNavigation } from '@react-navigation/native';
+import { registerService } from '../api_service/ApiRegistro';
 
 const Registre = () => {
   const [username, setUsername] = useState('');
@@ -15,6 +15,7 @@ const Registre = () => {
   const [secure_text_entry_2, setSecureTextEntry2] = useState(true);
   const [recordar_contrasenya, setRecordarContrasenya] = useState(true);
   const [escollir_usuari, setEscollirUsuari] = useState(false);
+  const [error_message, setError] = useState('');
   const NAVIGATOR = useNavigation();
   
   const handleRegister = async () => {
@@ -23,43 +24,23 @@ const Registre = () => {
     console.log('Confirm_Password', confirm_password);
     console.log('Me acuerdo', recordar_contrasenya ? "no": "si");
 
-    const data = {
-        email: username,
-        password: password,
-        repeat_password: confirm_password,
-    };
-    
-    const csrfToken = '';
-    
-    const requestOptions = {
-        method: 'POST',
-        headers: {
-            'accept': 'application/json',
-            'Content-Type': 'application/json',
-            'X-CSRFToken': csrfToken
-          },
-        body: JSON.stringify(data)
-    };
-    
-    const url = 'http://'+getIP()+'/users/register/';
-    
-    fetch(url, requestOptions)
-        .then(response => {
-          
-        return response.json();
-        })
-        .then(data => {
+    try {
+      const data = await registerService(username, password, confirm_password);
+      if (data.error) {
+        setError(data.error);
+        console.log(error_message);
+      }
+      else {
         console.log(data);
         console.log("dataCoso:", data.data.user_id);
         setUserId(data.data.user_id);
         setEmail(username);
         console.log("UserId", userId());
         NAVIGATOR.navigate("EscollirUsuari");
+      }
+    } catch (err) {console.log(err.message)}
 
-        })
-        .catch(error => {
-        console.error('There was a problem with your fetch operation:', error);
-        });
+    
 
     //setEscollirUsuari(true);
   };
@@ -88,8 +69,13 @@ const Registre = () => {
       width: 393,
       height: 254,
     },
+    error_message: {
+      fontSize: 19,
+      marginTop: 25,
+      color: "#ff0000"
+    },
     correo: {
-      marginTop: 60,
+      marginTop: 15,
       flexDirection: 'row', 
       alignItems: 'center', 
       borderWidth: 2, 
@@ -151,6 +137,8 @@ const Registre = () => {
       {!escollir_usuari && (
         <>
             <Image source={logo} style={STYLES.logo} />
+
+            <Text style={STYLES.error_message}>{error_message}</Text>
 
             <View style={STYLES.correo}>
             <Icon name="email" size={20} color="#bc6c25" style={{ marginRight: 7 }} />

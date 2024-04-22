@@ -4,8 +4,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import logo from '../assets/Farm2Table.png';
 import google from '../assets/Google.png';
 import { setUserId, setUserType, userId, userType, getPalabra } from '../informacion/User';
-import { getIP } from '../informacion/Constants';
 import { useNavigation } from '@react-navigation/native';
+import { loginService } from '../api_service/ApiInicioSesion';
 
 const InicioSesion = () => {
   const [username, setUsername] = useState('');
@@ -13,50 +13,28 @@ const InicioSesion = () => {
   const [secure_text_entry, setSecureTextEntry] = useState(true); 
   const [recordar_contrasenya, setRecordarContrasenya] = useState(true);
   const NAVIGATOR = useNavigation();
-  
+  const [error_message, setError] = useState('');
+
   const handleLogin = async () => {
     console.log('Username:', username);
     console.log('Password:', password);
 
-
-    const data = {
-        email: username,
-        password: password,
-    };
-    
-    const csrfToken = '';
-    
-    const requestOptions = {
-        method: 'POST',
-        headers: {
-            'accept': 'application/json',
-            'Content-Type': 'application/json',
-            'X-CSRFToken': csrfToken
-          },
-        body: JSON.stringify(data)
-    };
-    
-    const url = 'http://'+getIP()+'/users/login/';
-    console.log(url);
-    
-    fetch(url, requestOptions)
-        .then(response => {
-          
-        return response.json();
-        })
-        .then(data => {
-        console.log(data);
+    try {
+      const data = await loginService(username, password);
+      if (data.error) {
+        setError(data.error)
+        console.log(error_message);
+      }
+      else {
         console.log("dataId:", data.data.user_id);
         setUserId(data.data.user_id);
         setUserType(data.data.user_type);
         console.log("UserId", userId());
         console.log("Type", userType());
         NAVIGATOR.navigate('Footer');
-
-        })
-        .catch(error => {
-        console.error('There was a problem with your fetch operation:', error);
-        });
+      }
+    } catch (err) {console.log(err.message);}
+    
 
   };
 
@@ -93,8 +71,13 @@ const InicioSesion = () => {
       width: 393,
       height: 254,
     },
+    error_message: {
+      fontSize: 19,
+      marginTop: 25,
+      color: "#ff0000"
+    },
     correo: {
-      marginTop: 60,
+      marginTop: 30,
       flexDirection: 'row', 
       alignItems: 'center', 
       borderWidth: 2, 
@@ -195,6 +178,8 @@ const InicioSesion = () => {
     <View style={STYLES.container}>
 
       <Image source={logo} style={STYLES.logo} />
+
+      <Text style={STYLES.error_message}>{error_message}</Text>
 
       <View style={STYLES.correo}>
         <Icon name="email" size={20} color="#bc6c25" style={{ marginRight: 7 }} />
