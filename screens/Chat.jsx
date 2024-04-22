@@ -1,60 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import {View, Text, StyleSheet, FlatList, Image, TouchableOpacity, SafeAreaView} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { COLORS, SIZES } from '../constants/theme';
+import {COLORS, SIZES, URL} from '../constants/theme';
 import Header from '../navigation/header'
 import MensajesChat from './MensajesChat'
 
 const Chat = () => {
   const [chats, setChats] = useState([]);
   const navigation = useNavigation();
+  const API_CHATS = "http://10.192.146.7:8000/chats/{id}/";
 
   useEffect(() => {
-    const fakeChatsData = [
-      {
-        id: '1',
-        imageUrl: 'https://via.placeholder.com/150',
-        name: 'Nikita Mazepin',
-        lastMessage: 'Я хочу, чтобы ему подарили 33...',
-      },
-      {
-        id: '2',
-        imageUrl: 'https://via.placeholder.com/150',
-        name: 'Mike Krack',
-        lastMessage: 'I need 33 carrots to make strol...',
-      },
-      {
-        id: '3',
-        imageUrl: 'https://via.placeholder.com/150',
-        name: 'Dan Fallows',
-        lastMessage: 'Only 33 eggs?',
-      },
-      {
-        id: '4',
-        imageUrl: 'https://via.placeholder.com/150',
-        name: 'Fernando Alonso',
-        lastMessage: 'Si te compro 33 cebollas por 33€ m...',
-      },
-      {
-        id: '5',
-        imageUrl: 'https://via.placeholder.com/150',
-        name: 'Sir Lewis Carl Davidson...',
-        lastMessage: 'I want 33 steaks for dog Roscoe.',
-      },
-      {
-        id: '6',
-        imageUrl: 'https://via.placeholder.com/150',
-        name: 'Flavio Briatore',
-        lastMessage: 'Con 33 manzada posso restare...',
-      },
-      {
-        id: '7',
-        imageUrl: 'https://via.placeholder.com/150',
-        name: 'Lance Stroll',
-        lastMessage: 'With your chesse would I be able to...',
-      },
-    ];
-    setChats(fakeChatsData);
+    const fetchData = async () => {
+      try {
+        const response = await fetch(API_CHATS.replace("{id}", "1")); // Make sure to replace "your_id_here" with actual ID
+        const data = await response.json();
+        setChats(data);
+      } catch (error) {
+        console.error('Failed to fetch chats:', error);
+      }
+    };
+    fetchData();
   }, []);
 
   const renderItem = ({ item }) => (
