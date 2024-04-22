@@ -41,14 +41,13 @@ const AddProduct = () => {
         fetchProductTypes()
             .then(setData)
             .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
-                Alert.alert('Error', 'Unable to fetch product types');
+                Alert.alert('Error', getPalabra("unableProductTypes"));
             });
     }, []);
 
     const handleAddProduct = async () => {
         if (!productName.trim() || !productDescription.trim() || !selected || !quantity.trim() || !price.trim() || !unit.trim()) {
-            Alert.alert('Error', 'Please fill all fields.');
+            Alert.alert('Error', getPalabra("fillFields"));
             return;
         }
 
@@ -73,7 +72,7 @@ const AddProduct = () => {
 
         try {
             const data = await addNewProduct(formData);
-            Alert.alert('Success', 'Product added successfully');
+            Alert.alert(getPalabra("success"), getPalabra("addedProduct"));
             resetForm();
             navigation.goBack({ productAdded: true });
         } catch (error) {
@@ -94,9 +93,9 @@ const AddProduct = () => {
     };
 
     const removeImage = () => {
-        Alert.alert('Eliminar imatge', 'Estàs segur?', [
-            { text: 'Eliminar', onPress: () => setImageUri(null) },
-            { text: 'Cancel·lar', style: 'cancel' },
+        Alert.alert(getPalabra("removeImage"), getPalabra("sure"), [
+            { text: getPalabra("remove"), onPress: () => setImageUri(null) },
+            { text: getPalabra("cancel"), style: 'cancel' },
         ]);
     };
 

@@ -32,5 +32,13 @@
     "tipus": "Tipo:",
     "quantitat": "Cantidad disponible:",
     "preuperkg": "Precio por kg:",
-    "inserirImatge": "Inserir imagen"
+    "inserirImatge": "Inserir imagen",
+    "unableProductTypes": "No se pueden verificar los tipos de producto",
+    "fillFields": "Rellene todos los campos",
+    "addedProduct": "Producto añadido correctamente",
+    "success": "Éxito",
+    "removeImage": "Borrar imagen",
+    "sure": "¿Estás seguro?",
+    "remove": "Eliminar",
+    "cancel": "Cancelar"
 }
