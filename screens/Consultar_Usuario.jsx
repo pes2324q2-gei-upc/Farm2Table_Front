@@ -4,12 +4,7 @@ import {COLORS, SIZES, URL} from "../constants/theme";
 import {MaterialIcons, AntDesign} from '@expo/vector-icons';
 import { useRoute, useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Foundation } from '@expo/vector-icons';
-import ShopFeed from '../Products/ShopFeed';
-import ProductDetails from './ProductDetails';
-import EditarPerfil from './EditarPerfil';
-import SliderProducts from '../Products/SliderProducts';
-import { head } from 'lodash';
-
+import { fetchData } from '../api_service/ApiConsultar_Usuario';
 const API_ENDPOINT = "http://"+URL+"/users/productor/";
 
 const Consultar_Usuario = () => {
@@ -21,29 +16,15 @@ const Consultar_Usuario = () => {
     // Extract item from route params
     const { item } = route.params;
     useEffect(() => {
-        //console.log(API_ENDPOINT+item.id+"/products");
-        fetchData(API_ENDPOINT+item.id+"/products");
-    }, []);
-    const fetchData = async(url) => {
-        try {
-            const response = await fetch(url);
-            const json = await response.json();
-            //console.log(API_ENDPOINT)
-            if(json.results = null) console.log("hola")
-
-            setShopData(json.data);
-            //console.log(shopData)
-            /*
-            shopData.forEach(item => {
-                console.log(item);
+        fetchData(API_ENDPOINT + item.id + "/products")
+            .then(data => {
+                setShopData(data);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
             });
-            ^*/
-                
-        }catch (error) {
-            setError(error);
-            console.log(error);
-        }
-    };
+    }, [item]);
+
     const onPress = (buttonName) => {
         if(buttonName !== activeButton) {
             setActiveButton(buttonName === activeButton ? '' : buttonName);
