@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import {View, Text, StyleSheet, FlatList, Image, TouchableOpacity, SafeAreaView} from 'react-native';
+import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import {COLORS, SIZES, URL} from '../constants/theme';
-import Header from '../navigation/header'
-import MensajesChat from './MensajesChat'
+import { COLORS, SIZES, URL } from '../constants/theme';
+import Header from '../navigation/header';
+import MensajesChat from './MensajesChat';
+import {userId} from '../informacion/User';
 
 const Chat = () => {
   const [chats, setChats] = useState([]);
   const navigation = useNavigation();
-  const API_CHATS = "http://10.192.146.7:8000/chats/{id}/";
+  const userId = "1"; // Assume the user ID is 1, replace with actual logic to determine user ID
+  const API_CHATS = `http://${URL}/chats/${userId}/`;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(API_CHATS.replace("{id}", "1")); // Make sure to replace "your_id_here" with actual ID
+        const response = await fetch(API_CHATS);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const data = await response.json();
         setChats(data);
       } catch (error) {
@@ -21,30 +26,36 @@ const Chat = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [API_CHATS]);
 
   const renderItem = ({ item }) => (
       <TouchableOpacity
-          onPress={() => navigation.navigate('MensajesChat', { item })} // Asegúrate de tener esta pantalla en tu navegación
+          onPress={() => navigation.navigate('MensajesChat', { chatId: item.id })}
           style={styles.chatItem}
       >
-        <Image source={{ uri: item.imageUrl }} style={styles.image} />
+        <Image source={{ uri: item.product.image }} style={styles.image} />
         <View style={styles.textContainer}>
-          <Text style={styles.name}>{item.name}</Text>
-          <Text style={styles.lastMessage} numberOfLines={1}>{item.lastMessage}</Text>
+          {userId !== item.user1.id ? (
+              <Text style={styles.name}>{item.user1.username}</Text>
+          ) : (
+              <Text style={styles.name}>{item.user2.username}</Text>
+          )}
+          <Text style={styles.lastMessage} numberOfLines={1}>{item.last_message || "No messages yet"}</Text>
         </View>
       </TouchableOpacity>
   );
 
   return (
       <SafeAreaView style={styles.container}>
-        <Header></Header>
-        <FlatList
-            data={chats}
-            renderItem={renderItem}
-            keyExtractor={item => item.id.toString()}
-            showsVerticalScrollIndicator={false}
-        />
+        <Header/>
+        <SafeAreaView style={styles.containerIn}>
+          <FlatList
+              data={chats}
+              renderItem={renderItem}
+              keyExtractor={item => item.id.toString()}
+              showsVerticalScrollIndicator={false}
+          />
+        </SafeAreaView>
       </SafeAreaView>
   );
 };
@@ -52,7 +63,11 @@ const Chat = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: COLORS.secondary,
+  },
+  containerIn: {
     backgroundColor: COLORS.primary,
+    flex: 1,
   },
   chatItem: {
     flexDirection: 'row',
