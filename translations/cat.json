@@ -40,5 +40,6 @@
     "removeImage": "Esborrar imatge",
     "sure": "Estàs segur?",
     "remove": "Eliminar",
-    "cancel": "Cancel·lar"
+    "cancel": "Cancel·lar",
+    "errorChat": "Error carregant xats"
 }

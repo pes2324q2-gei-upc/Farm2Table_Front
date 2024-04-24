@@ -1,32 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, SafeAreaView } from 'react-native';
+import {View, Text, StyleSheet, FlatList, Image, TouchableOpacity, SafeAreaView, Alert} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { COLORS, SIZES, URL } from '../constants/theme';
 import Header from '../navigation/header';
 import MensajesChat from './MensajesChat';
-import {userId} from '../informacion/User';
+import {getPalabra, userId} from '../informacion/User';
+import {fetchChats} from "../api_service/ApiChat";
 
 const Chat = () => {
   const [chats, setChats] = useState([]);
   const navigation = useNavigation();
-  const userId = "1"; // Assume the user ID is 1, replace with actual logic to determine user ID
-  const API_CHATS = `http://${URL}/chats/${userId}/`;
 
   useEffect(() => {
-    const fetchData = async () => {
+    const loadData = async () => {
       try {
-        const response = await fetch(API_CHATS);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
+        const data = await fetchChats(userId());
         setChats(data);
       } catch (error) {
-        console.error('Failed to fetch chats:', error);
+        console.error('Error loading chats:', error);
+        Alert.alert('Error', getPalabra("errorChat"));
       }
     };
-    fetchData();
-  }, [API_CHATS]);
+    loadData();
+  }, [userId()]);
 
   const renderItem = ({ item }) => (
       <TouchableOpacity
@@ -35,12 +31,12 @@ const Chat = () => {
       >
         <Image source={{ uri: item.product.image }} style={styles.image} />
         <View style={styles.textContainer}>
-          {userId !== item.user1.id ? (
+          {userId() !== item.user1.id ? (
               <Text style={styles.name}>{item.user1.username}</Text>
           ) : (
               <Text style={styles.name}>{item.user2.username}</Text>
           )}
-          <Text style={styles.lastMessage} numberOfLines={1}>{item.last_message || "No messages yet"}</Text>
+          <Text style={styles.lastMessage} numberOfLines={1}>{item.last_message || " "}</Text>
         </View>
       </TouchableOpacity>
   );

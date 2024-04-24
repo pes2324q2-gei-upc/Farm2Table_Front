@@ -40,5 +40,6 @@
     "removeImage": "Borrar imagen",
     "sure": "¿Estás seguro?",
     "remove": "Eliminar",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "errorChat": "Error cargando chats"
 }

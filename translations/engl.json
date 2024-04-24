@@ -40,5 +40,6 @@
     "removeImage": "Remove image",
     "sure": "Are you sure?",
     "remove": "Remove",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "errorChat": "Error loading chats"
 }
