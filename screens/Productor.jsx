@@ -186,7 +186,7 @@ const Productor = () => {
             <Icon  name="arrow-back" style={STYLES.flecha} />  
         </TouchableOpacity>
 
-        <Text style={STYLES.error_message}>{error_message}</Text>
+        <Text style={STYLES.error_message}>{getPalabra(error_message)}</Text>
 
         <View style={STYLES.productor}>
 

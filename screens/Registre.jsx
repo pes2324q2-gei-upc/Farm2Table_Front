@@ -154,7 +154,7 @@ const Registre = () => {
           </TouchableOpacity>
           
 
-          <Text style={STYLES.error_message}>{error_message}</Text>
+          <Text style={STYLES.error_message}>{getPalabra(error_message)}</Text>
 
           <View style={STYLES.correo}>
           <Icon name="email" size={20} color="#bc6c25" style={{ marginRight: 7 }} />
