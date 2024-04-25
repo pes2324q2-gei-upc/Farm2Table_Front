@@ -29,14 +29,17 @@ const Chat = () => {
           onPress={() => navigation.navigate('MensajesChat', { chatId: item.id })}
           style={styles.chatItem}
       >
-        <Image source={{ uri: item.product.image }} style={styles.image} />
+        <Image
+            source={{ uri: (userId() !== item.user1.id ? item.user1 : item.user2).avatar }}
+            style={styles.image}
+        />
         <View style={styles.textContainer}>
-          {userId() !== item.user1.id ? (
-              <Text style={styles.name}>{item.user1.username}</Text>
-          ) : (
-              <Text style={styles.name}>{item.user2.username}</Text>
-          )}
-          <Text style={styles.lastMessage} numberOfLines={1}>{item.last_message || " "}</Text>
+          <Text style={styles.name}>
+            {(userId() !== item.user1.id ? item.user1 : item.user2).username}
+          </Text>
+          <Text style={styles.lastMessage} numberOfLines={1}>
+            {item.last_message || " "}
+          </Text>
         </View>
       </TouchableOpacity>
   );
