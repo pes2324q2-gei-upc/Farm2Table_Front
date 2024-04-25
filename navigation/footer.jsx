@@ -14,6 +14,7 @@ import { COLORS, SIZES } from '../constants/theme'
 import EditarPerfil from '../screens/EditarPerfil';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+const BuscadorStack = createNativeStackNavigator();
 
 const screenOptions = {
     tabBarShowLabel: false,
@@ -32,8 +33,8 @@ const screenOptions = {
 }
 const BuscadorStackScreen = () => {
     return (
-      <Stack.Navigator 
-        initialRouteName="Buscador"
+      <BuscadorStack.Navigator 
+        initialRouteName="BuscadorScreen"
         screenOptions={{
             headerStyle: {
               backgroundColor: '#f4511e',
@@ -45,10 +46,10 @@ const BuscadorStackScreen = () => {
             headerShown: false
           }}
       >
-        <Stack.Screen name="Buscador" component={Buscador} />
+        <Stack.Screen name="BuscadorScreen" component={Buscador} />
         <Stack.Screen name="Consultar_Usuario" component={Consultar_Usuario} />
         <Stack.Screen name="EditarPerfil" component={EditarPerfil} /> 
-      </Stack.Navigator>
+      </BuscadorStack.Navigator>
     );
 }
 
@@ -77,7 +78,7 @@ const Footer = () => {
                 );
             }
         }} />
-        <Tab.Screen name="Buscador" component={BuscadorStackScreen} options={{
+        <Tab.Screen name="SearchTab" component={BuscadorStackScreen} options={{
             tabBarIcon: ({ focused }) => {
                 return (
                     <Ionicons
