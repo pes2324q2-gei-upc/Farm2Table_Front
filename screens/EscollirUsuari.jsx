@@ -5,8 +5,13 @@ import Productor from './Productor';
 import Minorista from './Minorista';
 import Particular from './Particular';
 import { getPalabra } from '../informacion/User';
+import { useNavigation } from '@react-navigation/native';
+
 
 const EscollirUsuari = () => {
+
+  const [tipus_usuari, setTipusUsuari] = useState([false, false, false]);
+  const NAVIGATOR = useNavigation();
 
   const USUARIS = {
     productor: 0,
@@ -14,21 +19,19 @@ const EscollirUsuari = () => {
     particular: 2
   };
 
-  const [tipus_usuari, setTipusUsuari] = useState([false, false, false]);
-
   const handleProductor = () => {
     console.log("Productor");
-    setTipusUsuari([true, false, false]);
+    NAVIGATOR.navigate("Productor");
   };
 
   const handleMinorista = () => {
     console.log("Minorista");
-    setTipusUsuari([false, true, false]);
+    NAVIGATOR.navigate("Minorista");
   };
 
   const handleParticular = () => {
     console.log("Particular");
-    setTipusUsuari([false, false, true]);
+    NAVIGATOR.navigate("Particular");
   };
 
   const STYLES = StyleSheet.create({
