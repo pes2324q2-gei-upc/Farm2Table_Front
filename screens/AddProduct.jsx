@@ -7,8 +7,10 @@ import { faCamera, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Picker } from '@react-native-picker/picker';
 import HeaderBack from '../navigation/header_back';
 import { COLORS, URL } from '../constants/theme';
-import { useNavigation } from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 //import {userId} from "../informacion/User";
+import { getPalabra } from '../informacion/User';
+import { fetchProductTypes, addNewProduct } from '../api_service/ApiAddProduct';
 
 
 const AddProduct = () => {
@@ -21,7 +23,6 @@ const AddProduct = () => {
     const [quantity, setQuantity] = useState('');
     const [price, setPrice] = useState('');
     const [unit, setUnit] = useState('Kg');
-
     const navigation = useNavigation();
 
 
@@ -36,30 +37,17 @@ const AddProduct = () => {
     };
 
     useEffect(() => {
-        // Get Values from database
-        fetch('http://' + URL + '/products/types/')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json(); // Parse the JSON data
-            })
-            .then(data => {
-                // Store Values in Temporary Array
-                let newArray = data.map(item => {
-                    return { key: item.id.toString(), value: item.name };
-                });
-                // Set Data Variable
-                setData(newArray);
-            })
+        // Get Values from database using the new service
+        fetchProductTypes()
+            .then(setData)
             .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
+                Alert.alert('Error', getPalabra("unableProductTypes"));
             });
     }, []);
 
     const handleAddProduct = async () => {
         if (!productName.trim() || !productDescription.trim() || !selected || !quantity.trim() || !price.trim() || !unit.trim()) {
-            Alert.alert('Error', 'Omple tots els camps.');
+            Alert.alert('Error', getPalabra("fillFields"));
             return;
         }
 
@@ -75,7 +63,6 @@ const AddProduct = () => {
         if (imageUri) {
             const uriParts = imageUri.split('.');
             const fileType = uriParts[uriParts.length - 1];
-
             formData.append('image', {
                 uri: imageUri,
                 name: `photo.${fileType}`,
@@ -84,29 +71,13 @@ const AddProduct = () => {
         }
 
         try {
-            const response = await fetch('http://' + URL + '/products/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-                body: formData,
-            });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                console.log('Product added successfully:', data);
-                Alert.alert('Success', 'Product added successfully');
-                resetForm();
-            } else {
-                console.error('API call error:', data);
-                Alert.alert('Error', 'Failed to add the product');
-            }
+            const data = await addNewProduct(formData);
+            Alert.alert(getPalabra("success"), getPalabra("addedProduct"));
+            resetForm();
+            navigation.goBack({ productAdded: true });
         } catch (error) {
-            console.error('Error:', error);
-            Alert.alert('Error', 'An error occurred while adding the product');
+            Alert.alert('Error', error.message);
         }
-        navigation.goBack();
     };
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -122,9 +93,9 @@ const AddProduct = () => {
     };
 
     const removeImage = () => {
-        Alert.alert('Eliminar imatge', 'Estàs segur?', [
-            { text: 'Eliminar', onPress: () => setImageUri(null) },
-            { text: 'Cancel·lar', style: 'cancel' },
+        Alert.alert(getPalabra("removeImage"), getPalabra("sure"), [
+            { text: getPalabra("remove"), onPress: () => setImageUri(null) },
+            { text: getPalabra("cancel"), style: 'cancel' },
         ]);
     };
 
@@ -133,16 +104,16 @@ const AddProduct = () => {
             <HeaderBack />
             <ScrollView style={styles.background}>
             <ScrollView contentContainerStyle={styles.scrollView}>
-                <Text style={styles.title}>Afegir Producte</Text>
-                <InputField label="Nom del producte:" value={productName} onChangeText={setProductName} />
-                <InputField label="Descripció:" multiline numberOfLines={4} value={productDescription} onChangeText={setProductDescription} />
+                <Text style={styles.title}>{getPalabra("afegirProducte")}</Text>
+                <InputField label={getPalabra("nomProducte")} value={productName} onChangeText={setProductName} />
+                <InputField label={getPalabra("descripcio")} multiline numberOfLines={4} value={productDescription} onChangeText={setProductDescription} />
                 <View style={styles.inputContainer}>
-                    <Text style={styles.label}>Tipus:</Text>
+                    <Text style={styles.label}>{getPalabra("tipus")}</Text>
                     <SelectList setSelected={setSelected} data={data} boxStyles={styles.dropdown} dropdownStyles={styles.dropdown} search={true} />
                 </View>
                 <View style={styles.quantityUnitContainer}>
                     <View style={styles.quantityContainer}>
-                        <Text style={styles.label}>Quantitat disponible:</Text>
+                        <Text style={styles.label}>{getPalabra("quantitat")}</Text>
                         <TextInput
                             style={styles.input}
                             keyboardType="numeric"
@@ -162,10 +133,10 @@ const AddProduct = () => {
                         </Picker>
                     </View>
                 </View>
-                <InputField label="Preu per kg:" keyboardType="numeric" value={price} onChangeText={setPrice} />
+                <InputField label={getPalabra("preuperkg")} keyboardType="numeric" value={price} onChangeText={setPrice} />
                 <ImagePickerComponent imageUri={imageUri} pickImage={pickImage} removeImage={removeImage} />
                 <TouchableOpacity style={styles.submitButton} onPress={handleAddProduct}>
-                    <Text style={styles.buttonText}>Afegir producte</Text>
+                    <Text style={styles.buttonText}>{getPalabra("afegirProducte")}</Text>
                 </TouchableOpacity>
             </ScrollView>
             </ScrollView>
@@ -202,7 +173,7 @@ const ImagePickerComponent = ({ imageUri, pickImage, removeImage }) => (
         {!imageUri ? (
             <TouchableOpacity onPress={pickImage} style={styles.imageButton}>
                 <FontAwesomeIcon icon={faCamera} size={20} color="#FFFFFF" />
-                <Text style={styles.buttonText}>Inserir imatge</Text>
+                <Text style={styles.buttonText}>{getPalabra("inserirImatge")}</Text>
             </TouchableOpacity>
         ) : (
             <View style={styles.imagePreviewContainer}>

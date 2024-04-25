@@ -25,5 +25,21 @@
     "retail": "Retail",
     "service_type": "Service type",
     "particular": "Particular",
-    "reach": "Your reach (kilometers)"
+    "reach": "Your reach (kilometers)",
+    "afegirProducte": "Add Product",
+    "nomProducte": "Product name",
+    "descripcio": "Description:",
+    "tipus": "Type:",
+    "quantitat": "Quantity available:",
+    "preuperkg": "Price per kg:",
+    "inserirImatge": "Insert image",
+    "unableProductTypes": "Unable to fetch product types",
+    "fillFields": "Please fill all fields",
+    "addedProduct": "Product added successfully",
+    "success": "Success",
+    "removeImage": "Remove image",
+    "sure": "Are you sure?",
+    "remove": "Remove",
+    "cancel": "Cancel",
+    "errorChat": "Error loading chats"
 }

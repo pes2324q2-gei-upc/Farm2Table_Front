@@ -1,36 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import { StyleSheet, View, ScrollView, SafeAreaView, Text } from 'react-native';
 import { COLORS, URL } from '../constants/theme';
 import Header from '../navigation/header';
 import ShopFeed from '../Products/ShopFeed';
 import AddButton from '../components/addButton'; // Adjust import path
-import { useNavigation } from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 
 const MainFeed = () => {
   const [shopData, setShopData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigation = useNavigation();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('http://' +URL + '/users/productors/products');
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
-        }
-        const data = await response.json();
-        setShopData(data.data);
-        console.log(data);
-        setLoading(false);
-      } catch (error) {
-        setError(error.message);
-        setLoading(false);
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(`http://${URL}/users/productors/products`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch data');
       }
-    };
+      const data = await response.json();
+      setShopData(data.data);
+    } catch (error) {
+      setError(error.message);
+    }
+    setLoading(false);
+  };
 
-    fetchData();
-  }, []);
+  useFocusEffect(
+      useCallback(() => {
+        fetchData();
+      }, [])
+  );
 
   if (loading) {
     return (

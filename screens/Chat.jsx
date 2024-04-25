@@ -1,91 +1,99 @@
-import React, {useState} from "react";
-import {ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, SafeAreaView} from "react-native";
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import React, { useEffect, useState } from 'react';
+import {View, Text, StyleSheet, FlatList, Image, TouchableOpacity, SafeAreaView, Alert} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { COLORS, SIZES, URL } from '../constants/theme';
+import Header from '../navigation/header';
+import MensajesChat from './MensajesChat';
+import {getPalabra, userId} from '../informacion/User';
+import {fetchChats} from "../api_service/ApiChat";
 
 const Chat = () => {
-  const [message, setMessage] = useState('');
-  const [messages, setMessages] = useState([]);
+  const [chats, setChats] = useState([]);
+  const navigation = useNavigation();
 
-  const sendMessage = () => {
-    if (message.trim() !== "") {
-      const newMessage = { text: message, sender: 'user' };
-      setMessages([...messages, newMessage]);
-      setMessage('');
-    }
-  };
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const data = await fetchChats(userId());
+        setChats(data);
+      } catch (error) {
+        console.error('Error loading chats:', error);
+        Alert.alert('Error', getPalabra("errorChat"));
+      }
+    };
+    loadData();
+  }, [userId()]);
+
+  const renderItem = ({ item }) => (
+      <TouchableOpacity
+          onPress={() => navigation.navigate('MensajesChat', { chatId: item.id })}
+          style={styles.chatItem}
+      >
+        <Image
+            source={{ uri: (userId() !== item.user1.id ? item.user1 : item.user2).avatar }}
+            style={styles.image}
+        />
+        <View style={styles.textContainer}>
+          <Text style={styles.name}>
+            {(userId() !== item.user1.id ? item.user1 : item.user2).username}
+          </Text>
+          <Text style={styles.lastMessage} numberOfLines={1}>
+            {item.last_message || " "}
+          </Text>
+        </View>
+      </TouchableOpacity>
+  );
 
   return (
       <SafeAreaView style={styles.container}>
-        <ScrollView contentContainerStyle={styles.messagesContainer}>
-          {messages.map((msg, index) => (
-              <SafeAreaView key={index} style={[styles.messageBubble, msg.sender === 'user' ? styles.userMessage : styles.otherMessage]}>
-                <Text style={styles.messageText}>{msg.text}</Text>
-              </SafeAreaView>
-          ))}
-        </ScrollView>
-
-        <SafeAreaView style={styles.inputContainer}>
-          <TextInput
-              style={styles.input}
-              placeholder="Escriu un missatge"
-              onChangeText={setMessage}
-              value={message}
-              multiline={true}
-              autoFocus={true}
+        <Header/>
+        <SafeAreaView style={styles.containerIn}>
+          <FlatList
+              data={chats}
+              renderItem={renderItem}
+              keyExtractor={item => item.id.toString()}
+              showsVerticalScrollIndicator={false}
           />
-          <TouchableOpacity onPress={sendMessage}>
-            <FontAwesomeIcon icon={faPaperPlane} size={35} color="#245414" />
-          </TouchableOpacity>
         </SafeAreaView>
       </SafeAreaView>
   );
 };
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginBottom: 75,
+    backgroundColor: COLORS.secondary,
   },
-  messagesContainer: {
-    flexGrow: 1,
-    marginTop: 30,
-  },
-  messageBubble: {
-    maxWidth: '80%',
-    padding: 10,
-    borderRadius: 20,
-    marginVertical: 5,
-    marginRight: 10,
-    paddingHorizontal: 15,
-  },
-  userMessage: {
-    alignSelf: 'flex-end',
-    backgroundColor: '#249050',
-  },
-  otherMessage: {
-    alignSelf: 'flex-start',
-    backgroundColor: '#E5E5EA',
-  },
-  messageText: {
-    fontSize: 18,
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#18E19A',
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    borderRadius: 20,
-    marginHorizontal: 10,
-    marginBottom: 5,
-  },
-  input: {
+  containerIn: {
+    backgroundColor: COLORS.primary,
     flex: 1,
-    fontSize: 18,
-    paddingVertical: 10,
-    paddingHorizontal: 5,
+  },
+  chatItem: {
+    flexDirection: 'row',
+    paddingVertical: 20,
+    paddingHorizontal: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: "#cbc0bb",
+  },
+  image: {
+    width: 65,
+    height: 65,
+    borderRadius: 32.5,
+    marginRight: 15,
+  },
+  textContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  name: {
+    fontSize: SIZES.xlarge,
+    fontWeight: 'bold',
+    color: COLORS.text,
+  },
+  lastMessage: {
+    fontSize: SIZES.medium,
+    color: "#cbc0bb",
+    marginTop: 6,
   },
 });
 

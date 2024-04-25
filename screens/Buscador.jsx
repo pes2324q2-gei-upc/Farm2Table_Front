@@ -1,14 +1,12 @@
 import { View, Text, StyleSheet, FlatList, Image } from 'react-native'
-import React,  { useEffect, useState } from 'react'
+import React,  {useState, useCallback } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { COLORS, SIZES, URL} from '../constants/theme'
 import { TextInput } from 'react-native'
 import { TouchableOpacity } from 'react-native'
-import { AntDesign } from "@expo/vector-icons"
 import Header from '../navigation/header'
-import { useNavigation } from '@react-navigation/native';
-import Consultar_Usuario from './Consultar_Usuario'
-
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { fetchData2 } from '../api_service/ApiBuscador'
 const API_ENDPOINT = "http://"+URL+"/users/productor/";
 const API_PRODUCTES = "http://"+ URL +"/products/";
 
@@ -29,18 +27,18 @@ const TouchableElement = ({ title, isSelected, onPress, index, color,  backgroun
 
 const Buscador = () => {
     const [selectedIndex, setSelectedIndex] = useState(null);
-    const [selectedData, setselectedData] = useState([]);
     const [data1, setData1] = useState([]);
     const [data2, setData2] = useState([]);
     const [error, setError] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
 
-    useEffect(() => {
-        //console.log(URL);
-        fetchData(API_ENDPOINT, 0);
-        fetchData(API_PRODUCTES, 1);
+    useFocusEffect(
+        useCallback(() => {
+        fetchData2(API_ENDPOINT, 0, setData1);
+        fetchData2(API_PRODUCTES, 1,setData2);
         setSelectedIndex(1);
-    }, []);
+    }, [])
+);
 
     const navigation = useNavigation();
 
@@ -48,9 +46,9 @@ const Buscador = () => {
         navigation.navigate('Consultar_Usuario', { item });
       };
 
-    const keyExtractor1 = (item) => item.username;
+    const keyExtractor1 = (item) => item.username.toString();
     
-    const keyExtractor2 = (item) => item.name;
+    const keyExtractor2 = (item) => item.id.toString();
 
     const renderItem1 = ({ item }) => (
         <TouchableOpacity onPress={() => handlePress(item)}>
@@ -78,56 +76,10 @@ const Buscador = () => {
         </TouchableOpacity>
     );
 
-    const fetchData = async(url, value) => {
-        try {
-            const response = await fetch(url);
-            const json = await response.json();
-            //console.log(API_ENDPOINT)
-            if(json.results = null) console.log("hola")
-            if(value === 0) {
-                setData1(json.data);
-                //console.log(data1)
-                data1.forEach(item => {
-                    console.log(item);
-                });
-                
-                
-            }
-            else if(value === 1){
-                setData2(json)
-                /*
-                data2.forEach(item => {
-                    console.log(item.name);
-                });
-                
-                console.log(json)
-                datap.forEach(item => {
-                    console.log(item.name);
-                });
-                */
-            }
-            //console.log(json.data[0].username);
-        }catch (error) {
-            setError(error);
-            console.log(error);
-        }
-    };
-
     const handleItemPress = (index) => {
         setSelectedIndex(index);
     };
 
-    const handleData = (index) => {
-        if(index === 1) {
-            selectedData.filter(item => 
-                item.username.toLowerCase().includes(searchQuery.toLowerCase()))
-        }else if(index === 2) {
-            selectedData.filter(item => 
-                item.name.toLowerCase().includes(searchQuery.toLowerCase()))
-        }else{
-
-        }
-    };
     const items = [
         { title: 'Pagès', index: 1 },
         { title: 'Productes', index: 2 },
@@ -137,21 +89,6 @@ const Buscador = () => {
     return (
         <SafeAreaView style = {styles.info}>
             <Header></Header>
-            {/*}
-            <View style={styles.top}>
-                <AntDesign 
-                    name='setting'
-                    size={styles.top.height/100 * 60} 
-                    color = 'white'
-                    style={{
-                        position: 'absolute',
-                        top: 10,
-                        right: 10,
-                        backgroundColor: 'transparent'
-                    }}
-                />
-            </View>
-                */}
             <View style={styles.bottom}>
                 <TextInput
                     placeholder= 'Search by username' 
@@ -172,11 +109,6 @@ const Buscador = () => {
                             onPress={() => {
                                 const index = item.index;
                                 handleItemPress(index);
-                                if (index === 1) {
-                                    setselectedData(data1);
-                                }else if(index === 2) {
-                                    setselectedData(data2);
-                                }
                               }}
                             color= {item.index === selectedIndex ? 'white' : 'black'}
                             borderColor={item.index === selectedIndex ? 'white' : 'black'}
@@ -187,28 +119,10 @@ const Buscador = () => {
                 </View>
                 
                 <FlatList   
-                    data={selectedIndex === 1 ? data1 : data2.filter(item => 
+                    data={selectedIndex === 1 ? data1.filter(item => item.username.toLowerCase().includes(searchQuery.toLowerCase())) : data2.filter(item => 
                         item.name.toLowerCase().includes(searchQuery.toLowerCase()))}
-                        /*
-                        selectedData.filter(item => 
-                        item.name.toLowerCase().includes(searchQuery.toLowerCase()))}
-                        */
                     keyExtractor={selectedIndex === 1  ? keyExtractor1 : keyExtractor2}
                     renderItem={selectedIndex === 1 ? renderItem1 : renderItem2}
-                    /*
-                    renderItem={({item}) => (
-                        <View style={styles.lista}>
-                            <Image source = {{uri: item.image}} style={styles.image} />
-                            <View>
-                                <Text style={styles.textName}>
-                                {item.name}
-                                </Text>
-                                <Text style={styles.textEmail}>{item.name}</Text>
-                            </View>
-                        </View>
-                        )
-                    }
-                    */
                 />
             </View>
         </SafeAreaView>
@@ -245,7 +159,6 @@ const styles = StyleSheet.create({
         height: (SIZES.height)/100*80,
         paddingTop: 30,
         alignItems: 'center',
-        //justifyContent: 'center,'
     },
     searchBar:{
         paddingHorizontal: 10,

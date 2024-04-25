@@ -2,15 +2,12 @@ import { View, Text, StyleSheet, Image } from 'react-native'
 import FormData from "form-data"
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { COLORS, SIZES,URL } from '../constants/theme'
+import { COLORS, SIZES } from '../constants/theme'
 import { Alert, TextInput } from 'react-native'
 import { TouchableOpacity } from 'react-native'
 import { useRoute, useNavigation } from '@react-navigation/native';
-import { Picker } from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
-
-
-const API_ENDPOINT = "http://"+URL+"/users/profile/";
+import { submitPerfil } from '../api_service/ApiEditarPerfil'
 
 const EditarPerfil = () => { 
   const route = useRoute();
@@ -27,7 +24,10 @@ const EditarPerfil = () => {
       Alert.alert('Error', 'Omple tots els camps.');
       return;
     }
-    console.log(API_ENDPOINT+item.id);
+    item.username = username;
+    item.brief_description = resum;
+    item.about_me = descripcio;
+    item.telephone = number;
     const formData = new FormData();
     formData.append("username", username);
     formData.append("brief_description", descripcio);
@@ -35,6 +35,7 @@ const EditarPerfil = () => {
     formData.append("telephone", number);
 
     if(imageUri) {
+      console.log("llega");
       const uriParts = imageUri.split('.');
       const fileType = uriParts[uriParts.length - 1];
 
@@ -45,26 +46,10 @@ const EditarPerfil = () => {
       });
     }
     try {
-      const response = await fetch(API_ENDPOINT+item.id, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: formData,
-      });
-      //console.log(response);
-      const data = await response.json();
-      if (!response.ok) {
-        console.log('Product added successfully:', data);
-        throw new Error('Something went wrong');
-      }else{
-        console.log('Product added successfully:', data);
-        Alert.alert('Success', 'Profile changed successfully');
-      }
+      const data = await submitPerfil(formData);
+      item.avatar = data.data.avatar;
     } catch (error) {
-      console.log("hola");
-      Alert.alert('Error', 'An error occurred while adding the product');
-      console.log(error.message);
+        Alert.alert('Error', error.message);
     }
   }
   const pickImage = async () => {
@@ -76,47 +61,11 @@ const EditarPerfil = () => {
     });
 
     if (!result.cancelled) {
-      setImageUri(result.uri);
+      setImageUri(result.assets[0].uri);
+      if(!imageUri) console.log("no va");
     }
-};
-  /*
-  const handleSubmit = async () => {
-    console.log(API_ENDPOINT+item.id)
-    console.log(username + ' ' + descripcio)
-    try {
-      const response = await fetch(API_ENDPOINT+item.id, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          "username": username,
-          "brief_description": descripcio,
-          "about_me": resum,
-          "telephone": number,
-          "avatar": image,
-        }),
-      });
-      //console.log(response);
-
-      if (!response.ok) {
-        throw new Error('Something went wrong');
-      }
-      /*
-      setusername('');
-      setdescripcio('');
-      setresum('');
-      setnumber('');
-      // Handle the response here
-      const data = await response.json();
-      console.log(response);
-      //console.log(data);
-    } catch (error) {
-      // Handle the error here
-      console.log(error.message);
-    }
+    console.log("va");
   };
-  */
   return (
     <SafeAreaView style={styles.top}>
       <View style={styles.vista}>
@@ -221,12 +170,9 @@ const styles = StyleSheet.create({
     borderWidth: 2.5,
     width:'25%',
     height: '20%',
-    //paddingHorizontal: 10,
-    //paddingVertical: 10,
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    //flexDirection: 'row'
   },
   top:{
     width: '100%',
@@ -235,11 +181,9 @@ const styles = StyleSheet.create({
   },
   vista:{
     width: '100%',
-    //backgroundColor: 'blue',
     height: (SIZES.height/100)*60,
   },
   v1:{
-    //backgroundColor: 'red',
     width: '90%',
     alignSelf: 'center',
     height: '11.6%',
@@ -260,7 +204,6 @@ const styles = StyleSheet.create({
   },
   input:{
     flex: 1,
-    //backgroundColor: 'green',
     height: '100%',
     color: 'black',
     fontSize: 14,

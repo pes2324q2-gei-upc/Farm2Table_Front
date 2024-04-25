@@ -25,6 +25,21 @@
     "retail": "Minorista",
     "service_type": "Tipo de servicio",
     "particular": "Particular",
-    "reach": "Tu alcance (kilómetros)"
-
+    "reach": "Tu alcance (kilómetros)",
+    "afegirProducte": "Añadir Producto",
+    "nomProducte": "Nombre del producto",
+    "descripcio": "Descripción:",
+    "tipus": "Tipo:",
+    "quantitat": "Cantidad disponible:",
+    "preuperkg": "Precio por kg:",
+    "inserirImatge": "Inserir imagen",
+    "unableProductTypes": "No se pueden verificar los tipos de producto",
+    "fillFields": "Rellene todos los campos",
+    "addedProduct": "Producto añadido correctamente",
+    "success": "Éxito",
+    "removeImage": "Borrar imagen",
+    "sure": "¿Estás seguro?",
+    "remove": "Eliminar",
+    "cancel": "Cancelar",
+    "errorChat": "Error cargando chats"
 }

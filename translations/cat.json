@@ -25,5 +25,21 @@
     "retail": "Minorista",
     "service_type": "Tipus de servei",
     "particular": "Particular",
-    "reach": "El teu abast (km)"
+    "reach": "El teu abast (km)",
+    "afegirProducte": "Afegir Producte",
+    "nomProducte": "Nom del producte",
+    "descripcio": "Descripció:",
+    "tipus": "Tipus:",
+    "quantitat": "Quantitat disponible:",
+    "preuperkg": "Preu per kg:",
+    "inserirImatge": "Inserir imatge",
+    "unableProductTypes": "No es poden verificar els tipus de producte",
+    "fillFields": "Ompli tots els camps",
+    "addedProduct": "Producte afegit correctament",
+    "success": "Èxit",
+    "removeImage": "Esborrar imatge",
+    "sure": "Estàs segur?",
+    "remove": "Eliminar",
+    "cancel": "Cancel·lar",
+    "errorChat": "Error carregant xats"
 }
