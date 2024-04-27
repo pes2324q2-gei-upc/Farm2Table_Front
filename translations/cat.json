@@ -32,6 +32,7 @@
     "market": "Mercat",
     "retail": "Minorista",
     "service_type": "Tipus de servei",
+    "service_name": "Nom del teu servei",
     "Service must be a Restaurant or a Mercat": "El servei ha de ser Restaurant o Mercat",
     "Minorista is not registered as User": "Encara no t'has registrat",
     "particular": "Particular",

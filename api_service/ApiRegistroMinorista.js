@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { getIP } from "../informacion/Constants";
 import { userId } from "../informacion/User";
 
-export const registerMinoristaService = (tipus) => {
+export const registerMinoristaService = (tipus, servei) => {
 
     return new Promise ((resolve, reject) => {
         
         const data = {
             service: tipus,
+            nom_service: servei
         };
         
         const csrfToken = '';
