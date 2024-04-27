@@ -1,44 +1,29 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import HeaderBack from '../navigation/header_back';
-import styles from '../styles/cart.style'; // Ensure this path is correct
+import { loadCart, saveCart, removeItemFromCart } from '../informacion/cartInfo';
+import styles from '../styles/cart.style';
+import { userId } from '../informacion/User';
 
 const CartScreen = () => {
-    const cartItems = [
-        {
-            "storeId": "store1",
-            "storeName": "Store 1",
-            "storePicture": "https://www.caprabo.com/export/shared/.galleries/articulos/caprabo.png_940553528.png",
-            "items": [
-                {
-                    "productId": "product1",
-                    "name": "Product 1",
-                    "quantity": 2,
-                    "price": 10.00
-                },
-                {
-                    "productId": "product2",
-                    "name": "Product 2",
-                    "quantity": 1,
-                    "price": 15.00
-                }
-            ]
-        },
-        {
-            "storeId": "store2",
-            "storeName": "Store 2",
-            "storePicture": "https://1000logos.net/wp-content/uploads/2017/05/Walmart-Logo.png",
-            "items": [
-                {
-                    "productId": "product3",
-                    "name": "Product 3",
-                    "quantity": 1,
-                    "price": 20.00
-                }
-            ]
-        }
-    ];
+    const [cartItems, setCartItems] = useState([]);
+
+    useEffect(() => {
+        const initializeCart = async () => {
+            const loadedCart = await loadCart(userId());
+            setCartItems(loadedCart);
+        };
+
+        initializeCart();
+    }, []);
+
+    const handleRemoveItem = async (storeId, productId) => {
+        const updatedCart = removeItemFromCart(cartItems, storeId, productId);
+        setCartItems(updatedCart);
+        await saveCart(updatedCart); // Asumiendo que saveCart solo necesita el carrito actualizado
+    };
+
 
     const calculateTotal = (items) => items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
 
