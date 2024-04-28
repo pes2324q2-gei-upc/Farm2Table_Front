@@ -3,8 +3,23 @@ import { StyleSheet, View, Image, TouchableOpacity, SafeAreaView } from 'react-n
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '../constants/theme';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+
+
+//Este es el componente que se encarga de mostrar el header de la aplicación
+//Este header se muestra en todas las pantallas de la aplicación
+//Este header tiene el avatar del usuario logeado, un icono de carrito y un icono de configuración
+
 
 const Header = () => {
+
+    const navigation = useNavigation();
+
+    const handleCartPress = () => {
+        navigation.navigate('CartScreen');
+    }
+
+
     return (
         <View style={styles.container}>
             <View style={styles.innerContainer}>
@@ -13,9 +28,9 @@ const Header = () => {
                     style={styles.profileImage}
                 />
                 <FontAwesome5 name="tractor" size={44} color="white" />
-                <TouchableOpacity>
+                <TouchableOpacity onPress={handleCartPress}>
                     <Ionicons
-                        name="settings"
+                        name="cart"
                         size={35}
                         color="white"
                         style={styles.settingsIcon}

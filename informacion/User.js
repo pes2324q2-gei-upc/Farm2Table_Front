@@ -10,9 +10,11 @@ idioma = "esp";
 
 export const setUserId = (idd) => {
     id = idd;
+    console.log("Id:", id);
 } 
 
 export const userId = () => {
+    console.log("Id:", id);
     return id;
 }
 
