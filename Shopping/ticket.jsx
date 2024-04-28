@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, SafeAreaView} fro
 import { COLORS } from '../constants/theme'; // Adjust the import path as needed
 import Header from '../navigation/header_back';
 
-const Ticket = ({ navigation }) => {
+const Ticket = ({ navigation, cart }) => {
     // Example data, replace with real data as needed
     const storeName = "Best Store Ever";
     const storeAddress = "123 Shopping Ln, Retail City";
