@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import HeaderBack from '../navigation/header_back';
+import HeaderHome from '../navigation/header_backHome';
 import { loadCart, saveCart, removeItemFromCart, clearAllData, changeQuantity } from '../informacion/cartInfo';
 import styles from '../styles/cart.style';
 import { userId } from '../informacion/User';
@@ -53,7 +53,7 @@ const CartScreen = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <HeaderBack />
+            <HeaderHome />
             <ScrollView style={styles.content}>
                 {cartItems.map((store) => (
                     <View key={store.storeId} style={styles.storeContainer}>
