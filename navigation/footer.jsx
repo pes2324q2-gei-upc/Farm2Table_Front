@@ -7,11 +7,13 @@ import {Ionicons} from "@expo/vector-icons"
 import Home from '../screens/Home'
 import Map from '../screens/Map'
 import Chat from '../screens/Chat'
-import Product from '../Products/Product'
 import Buscador from '../screens/Buscador'
 import Consultar_Usuario from '../screens/Consultar_Usuario';
-import { COLORS, SIZES } from '../constants/theme'
+import { COLORS, SIZES } from '../constants/theme' 
 import EditarPerfil from '../screens/EditarPerfil';
+
+import Ticket from '../Shopping/ticket';
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -55,7 +57,7 @@ const BuscadorStackScreen = () => {
 const Footer = () => {
   return (
     <Tab.Navigator screenOptions={screenOptions}>
-        <Tab.Screen name="Home" component={Home} options={{
+        <Tab.Screen name="Home" component={Ticket} options={{
             tabBarIcon: ({ focused }) => {
                 return (
                     <Ionicons
