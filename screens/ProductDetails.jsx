@@ -7,15 +7,17 @@ import HeaderBack from '../navigation/header_back';
 import { URL } from '../constants/theme';
 import { addProductToCart, loadCart, saveCart } from '../informacion/cartInfo';
 import { userId, setUserId } from '../informacion/User';
-
+import CartPopUp from '../PopUps/addedCart';
 
 const ProductDetails = ({ navigation, route }) => {
   const [product, setProduct] = useState(null);
   const [userAvatar, setUserAvatar] = useState(null);
   const [count, setCount] = useState(1);
+
   const [cartItems, setCartItems] = useState([]);
 
   const UserId = userId();
+  const [modalVisible, setModalVisible] = useState(false);
 
   const { id } = route.params;
 
@@ -51,6 +53,7 @@ const ProductDetails = ({ navigation, route }) => {
     if (count > 1) setCount(count - 1);
   };
 
+
   const addToCart = async () => {
 
     let cart = []
@@ -79,8 +82,7 @@ const ProductDetails = ({ navigation, route }) => {
     setCartItems(updatedCart);
     console.log('Updated cart:', updatedCart);
     await saveCart(userId(), updatedCart); // Asumiendo que saveCart maneja el guardado en AsyncStorage o similar
-  };
-
+  }
   return (
     <SafeAreaView style={styles.container}>
       <HeaderBack />
@@ -132,6 +134,14 @@ const ProductDetails = ({ navigation, route }) => {
           </>
         )}
       </ScrollView>
+      <CartPopUp
+        isVisible={modalVisible}
+        onContinueShopping={() => setModalVisible(false)}
+        onGoToCart={() => {
+          setModalVisible(false);
+          navigation.navigate('AddProduct'); // Make sure 'Cart' is the correct route name
+        }}
+      />
     </SafeAreaView>
   );
 };
