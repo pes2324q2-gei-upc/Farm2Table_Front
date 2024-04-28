@@ -59,38 +59,32 @@ export const removeItemFromCart = (cartItems, storeId, productId) => {
     });
 };
 
-export const increaseProductQuantity = (cartItems, storeId, productId) => {
-    console.log('Increasing quantity for product:', productId, 'in store:', storeId);
-    return cartItems.map(store => {
+export const changeQuantity = (cartItems, storeId, productId, change) => {
+    const updatedCart = cartItems.map(store => {
         if (store.storeId === storeId) {
             const updatedItems = store.items.map(item => {
                 if (item.productId === productId) {
-                    return { ...item, quantity: item.quantity + 1 };
+                    const newQuantity = item.quantity + change;
+                    if (newQuantity > 0) {  // Asegura que la cantidad nunca sea menor que 1
+                        return { ...item, quantity: newQuantity };
+                    }
                 }
                 return item;
             });
-            console.log('Updated items after increase:', updatedItems);
             return { ...store, items: updatedItems };
         }
         return store;
     });
+    return updatedCart;
 };
 
-export const decreaseProductQuantity = (cartItems, storeId, productId) => {
-    console.log('Decreasing quantity for product:', productId, 'in store:', storeId);
-    return cartItems.map(store => {
-        if (store.storeId === storeId) {
-            const updatedItems = store.items.map(item => {
-                if (item.productId === productId && item.quantity > 1) {
-                    return { ...item, quantity: item.quantity - 1 };
-                }
-                return item;
-            });
-            console.log('Updated items after decrease:', updatedItems);
-            return { ...store, items: updatedItems };
-        }
-        return store;
-    });
+export const clearAllData = async () => {
+    try {
+        await AsyncStorage.clear();
+        console.log('All AsyncStorage data cleared successfully');
+    } catch (error) {
+        console.error('Failed to clear AsyncStorage:', error);
+    }
 };
 
 export const addProductToCart = (cartItems, storeId, newProduct, storeName, storeAvatar) => {

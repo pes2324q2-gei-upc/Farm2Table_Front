@@ -50,11 +50,7 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.tertiary,  // Red to signify deletion or removal
         padding: 5,
         borderRadius: 5,
-    },
-    removeButtonText: {
-        color: 'white',
-        textAlign: 'center',
-        fontWeight: 'bold',
+        marginLeft: 15,
     },
     user_info_container: {
         flexDirection: "row",
