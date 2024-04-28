@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, } from 'react-native';
 import logo from '../assets/Farm2Table.png';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { SelectList } from 'react-native-dropdown-select-list';
-import { getPalabra, userId } from '../informacion/User';
+import { getPalabra, getPalabraEng, userId } from '../informacion/User';
 import { getIP } from '../informacion/Constants';
 import { useNavigation } from '@react-navigation/native';
+import { registerMinoristaService } from '../api_service/ApiRegistroMinorista';
 
 const STYLES = StyleSheet.create({
     container: {
@@ -13,6 +15,20 @@ const STYLES = StyleSheet.create({
       alignItems: 'center',
       backgroundColor: '#fefae0',
       position: 'relative',
+    },
+    flecha_posicion: {
+      position: 'absolute',
+      left: 10,
+      top: 20,
+    },
+    flecha: {
+      color: "#bc6c25",
+      fontSize: 45,
+    },
+    error_message: {
+      fontSize: 19,
+      marginTop: 10,
+      color: "#ff0000"
     },
     logo: {
       //la relacion es 498width/322height
@@ -90,49 +106,43 @@ const Minorista = () => {
 
   const [tipus, setTipus] = useState("");
   const TIPUS = [getPalabra("restaurant"),getPalabra("market")];
+  const [error_message, setError] = useState('');
   const NAVIGATOR = useNavigation();
 
-  const handleRegister = () => {
+  const handleGoBack = () => {
+    NAVIGATOR.goBack();
+  };
+
+  const handleRegister = async () => {
+    if (tipus != "") setTipus(getPalabraEng(tipus.toLowerCase));
     console.log("Tipus:", tipus);
     console.log("UserId", userId());
+    
 
-    const data = {
-        service: tipus,
-    };
-    
-    const csrfToken = '';
-    
-    const requestOptions = {
-        method: 'POST',
-        headers: {
-            'accept': 'application/json',
-            'Content-Type': 'application/json',
-            'X-CSRFToken': csrfToken
-          },
-        body: JSON.stringify(data)
-    };
-    
-    const url = 'http://'+getIP()+'/users/register/Minorista/'+userId()+'/';
-    
-    fetch(url, requestOptions)
-        .then(response => {
+    try {
+        const data = await registerMinoristaService(tipus);
+        if (data.error) {
+          setError(data.error)
+          console.log(error_message);
+        }
+        else {
+            console.log(data);
+            NAVIGATOR.navigate('Footer');
+        }
+      } catch (err) {console.log("Error:",err.message);}
 
-        return response.json();
-        })
-        .then(data => {
-        console.log(data);
-        NAVIGATOR.navigate('Footer');
-
-        })
-        .catch(error => {
-        console.error('There was a problem with your fetch operation:', error);
-        });
   };
 
   return (
     <View style={STYLES.container}>
 
         <Image source={logo} style={STYLES.logo} />
+
+        <TouchableOpacity style={STYLES.flecha_posicion} onPress={handleGoBack}>
+            <Icon  name="arrow-back" style={STYLES.flecha} />  
+        </TouchableOpacity>
+
+        <Text style={STYLES.error_message}>{getPalabra(error_message)}</Text>
 
         <View style={STYLES.productor}>
 

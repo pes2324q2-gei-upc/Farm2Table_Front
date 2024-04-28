@@ -20,6 +20,9 @@ import { StyleSheet, Text, View } from 'react-native';
 import Registre from "./screens/Registre";
 import InicioSesion from "./screens/InicioSesion";
 import EscollirUsuari from './screens/EscollirUsuari';
+import Productor from './screens/Productor';
+import Minorista from './screens/Minorista';
+import Particular from './screens/Particular';
 
 
 
@@ -46,6 +49,9 @@ export default function App() {
         <Stack.Screen name="InicioSesion" component={InicioSesion} options={{headerShown: false}} />
         <Stack.Screen name="Registre" component={Registre} options={{headerShown: false}} />
         <Stack.Screen name="EscollirUsuari" component={EscollirUsuari} options={{headerShown: false}} />
+        <Stack.Screen name="Productor" component={Productor} options={{headerShown: false}} />
+        <Stack.Screen name="Minorista" component={Minorista} options={{headerShown: false}} />
+        <Stack.Screen name="Particular" component={Particular} options={{headerShown: false}} />
         <Stack.Screen name="Footer" component={Footer} options={{headerShown: false}} />
         <Stack.Screen name="MainFeed" component={MainFeed} options={{headerShown: false}} />
         <Stack.Screen name="AddProduct" component={AddProduct} options={{headerShown: false}} />
