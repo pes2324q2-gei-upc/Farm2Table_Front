@@ -23,7 +23,7 @@ const Header = () => {
                 <FontAwesome5 name="tractor" size={44} color="white" />
                 <TouchableOpacity>
                     <Ionicons
-                        name="settings"
+                        name="cart"
                         size={35}
                         color="white"
                         style={styles.settingsIcon}

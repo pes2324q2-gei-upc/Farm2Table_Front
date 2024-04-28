@@ -5,12 +5,18 @@ import styles from '../styles/productDetails.style';
 import Footer from '../navigation/footer';
 import HeaderBack from '../navigation/header_back';
 import { URL } from '../constants/theme';
+import { addProductToCart, loadCart, saveCart } from '../informacion/cartInfo';
+import { userId, setUserId } from '../informacion/User';
 import CartPopUp from '../PopUps/addedCart';
 
 const ProductDetails = ({ navigation, route }) => {
   const [product, setProduct] = useState(null);
   const [userAvatar, setUserAvatar] = useState(null);
   const [count, setCount] = useState(1);
+
+  const [cartItems, setCartItems] = useState([]);
+
+  const UserId = userId();
   const [modalVisible, setModalVisible] = useState(false);
 
   const { id } = route.params;
@@ -47,10 +53,36 @@ const ProductDetails = ({ navigation, route }) => {
     if (count > 1) setCount(count - 1);
   };
 
-  const addToCart = () => {
-    setModalVisible(true);
-  };
 
+  const addToCart = async () => {
+
+    let cart = []
+
+    if (!loadCart(userId())) {
+      console.log('No cart found for user:', userId());
+      setCartItems([]);
+      saveCart(userId(), []);
+    }
+    else {
+      console.log('Cart found for user:', userId());
+      const loadedCart = await loadCart(userId());
+      console.log('Loaded cart:', loadedCart);
+      cart = loadedCart;
+    }
+
+    const newCartItem = {
+      productId: product.id,
+      name: product.name,
+      quantity: count,
+      price: product.price,
+    };
+
+    console.log('Cart Items:', cart);
+    const updatedCart = addProductToCart(cart, product.productor_info.id, newCartItem, product.productor_info.username, product.productor_info.avatar);
+    setCartItems(updatedCart);
+    console.log('Updated cart:', updatedCart);
+    await saveCart(userId(), updatedCart); // Asumiendo que saveCart maneja el guardado en AsyncStorage o similar
+  }
   return (
     <SafeAreaView style={styles.container}>
       <HeaderBack />

@@ -15,7 +15,7 @@ const MainFeed = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://' +URL + '/users/productors/products');
+        const response = await fetch('http://' + URL + '/users/productors/products');
         if (!response.ok) {
           throw new Error('Failed to fetch data');
         }
@@ -48,9 +48,7 @@ const MainFeed = () => {
     );
   }
 
-  //Faltaria comprobar si el usuario es productor o consumidor para mostrar el boton de añadir producto
   const handleAddButtonPress = () => {
-    // Navigate to AddProduct screen
     navigation.navigate("AddProduct");
   };
 
@@ -60,7 +58,7 @@ const MainFeed = () => {
       <SafeAreaView style={styles.containerIn}>
         <ScrollView contentContainerStyle={styles.feedContainer}>
           {shopData.map((shop, index) => (
-            <ShopFeed key={index} shopName={shop.username} products={shop.products_info} />
+            shop.products_info.length > 0 && <ShopFeed key={index} shopName={shop.username} products={shop.products_info} />
           ))}
         </ScrollView>
         <AddButton onPress={handleAddButtonPress} />
