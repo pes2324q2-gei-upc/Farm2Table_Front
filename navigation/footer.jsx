@@ -57,7 +57,7 @@ const BuscadorStackScreen = () => {
 const Footer = () => {
   return (
     <Tab.Navigator screenOptions={screenOptions}>
-        <Tab.Screen name="Home" component={Ticket} options={{
+        <Tab.Screen name="Home" component={Home} options={{
             tabBarIcon: ({ focused }) => {
                 return (
                     <Ionicons

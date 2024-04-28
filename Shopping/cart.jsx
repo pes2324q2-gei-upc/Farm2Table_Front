@@ -5,9 +5,11 @@ import HeaderBack from '../navigation/header_back';
 import { loadCart, saveCart, removeItemFromCart } from '../informacion/cartInfo';
 import styles from '../styles/cart.style';
 import { userId } from '../informacion/User';
+import { useNavigation } from '@react-navigation/native';
 
 const CartScreen = () => {
     const [cartItems, setCartItems] = useState([]);
+    const navigation = useNavigation();
 
     useEffect(() => {
         const initializeCart = async () => {
@@ -24,6 +26,19 @@ const CartScreen = () => {
         await saveCart(updatedCart); // Asumiendo que saveCart solo necesita el carrito actualizado
     };
 
+    const handleBuyNow = (storeId, items) => {
+        console.log('Buy now', storeId, items);
+        if (!storeId || !items || items.length === 0) {
+            console.error("Datos inválidos: Store ID o Items están vacíos");
+            // Aquí puedes optar por mostrar un mensaje al usuario, manejar el error o simplemente no navegar.
+            return;
+        }
+    
+        navigation.navigate('Ticket', {
+            storeId: storeId,
+            items: items
+        });
+    }
 
     const calculateTotal = (items) => items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
 
@@ -56,8 +71,8 @@ const CartScreen = () => {
                         ))}
                         <View style={styles.totalContainer}>
                             <Text style={styles.totalText}>Total: {calculateTotal(store.items).toFixed(2)}€</Text>
-                            <TouchableOpacity style={styles.buyButton}>
-                                <Text style={styles.buyButtonText}>Comprar Ahora</Text>
+                            <TouchableOpacity style={styles.buyButton} onPress={() => handleBuyNow(store.storeId, store.items)}>
+                                <Text style={styles.buyButtonText}>Comprar Ahora</Text> 
                             </TouchableOpacity>
                         </View>
                     </View>

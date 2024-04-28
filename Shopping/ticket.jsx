@@ -3,32 +3,16 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, SafeAreaView} fro
 import { COLORS } from '../constants/theme'; // Adjust the import path as needed
 import Header from '../navigation/header_back';
 
-const Ticket = ({ navigation, cart }) => {
-    // Example data, replace with real data as needed
-    const storeName = "Best Store Ever";
-    const storeAddress = "123 Shopping Ln, Retail City";
-    const cartItems = [
-        { id: 1, name: "Product 1", quantity: 2, price: 10.00 },
-        { id: 2, name: "Product 2", quantity: 1, price: 15.00 },
-        { id: 3, name: "Product 3", quantity: 3, price: 5.00 },
-        { id: 1, name: "Product 1", quantity: 2, price: 10.00 },
-        { id: 2, name: "Product 2", quantity: 1, price: 15.00 },
-        { id: 3, name: "Product 3", quantity: 3, price: 5.00 },
-        { id: 1, name: "Product 1", quantity: 2, price: 10.00 },
-        { id: 2, name: "Product 2", quantity: 1, price: 15.00 },
-        { id: 3, name: "Product 3", quantity: 3, price: 5.00 },
-        { id: 1, name: "Product 1", quantity: 2, price: 10.00 },
-        { id: 2, name: "Product 2", quantity: 1, price: 15.00 },
-        { id: 3, name: "Product 3", quantity: 3, price: 5.00 },
-        { id: 1, name: "Product 1", quantity: 2, price: 10.00 },
-        { id: 2, name: "Product 2", quantity: 1, price: 15.00 },
-        { id: 3, name: "Product 3", quantity: 3, price: 5.00 },
-    ];
+const Ticket = ({ navigation, route }) => {
+    console.log(route.params);
+    const { items, storeId } = route.params; // Asegúrate de que los nombres de las propiedades coincidan con los que se pasan desde la pantalla de carrito
+    const storeName = "Best Store Ever"; // Este valor debería ser dinámico si tienes varios almacenes
+    const storeAddress = "123 Shopping Ln, Retail City"; // Esto también debería venir de los datos del almacén
 
     const getTotal = () => {
-        return cartItems.reduce((acc, item) => acc + (item.quantity * item.price), 0).toFixed(2);
+        return items.reduce((acc, item) => acc + (item.quantity * item.price), 0).toFixed(2);
     };
-
+    
     return (
         <SafeAreaView style={styles.container_green}>
             <Header />
@@ -44,8 +28,8 @@ const Ticket = ({ navigation, cart }) => {
                         <Text style={styles.headerText}>Preu</Text>
                     </View>
                     <Text>------------------------------------------------</Text>
-                    {cartItems.map((item) => (
-                        <View key={item.id} style={styles.tableRow}>
+                    {items.map((item, index) => (
+                        <View key={index} style={styles.tableRow}>
                             <Text style={styles.productName}>{item.name}</Text>
                             <Text style={styles.tableText}>{item.quantity}</Text>
                             <Text style={styles.tableText}>{item.price.toFixed(2)} €</Text>
