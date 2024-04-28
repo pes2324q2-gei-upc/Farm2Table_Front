@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Image, ScrollView, SafeAreaView } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, TouchableOpacity, Image, ScrollView, SafeAreaView, Vibration } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import styles from '../styles/productDetails.style';
-import Footer from '../navigation/footer';
 import HeaderBack from '../navigation/header_back';
 import { URL } from '../constants/theme';
 import { addProductToCart, loadCart, saveCart } from '../informacion/cartInfo';
@@ -13,11 +12,8 @@ const ProductDetails = ({ navigation, route }) => {
   const [product, setProduct] = useState(null);
   const [userAvatar, setUserAvatar] = useState(null);
   const [count, setCount] = useState(1);
-
-  const [cartItems, setCartItems] = useState([]);
-
-  const UserId = userId();
   const [modalVisible, setModalVisible] = useState(false);
+  const cartIconRef = useRef();
 
   const { id } = route.params;
 
@@ -29,7 +25,9 @@ const ProductDetails = ({ navigation, route }) => {
           throw new Error('Failed to fetch product details');
         }
         const productData = await response.json();
+        console.log('Product data:', productData);
         setProduct(productData);
+        console.log('Product:', product);
 
         // Fetch user avatar
         const userResponse = await fetch(`http://` + URL + `/users/profile/${productData.productor_info.id}`);
@@ -43,6 +41,7 @@ const ProductDetails = ({ navigation, route }) => {
       }
     };
     fetchProductDetails();
+    console.log('Product:', product)
   }, []);
 
   const increment = () => {
@@ -53,14 +52,12 @@ const ProductDetails = ({ navigation, route }) => {
     if (count > 1) setCount(count - 1);
   };
 
-
   const addToCart = async () => {
 
     let cart = []
 
     if (!loadCart(userId())) {
       console.log('No cart found for user:', userId());
-      setCartItems([]);
       saveCart(userId(), []);
     }
     else {
@@ -77,15 +74,19 @@ const ProductDetails = ({ navigation, route }) => {
       price: product.price,
     };
 
+    if (cartIconRef.current) {
+      cartIconRef.current.triggerCartAnimation();
+      Vibration.vibrate(200);
+    }
+
     console.log('Cart Items:', cart);
     const updatedCart = addProductToCart(cart, product.productor_info.id, newCartItem, product.productor_info.username, product.productor_info.avatar);
-    setCartItems(updatedCart);
     console.log('Updated cart:', updatedCart);
     await saveCart(userId(), updatedCart); // Asumiendo que saveCart maneja el guardado en AsyncStorage o similar
   }
   return (
     <SafeAreaView style={styles.container}>
-      <HeaderBack />
+      <HeaderBack ref={cartIconRef} />
       <ScrollView>
         {product && (
           <>

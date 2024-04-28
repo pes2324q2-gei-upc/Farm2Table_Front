@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     description_row: {
         marginHorizontal: 20,
         marginTop: 20,
-        maxHeight: 0,
+        maxHeight: 75,
     },
 
     description: {
@@ -160,6 +160,11 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.highlighter,
         borderRadius: 10,
         padding: 3,
+      },
+      flyingItem: {
+        position: 'absolute',
+        right: 50,  // Ajusta según donde esté el botón de añadir al carrito
+        bottom: 10
       },
 
 

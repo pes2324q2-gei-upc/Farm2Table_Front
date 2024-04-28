@@ -2,10 +2,14 @@ import React, {useEffect, useState} from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import HeaderBack from '../navigation/header_back';
-import { loadCart, saveCart, removeItemFromCart } from '../informacion/cartInfo';
+import { loadCart, saveCart, removeItemFromCart, clearAllData, changeQuantity } from '../informacion/cartInfo';
 import styles from '../styles/cart.style';
 import { userId } from '../informacion/User';
 import { useNavigation } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
+import { COLORS } from '../constants/theme';
+import QuantitySelector from '../components/quantity';
+import { initial } from 'lodash';
 
 const CartScreen = () => {
     const [cartItems, setCartItems] = useState([]);
@@ -16,14 +20,13 @@ const CartScreen = () => {
             const loadedCart = await loadCart(userId());
             setCartItems(loadedCart);
         };
-
         initializeCart();
     }, []);
 
     const handleRemoveItem = async (storeId, productId) => {
         const updatedCart = removeItemFromCart(cartItems, storeId, productId);
         setCartItems(updatedCart);
-        await saveCart(updatedCart); // Asumiendo que saveCart solo necesita el carrito actualizado
+        await saveCart(userId(), updatedCart); // Asumiendo que saveCart solo necesita el carrito actualizado
     };
 
     const handleBuyNow = (storeId, items) => {
@@ -39,6 +42,12 @@ const CartScreen = () => {
             items: items
         });
     }
+
+    const handleQuantityChange = (storeId, productId, change) => {
+        const updatedCart = changeQuantity(cartItems, storeId, productId, change);
+        setCartItems(updatedCart);
+        saveCart(userId(), updatedCart);
+    };
 
     const calculateTotal = (items) => items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
 
@@ -61,11 +70,16 @@ const CartScreen = () => {
                                     <Text style={styles.itemDetails}>Quantitat: {item.quantity}</Text>
                                     <Text style={styles.itemDetails}>Preu: {item.price.toFixed(2)}€</Text>
                                 </View>
+                                <QuantitySelector
+                                    count={item.quantity}
+                                    increment={() => handleQuantityChange(store.storeId, item.productId, 1)}
+                                    decrement={() => handleQuantityChange(store.storeId, item.productId, -1)}
+                                />
                                 <TouchableOpacity 
                                     style={styles.removeButton} 
                                     onPress={() => handleRemoveItem(store.storeId, item.productId)}
                                 >
-                                    <Text style={styles.removeButtonText}>Eliminar</Text>
+                                    <Ionicons name="trash" size={24} color={COLORS.primary}/>
                                 </TouchableOpacity>
                             </View>
                         ))}
