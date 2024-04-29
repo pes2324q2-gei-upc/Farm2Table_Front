@@ -36,6 +36,9 @@ const styles = StyleSheet.create({
     buttonCart: {
       backgroundColor: COLORS.secondary,
     },
+    buttonDelete: {
+      backgroundColor: COLORS.error,
+    },
     buttonShop: {
       backgroundColor: COLORS.tertiary,
     },
