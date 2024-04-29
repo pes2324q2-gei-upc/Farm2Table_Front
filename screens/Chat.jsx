@@ -1,20 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import {View, Text, StyleSheet, FlatList, Image, TouchableOpacity, SafeAreaView, Alert} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { COLORS, SIZES, URL } from '../constants/theme';
+import { COLORS, SIZES } from '../constants/theme';
 import Header from '../navigation/header';
 import MensajesChat from './MensajesChat';
-import {getPalabra, userId} from '../informacion/User';
+import {getPalabra, userId as fetchUserId} from '../informacion/User';
 import {fetchChats} from "../api_service/ApiChat";
 
 const Chat = () => {
   const [chats, setChats] = useState([]);
+  const [userId, setUserId] = useState(null);
   const navigation = useNavigation();
 
   useEffect(() => {
+    setUserId(fetchUserId());
+  }, []);
+
+  useEffect(() => {
     const loadData = async () => {
+      if (!userId) return;
       try {
-        const data = await fetchChats(userId());
+        const data = await fetchChats(userId);
         setChats(data);
       } catch (error) {
         console.error('Error loading chats:', error);
@@ -22,7 +28,7 @@ const Chat = () => {
       }
     };
     loadData();
-  }, [userId()]);
+  }, [userId]);
 
   const renderItem = ({ item }) => (
       <TouchableOpacity
@@ -30,15 +36,15 @@ const Chat = () => {
           style={styles.chatItem}
       >
         <Image
-            source={{ uri: (userId() !== item.user1.id ? item.user1 : item.user2).avatar }}
+            source={{ uri: item.product.image }}
             style={styles.image}
         />
         <View style={styles.textContainer}>
           <Text style={styles.name}>
-            {(userId() !== item.user1.id ? item.user1 : item.user2).username}
+            {(userId !== item.user1.id ? item.user1 : item.user2).username}
           </Text>
           <Text style={styles.lastMessage} numberOfLines={1}>
-            {item.last_message || " "}
+            {item.last_message ? item.last_message.text : "No messages yet"}
           </Text>
         </View>
       </TouchableOpacity>
