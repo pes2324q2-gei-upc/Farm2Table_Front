@@ -10,6 +10,8 @@ export const  fetchData2 = async(url, value,setValue) => {
       }
       else if(value === 1){
           setValue(json);
+      }else{
+        setValue(json.result.records)
       }
   }catch (error) {
       setError(error);
