@@ -1,7 +1,8 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, SafeAreaView} from 'react-native';
+import React, {useState} from 'react';
+import { View, Text, Modal, ScrollView, TouchableOpacity, SafeAreaView} from 'react-native';
 import { COLORS } from '../constants/theme'; // Adjust the import path as needed
 import HeaderHome from '../navigation/header_backHome';
+import ConfirmModal from '../PopUps/endPurchase';
 import styles from '../styles/ticket.styles'; // Adjust the import path as needed
 
 const Ticket = ({ navigation, route }) => {
@@ -9,6 +10,7 @@ const Ticket = ({ navigation, route }) => {
     const { items, storeId } = route.params; // Asegúrate de que los nombres de las propiedades coincidan con los que se pasan desde la pantalla de carrito
     const storeName = "Best Store Ever"; // Este valor debería ser dinámico si tienes varios almacenes
     const storeAddress = "123 Shopping Ln, Retail City"; // Esto también debería venir de los datos del almacén
+    const [modalVisible, setModalVisible] = useState(false);
 
     const getTotal = () => {
         return items.reduce((acc, item) => acc + (item.quantity * item.price), 0).toFixed(2);
@@ -43,11 +45,12 @@ const Ticket = ({ navigation, route }) => {
                     </View>
                 </ScrollView>
                 <View style={styles.button_container}>
-                    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
+                    <TouchableOpacity style={styles.button}  onPress={() => setModalVisible(true)}>
                         <Text style={styles.buttonText}>Finalizar Pedido</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
+            <ConfirmModal modalVisible={modalVisible} setModalVisible={setModalVisible} navigation={navigation} />
         </SafeAreaView>
     );
 };
