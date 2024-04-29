@@ -18,6 +18,8 @@ const COLORS = {
 
     light_green: "#6d9461",
 
+    error: "#ff0000"
+
 };
 
 const SIZES = {

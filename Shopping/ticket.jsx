@@ -3,6 +3,7 @@ import { View, Text, Modal, ScrollView, TouchableOpacity, SafeAreaView} from 're
 import { COLORS } from '../constants/theme'; // Adjust the import path as needed
 import HeaderHome from '../navigation/header_backHome';
 import ConfirmModal from '../PopUps/endPurchase';
+import AddFundsModal from '../PopUps/insufficientFunds';
 import styles from '../styles/ticket.styles'; // Adjust the import path as needed
 
 const Ticket = ({ navigation, route }) => {
@@ -50,10 +51,11 @@ const Ticket = ({ navigation, route }) => {
                     </TouchableOpacity>
                 </View>
             </ScrollView>
-            <ConfirmModal modalVisible={modalVisible} setModalVisible={setModalVisible} navigation={navigation} />
+            <AddFundsModal modalVisible={modalVisible} setModalVisible={setModalVisible} navigation={navigation} />
         </SafeAreaView>
     );
 };
 
+//<ConfirmModal modalVisible={modalVisible} setModalVisible={setModalVisible} navigation={navigation} />
 
 export default Ticket;
