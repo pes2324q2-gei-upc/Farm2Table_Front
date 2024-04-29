@@ -41,10 +41,10 @@ const Chat = () => {
         />
         <View style={styles.textContainer}>
           <Text style={styles.name}>
-            {(userId !== item.user1.id ? item.user1 : item.user2).username}
+            {(userId !== item.user1.id ? item.user1 : item.user2).username + ', ' + item.product.name}
           </Text>
           <Text style={styles.lastMessage} numberOfLines={1}>
-            {item.last_message ? item.last_message.text : "No messages yet"}
+            {item.last_message ? item.last_message.text : ""}
           </Text>
         </View>
       </TouchableOpacity>
