@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { getIP } from "../informacion/Constants";
 import { userId } from "../informacion/User";
 
-export const registerMinoristaService = (tipus) => {
+export const registerMinoristaService = (tipus, servei) => {
 
     return new Promise ((resolve, reject) => {
         
         const data = {
             service: tipus,
+            service_name: servei,
         };
         
         const csrfToken = '';
@@ -21,6 +22,8 @@ export const registerMinoristaService = (tipus) => {
               },
             body: JSON.stringify(data)
         };
+
+        console.log("DATOS:",requestOptions)
         
         const url = 'http://'+getIP()+'/users/register/Minorista/'+userId()+'/';
         console.log("URL:",url)
@@ -38,6 +41,7 @@ export const registerMinoristaService = (tipus) => {
             })
             .catch(error => {
             console.error('There was a problem with your fetch operation:', error);
+            reject(new Error(error));
             });
     })
     

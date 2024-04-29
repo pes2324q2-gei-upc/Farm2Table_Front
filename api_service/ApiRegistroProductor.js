@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import { getIP } from "../informacion/Constants";
 import { userId } from "../informacion/User";
 
-export const registerProductorService = (nif, num_acreditation, name) => {
+export const registerProductorService = (num_acreditation, name) => {
 
     return new Promise ((resolve, reject) => {
         
         const data = {
-            nif: nif,
-            num_acreditation: num_acreditation,
+            num_accreditation: num_acreditation,
             name_productor: name
         };
         
@@ -24,6 +23,7 @@ export const registerProductorService = (nif, num_acreditation, name) => {
             body: JSON.stringify(data)
         };
         
+        console.log(requestOptions)
         const url = 'http://'+getIP()+'/users/register/Productor/'+userId()+'/';
         
         fetch(url, requestOptions)

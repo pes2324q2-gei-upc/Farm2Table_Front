@@ -55,6 +55,22 @@ export const getPalabraEng = (palabra) => {
     return eng[palabra] || palabra;
 }
 
+export const getRestaurantOrMercat = (palabra) => {
+    switch (idioma) {
+        case "esp":
+            if (palabra == "Restaurante") return "Restaurant";
+            else if (palabra == "Mercado") return "Mercat";
+            return palabra;
+        case  "eng":
+            if (palabra == "Market") return "Mercat";
+            return palabra;
+        case "cat":
+            return palabra;
+        default:
+            return palabra;
+    }
+}
+
 const User = () => {
   
 }

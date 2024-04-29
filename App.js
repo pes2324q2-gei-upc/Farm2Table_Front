@@ -17,12 +17,12 @@ import Ticket from './Shopping/ticket';
 import SliderProducts from './products/SliderProducts';
 */
 import { StyleSheet, Text, View } from 'react-native';
-import Registre from "./screens/Registre";
 import InicioSesion from "./screens/InicioSesion";
-import EscollirUsuari from './screens/EscollirUsuari';
-import Productor from './screens/Productor';
-import Minorista from './screens/Minorista';
-import Particular from './screens/Particular';
+import Registre from "./Register/Registre";
+import EscollirUsuari from './Register/EscollirUsuari';
+import Productor from './Register/Productor';
+import Minorista from './Register/Minorista';
+import Particular from './Register/Particular';
 
 
 

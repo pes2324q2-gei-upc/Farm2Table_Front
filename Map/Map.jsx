@@ -4,6 +4,9 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import SearchTab from '../components/searchTab';
 import styles from '../styles/ticket.styles';
+import mapStyle from '../styles/mapStyle';
+import STYLES from '../styles/map.style';
+
 const Map = () => {
 
 	const items = [
@@ -11,109 +14,8 @@ const Map = () => {
 		{ title: 'Mercats', index: 2 },
 		{ title: 'Restaurants', index: 3 },
 	];
-  const mapStyle = [
-    {
-        "featureType": "all",
-        "elementType": "all",
-        "stylers": [
-            {
-                "saturation": "32"
-            },
-            {
-                "lightness": "-3"
-            },
-            {
-                "visibility": "on"
-            },
-            {
-                "weight": "1.18"
-            }
-        ]
-    },
-    {
-        "featureType": "administrative",
-        "elementType": "labels",
-        "stylers": [
-            {
-                "visibility": "on"
-            }
-        ]
-    },
-    {
-        "featureType": "landscape",
-        "elementType": "labels",
-        "stylers": [
-            {
-                "visibility": "off"
-            }
-        ]
-    },
-    {
-        "featureType": "landscape.man_made",
-        "elementType": "all",
-        "stylers": [
-            {
-                "saturation": "-70"
-            },
-            {
-                "lightness": "14"
-            }
-        ]
-    },
-    {
-        "featureType": "poi",
-        "elementType": "labels",
-        "stylers": [
-            {
-                "visibility": "on"
-            }
-        ]
-    },
-    {
-        "featureType": "road",
-        "elementType": "labels",
-        "stylers": [
-            {
-                "visibility": "off"
-            }
-        ]
-    },
-    {
-        "featureType": "transit",
-        "elementType": "labels",
-        "stylers": [
-            {
-                "visibility": "on"
-            }
-        ]
-    },
-    {
-        "featureType": "water",
-        "elementType": "all",
-        "stylers": [
-            {
-                "saturation": "100"
-            },
-            {
-                "lightness": "-14"
-            }
-        ]
-    },
-    {
-        "featureType": "water",
-        "elementType": "labels",
-        "stylers": [
-            {
-                "visibility": "off"
-            },
-            {
-                "lightness": "12"
-            }
-        ]
-    }
-]
-  
-  return (
+    
+    return (
     <View style={STYLES.container}>
         <MapView
         customMapStyle={mapStyle}
@@ -147,45 +49,5 @@ const Map = () => {
     
   )
 }
-
-const STYLES = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  mapStyle: {
-    width:"100%",
-    height: "100%",
-  },
-  searchTab:{
-    position: 'absolute', 
-    top: '10%',
-    width: '100%',
-  },
-	filtros: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-	},
-	scroll: {
-		position: 'absolute',
-		//backgroundColor: 'blue',
-		top: '18%',
-		paddingHorizontal: 20
-	},
-	filtro: {
-		flexDirection:"row",
-    backgroundColor:'#fff', 
-    borderRadius:20,
-    padding:8,
-    paddingHorizontal:20, 
-    marginHorizontal:10,
-    height:35,
-    shadowColor: '#ccc',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.5,
-    shadowRadius: 5,
-    elevation: 10,
-	}
-});
 
 export default Map;
