@@ -7,9 +7,10 @@ import { TouchableOpacity } from 'react-native'
 import Header from '../navigation/header'
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { fetchData2 } from '../api_service/ApiBuscador'
+import { MaterialIcons } from '@expo/vector-icons'; 
 const API_ENDPOINT = "http://"+URL+"/users/productor/";
 const API_PRODUCTES = "http://"+ URL +"/products/";
-
+const API_RESTAURANTS = "https://opendata-ajuntament.barcelona.cat/data/api/action/datastore_search?resource_id=bce0486e-370e-4a72-903f-024ba8902ae1&limit=20"
 
 const TouchableElement = ({ title, isSelected, onPress, index, color,  backgroundColor, borderColor }) => {
 
@@ -29,14 +30,17 @@ const Buscador = () => {
     const [selectedIndex, setSelectedIndex] = useState(null);
     const [data1, setData1] = useState([]);
     const [data2, setData2] = useState([]);
+    const [data3, setData3] = useState([]);
     const [error, setError] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
 
     useFocusEffect(
         useCallback(() => {
+        fetchData2(API_RESTAURANTS,2,setData3);
         fetchData2(API_ENDPOINT, 0, setData1);
         fetchData2(API_PRODUCTES, 1,setData2);
-        setSelectedIndex(1);
+        //console.log(data3);
+        setSelectedIndex(3);
     }, [])
 );
 
@@ -46,9 +50,15 @@ const Buscador = () => {
         navigation.navigate('Consultar_Usuario', { item });
       };
 
+    const handlePressRestaurant = (item, icon) => {
+        navigation.navigate('Restaurante', { item, icon });
+      };
+
     const keyExtractor1 = (item) => item.username.toString();
     
     const keyExtractor2 = (item) => item.id.toString();
+
+    const keyExtractor3 = (item) => item._id;
 
     const renderItem1 = ({ item }) => (
         <TouchableOpacity onPress={() => handlePress(item)}>
@@ -76,6 +86,44 @@ const Buscador = () => {
         </TouchableOpacity>
     );
 
+    const renderItem3 = ({ item }) => {
+        // Define the default icon
+        let icon = null;
+        
+        // Check if the name contains the specified keywords and set the appropriate icon
+        const lowerCaseName = item.name.toLowerCase();
+      
+        if (lowerCaseName.includes('bar')) {
+          icon = <MaterialIcons name="local-bar" size={35} color="black" />;
+        } else if (lowerCaseName.includes('pizza')) {
+          icon = <MaterialIcons name="local-pizza" size={35} color="black" />;
+        } else if (lowerCaseName.includes('café')) {
+          icon = <MaterialIcons name="local-cafe" size={35} color="black" />;
+        } else if (lowerCaseName.includes('kebab')) {
+          icon = <MaterialIcons name="fastfood" size={35} color="black" />; // Kebab icon
+        } else if (lowerCaseName.includes(" ramen")) {
+          icon = <MaterialIcons name="ramen-dining" size={35} color="black" />; // Ramen icon
+        } else if (lowerCaseName.includes('hamburger')) {
+          icon = <MaterialIcons name="fastfood" size={35} color="black" />; // Hamburger icon
+        } else {
+          // If none of the keywords match, default to "restaurant-menu" icon
+          icon = <MaterialIcons name="restaurant-menu" size={35} color="black" />;
+        }
+        
+        return (
+          <TouchableOpacity onPress={() => handlePressRestaurant(item, icon)}>
+            <View style={styles.lista}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                {/* Render the icon */}
+                {icon}
+                {/* Render the item's name */}
+                <Text style={styles.textName}>{item.name}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        );
+      };
+
     const handleItemPress = (index) => {
         setSelectedIndex(index);
     };
@@ -91,7 +139,7 @@ const Buscador = () => {
             <Header></Header>
             <View style={styles.bottom}>
                 <TextInput
-                    placeholder= 'Search by username' 
+                    placeholder= 'Search by name' 
                     clearButtonMode='always' 
                     style={styles.searchBar} 
                     autoCapitalize='words'
@@ -119,10 +167,11 @@ const Buscador = () => {
                 </View>
                 
                 <FlatList   
-                    data={selectedIndex === 1 ? data1.filter(item => item.username.toLowerCase().includes(searchQuery.toLowerCase())) : data2.filter(item => 
-                        item.name.toLowerCase().includes(searchQuery.toLowerCase()))}
-                    keyExtractor={selectedIndex === 1  ? keyExtractor1 : keyExtractor2}
-                    renderItem={selectedIndex === 1 ? renderItem1 : renderItem2}
+                    //Data={selectedIndex === 1 ? data1 : selectedIndex === 2 ? data2 : data3
+                    data={selectedIndex === 1 ? data1.filter(item => item.username.toLowerCase().includes(searchQuery.toLowerCase())) : selectedIndex === 2 ? data2.filter(item => 
+                        item.name.toLowerCase().includes(searchQuery.toLowerCase())) : data3.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()))}
+                    keyExtractor={selectedIndex === 1 ? keyExtractor1 : selectedIndex === 2 ? keyExtractor2 : keyExtractor3}
+                    renderItem={selectedIndex === 1 ? renderItem1 : selectedIndex === 2 ? renderItem2 : renderItem3}
                 />
             </View>
         </SafeAreaView>

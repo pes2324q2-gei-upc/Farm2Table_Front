@@ -7,6 +7,7 @@ import {Ionicons} from "@expo/vector-icons"
 import Home from '../screens/Home'
 import Map from '../screens/Map'
 import Chat from '../screens/Chat'
+import Restaurante from '../screens/Restaurante'
 import Product from '../Products/Product'
 import Buscador from '../screens/Buscador'
 import Consultar_Usuario from '../screens/Consultar_Usuario';
@@ -49,6 +50,7 @@ const BuscadorStackScreen = () => {
         <Stack.Screen name="BuscadorScreen" component={Buscador} />
         <Stack.Screen name="Consultar_Usuario" component={Consultar_Usuario} />
         <Stack.Screen name="EditarPerfil" component={EditarPerfil} /> 
+        <Stack.Screen name="Restaurante" component={Restaurante} />
       </BuscadorStack.Navigator>
     );
 }
