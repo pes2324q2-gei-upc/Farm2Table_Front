@@ -13,12 +13,14 @@ import Buscador from '../screens/Buscador'
 import Consultar_Usuario from '../screens/Consultar_Usuario';
 import { COLORS, SIZES } from '../constants/theme' 
 import EditarPerfil from '../screens/EditarPerfil';
+import MensajesChat from "../screens/MensajesChat";
 
 import Ticket from '../Shopping/ticket';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const BuscadorStack = createNativeStackNavigator();
+const ChatStack = createNativeStackNavigator();
 
 const screenOptions = {
     tabBarShowLabel: false,
@@ -35,6 +37,15 @@ const screenOptions = {
         paddingTop: 10,
     }
 }
+
+const ChatStackScreen = () => {
+    return (
+        <ChatStack.Navigator screenOptions={{headerShown: false }}>
+            <ChatStack.Screen name="Chat" component={Chat} />
+            <ChatStack.Screen name="MensajesChat" component={MensajesChat} />
+        </ChatStack.Navigator>
+    );
+};
 const BuscadorStackScreen = () => {
     return (
       <BuscadorStack.Navigator 
@@ -94,7 +105,7 @@ const Footer = () => {
                 );
             }
         }} />
-        <Tab.Screen name="Chat" component={Chat} options={{
+        <Tab.Screen name="Chat" component={ChatStackScreen} options={{
             tabBarIcon: ({ focused }) => {
                 return (
                     <Ionicons

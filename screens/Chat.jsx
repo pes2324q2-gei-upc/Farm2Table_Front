@@ -7,10 +7,9 @@ import MensajesChat from './MensajesChat';
 import {getPalabra, userId as fetchUserId} from '../informacion/User';
 import {fetchChats} from "../api_service/ApiChat";
 
-const Chat = () => {
+const Chat = ({ navigation }) => {
   const [chats, setChats] = useState([]);
   const [userId, setUserId] = useState(null);
-  const navigation = useNavigation();
 
   useEffect(() => {
     setUserId(fetchUserId());
