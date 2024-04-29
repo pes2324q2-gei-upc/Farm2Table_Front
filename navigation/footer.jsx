@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {Ionicons} from "@expo/vector-icons"
 
 import Home from '../screens/Home'
-import Map from '../screens/Map'
+import Map from '../Map/Map'
 import Chat from '../screens/Chat'
 import Restaurante from '../screens/Restaurante'
 import Product from '../Products/Product'
