@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import logo from '../assets/Farm2Table.png';
-import Productor from './Productor';
-import Minorista from './Minorista';
-import Particular from './Particular';
+import Productor from '../Register/Productor';
+import Minorista from '../Register/Minorista';
+import Particular from '../Register/Particular';
 import { getPalabra } from '../informacion/User';
 import { useNavigation } from '@react-navigation/native';
 import STYLES from '../styles/escollirUsuari.style';

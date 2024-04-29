@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import logo from '../assets/Farm2Table.png';
-import EscollirUsuari from './EscollirUsuari';
+import EscollirUsuari from '../Register/EscollirUsuari';
 import { getPalabra, setEmail, setUserId, userId } from '../informacion/User';
 import { useNavigation } from '@react-navigation/native';
 import { registerService } from '../api_service/ApiRegistro';
