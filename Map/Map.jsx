@@ -38,12 +38,11 @@ const Map = () => {
 					height={50}
 					style={STYLES.scroll}
 				>
-					{items.map((item, index) => (
-						<TouchableOpacity key={index} style={STYLES.filtro}>
-							<Text>{item.title}</Text>
-						</TouchableOpacity>
-					))}
-
+                    {items.map((item, index) => (
+                        <TouchableOpacity key={index} style={STYLES.filtro}>
+                            <Text>{item.title}</Text>
+                        </TouchableOpacity>
+                    ))}
 				</ScrollView>
     </View>
     
