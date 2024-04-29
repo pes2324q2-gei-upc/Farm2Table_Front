@@ -9,6 +9,10 @@ import AddProduct from './screens/AddProduct';
 import { COLORS, SIZES } from './constants/theme';
 import ProductDetails from './screens/ProductDetails';
 import Consultar_Usuario from './screens/Consultar_Usuario';
+import CartScreen from './Shopping/cart';
+import Ticket from './Shopping/ticket';
+
+
 /*
 import SliderProducts from './products/SliderProducts';
 */
@@ -34,6 +38,7 @@ export default function App() {
     extraBold: require("./assets/fonts/Poppins-ExtraBold.ttf"),
     black: require("./assets/fonts/Poppins-Black.ttf"),
     thin: require("./assets/fonts/Poppins-Thin.ttf"),
+    ticket: require("./assets/fonts/Ticketing.ttf")
   });
   
   if(!fontsLoaded) return null;
@@ -52,6 +57,8 @@ export default function App() {
         <Stack.Screen name="AddProduct" component={AddProduct} options={{headerShown: false}} />
         <Stack.Screen name="ProductDetails" component={ProductDetails} options={{headerShown: false}} />
         <Stack.Screen name="Consultar_Usuario" component={Consultar_Usuario} options={{headerShown: false}} />
+        <Stack.Screen name="CartScreen" component={CartScreen} options={{headerShown: false}} />
+        <Stack.Screen name="Ticket" component={Ticket} options={{headerShown: false}} />
       </Stack.Navigator>
     </NavigationContainer>
   );
