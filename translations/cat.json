@@ -35,6 +35,8 @@
     "service_name": "Nom del teu servei",
     "Service must be a Restaurant or a Mercat": "El servei ha de ser Restaurant o Mercat",
     "Minorista is not registered as User": "Encara no t'has registrat",
+    "Mercat does not exist": "El mercat no existeix",
+    "Restaurants does not exist": "El restaurant no existeix",
     "particular": "Particular",
     "reach": "El teu abast (km)",
     "User is already a subtype": "L'usuari ja està registrat",

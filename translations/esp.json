@@ -35,6 +35,8 @@
     "service_name": "Nombre de tu servicio",
     "Service must be a Restaurant or a Mercat": "El servicio debe ser Restaurante o Mercado",
     "Minorista is not registered as User": "No has sido registrado",
+    "Mercat does not exist": "El mercado no existe",
+    "Restaurants does not exist": "El restaurante no existe",
     "particular": "Particular",
     "reach": "Tu alcance (kilómetros)",
     "User is already a subtype": "El usuario ya está registrado",

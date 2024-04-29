@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput } from 'reac
 import logo from '../assets/Farm2Table.png';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { SelectList } from 'react-native-dropdown-select-list';
-import { getPalabra, getPalabraEng, userId } from '../informacion/User';
+import { getPalabra, getPalabraEng, getRestaurantOrMercat, userId } from '../informacion/User';
 import { getIP } from '../informacion/Constants';
 import { useNavigation } from '@react-navigation/native';
 import { registerMinoristaService } from '../api_service/ApiRegistroMinorista';
@@ -133,14 +133,16 @@ const Minorista = () => {
   };
 
   const handleRegister = async () => {
-    if (tipus != "") setTipus(getPalabraEng(tipus.toLowerCase));
+    
     console.log("Tipus:", tipus);
     console.log("nomServei", servei);
     console.log("UserId", userId());
     
+    const tipus_cat = getRestaurantOrMercat(tipus);
+    console.log("TIPUS CAT",tipus_cat);
 
     try {
-        const data = await registerMinoristaService(tipus, servei);
+        const data = await registerMinoristaService(tipus_cat, servei);
         if (data.error) {
           setError(data.error)
           console.log(error_message);

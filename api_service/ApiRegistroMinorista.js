@@ -8,7 +8,7 @@ export const registerMinoristaService = (tipus, servei) => {
         
         const data = {
             service: tipus,
-            nom_service: servei
+            service_name: servei,
         };
         
         const csrfToken = '';
@@ -22,6 +22,8 @@ export const registerMinoristaService = (tipus, servei) => {
               },
             body: JSON.stringify(data)
         };
+
+        console.log("DATOS:",requestOptions)
         
         const url = 'http://'+getIP()+'/users/register/Minorista/'+userId()+'/';
         console.log("URL:",url)
@@ -39,6 +41,7 @@ export const registerMinoristaService = (tipus, servei) => {
             })
             .catch(error => {
             console.error('There was a problem with your fetch operation:', error);
+            reject(new Error(error));
             });
     })
     

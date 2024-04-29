@@ -159,12 +159,11 @@ const Productor = () => {
 
   const handleRegister = async () => {
     console.log("Nombre:", name);
-    console.log("NIF:", nif);
     console.log("Num acreditacio:", num_acreditation);
     console.log("UserId", userId())
 
     try {
-        const data = await registerProductorService(nif, num_acreditation, name);
+        const data = await registerProductorService(num_acreditation, name);
         if (data.error) {
           setError(data.error)
           console.log(error_message);
@@ -205,19 +204,6 @@ const Productor = () => {
                     placeholder={getPalabra("name_producer")}
                     value={name}
                     onChangeText={setName}
-                >
-                
-                </TextInput>
-
-            </View>
-
-            <View style={STYLES.fondo_nif}>
-
-                <TextInput 
-                    style={STYLES.nif}
-                    placeholder={getPalabra("nif")}
-                    value={nif}
-                    onChangeText={setNif}
                 >
                 
                 </TextInput>

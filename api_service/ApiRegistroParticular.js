@@ -38,6 +38,7 @@ export const registerParticularService = (abast, productes) => {
             })
             .catch(error => {
             console.error('There was a problem with your fetch operation:', error);
+            reject(new Error(error));
             });
     })
     
