@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput } from 'react-native';
 import logo from '../assets/Farm2Table.png';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { SelectList } from 'react-native-dropdown-select-list';
-import { getPalabra, getPalabraEng, userId } from '../informacion/User';
+import { getPalabra, getPalabraEng, getRestaurantOrMercat, userId } from '../informacion/User';
 import { getIP } from '../informacion/Constants';
 import { useNavigation } from '@react-navigation/native';
 import { registerMinoristaService } from '../api_service/ApiRegistroMinorista';
@@ -100,12 +100,31 @@ const STYLES = StyleSheet.create({
         color: '#749969',
         fontWeight: 'bold',
     },
+    desplegable2: {
+        marginTop: 180,
+        backgroundColor: 'white',
+        bottom: 100,
+        width: 275,
+        justifyContent: 'top',
+        alignItems: 'left',
+        borderRadius: 10,
+        height: 55,
+        elevation: -3
+    },
+    service_text: {
+        fontSize: 20,
+        color: '#749969',
+        fontWeight: 'bold',
+        width: 270,
+        height: 50,
+    },
   });
 
 const Minorista = () => {
 
   const [tipus, setTipus] = useState("");
   const TIPUS = [getPalabra("restaurant"),getPalabra("market")];
+  const [servei, setServei] = useState("");
   const [error_message, setError] = useState('');
   const NAVIGATOR = useNavigation();
 
@@ -114,13 +133,16 @@ const Minorista = () => {
   };
 
   const handleRegister = async () => {
-    if (tipus != "") setTipus(getPalabraEng(tipus.toLowerCase));
+    
     console.log("Tipus:", tipus);
+    console.log("nomServei", servei);
     console.log("UserId", userId());
     
+    const tipus_cat = getRestaurantOrMercat(tipus);
+    console.log("TIPUS CAT",tipus_cat);
 
     try {
-        const data = await registerMinoristaService(tipus);
+        const data = await registerMinoristaService(tipus_cat, servei);
         if (data.error) {
           setError(data.error)
           console.log(error_message);
@@ -154,6 +176,17 @@ const Minorista = () => {
                 {getPalabra("fill_data")}
             </Text>     
 
+            <View style={STYLES.desplegable2}>
+                <View style={{marginTop: 14, marginLeft: 20,}}>
+                  <TextInput 
+                      placeholder = {getPalabra("service_name")}
+                      style={STYLES.sector_texto}
+                      value={servei}
+                      onChangeText={setServei}
+                  />
+                </View>
+            </View>
+
             <View style={STYLES.desplegable}>
                 <SelectList 
                     placeholder = {getPalabra("service_type")}
@@ -167,6 +200,8 @@ const Minorista = () => {
                     search={false}
                 />
             </View>
+
+            
 
         </View>
 
