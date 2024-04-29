@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Dimensions, ScrollView,TouchableOpacity} from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import SearchTab from '../components/searchTab';
 import styles from '../styles/ticket.styles';
 import mapStyle from '../styles/mapStyle';
@@ -21,14 +21,28 @@ const Map = () => {
         customMapStyle={mapStyle}
         provider={PROVIDER_GOOGLE}
         style={STYLES.mapStyle}
-        initialRegion={{
+        region={{
           latitude: 41.3995345,
           longitude: 2.1909796,
           latitudeDelta: 0.003,
           longitudeDelta: 0.003,
         }}
         mapType="standard"
-        ></MapView>
+        >
+            <Marker
+            coordinate={{
+                latitude: 41.3995345,
+                longitude: 2.1909796
+            }}
+            title="HOLAAAA"
+            description="DESCRIPCIOOON"
+            pinColor='black'
+            />
+
+        </MapView>
+
+        
+
         <View style={STYLES.searchTab}>
             <SearchTab/>
         </View>

@@ -44,6 +44,30 @@ const STYLES = StyleSheet.create({
       shadowOpacity: 0.5,
       shadowRadius: 5,
       elevation: 10,
+    },
+    flecha: {
+      backgroundColor: 'transparent',
+      borderColor: 'transparent',
+      borderTopColor: '#fff',
+      borderWidth: 16,
+      alignSelf: 'center',
+      marginTop: -32
+    },
+    flecha_border: {
+      backgroundColor: 'transparent',
+      borderColor: 'transparent',
+      borderTopColor: '#007a87',
+      borderWidth: 16,
+      alignSelf: 'center',
+      marginTop: -0.5
+    },
+    name: {
+      fontSize: 16,
+      marginBottom: 5
+    },
+    imagen: {
+      width: 120,
+      height: 80
     }
   });
 
