@@ -1,9 +1,19 @@
-import React, {useState} from "react";
-import {ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, SafeAreaView} from "react-native";
+import React, { useState } from "react";
+import {
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
+    SafeAreaView,
+    KeyboardAvoidingView,
+    Platform
+} from "react-native";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faPaperPlane, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
-const MensajesChat = () => {
+const MensajesChat = ({ navigation }) => {
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
 
@@ -15,38 +25,57 @@ const MensajesChat = () => {
         }
     };
 
+    const goBack = () => {
+        navigation.goBack();
+    };
+
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView contentContainerStyle={styles.messagesContainer}>
-                {messages.map((msg, index) => (
-                    <SafeAreaView key={index} style={[styles.messageBubble, msg.sender === 'user' ? styles.userMessage : styles.otherMessage]}>
-                        <Text style={styles.messageText}>{msg.text}</Text>
-                    </SafeAreaView>
-                ))}
-            </ScrollView>
-
-            <SafeAreaView style={styles.inputContainer}>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Escriu un missatge"
-                    onChangeText={setMessage}
-                    value={message}
-                    multiline={true}
-                    autoFocus={true}
-                />
-                <TouchableOpacity onPress={sendMessage}>
-                    <FontAwesomeIcon icon={faPaperPlane} size={35} color="#245414" />
+            <KeyboardAvoidingView
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+                style={styles.flexOne}
+                keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
+            >
+                <TouchableOpacity onPress={goBack} style={styles.backButton}>
+                    <FontAwesomeIcon icon={faArrowLeft} size={24} color="#000" />
                 </TouchableOpacity>
-            </SafeAreaView>
+                <ScrollView contentContainerStyle={styles.messagesContainer}>
+                    {messages.map((msg, index) => (
+                        <SafeAreaView key={index} style={[styles.messageBubble, msg.sender === 'user' ? styles.userMessage : styles.otherMessage]}>
+                            <Text style={styles.messageText}>{msg.text}</Text>
+                        </SafeAreaView>
+                    ))}
+                </ScrollView>
+
+                <SafeAreaView style={styles.inputContainer}>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Escriu un missatge"
+                        onChangeText={setMessage}
+                        value={message}
+                        multiline={true}
+                        autoFocus={true}
+                    />
+                    <TouchableOpacity onPress={sendMessage}>
+                        <FontAwesomeIcon icon={faPaperPlane} size={35} color="#245414" />
+                    </TouchableOpacity>
+                </SafeAreaView>
+            </KeyboardAvoidingView>
         </SafeAreaView>
     );
 };
-
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         marginBottom: 75,
+    },
+    flexOne: {
+        flex: 1,
+    },
+    backButton: {
+        margin: 10,
+        alignSelf: 'flex-start',
     },
     messagesContainer: {
         flexGrow: 1,
@@ -79,7 +108,7 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         borderRadius: 20,
         marginHorizontal: 10,
-        marginBottom: 5,
+        marginBottom: 20,
     },
     input: {
         flex: 1,
