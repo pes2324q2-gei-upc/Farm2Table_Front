@@ -1,65 +1,133 @@
-import React, { useState } from "react";
-import {
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
-    SafeAreaView,
-    KeyboardAvoidingView,
-    Platform
-} from "react-native";
+import React, { useState, useEffect } from 'react';
+import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, SafeAreaView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPaperPlane, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { useRoute } from '@react-navigation/native';
+import { format, parseISO, isSameDay } from 'date-fns';
+
 
 const MensajesChat = ({ navigation }) => {
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
+    const [socket, setSocket] = useState(null);
+    const route = useRoute();
+    const { chatId, productId, authorId, receiverId } = route.params;
+
+    useEffect(() => {
+        const websocketURL = `ws://51.44.17.164/ws/${authorId}/chat/messages/`;
+        const newSocket = new WebSocket(websocketURL);
+
+        newSocket.onopen = () => {
+            console.log('WebSocket connection established');
+            fetchInitialMessages();
+        };
+
+        newSocket.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            if (data.message_text && data.sent_date) {
+                setMessages(prev => [...prev, {
+                    text: data.message_text,
+                    sender: 'user',
+                    timestamp: data.sent_date
+                }]);
+            } else {
+                console.error('Message missing timestamp or text:', data);
+            }
+        };
+
+        newSocket.onerror = error => {
+            console.error('WebSocket error:', error);
+            Alert.alert("Error", "Unable to connect to chat service.");
+        };
+
+        newSocket.onclose = () => {
+            console.log('WebSocket connection closed');
+        };
+
+        setSocket(newSocket);
+        return () => newSocket.close();
+    }, [authorId, chatId]);
+
+    const fetchInitialMessages = async () => {
+        const url = `http://51.44.17.164/chats/rooms/${chatId}`;
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error('Failed to fetch chat messages: ' + response.statusText);
+            }
+            setMessages(data.map(msg => ({
+                ...msg,
+                sender: msg.author.id === authorId ? 'user' : 'server',
+                timestamp: msg.sent_date
+
+            })));
+        } catch (error) {
+            console.error('Fetch error:', error);
+            Alert.alert("Error", "Failed to load chat history.");
+        }
+    };
 
     const sendMessage = () => {
-        if (message.trim() !== "") {
-            const newMessage = { text: message, sender: 'user' };
-            setMessages([...messages, newMessage]);
+        if (message.trim() && socket) {
+            socket.send(JSON.stringify({
+                product_id: productId,
+                author_id: authorId,
+                message_text: message,
+                receiver_id: receiverId,
+            }));
             setMessage('');
         }
     };
 
-    const goBack = () => {
-        navigation.goBack();
-    };
+    const groupedMessages = messages.reduce((acc, message) => {
+        if (message.timestamp) {
+            const date = format(parseISO(message.timestamp), 'yyyy-MM-dd');
+            if (!acc[date]) {
+                acc[date] = [];
+            }
+            acc[date].push(message);
+        } else {
+            console.warn('Message without a timestamp:', message);
+        }
+        return acc;
+    }, {});
 
     return (
         <SafeAreaView style={styles.container}>
             <KeyboardAvoidingView
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
                 style={styles.flexOne}
-                keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
             >
-                <TouchableOpacity onPress={goBack} style={styles.backButton}>
+                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
                     <FontAwesomeIcon icon={faArrowLeft} size={24} color="#000" />
                 </TouchableOpacity>
                 <ScrollView contentContainerStyle={styles.messagesContainer}>
-                    {messages.map((msg, index) => (
-                        <SafeAreaView key={index} style={[styles.messageBubble, msg.sender === 'user' ? styles.userMessage : styles.otherMessage]}>
-                            <Text style={styles.messageText}>{msg.text}</Text>
-                        </SafeAreaView>
+                    {Object.entries(groupedMessages).map(([date, dateMessages]) => (
+                        <View key={date}>
+                            <Text style={styles.dateHeader}>{format(parseISO(date), 'PPP')}</Text>
+                            {dateMessages.map((msg, index) => (
+                                <View key={index} style={[styles.messageBubble, msg.sender === 'user' ? styles.userMessage : styles.otherMessage]}>
+                                    <Text style={styles.messageText}>{msg.text}</Text>
+                                    <Text style={styles.timestamp}>{format(parseISO(msg.timestamp), 'p')}</Text>
+                                </View>
+                            ))}
+                        </View>
                     ))}
                 </ScrollView>
-
-                <SafeAreaView style={styles.inputContainer}>
+                <View style={styles.inputContainer}>
                     <TextInput
                         style={styles.input}
-                        placeholder="Escriu un missatge"
+                        placeholder="Type a message"
                         onChangeText={setMessage}
                         value={message}
-                        multiline={true}
-                        autoFocus={true}
+                        multiline
+                        autoFocus
                     />
-                    <TouchableOpacity onPress={sendMessage}>
-                        <FontAwesomeIcon icon={faPaperPlane} size={35} color="#245414" />
+                    <TouchableOpacity onPress={sendMessage} style={styles.sendButton}>
+                        <FontAwesomeIcon icon={faPaperPlane} size={24} color="#245414" />
                     </TouchableOpacity>
-                </SafeAreaView>
+                </View>
             </KeyboardAvoidingView>
         </SafeAreaView>
     );
@@ -79,15 +147,13 @@ const styles = StyleSheet.create({
     },
     messagesContainer: {
         flexGrow: 1,
-        marginTop: 30,
+        padding: 10,
     },
     messageBubble: {
         maxWidth: '80%',
         padding: 10,
         borderRadius: 20,
         marginVertical: 5,
-        marginRight: 10,
-        paddingHorizontal: 15,
     },
     userMessage: {
         alignSelf: 'flex-end',
@@ -105,16 +171,33 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#18E19A',
         paddingHorizontal: 10,
-        paddingVertical: 10,
+        paddingVertical: 5,
         borderRadius: 20,
         marginHorizontal: 10,
         marginBottom: 20,
     },
     input: {
         flex: 1,
+        marginRight: 10,
         fontSize: 18,
-        paddingVertical: 10,
-        paddingHorizontal: 5,
+    },
+    sendButton: {
+        padding: 10,
+    },
+    dateHeader: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        paddingVertical: 8,
+        paddingHorizontal: 10,
+        backgroundColor: '#f0f0f0',
+        textAlign: 'center',
+        width: '100%',
+    },
+    timestamp: {
+        fontSize: 12,
+        opacity: 0.6,
+        textAlign: 'right',
+        marginTop: 4,
     },
 });
 

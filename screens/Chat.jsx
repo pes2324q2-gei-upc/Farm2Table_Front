@@ -31,7 +31,12 @@ const Chat = ({ navigation }) => {
 
   const renderItem = ({ item }) => (
       <TouchableOpacity
-          onPress={() => navigation.navigate('MensajesChat', { chatId: item.id })}
+          onPress={() => navigation.navigate('MensajesChat', {
+            chatId: item.id,
+            productId: item.product.id,
+            authorId: userId, // asumiendo que `userId` es el ID del usuario actual
+            receiverId: (userId !== item.user1.id ? item.user1.id : item.user2.id) // ID del otro usuario en el chat
+          })}
           style={styles.chatItem}
       >
         <Image
