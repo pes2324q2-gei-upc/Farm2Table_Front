@@ -96,7 +96,7 @@ const MensajesChat = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
             <KeyboardAvoidingView
-                behavior={Platform.OS === "ios" ? "padding" : "height"}
+                behavior={Platform.OS === "ios" || Platform.OS === "android" ? "padding" : "height"}
                 style={styles.flexOne}
             >
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
