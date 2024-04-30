@@ -10,10 +10,13 @@ import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '../constants/theme';
 import QuantitySelector from '../components/quantity';
 import { initial } from 'lodash';
+import DeleteConfirmationModal from '../PopUps/deleteItem';
 
 const CartScreen = () => {
     const [cartItems, setCartItems] = useState([]);
     const navigation = useNavigation();
+    const [selectedItem, setSelectedItem] = useState(null);
+    const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 
     useEffect(() => {
         const initializeCart = async () => {
@@ -22,6 +25,18 @@ const CartScreen = () => {
         };
         initializeCart();
     }, []);
+
+    const handleOpenDeleteModal = (storeId, productId) => {
+        setSelectedItem({ storeId, productId });
+        setDeleteModalVisible(true);
+    };
+
+    const handleConfirmDelete = () => {
+        const { storeId, productId } = selectedItem;
+        const updatedCart = removeItemFromCart(cartItems, storeId, productId);
+        setCartItems(updatedCart);
+        saveCart(userId(), updatedCart);
+    };
 
     const handleRemoveItem = async (storeId, productId) => {
         const updatedCart = removeItemFromCart(cartItems, storeId, productId);
@@ -77,7 +92,7 @@ const CartScreen = () => {
                                 />
                                 <TouchableOpacity 
                                     style={styles.removeButton} 
-                                    onPress={() => handleRemoveItem(store.storeId, item.productId)}
+                                    onPress={() => handleOpenDeleteModal(store.storeId, item.productId)}
                                 >
                                     <Ionicons name="trash" size={24} color={COLORS.primary}/>
                                 </TouchableOpacity>
@@ -92,6 +107,11 @@ const CartScreen = () => {
                     </View>
                 ))}
             </ScrollView>
+            <DeleteConfirmationModal
+                modalVisible={deleteModalVisible}
+                setModalVisible={setDeleteModalVisible}
+                handleConfirmDelete={handleConfirmDelete}
+            />
         </SafeAreaView>
     );
 };
