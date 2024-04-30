@@ -36,6 +36,11 @@ const styles = StyleSheet.create({
     buttonCart: {
       backgroundColor: COLORS.secondary,
     },
+    buttonBack: {
+      backgroundColor: COLORS.white,
+      borderWidth: 2,
+      borderColor: COLORS.secondary,
+  
     buttonDelete: {
       backgroundColor: COLORS.error,
     },
@@ -44,6 +49,11 @@ const styles = StyleSheet.create({
     },
     buttonText: {
       color: "white",
+      fontWeight: "bold",
+      textAlign: "center"
+    },
+    buttonTextBlack: {
+      color: COLORS.secondary,
       fontWeight: "bold",
       textAlign: "center"
     },
