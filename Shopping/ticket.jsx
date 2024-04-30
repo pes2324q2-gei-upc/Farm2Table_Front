@@ -6,7 +6,7 @@ import ConfirmModal from '../PopUps/endPurchase';
 import AddFundsModal from '../PopUps/insufficientFunds';
 import OutOfStockModal from '../PopUps/outOfStock';
 import styles from '../styles/ticket.styles'; // Adjust the import path as needed
-import { fetchUserFunds } from '../api_service/API_Cart';
+import { fetchUserFunds, fetchProductStock } from '../api_service/API_Cart';
 
 const Ticket = ({ navigation, route }) => {
     console.log(route.params);
@@ -16,6 +16,7 @@ const Ticket = ({ navigation, route }) => {
     const [confirmModalVisible, setConfirmModalVisible] = useState(false);
     const [fundsModalVisible, setFundsModalVisible] = useState(false);
     const [stockModalVisible, setStockModalVisible] = useState(false);
+    const [stockDetails, setStockDetails] = useState({ productName: '', quantityLeft: 0 });
 
     const handlePurchase = async () => {
         // Verificar si hay suficientes fondos
@@ -26,6 +27,20 @@ const Ticket = ({ navigation, route }) => {
         if (userFunds < total) {
             setFundsModalVisible(true);
             return;
+        }
+
+        // Verificar si hay suficiente stock
+        for (let i = 0; i < items.length; i++) {
+            const stock = await fetchProductStock(items[i].productId);
+            if (stock.quantity < items[i].quantity) {
+                setStockDetails({ productName: stock.name, quantityLeft: stock.quantity });
+                setStockModalVisible(true);
+                return;
+            }
+        }
+
+        //Comprar y cobrar producto a producto 
+        for (let i = 0; i < items.length; i++) {
         }
     }
     
@@ -70,7 +85,13 @@ const Ticket = ({ navigation, route }) => {
             </ScrollView>
             <ConfirmModal modalVisible={confirmModalVisible} setModalVisible={setConfirmModalVisible} navigation={navigation} />
             <AddFundsModal modalVisible={fundsModalVisible} setModalVisible={setFundsModalVisible} navigation={navigation} />
-            <OutOfStockModal modalVisible={stockModalVisible} setModalVisible={setStockModalVisible} navigation={navigation} />
+            <OutOfStockModal 
+                modalVisible={stockModalVisible} 
+                setModalVisible={setStockModalVisible} 
+                navigation={navigation} 
+                productName={stockDetails.productName} 
+                quantityLeft={stockDetails.quantityLeft} 
+            />
         </SafeAreaView>
     );
 };
