@@ -34,8 +34,9 @@ const Chat = ({ navigation }) => {
           onPress={() => navigation.navigate('MensajesChat', {
             chatId: item.id,
             productId: item.product.id,
-            authorId: userId, // asumiendo que `userId` es el ID del usuario actual
-            receiverId: (userId !== item.user1.id ? item.user1.id : item.user2.id) // ID del otro usuario en el chat
+            authorId: userId,
+            receiverId: (userId !== item.user1.id ? item.user1.id : item.user2.id),
+            receiverUsername: (userId !== item.user1.id ? item.user1.username : item.user2.username)
           })}
           style={styles.chatItem}
       >

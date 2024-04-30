@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, SafeAreaView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, SafeAreaView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPaperPlane, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useRoute } from '@react-navigation/native';
@@ -11,7 +11,7 @@ const MensajesChat = ({ navigation }) => {
     const [messages, setMessages] = useState([]);
     const [socket, setSocket] = useState(null);
     const route = useRoute();
-    const { chatId, productId, authorId, receiverId } = route.params;
+    const { chatId, productId, authorId, receiverId, receiverUsername } = route.params;
 
     useEffect(() => {
         const websocketURL = `ws://51.44.17.164/ws/${authorId}/chat/messages/`;
@@ -99,9 +99,12 @@ const MensajesChat = ({ navigation }) => {
                 behavior={Platform.OS === "ios" || Platform.OS === "android" ? "padding" : "height"}
                 style={styles.flexOne}
             >
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                    <FontAwesomeIcon icon={faArrowLeft} size={24} color="#000" />
-                </TouchableOpacity>
+                <View style={styles.headerContainer}>
+                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                        <FontAwesomeIcon icon={faArrowLeft} size={24} color="#000" />
+                    </TouchableOpacity>
+                    <Text style={styles.username}>{receiverUsername}</Text>
+                </View>
                 <ScrollView contentContainerStyle={styles.messagesContainer}>
                     {Object.entries(groupedMessages).map(([date, dateMessages]) => (
                         <View key={date}>
@@ -138,12 +141,26 @@ const styles = StyleSheet.create({
         flex: 1,
         marginBottom: 75,
     },
+    headerContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 10,
+        backgroundColor: '#f9f9f9',
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+    },
+    username: {
+        marginLeft: 10,
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
     flexOne: {
         flex: 1,
     },
     backButton: {
         margin: 10,
         alignSelf: 'flex-start',
+        marginRight: 65,
     },
     messagesContainer: {
         flexGrow: 1,
