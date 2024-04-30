@@ -105,7 +105,7 @@ const Footer = () => {
                 );
             }
         }} />
-        <Tab.Screen name="Chat" component={ChatStackScreen} options={{
+        <Tab.Screen name="Xat" component={ChatStackScreen} options={{
             tabBarIcon: ({ focused }) => {
                 return (
                     <Ionicons
