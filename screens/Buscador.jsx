@@ -10,7 +10,7 @@ import { fetchData2 } from '../api_service/ApiBuscador'
 import { MaterialIcons } from '@expo/vector-icons'; 
 const API_ENDPOINT = "http://"+URL+"/users/productor/";
 const API_PRODUCTES = "http://"+ URL +"/products/";
-const API_RESTAURANTS = "https://opendata-ajuntament.barcelona.cat/data/api/action/datastore_search?resource_id=bce0486e-370e-4a72-903f-024ba8902ae1&limit=20"
+const API_RESTAURANTS = "https://opendata-ajuntament.barcelona.cat/data/api/action/datastore_search?resource_id=bce0486e-370e-4a72-903f-024ba8902ae1&limit=2626"
 
 const TouchableElement = ({ title, isSelected, onPress, index, color,  backgroundColor, borderColor }) => {
 
