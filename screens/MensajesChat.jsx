@@ -24,11 +24,11 @@ const MensajesChat = ({ navigation }) => {
 
         newSocket.onmessage = (event) => {
             const data = JSON.parse(event.data);
-            if (data.message_text && data.sent_date) {
+            if (data.message_text) {
                 setMessages(prev => [...prev, {
                     text: data.message_text,
                     sender: 'user',
-                    timestamp: data.sent_date
+                    timestamp: new Date().toISOString()
                 }]);
             } else {
                 console.error('Message missing timestamp or text:', data);
