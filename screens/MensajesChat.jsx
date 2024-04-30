@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPaperPlane, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useRoute } from '@react-navigation/native';
 import { format, parseISO, isSameDay } from 'date-fns';
+import { COLORS, SIZES } from '../constants/theme'
 
 
 const MensajesChat = ({ navigation }) => {
@@ -100,6 +101,7 @@ const MensajesChat = ({ navigation }) => {
                         <FontAwesomeIcon icon={faArrowLeft} size={24} color="#000" />
                     </TouchableOpacity>
                     <Text style={styles.username}>{receiverUsername}</Text>
+                    <View style={styles.backButton} />
                 </View>
                 <ScrollView contentContainerStyle={styles.messagesContainer}>
                     {Object.entries(groupedMessages).map(([date, dateMessages]) => (
@@ -140,13 +142,15 @@ const styles = StyleSheet.create({
     headerContainer: {
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'space-between',
         padding: 10,
         backgroundColor: '#f9f9f9',
         borderBottomWidth: 1,
         borderBottomColor: '#ccc',
     },
     username: {
-        marginLeft: 10,
+        flex: 1,
+        textAlign: 'center',
         fontSize: 18,
         fontWeight: 'bold',
     },
@@ -156,7 +160,6 @@ const styles = StyleSheet.create({
     backButton: {
         margin: 10,
         alignSelf: 'flex-start',
-        marginRight: 65,
     },
     messagesContainer: {
         flexGrow: 1,
