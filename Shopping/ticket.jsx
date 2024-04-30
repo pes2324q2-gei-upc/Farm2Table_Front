@@ -6,13 +6,29 @@ import ConfirmModal from '../PopUps/endPurchase';
 import AddFundsModal from '../PopUps/insufficientFunds';
 import OutOfStockModal from '../PopUps/outOfStock';
 import styles from '../styles/ticket.styles'; // Adjust the import path as needed
+import { fetchUserFunds } from '../api_service/API_Cart';
 
 const Ticket = ({ navigation, route }) => {
     console.log(route.params);
     const { items, storeId } = route.params; // Asegúrate de que los nombres de las propiedades coincidan con los que se pasan desde la pantalla de carrito
     const storeName = "Best Store Ever"; // Este valor debería ser dinámico si tienes varios almacenes
     const storeAddress = "123 Shopping Ln, Retail City"; // Esto también debería venir de los datos del almacén
-    const [modalVisible, setModalVisible] = useState(false);
+    const [confirmModalVisible, setConfirmModalVisible] = useState(false);
+    const [fundsModalVisible, setFundsModalVisible] = useState(false);
+    const [stockModalVisible, setStockModalVisible] = useState(false);
+
+    const handlePurchase = async () => {
+        // Verificar si hay suficientes fondos
+        const userId = 14; // Este valor debería ser dinámico
+        const userFunds = await fetchUserFunds(userId);
+        console.log(userFunds);
+        const total = items.reduce((acc, item) => acc + (item.quantity * item.price), 0).toFixed(2); 
+        if (userFunds < total) {
+            setFundsModalVisible(true);
+            return;
+        }
+    }
+    
 
     const getTotal = () => {
         return items.reduce((acc, item) => acc + (item.quantity * item.price), 0).toFixed(2);
@@ -47,17 +63,18 @@ const Ticket = ({ navigation, route }) => {
                     </View>
                 </ScrollView>
                 <View style={styles.button_container}>
-                    <TouchableOpacity style={styles.button}  onPress={() => setModalVisible(true)}>
+                    <TouchableOpacity style={styles.button}  onPress={handlePurchase}>
                         <Text style={styles.buttonText}>Finalizar Pedido</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
-            <AddFundsModal modalVisible={modalVisible} setModalVisible={setModalVisible} navigation={navigation} />
-            <OutOfStockModal modalVisible={modalVisible} setModalVisible={setModalVisible} navigation={navigation} />
+            <ConfirmModal modalVisible={confirmModalVisible} setModalVisible={setConfirmModalVisible} navigation={navigation} />
+            <AddFundsModal modalVisible={fundsModalVisible} setModalVisible={setFundsModalVisible} navigation={navigation} />
+            <OutOfStockModal modalVisible={stockModalVisible} setModalVisible={setStockModalVisible} navigation={navigation} />
         </SafeAreaView>
     );
 };
 
-//<ConfirmModal modalVisible={modalVisible} setModalVisible={setModalVisible} navigation={navigation} />
+
 
 export default Ticket;
