@@ -6,14 +6,14 @@ import {Ionicons} from "@expo/vector-icons"
 
 import Home from '../screens/Home'
 import Map from '../Map/Map'
-import Chat from '../screens/Chat'
+import Chat from '../Chat/Chat'
 import Restaurante from '../screens/Restaurante'
 import Product from '../Products/Product'
 import Buscador from '../screens/Buscador'
 import Consultar_Usuario from '../screens/Consultar_Usuario';
 import { COLORS, SIZES } from '../constants/theme' 
 import EditarPerfil from '../screens/EditarPerfil';
-import MensajesChat from "../screens/MensajesChat";
+import MensajesChat from "../Chat/MensajesChat";
 
 import Ticket from '../Shopping/ticket';
 
@@ -105,7 +105,7 @@ const Footer = () => {
                 );
             }
         }} />
-        <Tab.Screen name="Chat" component={ChatStackScreen} options={{
+        <Tab.Screen name="Xat" component={ChatStackScreen} options={{
             tabBarIcon: ({ focused }) => {
                 return (
                     <Ionicons

@@ -6,6 +6,7 @@ import Header from '../navigation/header';
 import MensajesChat from './MensajesChat';
 import {getPalabra, userId as fetchUserId} from '../informacion/User';
 import {fetchChats} from "../api_service/ApiChat";
+import styles from "../styles/chat.style";
 
 const Chat = ({ navigation }) => {
   const [chats, setChats] = useState([]);
@@ -34,8 +35,9 @@ const Chat = ({ navigation }) => {
           onPress={() => navigation.navigate('MensajesChat', {
             chatId: item.id,
             productId: item.product.id,
-            authorId: userId, // asumiendo que `userId` es el ID del usuario actual
-            receiverId: (userId !== item.user1.id ? item.user1.id : item.user2.id) // ID del otro usuario en el chat
+            authorId: userId,
+            receiverId: (userId !== item.user1.id ? item.user1.id : item.user2.id),
+            receiverUsername: (userId !== item.user1.id ? item.user1.username : item.user2.username)
           })}
           style={styles.chatItem}
       >
@@ -68,43 +70,5 @@ const Chat = ({ navigation }) => {
       </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.secondary,
-  },
-  containerIn: {
-    backgroundColor: COLORS.primary,
-    flex: 1,
-  },
-  chatItem: {
-    flexDirection: 'row',
-    paddingVertical: 20,
-    paddingHorizontal: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#cbc0bb",
-  },
-  image: {
-    width: 65,
-    height: 65,
-    borderRadius: 32.5,
-    marginRight: 15,
-  },
-  textContainer: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  name: {
-    fontSize: SIZES.xlarge,
-    fontWeight: 'bold',
-    color: COLORS.text,
-  },
-  lastMessage: {
-    fontSize: SIZES.medium,
-    color: "#cbc0bb",
-    marginTop: 6,
-  },
-});
 
 export default Chat;

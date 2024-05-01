@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, SafeAreaView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, SafeAreaView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPaperPlane, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useRoute } from '@react-navigation/native';
 import { format, parseISO, isSameDay } from 'date-fns';
+import { COLORS, SIZES } from '../constants/theme'
+import styles from "../styles/mensajesChat.style";
+
 
 
 const MensajesChat = ({ navigation }) => {
@@ -11,7 +14,7 @@ const MensajesChat = ({ navigation }) => {
     const [messages, setMessages] = useState([]);
     const [socket, setSocket] = useState(null);
     const route = useRoute();
-    const { chatId, productId, authorId, receiverId } = route.params;
+    const { chatId, productId, authorId, receiverId, receiverUsername } = route.params;
 
     useEffect(() => {
         const websocketURL = `ws://51.44.17.164/ws/${authorId}/chat/messages/`;
@@ -24,12 +27,8 @@ const MensajesChat = ({ navigation }) => {
 
         newSocket.onmessage = (event) => {
             const data = JSON.parse(event.data);
-            if (data.message_text && data.sent_date) {
-                setMessages(prev => [...prev, {
-                    text: data.message_text,
-                    sender: 'user',
-                    timestamp: data.sent_date
-                }]);
+            if (data.message_text) {
+                fetchInitialMessages();
             } else {
                 console.error('Message missing timestamp or text:', data);
             }
@@ -96,12 +95,16 @@ const MensajesChat = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
             <KeyboardAvoidingView
-                behavior={Platform.OS === "ios" ? "padding" : "height"}
+                behavior={Platform.OS === "ios" || Platform.OS === "android" ? "padding" : "height"}
                 style={styles.flexOne}
             >
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                    <FontAwesomeIcon icon={faArrowLeft} size={24} color="#000" />
-                </TouchableOpacity>
+                <View style={styles.headerContainer}>
+                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                        <FontAwesomeIcon icon={faArrowLeft} size={24} color="#000" />
+                    </TouchableOpacity>
+                    <Text style={styles.username}>{receiverUsername}</Text>
+                    <View style={styles.backButton} />
+                </View>
                 <ScrollView contentContainerStyle={styles.messagesContainer}>
                     {Object.entries(groupedMessages).map(([date, dateMessages]) => (
                         <View key={date}>
@@ -132,73 +135,4 @@ const MensajesChat = ({ navigation }) => {
         </SafeAreaView>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginBottom: 75,
-    },
-    flexOne: {
-        flex: 1,
-    },
-    backButton: {
-        margin: 10,
-        alignSelf: 'flex-start',
-    },
-    messagesContainer: {
-        flexGrow: 1,
-        padding: 10,
-    },
-    messageBubble: {
-        maxWidth: '80%',
-        padding: 10,
-        borderRadius: 20,
-        marginVertical: 5,
-    },
-    userMessage: {
-        alignSelf: 'flex-end',
-        backgroundColor: '#249050',
-    },
-    otherMessage: {
-        alignSelf: 'flex-start',
-        backgroundColor: '#E5E5EA',
-    },
-    messageText: {
-        fontSize: 18,
-    },
-    inputContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: '#18E19A',
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-        borderRadius: 20,
-        marginHorizontal: 10,
-        marginBottom: 20,
-    },
-    input: {
-        flex: 1,
-        marginRight: 10,
-        fontSize: 18,
-    },
-    sendButton: {
-        padding: 10,
-    },
-    dateHeader: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        paddingVertical: 8,
-        paddingHorizontal: 10,
-        backgroundColor: '#f0f0f0',
-        textAlign: 'center',
-        width: '100%',
-    },
-    timestamp: {
-        fontSize: 12,
-        opacity: 0.6,
-        textAlign: 'right',
-        marginTop: 4,
-    },
-});
-
 export default MensajesChat;

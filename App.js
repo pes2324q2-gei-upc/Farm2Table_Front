@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font';
 import Footer from './navigation/footer';
 import MainFeed from './screens/Home';
-import AddProduct from './screens/AddProduct';
+import AddProduct from './Products/AddProduct';
 import { COLORS, SIZES } from './constants/theme';
 import ProductDetails from './screens/ProductDetails';
 import Consultar_Usuario from './screens/Consultar_Usuario';
