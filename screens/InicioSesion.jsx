@@ -32,14 +32,16 @@ const InicioSesion = () => {
       else {
         console.log("dataId:", data.data.user_id);
         setUserId(data.data.user_id);
-        setUserType(data.data.user_type);
-        console.log("UserId", userId());
-        console.log("Type", userType());
-        NAVIGATOR.navigate('Footer');
+        if (data.data.user_type === null) { NAVIGATOR.navigate("EscollirUsuari"); console.log("Nulo");}
+        else {
+          setUserType(data.data.user_type);
+          
+          console.log("UserId", userId());
+          console.log("Type", userType());
+          NAVIGATOR.navigate('Footer');
+        }
       }
     } catch (err) {console.log(err.message);}
-    
-
   };
 
   const contrasenyaVisible = () => {

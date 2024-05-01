@@ -17,6 +17,9 @@ const COLORS = {
     black: "#000000",
 
     light_green: "#6d9461",
+    error: "#ff0000",
+
+    error: "#ff0000"
 
 };
 
