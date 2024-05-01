@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { View, Text, Modal, ScrollView, TouchableOpacity, SafeAreaView} from 'react-native';
 import { COLORS } from '../constants/theme'; // Adjust the import path as needed
 import HeaderHome from '../navigation/header_backHome';
@@ -21,6 +21,11 @@ const Ticket = ({ navigation, route }) => {
     const [fundsModalVisible, setFundsModalVisible] = useState(false);
     const [stockModalVisible, setStockModalVisible] = useState(false);
     const [stockDetails, setStockDetails] = useState({ productName: '', quantityLeft: 0 });
+    const [userAccountFunds, setUserFunds] = useState(0);
+
+    useEffect(() => {
+        console.log('User account funds have been updated to:', userAccountFunds);
+    }, [userAccountFunds]);
 
     const handlePurchase = async () => {
         // Verificar si hay suficientes fondos
@@ -30,7 +35,12 @@ const Ticket = ({ navigation, route }) => {
         console.log(userFunds);
         const total = items.reduce((acc, item) => acc + (item.quantity * item.price), 0).toFixed(2); 
         if (userFunds < total) {
-            setFundsModalVisible(true);
+            console.log('Insufficient funds', userFunds);
+            setUserFunds(userFunds);
+            console.log('user accoutnfunds ticket: ',userAccountFunds);
+            setTimeout(() => {
+                setFundsModalVisible(true);
+            }, 0);
             return;
         }
 
@@ -47,7 +57,7 @@ const Ticket = ({ navigation, route }) => {
         //Comprar y cobrar producto a producto 
         for (let i = 0; i < items.length; i++) {
             const product = items[i];
-            const price = Math.round(product.price);
+            const price = Math.round(product.price*product.quantity);
             const purchaseData = [
                 {
                     buyer_id: userId,
@@ -118,7 +128,7 @@ const Ticket = ({ navigation, route }) => {
                 </View>
             </ScrollView>
             <ConfirmModal modalVisible={confirmModalVisible} setModalVisible={setConfirmModalVisible} navigation={navigation} />
-            <AddFundsModal modalVisible={fundsModalVisible} setModalVisible={setFundsModalVisible} navigation={navigation} />
+            <AddFundsModal modalVisible={fundsModalVisible} setModalVisible={setFundsModalVisible} navigation={navigation} actualfunds={userAccountFunds} />
             <OutOfStockModal 
                 modalVisible={stockModalVisible} 
                 setModalVisible={setStockModalVisible} 

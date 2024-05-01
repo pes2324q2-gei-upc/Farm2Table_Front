@@ -7,7 +7,8 @@ import { fetchUserFunds, fetchAddFunds } from '../api_service/API_funds';
 import { userId } from '../informacion/User';
 import { initial, now } from 'lodash';
 
-const AddCoinsScreen = ({ navigation, actualfunds }) => {
+const AddCoinsScreen = ({ navigation, route }) => {
+  const { actualfunds } = route.params;
   const [currentCoins, setCurrentCoins] = useState(actualfunds);
 
   const addCoins = async (amount) => {

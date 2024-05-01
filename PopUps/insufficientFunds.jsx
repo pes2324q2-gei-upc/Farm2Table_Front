@@ -4,7 +4,8 @@ import { Ionicons } from '@expo/vector-icons';
 import styles from '../styles/popUpCart.style'; // Make sure the path is correct
 import { COLORS } from '../constants/theme'; // Make sure the path is correct
 
-const AddFundsModal = ({ modalVisible, setModalVisible, navigation }) => {
+const AddFundsModal = ({ modalVisible, setModalVisible, navigation, actualfunds }) => {
+    console.log(actualfunds);
     return (
         <Modal
             animationType="slide"
@@ -29,9 +30,8 @@ const AddFundsModal = ({ modalVisible, setModalVisible, navigation }) => {
                     <TouchableOpacity
                         style={[styles.button, styles.buttonCart]}
                         onPress={() => {
-                            // Logic to navigate to the Add Funds Screen
                             setModalVisible(!modalVisible);
-                            navigation.navigate('AddCoinsScreen');
+                            navigation.navigate('AddCoinsScreen', { actualfunds });
                         }}
                     >
                         <Text style={styles.buttonText}>Añadir Fondos</Text>
