@@ -5,6 +5,7 @@ import Header from '../navigation/header_back';
 import { Ionicons } from '@expo/vector-icons';
 import { fetchUser } from '../api_service/ApiConsultar_Usuario';
 import { userId } from '../informacion/User';
+import UserProfile from './userInfo';
 
 const ProfileScreen = ({ navigation }) => {
     const [activeTab, setActiveTab] = useState('Pedidos');
@@ -68,8 +69,14 @@ const ProfileScreen = ({ navigation }) => {
 
                 {activeTab === 'Datos' && (
                     <View style={styles.tabContent}>
-                        <Text style={styles.tabTitle}>Sobre Mí</Text>
-                        {/* Display all the details beautifully */}
+                        <UserProfile
+                            username={shopData.username}
+                            //Falta cambiar esto para uqe pase los valores reales
+                            telephone="+1234567890"
+                            avatar="http://example.com/avatar.jpg"
+                            description="Especialista en productos orgánicos y sostenibles."
+                            reach={20}
+                        />
                     </View>
                 )}
             </View>
