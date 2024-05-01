@@ -69,20 +69,20 @@ const InicioSesion = () => {
     setRefresh(!refresh);
   };
 
-  const handleTus = () => {
-    console.log("MUERTOS");
-  };
-
   return (
     <View style={STYLES.container}>
 
       <Image source={logo} style={STYLES.logo} />
 
-      <View style={STYLES.cambio_idioma}> 
+      <View style={{
+        backgroundColor: 'rgba(52, 52, 52, 0.2)',
+        position: 'absolute',
+        right: 10,
+        top: 30,
+      }}> 
         <SelectList 
             placeholder = {getIdioma()}
             boxStyles={{backgroundColor: '#bc6c25', opacity:  0.9}}
-            inputStyles={STYLES.sector_texto}
             setSelected={ (val) => handleIdioma(val)}
             data={TIPUS_IDIOMA} 
             save="value"     
