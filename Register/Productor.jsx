@@ -7,13 +7,13 @@ import { useNavigation } from '@react-navigation/native';
 import { registerProductorService } from '../api_service/ApiRegistroProductor';
 import STYLES from '../styles/productor.style';
 import { SelectList } from 'react-native-dropdown-select-list';
+import { getTipusProductes } from '../informacion/Constants'
 
 const Productor = () => {
   const [num_acreditation, setAcreditation] = useState("");
   const [name, setName] = useState("");
   const [error_message, setError] = useState('');
   const [favourite_prod, setFavourite] = useState("");
-  const TIPUS_PRODUCTES = [getPalabra("apples"),getPalabra("bananas")];
   const NAVIGATOR = useNavigation();
 
   const handleGoBack = () => {
@@ -104,7 +104,7 @@ const Productor = () => {
                     inputStyles={STYLES.texto_favorits}
                     onChangeText={setAcreditation}
                     setSelected={ (val) => setFavourite(val)}
-                    data={TIPUS_PRODUCTES}
+                    data={getTipusProductes}
                     save="value"     
                     dropdownStyles={{backgroundColor: 'white' , maxHeight: 140, maxWidth: 280}}
                     dropdownTextStyles={STYLES.sector_textos}

@@ -110,6 +110,15 @@ const STYLES = StyleSheet.create({
         width: 270,
         height: 50,
     },
+    fondo_favorits: {   
+        width: 280,
+        height: 50,
+        position: 'absolute',
+        top: 580,
+        alignItems: 'center',
+        backgroundColor: 'white',
+        borderRadius: 10,
+    },
 });
 
 export default STYLES;
