@@ -7,6 +7,7 @@ id = null;
 user_type = null;
 correo = null;
 idioma = "esp";
+export const TIPUS_IDIOMA = ["Español", "Català", "English"];
 
 export const setUserId = (idd) => {
     id = idd;
@@ -35,7 +36,31 @@ export const email = () => {
 }
 
 export const setIdioma = (idioma) => {
-    this.idioma = idioma;
+    console.log("Idioma", idioma)
+    switch (idioma) {
+        case "Español":
+            this.idioma = "esp"; break;
+        case "Català":
+            this.idioma = "cat"; break;
+        case "English":
+            this.idioma = "eng"; break;
+        default:
+            this.idioma = idioma;
+    }
+    console.log("Idioma por tanto", this.idioma)
+}
+
+export const getIdioma = () => {
+    switch (idioma) {
+        case "esp":
+            return "Español";
+        case "cat":
+            return "Català";
+        case "eng":
+            return "English";
+        default:
+            return idioma;
+    }
 }
 
 export const getPalabra = (palabra) => {

@@ -3,10 +3,11 @@ import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity } from 'reac
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import logo from '../assets/Farm2Table.png';
 import EscollirUsuari from '../Register/EscollirUsuari';
-import { getPalabra, setEmail, setUserId, userId } from '../informacion/User';
+import { TIPUS_IDIOMA, getIdioma, getPalabra, setEmail, setIdioma, setUserId, userId } from '../informacion/User';
 import { useNavigation } from '@react-navigation/native';
 import { registerService } from '../api_service/ApiRegistro';
 import STYLES from '../styles/registre.style';
+import { SelectList } from 'react-native-dropdown-select-list';
 
 const Registre = () => {
   const [username, setUsername] = useState('');
@@ -18,6 +19,7 @@ const Registre = () => {
   const [escollir_usuari, setEscollirUsuari] = useState(false);
   const [error_message, setError] = useState('');
   const NAVIGATOR = useNavigation();
+  const [refresh, setRefresh] = useState(false);
   
   const handleRegister = async () => {
     console.log('Username:', username);
@@ -59,6 +61,12 @@ const Registre = () => {
     NAVIGATOR.navigate("InicioSesion");
   };
 
+  const handleIdioma = (idioma) => {
+    console.log("Handle_Idioma");
+    setIdioma(idioma);
+    setRefresh(!refresh);
+  };
+
   return (
     <View style={STYLES.container}>
       {!escollir_usuari && (
@@ -70,6 +78,23 @@ const Registre = () => {
             <Icon  name="arrow-back" style={STYLES.flecha} />  
           </TouchableOpacity>
           
+          <View style={{
+            backgroundColor: 'rgba(52, 52, 52, 0.2)',
+            position: 'absolute',
+            right: 10,
+            top: 30,
+          }}> 
+            <SelectList 
+                placeholder = {getIdioma()}
+                boxStyles={{backgroundColor: '#bc6c25', opacity:  0.9}}
+                setSelected={ (val) => handleIdioma(val)}
+                data={TIPUS_IDIOMA} 
+                save="value"     
+                dropdownStyles={{backgroundColor: '#bc6c25' , maxHeight: 80, maxWidth: 100}}
+                dropdownTextStyles={{backgroundColor: '#bc6c25'}}
+                search={false}
+            />
+          </View>
 
           <Text style={STYLES.error_message}>{getPalabra(error_message)}</Text>
 

@@ -3,16 +3,19 @@ import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity } from 'reac
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import logo from '../assets/Farm2Table.png';
 import google from '../assets/Google.png';
-import { setUserId, setUserType, userId, userType, getPalabra } from '../informacion/User';
+import { setUserId, setUserType, userId, userType, getPalabra, setIdioma, TIPUS_IDIOMA, getIdioma } from '../informacion/User';
 import { useNavigation } from '@react-navigation/native';
 import { loginService } from '../api_service/ApiInicioSesion';
 import STYLES from '../styles/inicioSesion.style';
+import { SelectList } from 'react-native-dropdown-select-list';
+import SeleccioIdioma from '../components/seleccioIdioma';
 
 const InicioSesion = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [secure_text_entry, setSecureTextEntry] = useState(true); 
   const [recordar_contrasenya, setRecordarContrasenya] = useState(true);
+  const [refresh, setRefresh] = useState(false);
   const NAVIGATOR = useNavigation();
   const [error_message, setError] = useState('');
 
@@ -62,10 +65,34 @@ const InicioSesion = () => {
     NAVIGATOR.navigate('Registre');
   };
 
+  const handleIdioma = (idioma) => {
+    console.log("Handle_Idioma");
+    setIdioma(idioma);
+    setRefresh(!refresh);
+  };
+
   return (
     <View style={STYLES.container}>
 
       <Image source={logo} style={STYLES.logo} />
+
+      <View style={{
+        backgroundColor: 'rgba(52, 52, 52, 0.2)',
+        position: 'absolute',
+        right: 10,
+        top: 30,
+      }}> 
+        <SelectList 
+            placeholder = {getIdioma()}
+            boxStyles={{backgroundColor: '#bc6c25', opacity:  0.9}}
+            setSelected={ (val) => handleIdioma(val)}
+            data={TIPUS_IDIOMA} 
+            save="value"     
+            dropdownStyles={{backgroundColor: '#bc6c25' , maxHeight: 80, maxWidth: 100}}
+            dropdownTextStyles={{backgroundColor: '#bc6c25'}}
+            search={false}
+        />
+      </View>
 
       <Text style={STYLES.error_message}>{getPalabra(error_message)}</Text>
 
