@@ -33,7 +33,7 @@ const Minorista = () => {
     console.log("TIPUS CAT",tipus_cat);
 
     try {
-        const data = await registerMinoristaService(tipus_cat, servei);
+        const data = await registerMinoristaService(tipus_cat, servei, favourite_prod);
         if (data.error) {
           setError(data.error)
           console.log(error_message);
