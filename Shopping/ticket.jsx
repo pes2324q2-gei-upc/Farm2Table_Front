@@ -6,8 +6,10 @@ import ConfirmModal from '../PopUps/endPurchase';
 import AddFundsModal from '../PopUps/insufficientFunds';
 import OutOfStockModal from '../PopUps/outOfStock';
 import { userId } from '../informacion/User';
+import { loadCart, removeStoreFromCart } from '../informacion/cartInfo';
 import styles from '../styles/ticket.styles'; // Adjust the import path as needed
 import { fetchUserFunds, fetchProductStock, buyProduct, processPurchase } from '../api_service/API_Cart';
+import { saveCart } from '../informacion/cartInfo';
 
 const Ticket = ({ navigation, route }) => {
     console.log(route.params);
@@ -46,15 +48,18 @@ const Ticket = ({ navigation, route }) => {
         for (let i = 0; i < items.length; i++) {
             const product = items[i];
             const price = Math.round(product.price);
-            const purchaseData = {
-                buyer_id: userId,
-                seller_id: storeId,
-                product_id: product.productId,
-                price: price,
-                date: new Date().toISOString(),
-                quantity: product.quantity,
-                unit: 0
-            };
+            const purchaseData = [
+                {
+                    buyer_id: userId,
+                    seller_id: storeId,
+                    product_id: product.productId,
+                    price: price,
+                    date: new Date().toISOString(),
+                    quantity: product.quantity,
+                    unit: 0
+                }
+            ];
+            
             
             console.log('ProductID antes de proceder a comprar: ', product.productId);
             console.log('PurchaseData antes de proceder a comprar: ', purchaseData);
@@ -62,6 +67,15 @@ const Ticket = ({ navigation, route }) => {
             const pay = await processPurchase(purchaseData);
             console.log(pay); console.log('pagado');
         }
+        // Mostrar modal de confirmación
+        setConfirmModalVisible(true);
+
+        // Borrar carrito
+        let cart = await loadCart(userId);
+        cart = removeStoreFromCart(cart, storeId);
+        await saveCart(userId, cart);
+
+        console.log('Cart after purchase:', cart);
     }
     
 

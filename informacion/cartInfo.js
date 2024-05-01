@@ -49,15 +49,22 @@ export const verifyCartOnLogin = async (currentUser) => {
 
 export const removeItemFromCart = (cartItems, storeId, productId) => {
     console.log('Removing item from cart:', productId, 'from store:', storeId);
-    return cartItems.map(store => {
+    const updatedCart = cartItems.map(store => {
         if (store.storeId === storeId) {
             const filteredItems = store.items.filter(item => item.productId !== productId);
             console.log('Updated items after removal:', filteredItems);
+            if (filteredItems.length === 0) {
+                // If no items left in the store, do not include this store in the updated cart
+                return null;
+            }
             return { ...store, items: filteredItems };
         }
         return store;
-    });
+    }).filter(store => store !== null);  // Remove any null entries, which indicate empty stores
+
+    return updatedCart;
 };
+
 
 export const changeQuantity = (cartItems, storeId, productId, change) => {
     const updatedCart = cartItems.map(store => {
@@ -123,3 +130,11 @@ export const addProductToCart = (cartItems, storeId, newProduct, storeName, stor
 
     return updatedCart;
 };
+
+export const removeStoreFromCart = (cartItems, storeId) => {
+    console.log('Removing store from cart:', storeId);
+    const updatedCart = cartItems.filter(store => store.storeId !== storeId);
+    console.log('Updated cart after removing store:', updatedCart);
+    return updatedCart;
+};
+

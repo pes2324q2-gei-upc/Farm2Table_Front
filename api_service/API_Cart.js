@@ -63,7 +63,9 @@ export const processPurchase = async (data) => {
         const response = await fetch(`${API_URL}/users/pay/cart`, {
             method: 'PUT',
             headers: {
+                'Accept': 'application/json',
                 'Content-Type': 'application/json',
+                'X-CSRFToken': 'x5M868wXkmLxsCWEiBKaY2U5XRQpZOVrzbHCKpjrvcRDyrJsRxUdSGsaIsbHzLU5'
             },
             body: JSON.stringify(data)
         });
