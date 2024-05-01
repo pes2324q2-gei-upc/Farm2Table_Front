@@ -11,6 +11,7 @@ import ProductDetails from './screens/ProductDetails';
 import Consultar_Usuario from './screens/Consultar_Usuario';
 import CartScreen from './Shopping/cart';
 import Ticket from './Shopping/ticket';
+import AddCoinsScreen from './Shopping/funds';
 
 
 /*
@@ -59,6 +60,7 @@ export default function App() {
         <Stack.Screen name="Consultar_Usuario" component={Consultar_Usuario} options={{headerShown: false}} />
         <Stack.Screen name="CartScreen" component={CartScreen} options={{headerShown: false}} />
         <Stack.Screen name="Ticket" component={Ticket} options={{headerShown: false}} />
+        <Stack.Screen name="AddCoinsScreen" component={AddCoinsScreen} options={{headerShown: false}} />
       </Stack.Navigator>
     </NavigationContainer>
   );
