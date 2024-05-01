@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
 import logo from '../assets/Farm2Table.png';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { SelectList } from 'react-native-dropdown-select-list';

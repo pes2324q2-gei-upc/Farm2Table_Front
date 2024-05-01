@@ -56,5 +56,8 @@
     "sure": "Are you sure?",
     "remove": "Remove",
     "cancel": "Cancel",
-    "errorChat": "Error loading chats"
+    "errorChat": "Error loading chats",
+    "favourite_products": "Your favourite products",
+    "apples": "Apples",
+    "bananas": "Bananas"
 }
