@@ -35,3 +35,46 @@ export const fetchProductStock = async(productId) => {
         throw error;
     }
 }
+
+export const buyProduct = async (productId, quantity) => {
+    try {
+        const response = await fetch(`${API_URL}/products/${productId}/buy?quantity=${quantity}`, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        const data = await response.json();
+        console.log(data);
+        if (response.ok) {
+            return data;
+        } else {
+            throw new Error(data.message || 'Failed to buy product');
+        }
+    } catch (error) {
+        console.error("Failed to buy product: ", error);
+        throw error;
+    }
+}
+
+export const processPurchase = async (data) => {
+    try {
+        console.log('Data:', JSON.stringify(data));
+        const response = await fetch(`${API_URL}/users/pay/cart`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
+        const result = await response.json();
+        console.log(result);
+        if (!response.ok) {
+            throw new Error(result.message);
+        }
+        return result;
+    } catch (error) {
+        console.error("Failed to process purchase: ", error);
+        throw error;
+    }
+}
