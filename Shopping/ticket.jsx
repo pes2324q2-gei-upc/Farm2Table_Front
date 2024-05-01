@@ -53,11 +53,8 @@ const Ticket = ({ navigation, route }) => {
                 </View>
             </ScrollView>
             <AddFundsModal modalVisible={modalVisible} setModalVisible={setModalVisible} navigation={navigation} />
-            <OutOfStockModal modalVisible={modalVisible} setModalVisible={setModalVisible} navigation={navigation} />
         </SafeAreaView>
     );
 };
-
-//<ConfirmModal modalVisible={modalVisible} setModalVisible={setModalVisible} navigation={navigation} />
 
 export default Ticket;
