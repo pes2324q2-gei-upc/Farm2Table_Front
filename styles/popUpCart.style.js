@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
       backgroundColor: COLORS.white,
       borderWidth: 2,
       borderColor: COLORS.secondary,
-  
+    },
     buttonDelete: {
       backgroundColor: COLORS.error,
     },
