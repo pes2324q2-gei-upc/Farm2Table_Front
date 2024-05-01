@@ -3,19 +3,23 @@ import { COLORS, SIZES, URL} from '../constants/theme'
 import { TextInput, StyleSheet } from 'react-native'
 
 
-const SearchTab = () =>{
+const SearchTab = ({ placeholder, style, onChangeText }) =>{
     const [searchQuery, setSearchQuery] = useState("");
     return (
         <TextInput
-            placeholder= 'Search by name' 
-            clearButtonMode='always' 
-            style={styles.searchBar} 
-            autoCapitalize='words'
-            autoCorrect={false}
-            value={searchQuery}
-            onChangeText={setSearchQuery}
+          placeholder={placeholder}
+          placeholderTextColor= 'grey' 
+          clearButtonMode="always"
+          style={[styles.searchBar, style]}
+          autoCapitalize="words"
+          autoCorrect={false}
+          value={searchQuery}
+          onChangeText={(text) => {
+            setSearchQuery(text);
+            onChangeText(text);
+          }}
         />
-    )
+    );
 };
 
 const styles = StyleSheet.create({ // Define styles object

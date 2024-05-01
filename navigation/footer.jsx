@@ -9,7 +9,7 @@ import Map from '../Map/Map'
 import Chat from '../Chat/Chat'
 import Restaurante from '../screens/Restaurante'
 import Product from '../Products/Product'
-import Buscador from '../screens/Buscador'
+import Buscador from '../Buscador/Buscador'
 import Consultar_Usuario from '../screens/Consultar_Usuario';
 import { COLORS, SIZES } from '../constants/theme' 
 import EditarPerfil from '../screens/EditarPerfil';
