@@ -1,25 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Button, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
 import Header from '../navigation/header_back';
 import { COLORS } from '../constants/theme';
 import styles from '../styles/funds.style';
 import { fetchUserFunds, fetchAddFunds } from '../api_service/API_funds';
 import { userId } from '../informacion/User';
+import { initial, now } from 'lodash';
 
 const AddCoinsScreen = ({ navigation, actualfunds }) => {
+  const [currentCoins, setCurrentCoins] = useState(actualfunds);
 
-  console.log("Actual funds: ", actualfunds);
-  console.log("User ID: ", userId());
-
-  const funds = fetchUserFunds(userId()).data;
-  console.log("Funds: ", funds);
-
-  const [currentCoins, setCurrentCoins] = useState(100);
-
-  const addCoins = (amount) => {
-    let newCoins = amount - funds;
-    fetchAddFunds(userId(), newCoins);
-    setCurrentCoins(prevCoins => Math.min(99999, prevCoins + amount));
+  const addCoins = async (amount) => {
+    const nowFunds = await fetchAddFunds(userId(), amount);
+    console.log(nowFunds);
+    setCurrentCoins(nowFunds);
   };
 
   const finishAdding = () => {

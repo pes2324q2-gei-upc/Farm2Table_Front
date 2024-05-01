@@ -57,7 +57,4 @@ const Ticket = ({ navigation, route }) => {
     );
 };
 
-//<ConfirmModal modalVisible={modalVisible} setModalVisible={setModalVisible} navigation={navigation} />
-//<OutOfStockModal modalVisible={modalVisible} setModalVisible={setModalVisible} navigation={navigation} />
-
 export default Ticket;
