@@ -8,7 +8,6 @@ import { useNavigation } from '@react-navigation/native';
 import { loginService } from '../api_service/ApiInicioSesion';
 import STYLES from '../styles/inicioSesion.style';
 import { SelectList } from 'react-native-dropdown-select-list';
-import SeleccioIdioma from '../components/seleccioIdioma';
 
 const InicioSesion = () => {
   const [username, setUsername] = useState('');

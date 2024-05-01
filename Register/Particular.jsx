@@ -4,17 +4,15 @@ import logo from '../assets/Farm2Table.png';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { SelectList } from 'react-native-dropdown-select-list';
 import { getPalabra, userId } from '../informacion/User';
-import { getIP } from '../informacion/Constants';
+import { getIP, getTipusProductes } from '../informacion/Constants';
 import { useNavigation } from '@react-navigation/native';
 import { registerParticularService } from '../api_service/ApiRegistroParticular';
 import STYLES from '../styles/particular.style';
 
 const Particular = () => {
-
-  const [productes, setProductes] = useState([]);
-  const [abast, setAbast] = useState();
-  const PRODUCTES = ['Fruita', 'Verdura', 'Hortalisses', 'Carn', 'Peix', 'Formatge', 'Altres'];
+  const [abast, setAbast] = useState("");
   const [error_message, setError] = useState('');
+  const [favourite_prod, setFavourite] = useState("");
   const NAVIGATOR = useNavigation();
 
   const handleGoBack = () => {
@@ -22,12 +20,12 @@ const Particular = () => {
   };
 
   const handleRegister = async () => {
-    console.log("Abast:", abast);
-    console.log("Productes:", productes);
+    console.log("Direccion:", abast);
+    console.log("Productes:", favourite_prod);
     console.log("UserId", userId());
 
     try {
-        const data = await registerParticularService(abast, productes);
+        const data = await registerParticularService(abast, favourite_prod);
         if (data.error) {
           setError(data.error)
           console.log(error_message);
@@ -62,16 +60,27 @@ const Particular = () => {
             </Text>
 
             <View style={STYLES.fondo_abast}>
-
                 <TextInput 
                     style={STYLES.abast}
-                    placeholder={getPalabra("reach")}
+                    placeholder={getPalabra("direction")}
                     value={abast}
                     onChangeText={setAbast}
                 >
-                
                 </TextInput>
-                    
+            </View>
+
+            <View style={STYLES.fondo_abast}>
+                <SelectList 
+                    placeholder = {getPalabra("favourite_products")}
+                    boxStyles={STYLES.desplegable1}
+                    inputStyles={STYLES.sector_texto}
+                    setSelected={ (val) => setFavourite(val)}
+                    data={getTipusProductes} 
+                    save="value"     
+                    dropdownStyles={{backgroundColor: 'white' , maxHeight: 140, maxWidth: 280}}
+                    dropdownTextStyles={STYLES.sector_textos}
+                    search={false}
+                />
             </View>
 
         </View>

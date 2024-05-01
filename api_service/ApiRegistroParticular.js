@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { getIP } from "../informacion/Constants";
 import { userId } from "../informacion/User";
 
-export const registerParticularService = (abast, productes) => {
+export const registerParticularService = (addres, productes) => {
 
     return new Promise ((resolve, reject) => {
         
         const data = {
-            reach: abast,
-            products: productes,
+            address: addres,
+            types: productes
         };
         
         const csrfToken = '';
