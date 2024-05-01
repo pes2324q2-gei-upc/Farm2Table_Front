@@ -3,12 +3,23 @@ import { View, Text, Button, StyleSheet, SafeAreaView, TouchableOpacity } from '
 import Header from '../navigation/header_back';
 import { COLORS } from '../constants/theme';
 import styles from '../styles/funds.style';
+import { fetchUserFunds, fetchAddFunds } from '../api_service/API_funds';
+import { userId } from '../informacion/User';
 
 const AddCoinsScreen = ({ navigation, actualfunds }) => {
+
+  console.log("Actual funds: ", actualfunds);
+  console.log("User ID: ", userId());
+
+  const funds = fetchUserFunds(userId()).data;
+  console.log("Funds: ", funds);
+
   const [currentCoins, setCurrentCoins] = useState(100);
 
   const addCoins = (amount) => {
-    setCurrentCoins(prevCoins => Math.min(9999, prevCoins + amount));  // Limit the max digits to 4
+    let newCoins = amount - funds;
+    fetchAddFunds(userId(), newCoins);
+    setCurrentCoins(prevCoins => Math.min(99999, prevCoins + amount));
   };
 
   const finishAdding = () => {
