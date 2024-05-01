@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import styles from '../styles/popUpCart.style'; // Make sure the path is correct
 import { COLORS } from '../constants/theme'; // Make sure the path is correct
 
-const AddFundsModal = ({ modalVisible, setModalVisible }) => {
+const AddFundsModal = ({ modalVisible, setModalVisible, navigation }) => {
     return (
         <Modal
             animationType="slide"
@@ -31,6 +31,7 @@ const AddFundsModal = ({ modalVisible, setModalVisible }) => {
                         onPress={() => {
                             // Logic to navigate to the Add Funds Screen
                             setModalVisible(!modalVisible);
+                            navigation.navigate('AddCoinsScreen');
                         }}
                     >
                         <Text style={styles.buttonText}>Añadir Fondos</Text>

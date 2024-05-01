@@ -137,6 +137,27 @@ const STYLES = StyleSheet.create({
         width: 220,
         height: 40
     },
+    fondo_favorits: {   
+        width: 280,
+        height: 50,
+        position: 'absolute',
+        top: 560,
+        alignItems: 'center',
+        backgroundColor: 'white',
+        borderRadius: 10,
+    },
+    favorits: {
+        fontSize: 20,
+        color: '#749969',
+        fontWeight: 'bold',
+        width: 280,
+        height: 50
+    },
+    texto_favorits: {
+        fontSize: 18,
+        color: '#749969',
+        fontWeight: 'bold',
+    },
 });
 
 export default STYLES;

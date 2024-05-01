@@ -6,11 +6,14 @@ import { userId, getPalabra } from '../informacion/User';
 import { useNavigation } from '@react-navigation/native';
 import { registerProductorService } from '../api_service/ApiRegistroProductor';
 import STYLES from '../styles/productor.style';
+import { SelectList } from 'react-native-dropdown-select-list';
+import { getTipusProductes } from '../informacion/Constants'
 
 const Productor = () => {
   const [num_acreditation, setAcreditation] = useState("");
   const [name, setName] = useState("");
   const [error_message, setError] = useState('');
+  const [favourite_prod, setFavourite] = useState("");
   const NAVIGATOR = useNavigation();
 
   const handleGoBack = () => {
@@ -20,10 +23,11 @@ const Productor = () => {
   const handleRegister = async () => {
     console.log("Nombre:", name);
     console.log("Num acreditacio:", num_acreditation);
+    console.log("Tipos favoritos", favourite_prod)
     console.log("UserId", userId())
 
     try {
-        const data = await registerProductorService(num_acreditation, name);
+        const data = await registerProductorService(num_acreditation, name, favourite_prod);
         if (data.error) {
           setError(data.error)
           console.log(error_message);
@@ -83,6 +87,8 @@ const Productor = () => {
                     
             </View>
 
+            
+
         </View>
 
         <TouchableOpacity style={STYLES.comensa} onPress={handleRegister}>
@@ -90,6 +96,21 @@ const Productor = () => {
                 {getPalabra("start_button")}    
             </Text>           
         </TouchableOpacity>
+
+        <View style={STYLES.fondo_favorits}>
+                <SelectList 
+                    boxStyles={STYLES.favorits}
+                    placeholder={getPalabra("favourite_products")}
+                    inputStyles={STYLES.texto_favorits}
+                    onChangeText={setAcreditation}
+                    setSelected={ (val) => setFavourite(val)}
+                    data={getTipusProductes}
+                    save="value"     
+                    dropdownStyles={{backgroundColor: 'white' , maxHeight: 140, maxWidth: 280}}
+                    dropdownTextStyles={STYLES.sector_textos}
+                    search={false} 
+                />  
+            </View>
         
     </View>
   );

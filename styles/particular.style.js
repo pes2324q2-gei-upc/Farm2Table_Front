@@ -76,7 +76,7 @@ const STYLES = StyleSheet.create({
     },
     desplegable1: {
         width: 280,
-        height: 55,
+        height: 50,
         justifyContent: 'top',
         backgroundColor: 'white',
         borderRadius: 10,

@@ -12,6 +12,12 @@ const STYLES = StyleSheet.create({
         width: 393,
         height: 254,
     },
+    cambio_idioma: {
+        backgroundColor: 'rgba(52, 52, 52, 0.2)',
+        position: 'absolute',
+        right: 10,
+        top: 30,
+    },
     error_message: {
         fontSize: 19,
         marginTop: 25,

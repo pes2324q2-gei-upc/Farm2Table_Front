@@ -4,15 +4,17 @@ import logo from '../assets/Farm2Table.png';
 import Productor from '../Register/Productor';
 import Minorista from '../Register/Minorista';
 import Particular from '../Register/Particular';
-import { getPalabra } from '../informacion/User';
+import { TIPUS_IDIOMA, getIdioma, getPalabra, setIdioma } from '../informacion/User';
 import { useNavigation } from '@react-navigation/native';
 import STYLES from '../styles/escollirUsuari.style';
+import { SelectList } from 'react-native-dropdown-select-list';
 
 
 const EscollirUsuari = () => {
 
   const [tipus_usuari, setTipusUsuari] = useState([false, false, false]);
   const NAVIGATOR = useNavigation();
+  const [refresh, setRefresh] = useState(false);
 
   const USUARIS = {
     productor: 0,
@@ -35,6 +37,12 @@ const EscollirUsuari = () => {
     NAVIGATOR.navigate("Particular");
   };
 
+  const handleIdioma = (idioma) => {
+    console.log("Handle_Idioma");
+    setIdioma(idioma);
+    setRefresh(!refresh);
+  };
+
   return (
     <View style={STYLES.container}>
 
@@ -44,6 +52,24 @@ const EscollirUsuari = () => {
             (
                 <>
                 <Image source={logo} style={STYLES.logo} />
+
+                <View style={{
+                  backgroundColor: 'rgba(52, 52, 52, 0.2)',
+                  position: 'absolute',
+                  right: 10,
+                  top: 30,
+                }}> 
+                  <SelectList 
+                      placeholder = {getIdioma()}
+                      boxStyles={{backgroundColor: '#bc6c25', opacity:  0.9}}
+                      setSelected={ (val) => handleIdioma(val)}
+                      data={TIPUS_IDIOMA} 
+                      save="value"     
+                      dropdownStyles={{backgroundColor: '#bc6c25' , maxHeight: 80, maxWidth: 100}}
+                      dropdownTextStyles={{backgroundColor: '#bc6c25'}}
+                      search={false}
+                  />
+                </View>
 
                 <Text style={STYLES.escollir_usuari}>
                     {getPalabra("choose_user")}

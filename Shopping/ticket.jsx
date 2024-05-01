@@ -129,7 +129,4 @@ const Ticket = ({ navigation, route }) => {
         </SafeAreaView>
     );
 };
-
-
-
 export default Ticket;

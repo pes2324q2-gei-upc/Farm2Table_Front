@@ -5,12 +5,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font';
 import Footer from './navigation/footer';
 import MainFeed from './screens/Home';
-import AddProduct from './screens/AddProduct';
+import AddProduct from './Products/AddProduct';
 import { COLORS, SIZES } from './constants/theme';
 import ProductDetails from './screens/ProductDetails';
 import Consultar_Usuario from './screens/Consultar_Usuario';
 import CartScreen from './Shopping/cart';
 import Ticket from './Shopping/ticket';
+import AddCoinsScreen from './Shopping/funds';
 
 
 /*
@@ -59,6 +60,7 @@ export default function App() {
         <Stack.Screen name="Consultar_Usuario" component={Consultar_Usuario} options={{headerShown: false}} />
         <Stack.Screen name="CartScreen" component={CartScreen} options={{headerShown: false}} />
         <Stack.Screen name="Ticket" component={Ticket} options={{headerShown: false}} />
+        <Stack.Screen name="AddCoinsScreen" component={AddCoinsScreen} options={{headerShown: false}} />
       </Stack.Navigator>
     </NavigationContainer>
   );
