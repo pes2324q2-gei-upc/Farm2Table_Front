@@ -5,14 +5,79 @@ import HeaderHome from '../navigation/header_backHome';
 import ConfirmModal from '../PopUps/endPurchase';
 import AddFundsModal from '../PopUps/insufficientFunds';
 import OutOfStockModal from '../PopUps/outOfStock';
+import { userId } from '../informacion/User';
+import { loadCart, removeStoreFromCart } from '../informacion/cartInfo';
 import styles from '../styles/ticket.styles'; // Adjust the import path as needed
+import { fetchUserFunds, fetchProductStock, buyProduct, processPurchase } from '../api_service/API_Cart';
+import { saveCart } from '../informacion/cartInfo';
 
 const Ticket = ({ navigation, route }) => {
     console.log(route.params);
+    const USERID = userId();
     const { items, storeId } = route.params; // Asegúrate de que los nombres de las propiedades coincidan con los que se pasan desde la pantalla de carrito
     const storeName = "Best Store Ever"; // Este valor debería ser dinámico si tienes varios almacenes
     const storeAddress = "123 Shopping Ln, Retail City"; // Esto también debería venir de los datos del almacén
-    const [modalVisible, setModalVisible] = useState(false);
+    const [confirmModalVisible, setConfirmModalVisible] = useState(false);
+    const [fundsModalVisible, setFundsModalVisible] = useState(false);
+    const [stockModalVisible, setStockModalVisible] = useState(false);
+    const [stockDetails, setStockDetails] = useState({ productName: '', quantityLeft: 0 });
+
+    const handlePurchase = async () => {
+        // Verificar si hay suficientes fondos
+        const userId = USERID;
+        console.log('user id antes de purchase:', userId);
+        const userFunds = await fetchUserFunds(userId);
+        console.log(userFunds);
+        const total = items.reduce((acc, item) => acc + (item.quantity * item.price), 0).toFixed(2); 
+        if (userFunds < total) {
+            setFundsModalVisible(true);
+            return;
+        }
+
+        // Verificar si hay suficiente stock
+        for (let i = 0; i < items.length; i++) {
+            const stock = await fetchProductStock(items[i].productId);
+            if (stock.quantity < items[i].quantity) {
+                setStockDetails({ productName: stock.name, quantityLeft: stock.quantity });
+                setStockModalVisible(true);
+                return;
+            }
+        }
+
+        //Comprar y cobrar producto a producto 
+        for (let i = 0; i < items.length; i++) {
+            const product = items[i];
+            const price = Math.round(product.price);
+            const purchaseData = [
+                {
+                    buyer_id: userId,
+                    seller_id: storeId,
+                    product_id: product.productId,
+                    price: price,
+                    date: new Date().toISOString(),
+                    quantity: product.quantity,
+                    unit: 0
+                }
+            ];
+            
+            
+            console.log('ProductID antes de proceder a comprar: ', product.productId);
+            console.log('PurchaseData antes de proceder a comprar: ', purchaseData);
+            const buy = await buyProduct(product.productId, product.quantity);
+            const pay = await processPurchase(purchaseData);
+            console.log(pay); console.log('pagado');
+        }
+        // Mostrar modal de confirmación
+        setConfirmModalVisible(true);
+
+        // Borrar carrito
+        let cart = await loadCart(userId);
+        cart = removeStoreFromCart(cart, storeId);
+        await saveCart(userId, cart);
+
+        console.log('Cart after purchase:', cart);
+    }
+    
 
     const getTotal = () => {
         return items.reduce((acc, item) => acc + (item.quantity * item.price), 0).toFixed(2);
@@ -47,14 +112,21 @@ const Ticket = ({ navigation, route }) => {
                     </View>
                 </ScrollView>
                 <View style={styles.button_container}>
-                    <TouchableOpacity style={styles.button}  onPress={() => setModalVisible(true)}>
+                    <TouchableOpacity style={styles.button}  onPress={handlePurchase}>
                         <Text style={styles.buttonText}>Finalizar Pedido</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
-            <AddFundsModal modalVisible={modalVisible} setModalVisible={setModalVisible} navigation={navigation} />
+            <ConfirmModal modalVisible={confirmModalVisible} setModalVisible={setConfirmModalVisible} navigation={navigation} />
+            <AddFundsModal modalVisible={fundsModalVisible} setModalVisible={setFundsModalVisible} navigation={navigation} />
+            <OutOfStockModal 
+                modalVisible={stockModalVisible} 
+                setModalVisible={setStockModalVisible} 
+                navigation={navigation} 
+                productName={stockDetails.productName} 
+                quantityLeft={stockDetails.quantityLeft} 
+            />
         </SafeAreaView>
     );
 };
-
 export default Ticket;

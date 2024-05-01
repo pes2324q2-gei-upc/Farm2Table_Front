@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import styles from '../styles/popUpCart.style'; // Make sure the path is correct
 import { COLORS } from '../constants/theme'; // Make sure the path is correct
 
-const OutOfStockModal = ({ modalVisible, setModalVisible, navigation }) => {
+const OutOfStockModal = ({ modalVisible, setModalVisible, navigation , productName, quantityLeft}) => {
     return (
         <Modal
             animationType="slide"
@@ -19,13 +19,12 @@ const OutOfStockModal = ({ modalVisible, setModalVisible, navigation }) => {
                     <Ionicons
                         name='alert-circle-outline'
                         size={30}
-                        color={COLORS.primary} // This color is just an example, change it as needed
+                        color={COLORS.error} // This color is just an example, change it as needed
                         style={{ marginBottom: 20 }}
                     />
-                    <Text style={styles.modalText}>No hay suficiente stock</Text>
-                    <Text style={styles.modalText}>
-                        El artículo que intentas comprar ya no está disponible en la cantidad deseada.
-                    </Text>
+                    <Text style={styles.modalText}>Not enough stock for:</Text>
+                    <Text style={styles.modalTitle}>{productName}</Text>
+                    <Text style={styles.modalText}>Only {quantityLeft} left in stock.</Text>
                     <TouchableOpacity
                         style={[styles.button, styles.buttonCart]}
                         onPress={() => {
