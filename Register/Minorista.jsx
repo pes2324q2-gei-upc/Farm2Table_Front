@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
 import logo from '../assets/Farm2Table.png';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { SelectList } from 'react-native-dropdown-select-list';
 import { getPalabra, getPalabraEng, getRestaurantOrMercat, userId } from '../informacion/User';
-import { getIP } from '../informacion/Constants';
+import { getIP, getTipusProductes } from '../informacion/Constants';
 import { useNavigation } from '@react-navigation/native';
 import { registerMinoristaService } from '../api_service/ApiRegistroMinorista';
 import STYLES from '../styles/minorista.style';
@@ -15,6 +15,7 @@ const Minorista = () => {
   const TIPUS = [getPalabra("restaurant"),getPalabra("market")];
   const [servei, setServei] = useState("");
   const [error_message, setError] = useState('');
+  const [favourite_prod, setFavourite] = useState("");
   const NAVIGATOR = useNavigation();
 
   const handleGoBack = () => {
@@ -25,13 +26,14 @@ const Minorista = () => {
     
     console.log("Tipus:", tipus);
     console.log("nomServei", servei);
+    console.log("Tipus favorits", favourite_prod)
     console.log("UserId", userId());
     
     const tipus_cat = getRestaurantOrMercat(tipus);
     console.log("TIPUS CAT",tipus_cat);
 
     try {
-        const data = await registerMinoristaService(tipus_cat, servei);
+        const data = await registerMinoristaService(tipus_cat, servei, favourite_prod);
         if (data.error) {
           setError(data.error)
           console.log(error_message);
@@ -99,6 +101,20 @@ const Minorista = () => {
                 {getPalabra("start_button")}    
             </Text>           
          </TouchableOpacity>
+
+         <View style={STYLES.fondo_favorits}>
+                <SelectList 
+                    placeholder = {getPalabra("favourite_products")}
+                    boxStyles={STYLES.desplegable1}
+                    inputStyles={STYLES.sector_texto}
+                    setSelected={ (val) => setFavourite(val)}
+                    data={getTipusProductes} 
+                    save="value"     
+                    dropdownStyles={{backgroundColor: 'white' , maxHeight: 140, maxWidth: 280}}
+                    dropdownTextStyles={STYLES.sector_textos}
+                    search={false}
+                />
+            </View>
     
     </View>
   );

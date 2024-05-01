@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { getIP } from "../informacion/Constants";
 import { userId } from "../informacion/User";
 
-export const registerProductorService = (num_acreditation, name) => {
+export const registerProductorService = (num_acreditation, name, fav_types) => {
 
     return new Promise ((resolve, reject) => {
         
         const data = {
             num_accreditation: num_acreditation,
-            name_productor: name
+            name_productor: name,
+            types: fav_types
         };
         
         const csrfToken = '';

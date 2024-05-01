@@ -38,7 +38,7 @@
     "Mercat does not exist": "Mercat does not exist",
     "Restaurants does not exist": "Restaurant does not exist",
     "particular": "Particular",
-    "reach": "Your reach (kilometers)",
+    "direction": "Your address",
     "User is already a subtype": "User is already a subtype",
     "Consumer is not registered as User": "Consumer is not registered as User",
     "afegirProducte": "Add Product",
@@ -56,5 +56,8 @@
     "sure": "Are you sure?",
     "remove": "Remove",
     "cancel": "Cancel",
-    "errorChat": "Error loading chats"
+    "errorChat": "Error loading chats",
+    "favourite_products": "Your favourite products",
+    "apples": "Apples",
+    "bananas": "Bananas"
 }
