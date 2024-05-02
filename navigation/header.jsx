@@ -23,10 +23,12 @@ const Header = () => {
     return (
         <View style={styles.container}>
             <View style={styles.innerContainer}>
-                <Image
-                    source={require('../assets/images/149071.png')}
-                    style={styles.profileImage}
-                />
+                <TouchableOpacity onPress={() => navigation.navigate('CheckUser')}>
+                    <Image
+                        source={require('../assets/images/149071.png')}
+                        style={styles.profileImage}
+                    />
+                </TouchableOpacity>
                 <FontAwesome5 name="tractor" size={44} color="white" />
                 <TouchableOpacity onPress={handleCartPress}>
                     <Ionicons

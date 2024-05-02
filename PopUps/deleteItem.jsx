@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, View, Text, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { getPalabra } from '../informacion/User';
 import styles from '../styles/popUpCart.style'; // Make sure the path is correct
 import { COLORS } from '../constants/theme'; // Make sure the path is correct
 
@@ -22,7 +23,7 @@ const DeleteConfirmationModal = ({ modalVisible, setModalVisible, handleConfirmD
                         color={COLORS.error} // This color is just an example, change it as needed
                         style={{ marginBottom: 20 }}
                     />
-                    <Text style={styles.modalText}>¿Estás seguro de que deseas eliminar este artículo del carrito?</Text>
+                    <Text style={styles.modalText}>{getPalabra("sure_remove")}</Text>
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity
                             style={[styles.button, styles.buttonCart]}
@@ -30,7 +31,7 @@ const DeleteConfirmationModal = ({ modalVisible, setModalVisible, handleConfirmD
                                 setModalVisible(!modalVisible);
                             }}
                         >
-                            <Text style={styles.buttonText}>Cancelar</Text>
+                            <Text style={styles.buttonText}>{getPalabra("cancel")}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={[styles.button, styles.buttonDelete]}
@@ -39,7 +40,7 @@ const DeleteConfirmationModal = ({ modalVisible, setModalVisible, handleConfirmD
                                 setModalVisible(!modalVisible);
                             }}
                         >
-                            <Text style={styles.buttonText}>Eliminar</Text>
+                            <Text style={styles.buttonText}>{getPalabra("remove")}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

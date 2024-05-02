@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { getIP } from "../informacion/Constants";
 
 const API_ENDPOINT = "http://"+URL+"/users/productor/";
 
@@ -13,3 +14,18 @@ const fetchData = async (url) => {
 };
 
 export { fetchData, API_ENDPOINT };
+
+const API_URL = `http://${getIP()}`;
+
+export const fetchUser = async (userId) => {
+    try {
+        const response = await fetch(`${API_URL}/users/profile/${userId}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch user');
+        }
+        const json = await response.json();
+        return json.data;
+    } catch (error) {
+        throw error;
+    }
+}

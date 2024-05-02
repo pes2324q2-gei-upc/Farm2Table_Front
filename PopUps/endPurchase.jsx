@@ -14,7 +14,7 @@ const ConfirmModal = ({ modalVisible, setModalVisible, navigation }) => {
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <Text style={styles.modalText}>Tu pedido ha sido procesado</Text>
+                    <Text style={styles.modalText}>{getPalabra("processed_purchase")}do</Text>
                     <TouchableOpacity
                         style={[styles.button, styles.buttonCart]}
                         onPress={() => {
@@ -22,7 +22,7 @@ const ConfirmModal = ({ modalVisible, setModalVisible, navigation }) => {
                             navigation.navigate('Home');
                         }}
                     >
-                        <Text style={styles.buttonText}>Ir a Inicio</Text>
+                        <Text style={styles.buttonText}>{getPalabra("go_home")}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={[styles.button, styles.buttonShop]}
@@ -31,7 +31,7 @@ const ConfirmModal = ({ modalVisible, setModalVisible, navigation }) => {
                             navigation.navigate('Home'); // Cambiar a 'Mis Pedidos' cuando esté disponible
                         }}
                     >
-                        <Text style={styles.buttonText}>Ir a Mis Pedidos</Text>
+                        <Text style={styles.buttonText}>{getPalabra("go_orders")}</Text>
                     </TouchableOpacity>
                 </View>
             </View>
