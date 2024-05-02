@@ -68,7 +68,20 @@ const STYLES = StyleSheet.create({
     imagen: {
       width: 120,
       height: 80
-    }
+    },
+    searchBar:{
+      paddingHorizontal: 10,
+      //paddingVertical: 10,
+      //paddingBottom: 15,
+      borderWidth: 1,
+      borderColor: '#ccc',
+      backgroundColor: 'white',
+      borderRadius: 15,
+      width: (SIZES.width)/100 *90,
+      height: SIZES.height/100*5,
+      alignSelf: 'center',
+      alignItems: 'center'
+  }
   });
 
 export default STYLES;

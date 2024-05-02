@@ -14,6 +14,10 @@ const Map = () => {
 		{ title: 'Mercats', index: 2 },
 		{ title: 'Restaurants', index: 3 },
 	];
+
+    const handleSearch = (text) => {
+        console.log(text);
+    };
     
     return (
     <View style={STYLES.container}>
@@ -44,7 +48,11 @@ const Map = () => {
         
 
         <View style={STYLES.searchTab}>
-            <SearchTab/>
+            <SearchTab
+                placeholder="Search for a location"
+                style={STYLES.searchBar}
+                onChangeText={handleSearch}
+            />
         </View>
 				<ScrollView
 					horizontal
