@@ -4,7 +4,7 @@ import { COLORS, SIZES } from '../constants/theme';
 import Header from '../navigation/header_back';
 import { Ionicons } from '@expo/vector-icons';
 import { fetchUser } from '../api_service/ApiConsultar_Usuario';
-import { userId } from '../informacion/User';
+import { userId, getPalabra } from '../informacion/User';
 import UserProfile from './userInfo';
 
 const ProfileScreen = ({ navigation }) => {
@@ -50,14 +50,14 @@ const ProfileScreen = ({ navigation }) => {
                         style={[styles.button, { borderColor: activeTab === 'Pedidos' ? 'orange' : '#1e4d2b' }]}
                         onPress={() => onPress('Pedidos')}
                     >
-                        <Text style={[styles.buttonText, { color: activeTab === 'Pedidos' ? 'orange' : 'white' }]}>Mis Pedidos</Text>
+                        <Text style={[styles.buttonText, { color: activeTab === 'Pedidos' ? 'orange' : 'white' }]}>{getPalabra("my_orders")}</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
                         style={[styles.button, { borderColor: activeTab === 'Datos' ? 'orange' : '#1e4d2b' }]}
                         onPress={() => onPress('Datos')}
                     >
-                        <Text style={[styles.buttonText, { color: activeTab === 'Datos' ? 'orange' : 'white' }]}>Mis Datos</Text>
+                        <Text style={[styles.buttonText, { color: activeTab === 'Datos' ? 'orange' : 'white' }]}>{getPalabra("my_data")}</Text>
                     </TouchableOpacity>
                 </View>
 

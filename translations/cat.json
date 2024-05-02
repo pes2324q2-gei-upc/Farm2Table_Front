@@ -59,5 +59,14 @@
     "errorChat": "Error carregant xats",
     "favourite_products": "Productes favorits",
     "apples": "Pomes",
-    "bananas": "Plàtans"
+    "bananas": "Plàtans",
+    "my_orders": "Comandes",
+    "my_data": "Les meves dades",
+    "order": "Comanda",
+    "order_date": "Data de la comanda",
+    "edit_data": "Editar dades",
+    "added_to_cart": "Producte afegit a la cistella!",
+    "keep_shopping": "Segueix comprant",
+    "go_to_cart": "Anar a la cistella",
+    "sure_remove": "Estàs segur que vols eliminar aquest producte de la cistella?"
 }

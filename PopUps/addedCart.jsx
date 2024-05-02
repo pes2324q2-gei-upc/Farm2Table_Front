@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import styles from '../styles/popUpCart.style';
+import { getPalabra } from "../informacion/User"
 
 const CartPopUp = ({ isVisible, onContinueShopping, onGoToCart }) => {
   return (
@@ -12,12 +13,12 @@ const CartPopUp = ({ isVisible, onContinueShopping, onGoToCart }) => {
     >
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
-          <Text style={styles.modalText}>Producte afegit a la cistella!</Text>
+          <Text style={styles.modalText}>{getPalabra("added_to_cart")}</Text>
           <TouchableOpacity style={[styles.button, styles.buttonShop]} onPress={onContinueShopping}>
-            <Text style={styles.buttonText}>Continuar Comprant</Text>
+            <Text style={styles.buttonText}>{getPalabra("keep_shopping")}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.button, styles.buttonCart]} onPress={onGoToCart}>
-            <Text style={styles.buttonText}>Anar a la cistella</Text>
+            <Text style={styles.buttonText}>{getPalabra("go_to_cart")}</Text>
           </TouchableOpacity>
         </View>
       </View>

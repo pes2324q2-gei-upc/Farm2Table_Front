@@ -59,5 +59,14 @@
     "errorChat": "Error loading chats",
     "favourite_products": "Your favourite products",
     "apples": "Apples",
-    "bananas": "Bananas"
+    "bananas": "Bananas",
+    "my_orders": "My orders",
+    "my_data": "My data",
+    "order": "Order",
+    "order_date": "Order date",
+    "edit_data": "Edit data",
+    "added_to_cart": "Added to cart",
+    "keep_shopping": "Keep shopping",
+    "go_to_cart": "Go to cart",
+    "sure_remove": "Are you sure you want to remove this product from the cart?"
 }
