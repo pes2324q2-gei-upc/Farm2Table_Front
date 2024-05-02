@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, View, Text, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { getPalabra } from '../informacion/User'
 import styles from '../styles/popUpCart.style'; // Make sure the path is correct
 import { COLORS } from '../constants/theme'; // Make sure the path is correct
 
@@ -23,9 +24,9 @@ const AddFundsModal = ({ modalVisible, setModalVisible, navigation, actualfunds 
                         color={COLORS.error} // Assume you have an error color defined
                         style={{ marginBottom: 20 }}
                     />
-                    <Text style={styles.modalText}>Fondos insuficientes</Text>
+                    <Text style={styles.modalText}>{getPalabra("insufficient_funds")}</Text>
                     <Text style={styles.modalText}>
-                        Por favor, añade más fondos para continuar con tu pedido.
+                        {getPalabra("add_more_funds")}
                     </Text>
                     <TouchableOpacity
                         style={[styles.button, styles.buttonCart]}
@@ -34,7 +35,7 @@ const AddFundsModal = ({ modalVisible, setModalVisible, navigation, actualfunds 
                             navigation.navigate('AddCoinsScreen', { actualfunds });
                         }}
                     >
-                        <Text style={styles.buttonText}>Añadir Fondos</Text>
+                        <Text style={styles.buttonText}>{getPalabra("add_funds")}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={[styles.button, styles.buttonBack]}
@@ -43,7 +44,7 @@ const AddFundsModal = ({ modalVisible, setModalVisible, navigation, actualfunds 
                             setModalVisible(!modalVisible);
                         }}
                     >
-                        <Text style={styles.buttonTextBlack}>Atrás</Text>
+                        <Text style={styles.buttonTextBlack}>{getPalabra("back")}</Text>
                     </TouchableOpacity>
                 </View>
             </View>

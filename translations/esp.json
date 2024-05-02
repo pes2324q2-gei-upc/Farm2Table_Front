@@ -68,5 +68,15 @@
     "added_to_cart": "Añadido al carrito",
     "keep_shopping": "Seguir comprando",
     "go_to_cart": "Ir al carrito",
-    "sure_remove": "¿Estás seguro de que deseas eliminar este artículo del carrito?"
+    "sure_remove": "¿Estás seguro de que deseas eliminar este artículo del carrito?",
+    "go_orders": "Ir a mis pedidos",
+    "go_home": "Ir a inicio",
+    "processed_purchase": "Tu compra ha sido procesada",
+    "insufficient_funds": "Fondos insuficientes",
+    "add_more_funds": "Por favor, añade más fondos para continuar con tu pedido.",
+    "add_funds": "Añadir fondos",
+    "back": "Atrás",
+    "only": "Solo quedan",
+    "left_in_stock": "en stock.",
+    "modify_order": "Modificar pedido"
 }

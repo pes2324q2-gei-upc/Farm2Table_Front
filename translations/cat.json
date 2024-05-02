@@ -68,5 +68,15 @@
     "added_to_cart": "Producte afegit a la cistella!",
     "keep_shopping": "Segueix comprant",
     "go_to_cart": "Anar a la cistella",
-    "sure_remove": "Estàs segur que vols eliminar aquest producte de la cistella?"
+    "sure_remove": "Estàs segur que vols eliminar aquest producte de la cistella?",
+    "go_home": "Anar al home",
+    "go_back": "Tornar enrere",
+    "processed_purchase": "La teva compra ha sigut processada correctament!",
+    "insufficient_funds": "Fons insuficients",
+    "add_more_funds": "Siusplau, afegeix més fons al teu compte",
+    "add_funds": "Afegeix fons",
+    "back": "Tornar",
+    "only": "Només",
+    "left_in_stock": "en estoc.",
+    "modify_order": "Modifificar comanda"
 }

@@ -68,5 +68,16 @@
     "added_to_cart": "Added to cart",
     "keep_shopping": "Keep shopping",
     "go_to_cart": "Go to cart",
-    "sure_remove": "Are you sure you want to remove this product from the cart?"
+    "sure_remove": "Are you sure you want to remove this product from the cart?",
+    "go_home": "Go to Home",
+    "go_orders": "Go to orders",
+    "processed_purchase": "Your purchase has been processed",
+    "insufficient_funds": "Insufficient funds",
+    "add_more_funds": "Please add more funds to your account to complete the purchase",
+    "add_funds": "Add funds",
+    "back": "Back",
+    "no_stock": "Not enough stock for:",
+    "only": "Only",
+    "left_in_stock": "left in stock.",
+    "modify_order": "Modify order"
 }
