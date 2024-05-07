@@ -79,5 +79,7 @@
     "no_stock": "Not enough stock for:",
     "only": "Only",
     "left_in_stock": "left in stock.",
-    "modify_order": "Modify order"
+    "modify_order": "Modify order",
+    "unable": "Unable to connect to chat service",
+    "load": "Failed to load chat history"
 }

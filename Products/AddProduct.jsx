@@ -11,7 +11,7 @@ import {useFocusEffect, useNavigation} from '@react-navigation/native';
 //import {userId} from "../informacion/User";
 import {getPalabra, userId} from '../informacion/User';
 import { fetchProductTypes, addNewProduct } from '../api_service/ApiAddProduct';
-import styles from '../styles/addProdcut.style';
+import styles from '../styles/addProduct.style';
 
 
 const AddProduct = () => {

@@ -6,9 +6,7 @@ import { useRoute } from '@react-navigation/native';
 import { format, parseISO, isSameDay } from 'date-fns';
 import { COLORS, SIZES } from '../constants/theme'
 import styles from "../styles/mensajesChat.style";
-
-
-
+import {getPalabra} from '../informacion/User';
 const MensajesChat = ({ navigation }) => {
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
@@ -36,7 +34,7 @@ const MensajesChat = ({ navigation }) => {
 
         newSocket.onerror = error => {
             console.error('WebSocket error:', error);
-            Alert.alert("Error", "Unable to connect to chat service.");
+            Alert.alert("Error", getPalabra("unable"));
         };
 
         newSocket.onclose = () => {
@@ -63,7 +61,7 @@ const MensajesChat = ({ navigation }) => {
             })));
         } catch (error) {
             console.error('Fetch error:', error);
-            Alert.alert("Error", "Failed to load chat history.");
+            Alert.alert("Error", getPalabra("load"));
         }
     };
 
