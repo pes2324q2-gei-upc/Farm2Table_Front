@@ -9,7 +9,7 @@ import HeaderBack from '../navigation/header_back';
 import { COLORS, URL } from '../constants/theme';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 //import {userId} from "../informacion/User";
-import { getPalabra } from '../informacion/User';
+import {getPalabra, userId} from '../informacion/User';
 import { fetchProductTypes, addNewProduct } from '../api_service/ApiAddProduct';
 import styles from '../styles/addProdcut.style';
 
@@ -53,7 +53,7 @@ const AddProduct = () => {
         }
 
         const formData = new FormData();
-        formData.append('id', '1');
+        formData.append('id', userId());
         formData.append('name', productName);
         formData.append('description', productDescription);
         formData.append('type', selected);

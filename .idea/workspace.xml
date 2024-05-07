@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2c62d708-8ebc-49fc-9632-855ec1f91a3c" name="Changes" comment="Es veu pantalla principal xats">
+    <list default="true" id="2c62d708-8ebc-49fc-9632-855ec1f91a3c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/AddProduct.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/AddProduct.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/translations/cat.json" beforeDir="false" afterPath="$PROJECT_DIR$/translations/cat.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/translations/engl.json" beforeDir="false" afterPath="$PROJECT_DIR$/translations/engl.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/translations/esp.json" beforeDir="false" afterPath="$PROJECT_DIR$/translations/esp.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Products/AddProduct.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Products/AddProduct.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +43,7 @@
     "RunOnceActivity.cidr.known.project.marker": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "146__TraduccionsAddProduct",
+    "git-widget-placeholder": "development",
     "last_opened_file_path": "C:/Users/peque/OneDrive/Escritorio/PES/FrontEnd/FrontEnd/android",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -137,6 +135,6 @@
     <MESSAGE value="Modificar afegir producte" />
     <MESSAGE value="Obrir xat" />
     <MESSAGE value="Es veu pantalla principal xats" />
-    <option name="LAST_COMMIT_MESSAGE" value="Es veu pantalla principal xats" />
+    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
 </project>
