@@ -12,7 +12,7 @@ import Product from '../Products/Product'
 import Buscador from '../Buscador/Buscador'
 import Consultar_Usuario from '../screens/Consultar_Usuario';
 import { COLORS, SIZES } from '../constants/theme' 
-import EditarPerfil from '../screens/EditarPerfil';
+import EditarPerfil from '../Users/EditarPerfil';
 import MensajesChat from "../Chat/MensajesChat";
 
 import Ticket from '../Shopping/ticket';
