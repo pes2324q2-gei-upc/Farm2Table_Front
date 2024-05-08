@@ -13,7 +13,6 @@ const InicioSesion = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [secure_text_entry, setSecureTextEntry] = useState(true); 
-  const [recordar_contrasenya, setRecordarContrasenya] = useState(true);
   const [refresh, setRefresh] = useState(false);
   const NAVIGATOR = useNavigation();
   const [error_message, setError] = useState('');
@@ -45,10 +44,6 @@ const InicioSesion = () => {
 
   const contrasenyaVisible = () => {
     setSecureTextEntry(!secure_text_entry);
-  };
-
-  const recordarContrasenya = () => {
-    setRecordarContrasenya(!recordar_contrasenya);
   };
 
   const contrasenyaOlvidada = () => {
@@ -117,17 +112,6 @@ const InicioSesion = () => {
         <TouchableOpacity onPress={contrasenyaVisible} style={STYLES.visibilidad}>
           <Icon name={secure_text_entry ? "visibility-off" : "visibility"} size={20} color="black" />
         </TouchableOpacity>
-      </View>
-
-      <View style={STYLES.recuerdate}>
-
-        <TouchableOpacity onPress={recordarContrasenya}>
-          <Icon name={recordar_contrasenya ? "check-box-outline-blank" : "check-box"} size={20} color="black" />
-        </TouchableOpacity>
-
-        <Text style={{position: 'absolute', marginLeft: 30, fontSize: 14}}>
-          {getPalabra("remember_password")}
-        </Text>
       </View>
 
       <TouchableOpacity onPress={contrasenyaOlvidada}>
