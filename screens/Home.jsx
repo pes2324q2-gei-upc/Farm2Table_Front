@@ -4,6 +4,7 @@ import { COLORS, URL } from '../constants/theme';
 import Header from '../navigation/header';
 import ShopFeed from '../Products/ShopFeed';
 import AddButton from '../components/addButton'; // Adjust import path
+import OpenChat from "../components/openChat";
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 
 const MainFeed = () => {
@@ -53,6 +54,10 @@ const MainFeed = () => {
     navigation.navigate("AddProduct");
   };
 
+  const handleOpenChatPress = () => {
+    navigation.navigate("MensajesChat");
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <Header />
@@ -63,6 +68,7 @@ const MainFeed = () => {
           ))}
         </ScrollView>
         <AddButton onPress={handleAddButtonPress} />
+        <OpenChat onPress={handleOpenChatPress} />
       </SafeAreaView>
     </SafeAreaView>
   );
