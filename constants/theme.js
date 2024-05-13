@@ -2,7 +2,7 @@ import { Dimensions } from "react-native";
 
 const {height, width} = Dimensions.get("window");
 
-export const URL= "51.44.17.164";
+export const URL= "13.37.224.132";
 
 const COLORS = {
     primary: "#fefae0", //Color pastel de fondo -- Cornsilk

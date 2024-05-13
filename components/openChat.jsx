@@ -1,14 +1,13 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, StyleSheet } from 'react-native';
 import { COLORS } from '../constants/theme';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faComments } from '@fortawesome/free-solid-svg-icons';
 
 const OpenChat = ({ onPress }) => {
-
-
-
     return (
         <TouchableOpacity style={styles.button} onPress={onPress}>
-            <Text style={styles.text}>+</Text>
+            <FontAwesomeIcon icon={faComments} size={24} color="white" />
         </TouchableOpacity>
     );
 };
@@ -16,7 +15,7 @@ const OpenChat = ({ onPress }) => {
 const styles = StyleSheet.create({
     button: {
         position: 'absolute',
-        bottom: 20, // Adjusted for the footer height
+        bottom: 300, // Ajustado por la altura del pie de página
         right: 20,
         backgroundColor: COLORS.tertiary,
         borderRadius: 30,
@@ -24,13 +23,6 @@ const styles = StyleSheet.create({
         height: 60,
         alignItems: 'center',
         justifyContent: 'center',
-        // Remove verticalAlign, not supported in React Native
-    },
-    text: {
-        color: 'white',
-        fontSize: 54,
-        fontWeight: 'bold',
-        lineHeight: 60, // Adjust line height to center vertically
     },
 });
 
