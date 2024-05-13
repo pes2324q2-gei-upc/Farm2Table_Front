@@ -7,6 +7,7 @@ import { URL } from '../constants/theme';
 import { addProductToCart, loadCart, saveCart } from '../informacion/cartInfo';
 import { userId, setUserId } from '../informacion/User';
 import CartPopUp from '../PopUps/addedCart';
+import OpenChat from "../components/openChat";
 
 const ProductDetails = ({ navigation, route }) => {
   const [product, setProduct] = useState(null);
@@ -51,6 +52,10 @@ const ProductDetails = ({ navigation, route }) => {
   const decrement = () => {
     if (count > 1) setCount(count - 1);
   };
+
+  const handleOpenChatPress = () => {
+    navigation.navigate("MensajesChat");
+  }
 
   const addToCart = async () => {
 
@@ -111,6 +116,7 @@ const ProductDetails = ({ navigation, route }) => {
                   <View style={styles.userrow}>
                     {userAvatar && <Image source={{ uri: userAvatar }} style={styles.user_image} />}
                     <Text style={styles.user_name}>{product.productor_info.username}</Text>
+                    <OpenChat onPress={handleOpenChatPress} />
                   </View>
 
                   <View style={styles.rating_row}>
