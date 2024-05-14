@@ -14,6 +14,7 @@ import Consultar_Usuario from '../screens/Consultar_Usuario';
 import { COLORS, SIZES } from '../constants/theme' 
 import EditarPerfil from '../screens/EditarPerfil';
 import MensajesChat from "../Chat/MensajesChat";
+import OpenChat from "../Chat/OpenChat";
 
 import Ticket from '../Shopping/ticket';
 
@@ -43,6 +44,7 @@ const ChatStackScreen = () => {
         <ChatStack.Navigator screenOptions={{headerShown: false }}>
             <ChatStack.Screen name="Chat" component={Chat} />
             <ChatStack.Screen name="MensajesChat" component={MensajesChat} />
+            <ChatStack.Screen name="OpenChat" component={OpenChat} />
         </ChatStack.Navigator>
     );
 };

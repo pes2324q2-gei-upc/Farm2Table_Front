@@ -7,12 +7,12 @@ import { format, parseISO, isSameDay } from 'date-fns';
 import { COLORS, SIZES } from '../constants/theme'
 import styles from "../styles/mensajesChat.style";
 import {getPalabra} from '../informacion/User';
-const MensajesChat = ({ navigation }) => {
+const OpenChat = ({ navigation }) => {
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
     const [socket, setSocket] = useState(null);
     const route = useRoute();
-    const { chatId, productId, authorId, receiverId, receiverUsername } = route.params;
+    const { productId, authorId, receiverId, receiverUsername } = route.params;
 
     useEffect(() => {
         const websocketURL = `ws://13.37.224.132/ws/${authorId}/chat/messages/`;
@@ -20,16 +20,10 @@ const MensajesChat = ({ navigation }) => {
 
         newSocket.onopen = () => {
             console.log('WebSocket connection established');
-            fetchInitialMessages();
         };
 
         newSocket.onmessage = (event) => {
             const data = JSON.parse(event.data);
-            if (data.message_text) {
-                fetchInitialMessages();
-            } else {
-                console.error('Message missing timestamp or text:', data);
-            }
         };
 
         newSocket.onerror = error => {
@@ -43,27 +37,7 @@ const MensajesChat = ({ navigation }) => {
 
         setSocket(newSocket);
         return () => newSocket.close();
-    }, [authorId, chatId]);
-
-    const fetchInitialMessages = async () => {
-        const url = `http://13.37.224.132/chats/rooms/${chatId}`;
-        try {
-            const response = await fetch(url);
-            const data = await response.json();
-            if (!response.ok) {
-                throw new Error('Failed to fetch chat messages: ' + response.statusText);
-            }
-            setMessages(data.map(msg => ({
-                ...msg,
-                sender: msg.author.id === authorId ? 'user' : 'server',
-                timestamp: msg.sent_date
-
-            })));
-        } catch (error) {
-            console.error('Fetch error:', error);
-            Alert.alert("Error", getPalabra("load"));
-        }
-    };
+    }, [authorId]);
 
     const sendMessage = () => {
         if (message.trim() && socket) {
@@ -74,6 +48,7 @@ const MensajesChat = ({ navigation }) => {
                 receiver_id: receiverId,
             }));
             setMessage('');
+            navigation.navigate("Chat");
         }
     };
 
@@ -133,4 +108,4 @@ const MensajesChat = ({ navigation }) => {
         </SafeAreaView>
     );
 };
-export default MensajesChat;
+export default OpenChat;
