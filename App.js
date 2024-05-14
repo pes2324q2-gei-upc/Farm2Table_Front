@@ -14,7 +14,8 @@ import CartScreen from './Shopping/cart';
 import Ticket from './Shopping/ticket';
 import AddCoinsScreen from './Shopping/funds';
 import CheckUser from './Users/CheckUser';
-import MensajesChat from "./Chat/MensajesChat";
+import OpenChat from "./Chat/OpenChat";
+
 
 
 /*
@@ -65,7 +66,7 @@ export default function App() {
         <Stack.Screen name="Ticket" component={Ticket} options={{headerShown: false}} />
         <Stack.Screen name="AddCoinsScreen" component={AddCoinsScreen} options={{headerShown: false}} />
         <Stack.Screen name="CheckUser" component={CheckUser} options={{headerShown: false}} />
-        <Stack.Screen name="MensajesChat" component={MensajesChat} options={{headerShown: false}} />
+        <Stack.Screen name="OpenChat" component={OpenChat} options={{headerShown: false}} />
       </Stack.Navigator>
     </NavigationContainer>
   );

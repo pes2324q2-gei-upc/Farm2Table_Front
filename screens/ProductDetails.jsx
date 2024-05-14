@@ -8,6 +8,7 @@ import { addProductToCart, loadCart, saveCart } from '../informacion/cartInfo';
 import { userId, setUserId } from '../informacion/User';
 import CartPopUp from '../PopUps/addedCart';
 import OpenChat from "../components/openChat";
+import {ChatStackScreen} from "../navigation/footer"
 
 const ProductDetails = ({ navigation, route }) => {
   const [product, setProduct] = useState(null);
@@ -15,6 +16,7 @@ const ProductDetails = ({ navigation, route }) => {
   const [count, setCount] = useState(1);
   const [modalVisible, setModalVisible] = useState(false);
   const cartIconRef = useRef();
+  const user = userId();
 
   const { id } = route.params;
 
@@ -54,8 +56,14 @@ const ProductDetails = ({ navigation, route }) => {
   };
 
   const handleOpenChatPress = () => {
-    navigation.navigate("MensajesChat");
-  }
+    navigation.navigate("OpenChat", {
+      productId: product.id,
+      authorId: user,
+      receiverId: product.productor_info.id,
+      receiverUsername: product.productor_info.username
+    });
+  };
+
 
   const addToCart = async () => {
 
