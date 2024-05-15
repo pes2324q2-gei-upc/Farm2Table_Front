@@ -1,6 +1,8 @@
 import React from 'react';
 import { Modal, View, Text, TouchableOpacity } from 'react-native';
 import styles from '../styles/popUpCart.style'; // Asegúrate de que esta ruta es correcta
+import { getPalabra } from '../informacion/User';
+
 
 const ConfirmModal = ({ modalVisible, setModalVisible, navigation }) => {
     return (

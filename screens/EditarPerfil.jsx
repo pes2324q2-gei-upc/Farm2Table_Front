@@ -9,6 +9,8 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import { submitPerfil } from '../api_service/ApiEditarPerfil'
 
+import Header from '../navigation/header_back'
+
 const EditarPerfil = () => { 
   const route = useRoute();
   const { item } = route.params;
@@ -67,13 +69,15 @@ const EditarPerfil = () => {
     console.log("va");
   };
   return (
-    <SafeAreaView style={styles.top}>
-      <View style={styles.vista}>
+    <SafeAreaView style={styles.container}>
+      <Header />
+      <View style={styles.content}>
         <TouchableOpacity onPress={pickImage}>
-          <Image
-            source={{ uri: imageUri }}
-            style={styles.profileImage}
-          />
+        {imageUri ? (
+          <Image source={{ uri: imageUri }} style={styles.profileImage} />
+        ) : (
+          <Text style={styles.placeholderText}>Añadir Imagen</Text>
+        )}
         </TouchableOpacity>
         <View style={styles.v1}>
           <Text style={styles.titulo1}>Nom</Text>
@@ -89,8 +93,7 @@ const EditarPerfil = () => {
         <View style={styles.v1}>
           <Text style={styles.titulo1}>Descripció</Text>
           <TextInput
-            placeholder='
-                        Breu descripció'
+            placeholder='Breu descripció'
             placeholderTextColor={'gray'}
             value={descripcio}
             onChangeText={(txt)=>setdescripcio(txt)}
@@ -99,7 +102,6 @@ const EditarPerfil = () => {
             style={styles.input}
           />
         </View>
-        
         <View style={styles.v1}>
           <Text style={styles.titulo1}>Sobre tu</Text>
           <TextInput
@@ -111,7 +113,6 @@ const EditarPerfil = () => {
             style={styles.input}
           />
         </View>
-
         <View style={styles.v1}>
           <Text style={styles.titulo1}>Telèfon</Text>
           <TextInput
@@ -125,26 +126,28 @@ const EditarPerfil = () => {
             inputMode="numeric"
           />
         </View>
-      </View>
-      <View style ={styles.bottom}>
+        <View style ={styles.bottom}>
         <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
           <Text style={styles.buttontext}>Torna</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
           <Text 
-          style={styles.buttontext} 
-          onPress={() => {
-            console.log(imageUri)
-          }}
+            style={styles.buttontext} 
+            onPress={() => {
+              console.log(imageUri)
+            }}
           >
-              Edita Productes
+            Edita Productes
           </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={handleAccepta}>
           <Text style={styles.buttontext}>Accepta</Text>
         </TouchableOpacity>
-      </View>
+    </View>
+
+      </View> 
     </SafeAreaView>
+
   )
 }
 const styles = StyleSheet.create({
@@ -168,20 +171,27 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     borderColor: COLORS.secondary,
     borderWidth: 2.5,
-    width:'25%',
+    width:'30%',
     height: '20%',
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
   },
+  container: {
+    flex: 1,
+    backgroundColor: COLORS.secondary,
+  },
+  content: {
+      backgroundColor: COLORS.primary,
+      padding: 5,
+      flex: 1,
+  },
   top:{
     width: '100%',
     backgroundColor: COLORS.primary,
-    height: SIZES.height,
   },
   vista:{
     width: '100%',
-    height: (SIZES.height/100)*60,
   },
   v1:{
     width: '90%',
@@ -216,6 +226,13 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginLeft: 10,
     alignSelf: 'center'
+  },
+  placeholderText: {
+    color: COLORS.secondary,
+    fontSize: 18,
+    fontWeight: '700',
+    alignSelf: 'center',
+    marginTop: 10,
   },
 })
 export default EditarPerfil

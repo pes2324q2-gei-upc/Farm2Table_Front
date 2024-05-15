@@ -15,7 +15,6 @@ export const setUserId = (idd) => {
 } 
 
 export const userId = () => {
-    console.log("Id:", id);
     return id;
 }
 

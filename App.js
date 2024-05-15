@@ -28,6 +28,9 @@ import EscollirUsuari from './Register/EscollirUsuari';
 import Productor from './Register/Productor';
 import Minorista from './Register/Minorista';
 import Particular from './Register/Particular';
+import EditarPerfil from './screens/EditarPerfil';
+import OrderSummary from './Users/orderSummary';
+import Orders from './Users/orderedProduct';
 
 
 
@@ -67,6 +70,9 @@ export default function App() {
         <Stack.Screen name="AddCoinsScreen" component={AddCoinsScreen} options={{headerShown: false}} />
         <Stack.Screen name="CheckUser" component={CheckUser} options={{headerShown: false}} />
         <Stack.Screen name="OpenChat" component={OpenChat} options={{headerShown: false}} />
+        <Stack.Screen name="EditarPerfil" component={EditarPerfil} options={{headerShown: false}} />
+        <Stack.Screen name="Orders" component={Orders} options={{headerShown: false}} />
+        <Stack.Screen name="OrderSummary" component={OrderSummary} options={{headerShown: false}} />
       </Stack.Navigator>
     </NavigationContainer>
   );
