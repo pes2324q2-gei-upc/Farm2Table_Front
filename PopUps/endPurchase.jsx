@@ -30,7 +30,7 @@ const ConfirmModal = ({ modalVisible, setModalVisible, navigation }) => {
                         style={[styles.button, styles.buttonShop]}
                         onPress={() => {
                             setModalVisible(!modalVisible);
-                            navigation.navigate('Home'); // Cambiar a 'Mis Pedidos' cuando esté disponible
+                            navigation.navigate('CheckUser'); // Cambiar a 'Mis Pedidos' cuando esté disponible
                         }}
                     >
                         <Text style={styles.buttonText}>{getPalabra("go_orders")}</Text>
