@@ -1,6 +1,8 @@
 import React from 'react';
 import { Modal, View, Text, TouchableOpacity } from 'react-native';
 import styles from '../styles/popUpCart.style'; // Asegúrate de que esta ruta es correcta
+import { getPalabra } from '../informacion/User';
+
 
 const ConfirmModal = ({ modalVisible, setModalVisible, navigation }) => {
     return (
@@ -28,7 +30,7 @@ const ConfirmModal = ({ modalVisible, setModalVisible, navigation }) => {
                         style={[styles.button, styles.buttonShop]}
                         onPress={() => {
                             setModalVisible(!modalVisible);
-                            navigation.navigate('Home'); // Cambiar a 'Mis Pedidos' cuando esté disponible
+                            navigation.navigate('CheckUser'); // Cambiar a 'Mis Pedidos' cuando esté disponible
                         }}
                     >
                         <Text style={styles.buttonText}>{getPalabra("go_orders")}</Text>

@@ -20,6 +20,12 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         maxHeight: '70%'
     },
+    ticket2: {
+        backgroundColor: 'white',
+        margin: 20,
+        padding: 20,
+        borderRadius: 10,
+    },
     storeName: {
         fontSize: 20,
         fontFamily: 'ticket', // Ensure this font is correctly linked in your React Native project

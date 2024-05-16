@@ -81,5 +81,6 @@
     "left_in_stock": "left in stock.",
     "modify_order": "Modify order",
     "unable": "Unable to connect to chat service",
-    "load": "Failed to load chat history"
+    "load": "Failed to load chat history",
+    "my_favs": "Favourites"
 }

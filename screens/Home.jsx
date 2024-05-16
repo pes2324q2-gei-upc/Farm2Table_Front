@@ -6,11 +6,14 @@ import ShopFeed from '../Products/ShopFeed';
 import AddButton from '../components/addButton';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 
+import { userType } from '../informacion/User';
+
 const MainFeed = () => {
   const [shopData, setShopData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigation = useNavigation();
+  const tipo = userType();
   
   const fetchData = async () => {
     setLoading(true);
@@ -62,7 +65,9 @@ const MainFeed = () => {
             shop.products_info.length > 0 && <ShopFeed key={index} shopName={shop.username} products={shop.products_info} />
           ))}
         </ScrollView>
-        <AddButton onPress={handleAddButtonPress} />
+        {tipo === 'Productor' && (
+          <AddButton onPress={handleAddButtonPress} />
+        )}
       </SafeAreaView>
     </SafeAreaView>
   );

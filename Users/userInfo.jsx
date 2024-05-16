@@ -3,7 +3,8 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS, SIZES } from '../constants/theme'; // Asegúrate de que la ruta es correcta
 
-const UserProfile = ({ username, telephone, avatar, description, reach }) => {
+const UserProfile = ({ username, telephone, avatar, description, reach, user, navigation }) => {
+
     return (
         <View style={styles.container}>
             <View style={styles.capsule}>
@@ -25,7 +26,7 @@ const UserProfile = ({ username, telephone, avatar, description, reach }) => {
                 )}
             </View>
             <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.boton}>
+                <TouchableOpacity style={styles.boton} onPress={() => navigation.navigate('EditarPerfil', { item: user })}>
                     <Text style={styles.botonEditar}>Editar Perfil</Text>
                 </TouchableOpacity>
             </View>

@@ -80,5 +80,6 @@
     "left_in_stock": "en stock.",
     "modify_order": "Modificar pedido",
     "unable": "No se puede conectar al servicio chat",
-    "load": "Error al cargar el historial de chat"
+    "load": "Error al cargar el historial de chat",
+    "my_favs": "Favoritos"
 }

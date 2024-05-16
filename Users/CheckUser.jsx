@@ -5,7 +5,9 @@ import Header from '../navigation/header_back';
 import { Ionicons } from '@expo/vector-icons';
 import { fetchUser } from '../api_service/ApiConsultar_Usuario';
 import { userId, getPalabra } from '../informacion/User';
-import UserProfile from './userInfo';
+
+import ConsumerCheck from './consumerCheck';
+
 
 const ProfileScreen = ({ navigation }) => {
     const [activeTab, setActiveTab] = useState('Pedidos');
@@ -44,41 +46,7 @@ const ProfileScreen = ({ navigation }) => {
                         </View>
                     )}
                 </View>
-
-                <View style={styles.buttonContainer}>
-                    <TouchableOpacity
-                        style={[styles.button, { borderColor: activeTab === 'Pedidos' ? 'orange' : '#1e4d2b' }]}
-                        onPress={() => onPress('Pedidos')}
-                    >
-                        <Text style={[styles.buttonText, { color: activeTab === 'Pedidos' ? 'orange' : 'white' }]}>{getPalabra("my_orders")}</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        style={[styles.button, { borderColor: activeTab === 'Datos' ? 'orange' : '#1e4d2b' }]}
-                        onPress={() => onPress('Datos')}
-                    >
-                        <Text style={[styles.buttonText, { color: activeTab === 'Datos' ? 'orange' : 'white' }]}>{getPalabra("my_data")}</Text>
-                    </TouchableOpacity>
-                </View>
-
-                {activeTab === 'Pedidos' && (
-                    <View style={styles.tabContent}>
-                        <Text style={styles.tabTitle}>Mis Pedidos</Text>
-                    </View>
-                )}
-
-                {activeTab === 'Datos' && (
-                    <View style={styles.tabContent}>
-                        <UserProfile
-                            username={shopData.username}
-                            //Falta cambiar esto para uqe pase los valores reales
-                            telephone="+1234567890"
-                            avatar="http://example.com/avatar.jpg"
-                            description="Especialista en productos orgánicos y sostenibles."
-                            reach={20}
-                        />
-                    </View>
-                )}
+                <ConsumerCheck navigation={navigation} shopData={shopData}/>
             </View>
         </SafeAreaView>
     );
@@ -155,3 +123,5 @@ const styles = StyleSheet.create({
 });
 
 export default ProfileScreen;
+
+
