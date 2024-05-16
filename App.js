@@ -28,6 +28,8 @@ import EscollirUsuari from './Register/EscollirUsuari';
 import Productor from './Register/Productor';
 import Minorista from './Register/Minorista';
 import Particular from './Register/Particular';
+import MensajesChat from "./Chat/MensajesChat";
+import Chat from "./Chat/Chat";
 
 
 
