@@ -6,6 +6,7 @@ import { COLORS } from "../constants/theme";
 import ProductorMinoristaItem from "../components/productorMinorista";
 import ProductItem from "../components/productItem";
 import TypeItem from "../components/typeItem";
+import { result } from "lodash";
 
 const Favoritos = ({ navigation, userId, userType }) => {
     const [searchParty, setSearchParty] = useState([]);
@@ -32,7 +33,8 @@ const Favoritos = ({ navigation, userId, userType }) => {
             if (selectedType === "Types" && !dataFetched.types) {
                 try {
                     const data = await getFavourites(userId, "types", userType.toLowerCase());
-                    setFavouriteData(prevState => ({ ...prevState, types: data || [] }));
+                    const result = data.data || [];
+                    setFavouriteData(prevState => ({ ...prevState, types: result }));
                     setDataFetched(prevState => ({ ...prevState, types: true }));
                 } catch (error) {
                     console.error("Failed to fetch types data: ", error);
@@ -41,6 +43,7 @@ const Favoritos = ({ navigation, userId, userType }) => {
                 try {
                     const data = await getFavourites(userId, "minoristas", userType.toLowerCase());
                     const result = data.data || [];
+                    console.log(result);
                     setFavouriteData(prevState => ({ ...prevState, minoristas: result }));
                     setDataFetched(prevState => ({ ...prevState, minoristas: true }));
                 } catch (error) {
@@ -78,12 +81,20 @@ const Favoritos = ({ navigation, userId, userType }) => {
             return <Text style={styles.noItemsText}>You haven't selected any {selectedType.toLowerCase()} yet.</Text>;
         }
 
-        if (selectedType === "Productors" || selectedType === "Minoristas") {
+        if (selectedType === "Productors") {
             return favourites.map((item, index) => (
                 <ProductorMinoristaItem
                     key={index}
                     name={item.productor_name}
                     username={item.username}
+                />
+            ));
+        } else if (selectedType === "Minoristas") {
+            return favourites.map((item, index) => (
+                <ProductorMinoristaItem
+                    key={index}
+                    name={item.service_name}
+                    username={item.telephone}
                 />
             ));
         } else if (selectedType === "Products") {
@@ -92,7 +103,7 @@ const Favoritos = ({ navigation, userId, userType }) => {
             ));
         } else if (selectedType === "Types") {
             return favourites.map((item, index) => (
-                <TypeItem key={index} type={item} />
+                <TypeItem key={index} type={item.name} />
             ));
         }
 

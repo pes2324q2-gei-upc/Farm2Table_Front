@@ -14,7 +14,7 @@ const TypeItem = ({ type }) => {
 const styles = StyleSheet.create({
     typeContainer: {
         padding: 15,
-        backgroundColor: COLORS.secondary,
+        backgroundColor: COLORS.primary,
         borderRadius: 10,
         marginBottom: 10,
     },
