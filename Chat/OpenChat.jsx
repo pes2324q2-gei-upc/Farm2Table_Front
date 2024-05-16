@@ -7,6 +7,7 @@ import { format, parseISO, isSameDay } from 'date-fns';
 import { COLORS, SIZES } from '../constants/theme'
 import styles from "../styles/mensajesChat.style";
 import {getPalabra} from '../informacion/User';
+import {ChatStackScreen} from "../navigation/footer"
 const OpenChat = ({ navigation }) => {
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
