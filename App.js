@@ -28,7 +28,7 @@ import EscollirUsuari from './Register/EscollirUsuari';
 import Productor from './Register/Productor';
 import Minorista from './Register/Minorista';
 import Particular from './Register/Particular';
-import EditarPerfil from './screens/EditarPerfil';
+import EditarPerfil from './Users/EditarPerfil';
 import OrderSummary from './Users/orderSummary';
 import Orders from './Users/orderedProduct';
 
