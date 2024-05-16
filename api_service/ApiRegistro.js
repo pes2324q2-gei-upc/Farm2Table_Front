@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { getIP } from "../informacion/Constants";
+import { URL } from "../constants/theme";
 import { reject } from "lodash";
 
 export const registerService = (username, password, confirm_password) => {
@@ -23,7 +23,7 @@ export const registerService = (username, password, confirm_password) => {
             body: JSON.stringify(data)
         };
         
-        const url = 'http://'+getIP()+'/users/register/';
+        const url = 'http://'+URL+'/users/register/';
         
         fetch(url, requestOptions)
             .then(response => {

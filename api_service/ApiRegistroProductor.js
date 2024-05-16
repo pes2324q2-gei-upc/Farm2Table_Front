@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { getIP } from "../informacion/Constants";
+import { URL } from "../constants/theme";
 import { userId } from "../informacion/User";
 
 export const registerProductorService = (num_acreditation, name, fav_types) => {
@@ -25,7 +25,7 @@ export const registerProductorService = (num_acreditation, name, fav_types) => {
         };
         
         console.log(requestOptions)
-        const url = 'http://'+getIP()+'/users/register/Productor/'+userId()+'/';
+        const url = 'http://'+URL+'/users/register/Productor/'+userId()+'/';
         
         fetch(url, requestOptions)
             .then(response => {
