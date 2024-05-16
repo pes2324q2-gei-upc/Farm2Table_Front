@@ -52,11 +52,11 @@ const styles = StyleSheet.create({
       alignItems: 'center',
   },
   row: {
-      paddingTop: 20,
+      maxHeight: '50%',
       flexDirection: 'row',
-      justifyContent: 'space-between',
+      //justifyContent: 'space-between',
       width: '80%',
-      paddingBottom: 20,
+      backgroundColor: 'red'
   },
   text: {
       fontSize: SIZES.xsmall,

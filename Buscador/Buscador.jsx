@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, FlatList, Image } from 'react-native'
+import { View, Text, StyleSheet, FlatList, Image, ScrollView } from 'react-native'
 import React,  {useState, useCallback, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { COLORS, SIZES, URL} from '../constants/theme'
@@ -63,6 +63,7 @@ const Buscador = () => {
         { title: 'Pagès', index: 1 },
         { title: 'Productes', index: 2 },
         { title: 'Restaurants', index: 3 },
+        { title: 'Mercats', index: 4 },
     ];
 
     return (
@@ -75,7 +76,7 @@ const Buscador = () => {
                   onChangeText={setSearchQuery}
                 />
                 <View styles = {styles.filtros}>
-                    <View style={styles.row}>
+                    <ScrollView style={styles.row} horizontal={true}>
                         {items.map((item, index) => (
                         <TouchableElement
                             key={index}
@@ -90,12 +91,13 @@ const Buscador = () => {
                             backgroundColor = {item.index === selectedIndex ? 'orange' : 'gray'}
                         />
                         ))}
-                    </View>
+                    </ScrollView>
                 </View>
                 
                 {selectedIndex === 1 && <ProductorList data={data1} searchQuery={searchQuery} />}
                 {selectedIndex === 2 && <ProductList data={data2} searchQuery={searchQuery} />}
                 {selectedIndex === 3 && <RestaurantList data={data3} searchQuery={searchQuery} />}
+                {selectedIndex === 4 && <RestaurantList data={data4} searchQuery={searchQuery} />}
             </View>
         </SafeAreaView>
     )
