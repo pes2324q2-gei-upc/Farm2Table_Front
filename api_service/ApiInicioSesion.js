@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { getIP } from "../informacion/Constants";
+import { URL } from "../constants/theme";
 
 export const loginService = (username, password) => {
 
@@ -21,7 +21,7 @@ export const loginService = (username, password) => {
             body: JSON.stringify(data)
         };
         
-        const url = 'http://'+getIP()+'/users/login/';
+        const url = 'http://'+URL+'/users/login/';
         console.log(url);
         
         fetch(url, requestOptions)

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { getIP } from "../informacion/Constants";
+import { URL } from "../constants/theme";
 import { userId } from "../informacion/User";
 
 export const registerMinoristaService = (tipus, servei, fav_types) => {
@@ -26,7 +26,7 @@ export const registerMinoristaService = (tipus, servei, fav_types) => {
 
         console.log("DATOS:",requestOptions)
         
-        const url = 'http://'+getIP()+'/users/register/Minorista/'+userId()+'/';
+        const url = 'http://'+URL+'/users/register/Minorista/'+userId()+'/';
         console.log("URL:",url)
         
         fetch(url, requestOptions)

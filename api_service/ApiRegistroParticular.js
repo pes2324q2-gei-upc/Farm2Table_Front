@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { getIP } from "../informacion/Constants";
+import { URL } from "../constants/theme";
 import { userId } from "../informacion/User";
 
 export const registerParticularService = (addres, productes) => {
@@ -23,7 +23,7 @@ export const registerParticularService = (addres, productes) => {
             body: JSON.stringify(data)
         };
         
-        const url = 'http://'+getIP()+'/users/register/Consumer/'+userId()+'/';
+        const url = 'http://'+URL+'/users/register/Consumer/'+userId()+'/';
 
         fetch(url, requestOptions)
             .then(response => {
