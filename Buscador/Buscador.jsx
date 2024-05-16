@@ -15,7 +15,8 @@ import ProductorList from './ProductorList'
 import RestaurantList from './RestaurantList'
 const API_ENDPOINT = "http://"+URL+"/users/productor/";
 const API_PRODUCTES = "http://"+ URL +"/products/";
-const API_RESTAURANTS = "https://opendata-ajuntament.barcelona.cat/data/api/action/datastore_search?resource_id=bce0486e-370e-4a72-903f-024ba8902ae1&limit=2626"
+const API_RESTAURANTS = "http://"+URL+"/users/restaurants/";
+const API_MERCATS = "http://"+URL+"/users/mercats/";
 
 const TouchableElement = ({ title, isSelected, onPress, index, color,  backgroundColor, borderColor }) => {
 
@@ -36,6 +37,7 @@ const Buscador = () => {
     const [data1, setData1] = useState([]);
     const [data2, setData2] = useState([]);
     const [data3, setData3] = useState([]);
+    const [data4, setData4] = useState([]);
     const [error, setError] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
     var v = 1;

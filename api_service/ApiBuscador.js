@@ -5,13 +5,10 @@ export const  fetchData2 = async(url, value,setValue) => {
       const json = await response.json();
       
       if(json.results = null) console.log("hola")
-      if(value === 0) {
-          setValue(json.data); 
-      }
-      else if(value === 1){
-          setValue(json);
+      if(value === 1) {
+          setValue(json); 
       }else{
-        setValue(json.result.records)
+        setValue(json.data)
       }
   }catch (error) {
       setError(error);
