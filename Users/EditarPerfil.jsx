@@ -8,7 +8,6 @@ import { TouchableOpacity } from 'react-native'
 import { useRoute, useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import { submitPerfil } from '../api_service/ApiEditarPerfil'
-import styles from '../styles/editarPerfil.style'
 
 import Header from '../navigation/header_back'
 
