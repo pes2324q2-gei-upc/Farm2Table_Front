@@ -9,13 +9,12 @@ import { userId, getPalabra } from '../informacion/User';
 import ConsumerCheck from './consumerCheck';
 
 
-const ProfileScreen = ({ navigation }) => {
-    const [activeTab, setActiveTab] = useState('Pedidos');
-    const [shopData, setUserData] = useState([]);
+const ProfileScreen = ({ navigation, idUser, typeUser}) => {
+    const [userData, setUserData] = useState([]);
 
     useEffect(() => {
         const userLoad = async () => {
-            const user = userId();
+            const user = idUser ? idUser : userId();
             try {
                 const data = await fetchUser(user);
                 setUserData(data);
@@ -26,27 +25,23 @@ const ProfileScreen = ({ navigation }) => {
         userLoad();
     });
 
-    const onPress = (tabName) => {
-        setActiveTab(tabName);
-    };
-
     return (
         <SafeAreaView style={styles.safecontainer}>
             <Header />
             <View style={{ flex: 1, backgroundColor: COLORS.secondary }}>
                 <View style={styles.profileContainer}>
-                    {shopData.avatar ? (
+                    {userData.avatar ? (
                         <Image source={require('../assets/images/149071.png')} style={styles.avatar} />
                     ) : null}
-                    <Text style={styles.usernameLarge}>{shopData.username}</Text>
-                    {shopData.telephone && (
+                    <Text style={styles.usernameLarge}>{userData.username}</Text>
+                    {userData.telephone && (
                         <View style={styles.telephoneContainer}>
                             <Ionicons name="call" size={18} color="white" />
-                            <Text style={styles.telephone}>{shopData.telephone}</Text>
+                            <Text style={styles.telephone}>{userData.telephone}</Text>
                         </View>
                     )}
                 </View>
-                <ConsumerCheck navigation={navigation} shopData={shopData}/>
+                <ConsumerCheck navigation={navigation} userData={userData}/>
             </View>
         </SafeAreaView>
     );

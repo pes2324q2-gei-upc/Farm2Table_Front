@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import styles from '../styles/consultarUsuario.style';
+
+
 import Orders from './orderedProduct';
 import UserProfile from './userInfo';
+import Favoritos from './Favoritos';
+
 import { getPalabra } from '../informacion/User';
 
-const ConsumerCheck = ({ navigation, shopData }) => {
+const ConsumerCheck = ({ navigation, userData }) => {
     const [activeTab, setActiveTab] = useState('Pedidos');
 
     const onPress = (tabName) => {
@@ -52,12 +56,12 @@ const ConsumerCheck = ({ navigation, shopData }) => {
             {activeTab === 'Datos' && (
                 <View style={styles.tabContent}>
                     <UserProfile
-                        username={shopData.username}
-                        telephone={shopData.telephone}
-                        avatar={shopData.avatar}
-                        description={shopData.description}
-                        reach={shopData.reach}
-                        user={shopData}
+                        username={userData.username}
+                        telephone={userData.telephone}
+                        avatar={userData.avatar}
+                        description={userData.description}
+                        reach={userData.reach}
+                        user={userData}
                         navigation={navigation}
                     />
                 </View>
@@ -65,7 +69,7 @@ const ConsumerCheck = ({ navigation, shopData }) => {
 
             {activeTab === 'Favoritos' && (
                 <View style={styles.tabContent}>
-                    <Text style={styles.tabTitle}>Mis Favoritos</Text>
+                    <Favoritos userId={userData.id} userType="Consumers" navigation={navigation} />
                 </View>
             )}
         </View>

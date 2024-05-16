@@ -8,14 +8,15 @@ const API_URL = `http://${getIP()}`;
 
 export const getFavourites = async (userId, favType, userType) => {
     try {
-        const response = await fetch(`${API_URL}/users/${userType}/favourite/${favType}/${userId}`);
+        const url = `${API_URL}/users/${userType}/favourite/${favType}/${userId}`;
+        console.log(url);
+        const response = await fetch(url);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        console.log(response);
-        return await response.json();
-    }
-    catch (error) {
+        const data = await response.json();
+        return data;
+    } catch (error) {
         console.log(error);
     }
 };
