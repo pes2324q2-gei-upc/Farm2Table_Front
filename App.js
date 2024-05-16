@@ -68,7 +68,6 @@ export default function App() {
         <Stack.Screen name="Ticket" component={Ticket} options={{headerShown: false}} />
         <Stack.Screen name="AddCoinsScreen" component={AddCoinsScreen} options={{headerShown: false}} />
         <Stack.Screen name="CheckUser" component={CheckUser} options={{headerShown: false}} />
-        <Stack.Screen name="OpenChat" component={OpenChat} options={{headerShown: false}} />
       </Stack.Navigator>
     </NavigationContainer>
   );
