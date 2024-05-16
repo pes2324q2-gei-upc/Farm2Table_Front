@@ -2,20 +2,20 @@ import { View, Text, StyleSheet, FlatList, Image,TouchableOpacity,Dimensions } f
 import React,  {useState, useCallback } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { COLORS, SIZES, URL} from '../constants/theme'
-
+import styles from '../styles/restaurante.style'
 
 const Restaurante = ({ route }) => {
     const { item, icon } = route.params;
     const [activeButton, setActiveButton] = useState('Insignies');
 
     const calculateFontSize = (name) => {
-        // You can adjust these values as needed
+       
         if (name.length <= 10) {
-            return 40; // Default font size
+            return 40; 
         } else if (name.length > 10 && name.length <= 15) {
-            return 30; // Adjust font size for medium-length names
+            return 30; 
         } else {
-            return 20; // Adjust font size for long names
+            return 20; 
         }
     };
 
@@ -61,47 +61,4 @@ const Restaurante = ({ route }) => {
     );  
 
 }
-const styles = StyleSheet.create({
-    safe: {
-        width: '100%',
-        backgroundColor: COLORS.secondary,
-        //paddingTop: SIZES.height/1,
-        flex:1,
-    },
-    vista: {
-        backgroundColor: 'brown',
-        height: SIZES.height,
-    },
-    cabecera: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: SIZES.height/7
-    },
-    restaurantName: {
-        fontSize: 30, // Adjust the font size as needed
-        //fontWeight: 'bold', // Add additional text styles as needed
-        marginLeft: 20,
-        color: COLORS.primary,
-        //backgroundColor: 'red',
-        width: SIZES.width/100*70
-    },
-    buttonContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between', 
-        paddingHorizontal: SIZES.padding,
-        backgroundColor: 'transparent'
-    },
-    button: {
-        alignItems: "center",
-        height: 40,
-        borderBottomWidth: 2,
-    },
-    buttonText: {
-        textAlign: 'center',
-        textAlignVertical: 'center',
-        fontWeight: 'bold',
-        fontSize: SIZES.xlarge
-    },
-})
 export default Restaurante
