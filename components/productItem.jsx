@@ -2,9 +2,17 @@ import React from "react";
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
 import { COLORS } from "../constants/theme";
 
-const ProductItem = ({ item }) => {
+const ProductItem = ({ navigation, item }) => {
+
+    const id = item.id;
+
+    const handlePress = () => {
+        console.log("ProductItem handlePress");
+        navigation.navigate("ProductDetails", { id });
+    }
+
     return (
-        <TouchableOpacity onPress={() => { /* Perform no action yet */ }}>
+        <TouchableOpacity onPress={handlePress}>
             <View style={styles.capsule}>
                 <View style={styles.vista_imagen}>
                     <Image source={{ uri: item.image }} style={styles.image} />
@@ -14,6 +22,7 @@ const ProductItem = ({ item }) => {
                     <Text style={styles.productPrice}>{item.price} €/kg</Text>
                 </View>
             </View>
+            <View style={styles.separator}></View>
         </TouchableOpacity>
     );
 };
@@ -21,18 +30,17 @@ const ProductItem = ({ item }) => {
 const styles = StyleSheet.create({
     capsule: {
         flexDirection: "row",
-        backgroundColor: COLORS.secondary,
+        backgroundColor: COLORS.primary,
         borderRadius: 10,
-        marginBottom: 10,
         padding: 10,
     },
     vista_imagen: {
         flex: 1,
     },
     image: {
-        width: 50,
+        width: 75,
         height: 50,
-        borderRadius: 25,
+        borderRadius: 10,
     },
     infoProducto: {
         flex: 3,
@@ -47,6 +55,12 @@ const styles = StyleSheet.create({
     productPrice: {
         fontSize: 16,
         color: COLORS.text,
+    },
+    separator: {
+        height: 1,
+        backgroundColor: COLORS.tertiary,
+        marginTop: 5,
+        marginHorizontal: 10,
     },
 });
 

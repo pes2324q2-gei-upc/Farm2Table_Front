@@ -63,7 +63,8 @@ const Favoritos = ({ navigation, userId, userType }) => {
             } else if (selectedType === "Products" && !dataFetched.products) {
                 try {
                     const data = await getFavourites(userId, "products", userType.toLowerCase());
-                    setFavouriteData(prevState => ({ ...prevState, products: data || [] }));
+                    const result = data.data || [];
+                    setFavouriteData(prevState => ({ ...prevState, products: result }));
                     setDataFetched(prevState => ({ ...prevState, products: true }));
                 } catch (error) {
                     console.error("Failed to fetch products data: ", error);
@@ -99,7 +100,7 @@ const Favoritos = ({ navigation, userId, userType }) => {
             ));
         } else if (selectedType === "Products") {
             return favourites.map((item, index) => (
-                <ProductItem key={index} item={item} />
+                <ProductItem key={index} navigation={navigation} item={item} />
             ));
         } else if (selectedType === "Types") {
             return favourites.map((item, index) => (
