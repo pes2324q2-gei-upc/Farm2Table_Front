@@ -4,13 +4,19 @@ import { COLORS, SIZES } from '../constants/theme';
 import Header from '../navigation/header_back';
 import { Ionicons } from '@expo/vector-icons';
 import { fetchUser } from '../api_service/ApiConsultar_Usuario';
-import { userId, getPalabra } from '../informacion/User';
+import { userId, getPalabra, userType } from '../informacion/User';
 
 import ConsumerCheck from './consumerCheck';
+import ProductorCheck from './productorCheck';
 
 
 const ProfileScreen = ({ navigation, idUser, typeUser}) => {
     const [userData, setUserData] = useState([]);
+
+    if (typeUser === undefined) {
+        typeUser = userType();
+    }
+
 
     useEffect(() => {
         const userLoad = async () => {
@@ -41,7 +47,11 @@ const ProfileScreen = ({ navigation, idUser, typeUser}) => {
                         </View>
                     )}
                 </View>
-                <ConsumerCheck navigation={navigation} userData={userData}/>
+                {typeUser === 'Consumer' ? (
+                    <ConsumerCheck navigation={navigation} userData={userData} />
+                ) : typeUser === 'Productor' ? (
+                    <ProductorCheck navigation={navigation} userData={userData} />
+                ) : null}
             </View>
         </SafeAreaView>
     );
