@@ -11,11 +11,11 @@ const STYLES = StyleSheet.create({
         position: 'absolute',
         left: 10,
         top: 20,
-      },
-      flecha: {
+    },
+    flecha: {
         color: "#bc6c25",
         fontSize: 45,
-      },
+    },
     logo: {
         //la relacion es 498width/322height
         width: 393,
@@ -128,6 +128,31 @@ const STYLES = StyleSheet.create({
     crear_cuenta_boton: {
         marginLeft: 20,
     },
+    //ESCOLLIR USUARI
+    escollir_usuari: {
+        marginTop: 10,
+        fontSize: 40,
+        color: '#bc6c25',
+        fontWeight: 'bold'
+    },
+    base_tipos: {
+        marginTop: 25,
+        width: 350,
+        height: 100,
+        justifyContent: 'top',
+        borderRadius: 10,
+    },
+    productor: { backgroundColor: '#6d9461' },
+    minorista: { backgroundColor: '#86af7e' },
+    particular: { backgroundColor: '#a8d5a2' },
+    base_texto: {
+        marginTop: 10,
+        color: 'white',
+        fontWeight: 'bold',
+        marginLeft: 20,
+    },
+    titulo_tipos: { fontSize: 25 },
+    texto_tipos: {fontSize: 18}
 });
 
 export default STYLES;

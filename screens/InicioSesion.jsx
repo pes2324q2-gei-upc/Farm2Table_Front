@@ -18,8 +18,6 @@ const InicioSesion = () => {
   const [error_message, setError] = useState('');
 
   const handleLogin = async () => {
-    console.log('Username:', username);
-    console.log('Password:', password);
 
     try {
       const data = await loginService(username, password);
@@ -33,9 +31,6 @@ const InicioSesion = () => {
         if (data.data.user_type === null) { NAVIGATOR.navigate("EscollirUsuari"); console.log("Nulo");}
         else {
           setUserType(data.data.user_type);
-          
-          console.log("UserId", userId());
-          console.log("Type", userType());
           NAVIGATOR.navigate('Footer');
         }
       }
@@ -47,7 +42,7 @@ const InicioSesion = () => {
   };
 
   const contrasenyaOlvidada = () => {
-    console.log("Contrasenya oblidada");
+
   };
 
   const inicioConGoogle = () => {
@@ -55,12 +50,10 @@ const InicioSesion = () => {
   };
 
   const registrarse = () => {
-    console.log("Registrar-se");
     NAVIGATOR.navigate('Registre');
   };
 
   const handleIdioma = (idioma) => {
-    console.log("Handle_Idioma");
     setIdioma(idioma);
     setRefresh(!refresh);
   };
