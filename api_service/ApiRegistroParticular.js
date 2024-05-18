@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { URL } from "../constants/theme";
-import { userId } from "../informacion/User";
+import { userId, setUserType } from "../informacion/User";
 
 export const registerParticularService = (addres, productes) => {
+
+    setUserType("Consumer");
 
     return new Promise ((resolve, reject) => {
         

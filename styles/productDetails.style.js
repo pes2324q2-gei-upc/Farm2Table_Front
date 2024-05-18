@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
 
     user_name: {
         fontFamily: "bold",
-        fontSize: SIZES.large,
+        fontSize: SIZES.medium,
         marginLeft: 10,
         maxWidth: 200,
     },
@@ -109,7 +109,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         marginTop: 30,
-        marginBottom: 20,
     },
 
     button: {
@@ -166,6 +165,23 @@ const styles = StyleSheet.create({
         right: 50,  // Ajusta según donde esté el botón de añadir al carrito
         bottom: 10
       },
+    button_bottom_row: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginHorizontal: 20,
+        alignItems: "center",
+        marginTop: 20,
+    },
+    buttonLove: {
+        backgroundColor: COLORS.tertiary,
+        borderRadius: 10,
+        padding: 10,
+        width: SIZES.width*0.7,
+        height: 50,
+        alignItems: "center",
+        flexDirection: "row",
+        justifyContent: "space-between",
+    },
 
 
     
