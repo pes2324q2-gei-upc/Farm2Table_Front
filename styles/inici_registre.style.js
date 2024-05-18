@@ -152,7 +152,50 @@ const STYLES = StyleSheet.create({
         marginLeft: 20,
     },
     titulo_tipos: { fontSize: 25 },
-    texto_tipos: {fontSize: 18}
+    texto_tipos: {fontSize: 18},
+    //PRODUCTOR/MINORISTA/PARTICULAR
+    base_recuadros: {
+        flexDirection: 'column',
+        marginTop: 5,
+        width: 325,
+        height: 370,
+        justifyContent: 'top',
+        alignItems: 'center',
+        borderRadius: 10,
+    },
+    //Con base texto
+    titulo_registro_tipos: { fontSize: 35 },
+    texto_registro_tipos: { fontSize: 18, textAlign: 'center' },
+    texto_comensa: { fontSize: 22, right: 5 },
+    base_fondo_datos: {
+        width: 280,
+        height: 50,
+        alignItems: 'center',
+        backgroundColor: 'white',
+        borderRadius: 10,
+    },
+    fondo_input_datos: { marginTop: 20 },
+    fondo_favorits: { position: 'absolute', top: 580 },
+    base_texto_datos: {
+        fontSize: 20,
+        color: '#749969',
+        fontWeight: 'bold',
+        height: 50
+    },
+    texto_input_datos: { width: 220, right: 20 },
+    texto_recuadros_datos: { width: 280, right: 20 },
+
+    box_favorits: { width: 280, height: 50 },
+    texto_favorits: { fontSize: 16, color: '#749969', fontWeight: 'bold' },
+    fondo_boton_comensa: {
+        marginTop: 20,
+        backgroundColor: '#bc6c25',
+        width: 250,
+        height: 50,
+        borderRadius: 10,
+        elevation: -1,
+        alignItems: 'center'
+    },
 });
 
 export default STYLES;

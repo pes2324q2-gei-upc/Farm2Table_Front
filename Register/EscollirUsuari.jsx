@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import logo from '../assets/Farm2Table.png';
-import Productor from '../Register/Productor';
-import Minorista from '../Register/Minorista';
-import Particular from '../Register/Particular';
 import { TIPUS_IDIOMA, getIdioma, getPalabra, setIdioma } from '../informacion/User';
 import { useNavigation } from '@react-navigation/native';
 import STYLES from '../styles/inici_registre.style';
@@ -11,16 +8,8 @@ import { SelectList } from 'react-native-dropdown-select-list';
 
 
 const EscollirUsuari = () => {
-
-  const [tipus_usuari, setTipusUsuari] = useState([false, false, false]);
   const NAVIGATOR = useNavigation();
   const [refresh, setRefresh] = useState(false);
-
-  const USUARIS = {
-    productor: 0,
-    minorista: 1,
-    particular: 2
-  };
 
   const handleProductor = () => {
     NAVIGATOR.navigate("Productor");

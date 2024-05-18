@@ -26,9 +26,8 @@ const InicioSesion = () => {
         console.log(error_message);
       }
       else {
-        console.log("dataId:", data.data.user_id);
         setUserId(data.data.user_id);
-        if (data.data.user_type === null) { NAVIGATOR.navigate("EscollirUsuari"); console.log("Nulo");}
+        if (data.data.user_type === null) { NAVIGATOR.navigate("EscollirUsuari"); }
         else {
           setUserType(data.data.user_type);
           NAVIGATOR.navigate('Footer');
@@ -46,7 +45,7 @@ const InicioSesion = () => {
   };
 
   const inicioConGoogle = () => {
-    console.log("Inici amb google");
+    
   };
 
   const registrarse = () => {
