@@ -162,6 +162,7 @@ const STYLES = StyleSheet.create({
         justifyContent: 'top',
         alignItems: 'center',
         borderRadius: 10,
+        elevation: -2
     },
     //Con base texto
     titulo_registro_tipos: { fontSize: 35 },
@@ -176,6 +177,7 @@ const STYLES = StyleSheet.create({
     },
     fondo_input_datos: { marginTop: 20 },
     fondo_favorits: { position: 'absolute', top: 580 },
+    fondo_servicio: { position: 'absolute', top: 510 },
     base_texto_datos: {
         fontSize: 20,
         color: '#749969',
@@ -185,8 +187,8 @@ const STYLES = StyleSheet.create({
     texto_input_datos: { width: 220, right: 20 },
     texto_recuadros_datos: { width: 280, right: 20 },
 
-    box_favorits: { width: 280, height: 50 },
-    texto_favorits: { fontSize: 16, color: '#749969', fontWeight: 'bold' },
+    box_lista: { width: 280, height: 50 },
+    texto_lista: { fontSize: 16, color: '#749969', fontWeight: 'bold' },
     fondo_boton_comensa: {
         marginTop: 20,
         backgroundColor: '#bc6c25',

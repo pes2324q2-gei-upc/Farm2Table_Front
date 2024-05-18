@@ -21,10 +21,6 @@ const Productor = () => {
   };
 
   const handleRegister = async () => {
-    console.log("Nombre:", name);
-    console.log("Num acreditacio:", num_acreditation);
-    console.log("Tipos favoritos", favourite_prod)
-    console.log("UserId", userId())
 
     try {
         const data = await registerProductorService(num_acreditation, name, favourite_prod);
@@ -33,7 +29,6 @@ const Productor = () => {
           console.log(error_message);
         }
         else {
-            console.log(data);
             NAVIGATOR.navigate('Footer');
         }
       } catch (err) {console.log("Error:",err.message);}
@@ -88,15 +83,15 @@ const Productor = () => {
 
         <View style={[STYLES.base_fondo_datos, STYLES.fondo_favorits]}>
             <SelectList 
-                boxStyles={STYLES.box_favorits}
+                boxStyles={STYLES.box_lista}
                 placeholder={getPalabra("favourite_products")}
-                inputStyles={STYLES.texto_favorits}
+                inputStyles={STYLES.texto_lista}
                 onChangeText={setAcreditation}
                 setSelected={ (val) => setFavourite(val)}
                 data={getTipusProductes}
                 save="value"     
                 dropdownStyles={{backgroundColor: 'white' , maxHeight: 140, maxWidth: 280}}
-                dropdownTextStyles={[STYLES.texto_favorits]}
+                dropdownTextStyles={STYLES.texto_lista}
                 search={false} 
             />  
         </View>

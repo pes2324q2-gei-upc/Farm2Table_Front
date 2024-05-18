@@ -3,11 +3,11 @@ import { View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
 import logo from '../assets/Farm2Table.png';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { SelectList } from 'react-native-dropdown-select-list';
-import { getPalabra, getPalabraEng, getRestaurantOrMercat, userId } from '../informacion/User';
-import { getIP, getTipusProductes } from '../informacion/Constants';
+import { getPalabra, getRestaurantOrMercat, userId } from '../informacion/User';
+import {  getTipusProductes } from '../informacion/Constants';
 import { useNavigation } from '@react-navigation/native';
 import { registerMinoristaService } from '../api_service/ApiRegistroMinorista';
-import STYLES from '../styles/minorista.style';
+import STYLES from '../styles/inici_registre.style';
 
 const Minorista = () => {
 
@@ -23,14 +23,7 @@ const Minorista = () => {
   };
 
   const handleRegister = async () => {
-    
-    console.log("Tipus:", tipus);
-    console.log("nomServei", servei);
-    console.log("Tipus favorits", favourite_prod)
-    console.log("UserId", userId());
-    
     const tipus_cat = getRestaurantOrMercat(tipus);
-    console.log("TIPUS CAT",tipus_cat);
 
     try {
         const data = await registerMinoristaService(tipus_cat, servei, favourite_prod);
@@ -39,7 +32,6 @@ const Minorista = () => {
           console.log(error_message);
         }
         else {
-            console.log(data);
             NAVIGATOR.navigate('Footer');
         }
       } catch (err) {console.log("Error:",err.message);}
@@ -57,38 +49,22 @@ const Minorista = () => {
 
         <Text style={STYLES.error_message}>{getPalabra(error_message)}</Text>
 
-        <View style={STYLES.productor}>
+        <View style={[STYLES.base_recuadros, STYLES.minorista]}>
 
-            <Text style={STYLES.titulo}>
+            <Text style={[STYLES.base_texto, STYLES.titulo_registro_tipos]}>
                 {getPalabra("retail")}
             </Text>
 
-            <Text style={STYLES.texto}>
+            <Text style={[STYLES.base_texto, STYLES.texto_registro_tipos]}>
                 {getPalabra("fill_data")}
             </Text>     
 
-            <View style={STYLES.desplegable2}>
-                <View style={{marginTop: 14, marginLeft: 20,}}>
-                  <TextInput 
-                      placeholder = {getPalabra("service_name")}
-                      style={STYLES.sector_texto}
-                      value={servei}
-                      onChangeText={setServei}
-                  />
-                </View>
-            </View>
-
-            <View style={STYLES.desplegable}>
-                <SelectList 
-                    placeholder = {getPalabra("service_type")}
-                    boxStyles={STYLES.desplegable1}
-                    inputStyles={STYLES.sector_texto}
-                    setSelected={ (val) => setTipus(val)}
-                    data={TIPUS} 
-                    save="value"     
-                    dropdownStyles={{backgroundColor: 'white' , maxHeight: 140, maxWidth: 280}}
-                    dropdownTextStyles={STYLES.sector_textos}
-                    search={false}
+            <View style={[STYLES.base_fondo_datos, STYLES.fondo_input_datos]}>
+                <TextInput 
+                    placeholder = {getPalabra("service_name")}
+                    style={[STYLES.base_texto_datos, STYLES.texto_input_datos]}
+                    value={servei}
+                    onChangeText={setServei}
                 />
             </View>
 
@@ -96,22 +72,36 @@ const Minorista = () => {
 
         </View>
 
-        <TouchableOpacity style={STYLES.comensa} onPress={handleRegister}>
-            <Text style={STYLES.texto_comensa}>
+        <TouchableOpacity style={STYLES.fondo_boton_comensa} onPress={handleRegister}>
+            <Text style={[STYLES.base_texto, STYLES.texto_comensa]}>
                 {getPalabra("start_button")}    
             </Text>           
          </TouchableOpacity>
 
-         <View style={STYLES.fondo_favorits}>
+         <View style={[STYLES.base_fondo_datos, STYLES.fondo_favorits]}>
                 <SelectList 
                     placeholder = {getPalabra("favourite_products")}
-                    boxStyles={STYLES.desplegable1}
-                    inputStyles={STYLES.sector_texto}
+                    boxStyles={STYLES.box_lista}
+                    inputStyles={STYLES.texto_lista}
                     setSelected={ (val) => setFavourite(val)}
                     data={getTipusProductes} 
                     save="value"     
                     dropdownStyles={{backgroundColor: 'white' , maxHeight: 140, maxWidth: 280}}
-                    dropdownTextStyles={STYLES.sector_textos}
+                    dropdownTextStyles={STYLES.texto_lista}
+                    search={false}
+                />
+            </View>
+
+            <View style={[STYLES.base_fondo_datos, STYLES.fondo_servicio]}>
+                <SelectList 
+                    placeholder = {getPalabra("service_type")}
+                    boxStyles={STYLES.box_lista}
+                    inputStyles={STYLES.texto_lista}
+                    setSelected={ (val) => setTipus(val)}
+                    data={TIPUS} 
+                    save="value"     
+                    dropdownStyles={{backgroundColor: 'white' , maxHeight: 140, maxWidth: 280}}
+                    dropdownTextStyles={STYLES.texto_lista}
                     search={false}
                 />
             </View>
