@@ -24,23 +24,39 @@ export const getFavourites = async (userId, favType, userType) => {
 
 export const addFavourite = async (userId, favType, userType, favId) => {
     try {
+
+        let bodyJson = {};
+
+        if (favType === "products") {
+            bodyJson = { product_id: favId };
+        } else if (favType === "minoristas") {
+            bodyJson = { minorista_id: favId };
+        } else if (favType === "productors") {
+            bodyJson = { productor_id: favId };
+        } else if (favType === "types") {
+            bodyJson = { type_id: favId };
+        }
+
         const response = await fetch(`${API_URL}/users/${userType}/favourite/${favType}/${userId}/add`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ favId }),
+            body: JSON.stringify(bodyJson),
         });
+
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        console.log(response);
-        return await response.json();
-    }
-    catch (error) {
+
+        const responseData = await response.json();
+        console.log(responseData);
+        return responseData;
+    } catch (error) {
         console.log(error);
     }
 };
+
 
 export const removeFavourite = async (userId, favType, userType, favId) => {
     try {

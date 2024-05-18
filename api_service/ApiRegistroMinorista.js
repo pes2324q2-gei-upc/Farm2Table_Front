@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import { URL } from "../constants/theme";
 import { userId } from "../informacion/User";
+import { setUserType } from "../informacion/User";
+import { set } from "lodash";
 
 export const registerMinoristaService = (tipus, servei, fav_types) => {
+    
+    setUserType("Minorista");
 
     return new Promise ((resolve, reject) => {
         
@@ -40,7 +44,6 @@ export const registerMinoristaService = (tipus, servei, fav_types) => {
             reject(new Error(error));
             });
     })
-    
 } 
 
 const ApiRegistroMinorista = () => {

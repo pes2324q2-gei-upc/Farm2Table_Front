@@ -3,9 +3,10 @@ import { View, Text, TouchableOpacity, Image, ScrollView, SafeAreaView, Vibratio
 import { Ionicons } from '@expo/vector-icons';
 import styles from '../styles/productDetails.style';
 import HeaderBack from '../navigation/header_back';
-import { URL } from '../constants/theme';
+import { COLORS, URL } from '../constants/theme';
 import { addProductToCart, loadCart, saveCart } from '../informacion/cartInfo';
-import { userId, setUserId } from '../informacion/User';
+import { addFavourite } from '../api_service/APIFavoritos';
+import { userId, setUserId, userType } from '../informacion/User';
 import CartPopUp from '../PopUps/addedCart';
 import OpenChat from "../components/openChat";
 import {ChatStackScreen} from "../navigation/footer"
@@ -63,6 +64,18 @@ const ProductDetails = ({ navigation, route }) => {
       receiverUsername: product.productor_info.username
     });
   };
+
+  const handleAddFavourite = async () => {
+    try {
+      const typeUser = userType().toLowerCase() + 's';
+      console.log('User type:', typeUser);
+      const response = await addFavourite(user, 'products', typeUser, product.id);
+      console.log('Add favourite response:', response);
+    } catch (error) {
+      console.error('Failed to add favourite:', error);
+    }
+  };
+    
 
 
   const addToCart = async () => {
@@ -124,7 +137,6 @@ const ProductDetails = ({ navigation, route }) => {
                   <View style={styles.userrow}>
                     {userAvatar && <Image source={{ uri: userAvatar }} style={styles.user_image} />}
                     <Text style={styles.user_name}>{product.productor_info.username}</Text>
-                    <OpenChat onPress={handleOpenChatPress} />
                   </View>
 
                   <View style={styles.rating_row}>
@@ -144,6 +156,15 @@ const ProductDetails = ({ navigation, route }) => {
                   <Text style={styles.button_text}>Afegir {count} a la cistella</Text>
                 </TouchableOpacity>
               </View>
+
+              <View style={styles.button_bottom_row}>
+                <OpenChat onPress={handleOpenChatPress} />
+                <TouchableOpacity style={styles.buttonLove} onPress={handleAddFavourite}>
+                  <Text style={styles.button_text}>Add Favourite</Text>
+                  <Ionicons name="heart" size={20} color={COLORS.primary} />
+                </TouchableOpacity>
+              </View>
+
             </View>
           </SafeAreaView>
           </>

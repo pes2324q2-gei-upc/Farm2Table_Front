@@ -14,9 +14,6 @@ const OpenChat = ({ onPress }) => {
 
 const styles = StyleSheet.create({
     button: {
-        position: 'absolute',
-        bottom: -150, // Ajustado por la altura del pie de página
-        left: 320,
         backgroundColor: COLORS.tertiary,
         borderRadius: 30,
         width: 60,
