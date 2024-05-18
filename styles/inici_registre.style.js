@@ -7,6 +7,15 @@ const STYLES = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#fefae0',
     },
+    flecha_posicion: {
+        position: 'absolute',
+        left: 10,
+        top: 20,
+    },
+    flecha: {
+        color: "#bc6c25",
+        fontSize: 45,
+    },
     logo: {
         //la relacion es 498width/322height
         width: 393,
@@ -57,13 +66,6 @@ const STYLES = StyleSheet.create({
         position: 'absolute', 
         right: 10,
     },
-    recuerdate: {
-        marginTop: 5,
-        marginLeft: 140,
-        flexDirection: 'row', 
-        alignItems: 'center', 
-        padding: 5,
-    },
     contrasenya_olvidada: {
         marginTop: 20,
         color: "#bc6c25",
@@ -77,7 +79,15 @@ const STYLES = StyleSheet.create({
         backgroundColor: "#bc6c25",
         borderRadius: 10,
     },
-    inicio_sesion_texto: {
+    registro: {
+        marginTop: 60,
+        width: 280,
+        height: 40,
+        alignItems: 'center',
+        backgroundColor: "#bc6c25",
+        borderRadius: 10,
+      },
+    inicio_registro_texto: {
         marginTop: 8,
         fontSize: 20,
         color: "white",
@@ -117,6 +127,76 @@ const STYLES = StyleSheet.create({
     },
     crear_cuenta_boton: {
         marginLeft: 20,
+    },
+    //ESCOLLIR USUARI
+    escollir_usuari: {
+        marginTop: 10,
+        fontSize: 40,
+        color: '#bc6c25',
+        fontWeight: 'bold'
+    },
+    base_tipos: {
+        marginTop: 25,
+        width: 350,
+        height: 100,
+        justifyContent: 'top',
+        borderRadius: 10,
+    },
+    productor: { backgroundColor: '#6d9461' },
+    minorista: { backgroundColor: '#86af7e' },
+    particular: { backgroundColor: '#a8d5a2' },
+    base_texto: {
+        marginTop: 10,
+        color: 'white',
+        fontWeight: 'bold',
+        marginLeft: 20,
+    },
+    titulo_tipos: { fontSize: 25 },
+    texto_tipos: {fontSize: 18},
+    //PRODUCTOR/MINORISTA/PARTICULAR
+    base_recuadros: {
+        flexDirection: 'column',
+        marginTop: 5,
+        width: 325,
+        height: 370,
+        justifyContent: 'top',
+        alignItems: 'center',
+        borderRadius: 10,
+        elevation: -2
+    },
+    //Con base texto
+    titulo_registro_tipos: { fontSize: 35 },
+    texto_registro_tipos: { fontSize: 18, textAlign: 'center' },
+    texto_comensa: { fontSize: 22, right: 5 },
+    base_fondo_datos: {
+        width: 280,
+        height: 50,
+        alignItems: 'center',
+        backgroundColor: 'white',
+        borderRadius: 10,
+    },
+    fondo_input_datos: { marginTop: 20 },
+    fondo_favorits: { position: 'absolute', top: 580 },
+    fondo_servicio: { position: 'absolute', top: 510 },
+    base_texto_datos: {
+        fontSize: 20,
+        color: '#749969',
+        fontWeight: 'bold',
+        height: 50
+    },
+    texto_input_datos: { width: 220, right: 20 },
+    texto_recuadros_datos: { width: 280, right: 20 },
+
+    box_lista: { width: 280, height: 50 },
+    texto_lista: { fontSize: 16, color: '#749969', fontWeight: 'bold' },
+    fondo_boton_comensa: {
+        marginTop: 20,
+        backgroundColor: '#bc6c25',
+        width: 250,
+        height: 50,
+        borderRadius: 10,
+        elevation: -1,
+        alignItems: 'center'
     },
 });
 

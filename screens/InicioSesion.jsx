@@ -6,7 +6,7 @@ import google from '../assets/Google.png';
 import { setUserId, setUserType, userId, userType, getPalabra, setIdioma, TIPUS_IDIOMA, getIdioma } from '../informacion/User';
 import { useNavigation } from '@react-navigation/native';
 import { loginService } from '../api_service/ApiInicioSesion';
-import STYLES from '../styles/inicioSesion.style';
+import STYLES from '../styles/inici_registre.style';
 import { SelectList } from 'react-native-dropdown-select-list';
 
 const InicioSesion = () => {
@@ -18,8 +18,6 @@ const InicioSesion = () => {
   const [error_message, setError] = useState('');
 
   const handleLogin = async () => {
-    console.log('Username:', username);
-    console.log('Password:', password);
 
     try {
       const data = await loginService(username, password);
@@ -28,14 +26,10 @@ const InicioSesion = () => {
         console.log(error_message);
       }
       else {
-        console.log("dataId:", data.data.user_id);
         setUserId(data.data.user_id);
-        if (data.data.user_type === null) { NAVIGATOR.navigate("EscollirUsuari"); console.log("Nulo");}
+        if (data.data.user_type === null) { NAVIGATOR.navigate("EscollirUsuari"); }
         else {
           setUserType(data.data.user_type);
-          
-          console.log("UserId", userId());
-          console.log("Type", userType());
           NAVIGATOR.navigate('Footer');
         }
       }
@@ -47,20 +41,18 @@ const InicioSesion = () => {
   };
 
   const contrasenyaOlvidada = () => {
-    console.log("Contrasenya oblidada");
+
   };
 
   const inicioConGoogle = () => {
-    console.log("Inici amb google");
+    
   };
 
   const registrarse = () => {
-    console.log("Registrar-se");
     NAVIGATOR.navigate('Registre');
   };
 
   const handleIdioma = (idioma) => {
-    console.log("Handle_Idioma");
     setIdioma(idioma);
     setRefresh(!refresh);
   };
@@ -70,12 +62,7 @@ const InicioSesion = () => {
 
       <Image source={logo} style={STYLES.logo} />
 
-      <View style={{
-        backgroundColor: 'rgba(52, 52, 52, 0.2)',
-        position: 'absolute',
-        right: 10,
-        top: 30,
-      }}> 
+      <View style={STYLES.cambio_idioma}> 
         <SelectList 
             placeholder = {getIdioma()}
             boxStyles={{backgroundColor: '#bc6c25', opacity:  0.9}}
@@ -119,7 +106,7 @@ const InicioSesion = () => {
       </TouchableOpacity>
 
       <TouchableOpacity onPress={handleLogin} style={STYLES.inicio_sesion}>
-        <Text style={STYLES.inicio_sesion_texto}>{getPalabra("logging_button")}</Text>
+        <Text style={STYLES.inicio_registro_texto}>{getPalabra("logging_button")}</Text>
       </TouchableOpacity>
 
 
