@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { URL } from "../constants/theme";
-import { reject } from "lodash";
 
 export const registerService = (username, password, confirm_password) => {
     
@@ -31,7 +30,6 @@ export const registerService = (username, password, confirm_password) => {
             return response.json();
             })
             .then(data => {
-                console.log(data);
                 resolve(data);
             })
             .catch(error => {

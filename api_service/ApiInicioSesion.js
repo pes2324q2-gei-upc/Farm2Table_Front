@@ -22,7 +22,6 @@ export const loginService = (username, password) => {
         };
         
         const url = 'http://'+URL+'/users/login/';
-        console.log(url);
         
         fetch(url, requestOptions)
             .then(response => {
@@ -31,7 +30,6 @@ export const loginService = (username, password) => {
             })
             .then(data => {
               
-            console.log(data);
             resolve(data);
     
             })

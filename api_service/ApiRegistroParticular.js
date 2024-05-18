@@ -31,8 +31,6 @@ export const registerParticularService = (addres, productes) => {
             return response.json();
             })
             .then(data => {
-              
-            console.log(data);
             resolve(data);
     
             })

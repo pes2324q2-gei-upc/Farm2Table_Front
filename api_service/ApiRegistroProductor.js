@@ -24,7 +24,6 @@ export const registerProductorService = (num_acreditation, name, fav_types) => {
             body: JSON.stringify(data)
         };
         
-        console.log(requestOptions)
         const url = 'http://'+URL+'/users/register/Productor/'+userId()+'/';
         
         fetch(url, requestOptions)
@@ -33,8 +32,6 @@ export const registerProductorService = (num_acreditation, name, fav_types) => {
             return response.json();
             })
             .then(data => {
-              
-            console.log(data);
             resolve(data);
     
             })

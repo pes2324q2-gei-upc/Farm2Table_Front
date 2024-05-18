@@ -23,11 +23,8 @@ export const registerMinoristaService = (tipus, servei, fav_types) => {
               },
             body: JSON.stringify(data)
         };
-
-        console.log("DATOS:",requestOptions)
         
         const url = 'http://'+URL+'/users/register/Minorista/'+userId()+'/';
-        console.log("URL:",url)
         
         fetch(url, requestOptions)
             .then(response => {
@@ -35,8 +32,6 @@ export const registerMinoristaService = (tipus, servei, fav_types) => {
             return response.json();
             })
             .then(data => {
-              
-            console.log(data);
             resolve(data);
     
             })
