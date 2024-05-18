@@ -7,6 +7,15 @@ const STYLES = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#fefae0',
     },
+    flecha_posicion: {
+        position: 'absolute',
+        left: 10,
+        top: 20,
+      },
+      flecha: {
+        color: "#bc6c25",
+        fontSize: 45,
+      },
     logo: {
         //la relacion es 498width/322height
         width: 393,
@@ -57,13 +66,6 @@ const STYLES = StyleSheet.create({
         position: 'absolute', 
         right: 10,
     },
-    recuerdate: {
-        marginTop: 5,
-        marginLeft: 140,
-        flexDirection: 'row', 
-        alignItems: 'center', 
-        padding: 5,
-    },
     contrasenya_olvidada: {
         marginTop: 20,
         color: "#bc6c25",
@@ -77,7 +79,15 @@ const STYLES = StyleSheet.create({
         backgroundColor: "#bc6c25",
         borderRadius: 10,
     },
-    inicio_sesion_texto: {
+    registro: {
+        marginTop: 60,
+        width: 280,
+        height: 40,
+        alignItems: 'center',
+        backgroundColor: "#bc6c25",
+        borderRadius: 10,
+      },
+    inicio_registro_texto: {
         marginTop: 8,
         fontSize: 20,
         color: "white",

@@ -6,7 +6,7 @@ import google from '../assets/Google.png';
 import { setUserId, setUserType, userId, userType, getPalabra, setIdioma, TIPUS_IDIOMA, getIdioma } from '../informacion/User';
 import { useNavigation } from '@react-navigation/native';
 import { loginService } from '../api_service/ApiInicioSesion';
-import STYLES from '../styles/inicioSesion.style';
+import STYLES from '../styles/inici_registre.style';
 import { SelectList } from 'react-native-dropdown-select-list';
 
 const InicioSesion = () => {
@@ -70,12 +70,7 @@ const InicioSesion = () => {
 
       <Image source={logo} style={STYLES.logo} />
 
-      <View style={{
-        backgroundColor: 'rgba(52, 52, 52, 0.2)',
-        position: 'absolute',
-        right: 10,
-        top: 30,
-      }}> 
+      <View style={STYLES.cambio_idioma}> 
         <SelectList 
             placeholder = {getIdioma()}
             boxStyles={{backgroundColor: '#bc6c25', opacity:  0.9}}
@@ -119,7 +114,7 @@ const InicioSesion = () => {
       </TouchableOpacity>
 
       <TouchableOpacity onPress={handleLogin} style={STYLES.inicio_sesion}>
-        <Text style={STYLES.inicio_sesion_texto}>{getPalabra("logging_button")}</Text>
+        <Text style={STYLES.inicio_registro_texto}>{getPalabra("logging_button")}</Text>
       </TouchableOpacity>
 
 

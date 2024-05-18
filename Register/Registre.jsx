@@ -6,7 +6,7 @@ import EscollirUsuari from '../Register/EscollirUsuari';
 import { TIPUS_IDIOMA, getIdioma, getPalabra, setEmail, setIdioma, setUserId, userId } from '../informacion/User';
 import { useNavigation } from '@react-navigation/native';
 import { registerService } from '../api_service/ApiRegistro';
-import STYLES from '../styles/registre.style';
+import STYLES from '../styles/inici_registre.style';
 import { SelectList } from 'react-native-dropdown-select-list';
 
 const Registre = () => {
@@ -78,12 +78,7 @@ const Registre = () => {
             <Icon  name="arrow-back" style={STYLES.flecha} />  
           </TouchableOpacity>
           
-          <View style={{
-            backgroundColor: 'rgba(52, 52, 52, 0.2)',
-            position: 'absolute',
-            right: 10,
-            top: 30,
-          }}> 
+          <View style={STYLES.cambio_idioma}> 
             <SelectList 
                 placeholder = {getIdioma()}
                 boxStyles={{backgroundColor: '#bc6c25', opacity:  0.9}}
@@ -136,19 +131,8 @@ const Registre = () => {
           </TouchableOpacity>
           </View>
 
-          <View style={STYLES.recuerdate}>
-
-          <TouchableOpacity onPress={recordarContrasenya}>
-              <Icon name={recordar_contrasenya ? "check-box-outline-blank" : "check-box"} size={20} color="black" />
-          </TouchableOpacity>
-
-          <Text style={{position: 'absolute', marginLeft: 30, fontSize: 14}}>
-            {getPalabra("remember_password")}
-          </Text>
-          </View>
-
           <TouchableOpacity onPress={handleRegister} style={STYLES.registro}>
-          <Text style={STYLES.registro_texto}>{getPalabra("register_button")}</Text>
+          <Text style={STYLES.inicio_registro_texto}>{getPalabra("register_button")}</Text>
           </TouchableOpacity>
         </>
       )}
