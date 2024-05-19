@@ -20,6 +20,7 @@ const EditProfile = ({ route }) => {
     const [address, setAddress] = useState(userData.address || '');
 
     const pickImage = async () => {
+
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
@@ -27,9 +28,17 @@ const EditProfile = ({ route }) => {
             quality: 1,
         });
 
+        console.log(result.assets);
+        console.log("uri result: ", result.assets[0].uri);
+
+
         if (!result.cancelled) {
-            setProfileImage(result.uri);
+            console.log(result.assets[0].uri);
+            setProfileImage(result.assets[0].uri);
         }
+
+        console.log(result);
+        console.log(profileImage);
     };
 
     const resetFields = () => {
@@ -44,83 +53,84 @@ const EditProfile = ({ route }) => {
 
     return (
         <SafeAreaView style={styles.outercontainer}>
+            <Header />
             <ScrollView style={styles.container}>
-                <View style={styles.profileContainer}>
-                    {profileImage ? (
-                        <Image source={{ uri: profileImage }} style={styles.avatar} />
-                    ) : (
-                        <TouchableOpacity onPress={pickImage} style={styles.avatarPlaceholder}>
-                            <Text style={styles.avatarPlaceholderText}>Add Photo</Text>
-                        </TouchableOpacity>
-                    )}
-                    <TouchableOpacity onPress={pickImage} style={styles.editButton}>
-                        <Text style={styles.editButtonText}>Edit Photo</Text>
+            <View style={styles.profileContainer}>
+                {profileImage ? (
+                    <Image source={{ uri: profileImage }} style={styles.avatar} />
+                ) : (
+                    <TouchableOpacity onPress={pickImage} style={styles.avatarPlaceholder}>
+                        <Text style={styles.avatarPlaceholderText}>Add Photo</Text>
                     </TouchableOpacity>
-                </View>
-                <View style={styles.fieldContainer}>
-                    <Text style={styles.label}>{getPalabra("Username")}</Text>
-                    <TextInput
-                        style={styles.input}
-                        value={username}
-                        onChangeText={setUsername}
-                        placeholder="Enter your username"
-                    />
-                </View>
-                <View style={styles.fieldContainer}>
-                    <Text style={styles.label}>{getPalabra("Description")}</Text>
-                    <TextInput
-                        style={styles.input}
-                        value={description}
-                        onChangeText={setDescription}
-                        placeholder="Enter a short description"
-                    />
-                </View>
-                <View style={styles.fieldContainer}>
-                    <Text style={styles.label}>{getPalabra("About Me")}</Text>
-                    <TextInput
-                        style={styles.input}
-                        value={aboutMe}
-                        onChangeText={setAboutMe}
-                        placeholder="Tell something about yourself"
-                    />
-                </View>
-                <View style={styles.fieldContainer}>
-                    <Text style={styles.label}>{getPalabra("Phone")}</Text>
-                    <TextInput
-                        style={styles.input}
-                        value={phone}
-                        onChangeText={setPhone}
-                        placeholder="Enter your phone number"
-                        keyboardType="phone-pad"
-                    />
-                </View>
-                <View style={styles.fieldContainer}>
-                    <Text style={styles.label}>{getPalabra("Reach")}</Text>
-                    <TextInput
-                        style={styles.input}
-                        value={reach}
-                        onChangeText={setReach}
-                        placeholder="Enter your reach"
-                    />
-                </View>
-                <View style={styles.fieldContainer}>
-                    <Text style={styles.label}>{getPalabra("Address")}</Text>
-                    <TextInput
-                        style={styles.input}
-                        value={address}
-                        onChangeText={setAddress}
-                        placeholder="Enter your address"
-                    />
-                </View>
-                <View style={styles.buttonsContainer}>
-                    <TouchableOpacity onPress={resetFields} style={styles.button}>
-                        <Text style={styles.buttonText}>Reset</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.button}>
-                        <Text style={styles.buttonText}>Save</Text>
-                    </TouchableOpacity>
-                </View>
-            </ScrollView>
+                )}
+                <TouchableOpacity onPress={pickImage} style={styles.editButton}>
+                    <Text style={styles.editButtonText}>Edit Photo</Text>
+                </TouchableOpacity>
+            </View>
+            <View style={styles.fieldContainer}>
+                <Text style={styles.label}>Username</Text>
+                <TextInput
+                    style={styles.input}
+                    value={username}
+                    onChangeText={setUsername}
+                    placeholder="Enter your username"
+                />
+            </View>
+            <View style={styles.fieldContainer}>
+                <Text style={styles.label}>Description</Text>
+                <TextInput
+                    style={styles.input}
+                    value={description}
+                    onChangeText={setDescription}
+                    placeholder="Enter a short description"
+                />
+            </View>
+            <View style={styles.fieldContainer}>
+                <Text style={styles.label}>About Me</Text>
+                <TextInput
+                    style={styles.input}
+                    value={aboutMe}
+                    onChangeText={setAboutMe}
+                    placeholder="Tell something about yourself"
+                />
+            </View>
+            <View style={styles.fieldContainer}>
+                <Text style={styles.label}>Phone</Text>
+                <TextInput
+                    style={styles.input}
+                    value={phone}
+                    onChangeText={setPhone}
+                    placeholder="Enter your phone number"
+                    keyboardType="phone-pad"
+                />
+            </View>
+            <View style={styles.fieldContainer}>
+                <Text style={styles.label}>Reach</Text>
+                <TextInput
+                    style={styles.input}
+                    value={reach}
+                    onChangeText={setReach}
+                    placeholder="Enter your reach"
+                />
+            </View>
+            <View style={styles.fieldContainer}>
+                <Text style={styles.label}>Address</Text>
+                <TextInput
+                    style={styles.input}
+                    value={address}
+                    onChangeText={setAddress}
+                    placeholder="Enter your address"
+                />
+            </View>
+            <View style={styles.buttonsContainer}>
+                <TouchableOpacity onPress={resetFields} style={styles.button}>
+                    <Text style={styles.buttonText}>Reset</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.button}>
+                    <Text style={styles.buttonText}>Save</Text>
+                </TouchableOpacity>
+            </View>
+        </ScrollView>
         </SafeAreaView>
     );
 };
@@ -133,22 +143,22 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: COLORS.primary,
+        padding: 10,
     },
     profileContainer: {
         alignItems: 'center',
-        marginVertical: 20,
     },
     avatar: {
-        width: 100,
-        height: 100,
-        borderRadius: 50,
+        width: 125,
+        height: 125,
+        borderRadius: 30,
         borderWidth: 5,
         borderColor: COLORS.tertiary,
     },
     avatarPlaceholder: {
-        width: 100,
-        height: 100,
-        borderRadius: 50,
+        width: 125,
+        height: 124,
+        borderRadius: 30,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: COLORS.tertiary,
@@ -170,19 +180,23 @@ const styles = StyleSheet.create({
         fontSize: 14,
     },
     fieldContainer: {
-        marginVertical: 10,
+        marginTop: 10,
         paddingHorizontal: 20,
     },
     label: {
-        color: 'white',
+        color: COLORS.secondary,
+        fontWeight: 'bold',
         fontSize: 16,
         marginBottom: 5,
     },
     input: {
-        backgroundColor: 'white',
+        backgroundColor: COLORS.primary,
         borderRadius: 5,
         padding: 10,
         fontSize: 16,
+        borderWidth: 1,
+        borderColor: COLORS.tertiary,
+        color: COLORS.secondary,
     },
     buttonsContainer: {
         flexDirection: 'row',
@@ -190,10 +204,12 @@ const styles = StyleSheet.create({
         margin: 20,
     },
     button: {
-        backgroundColor: COLORS.primary,
+        backgroundColor: COLORS.tertiary,
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 5,
+        borderWidth: 1,
+        borderColor: COLORS.tertiary,
     },
     buttonText: {
         color: 'white',
