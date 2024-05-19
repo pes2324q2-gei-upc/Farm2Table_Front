@@ -81,5 +81,11 @@
     "modify_order": "Modificar pedido",
     "unable": "No se puede conectar al servicio chat",
     "load": "Error al cargar el historial de chat",
-    "my_favs": "Favoritos"
+    "my_favs": "Favoritos",
+    "restaurants": "Restaurantes",
+    "markets": "Mercados",
+    "farmers": "Granjeros",
+    "products": "Productos",
+    "search_by_name": "Busca por nombre",
+    "no_markets": "No hay mercados disponibles"
 }

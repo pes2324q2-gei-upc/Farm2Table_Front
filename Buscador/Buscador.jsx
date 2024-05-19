@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, FlatList, Image } from 'react-native'
+import { View, Text, StyleSheet, FlatList, Image, ScrollView } from 'react-native'
 import React,  {useState, useCallback, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { COLORS, SIZES, URL} from '../constants/theme'
@@ -13,9 +13,12 @@ import SearchTab from '../components/searchTab'
 import ProductList from './ProductList'
 import ProductorList from './ProductorList'
 import RestaurantList from './RestaurantList'
+import MercatList from './MercatList'
+import { getPalabra } from '../informacion/User'
 const API_ENDPOINT = "http://"+URL+"/users/productor/";
 const API_PRODUCTES = "http://"+ URL +"/products/";
-const API_RESTAURANTS = "https://opendata-ajuntament.barcelona.cat/data/api/action/datastore_search?resource_id=bce0486e-370e-4a72-903f-024ba8902ae1&limit=2626"
+const API_RESTAURANTS = "http://"+ URL +"/users/restaurants/";
+const API_MERCATS = "http://"+ URL +"/users/mercats/";
 
 const TouchableElement = ({ title, isSelected, onPress, index, color,  backgroundColor, borderColor }) => {
 
@@ -36,6 +39,7 @@ const Buscador = () => {
     const [data1, setData1] = useState([]);
     const [data2, setData2] = useState([]);
     const [data3, setData3] = useState([]);
+    const [data4, setData4] = useState([]);
     const [error, setError] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
     var v = 1;
@@ -44,9 +48,9 @@ const Buscador = () => {
         fetchData2(API_RESTAURANTS,2,setData3);
         fetchData2(API_ENDPOINT, 0, setData1);
         fetchData2(API_PRODUCTES, 1,setData2);
-        console.log(v);
+        fetchData2(API_MERCATS, 3,setData4);
+        console.log(data2);
         if(v == 1) setSelectedIndex(1); v =2;
-        console.log(v);
     }, [])
 );
 
@@ -54,13 +58,15 @@ const Buscador = () => {
 
 
     const handleItemPress = (index) => {
+        console.log(index)
         setSelectedIndex(index);
     };
 
     const items = [
-        { title: 'Pagès', index: 1 },
-        { title: 'Productes', index: 2 },
-        { title: 'Restaurants', index: 3 },
+        { title: getPalabra("farmers"), index: 1 },
+        { title: getPalabra("products"), index: 2 },
+        { title: getPalabra("restaurants"), index: 3 },
+        { title: getPalabra("markets"), index: 4}
     ];
 
     return (
@@ -68,12 +74,14 @@ const Buscador = () => {
             <Header></Header>
             <View style={styles.bottom}>
                 <SearchTab
-                  placeholder="Search by name"
+                  placeholder={getPalabra("search_by_name")}
                   style={styles.searchBar}
                   onChangeText={setSearchQuery}
                 />
-                <View styles = {styles.filtros}>
                     <View style={styles.row}>
+                        <ScrollView 
+                            horizontal ={true}
+                            showsHorizontalScrollIndicator={false}>
                         {items.map((item, index) => (
                         <TouchableElement
                             key={index}
@@ -88,12 +96,12 @@ const Buscador = () => {
                             backgroundColor = {item.index === selectedIndex ? 'orange' : 'gray'}
                         />
                         ))}
+                        </ScrollView>
                     </View>
-                </View>
-                
                 {selectedIndex === 1 && <ProductorList data={data1} searchQuery={searchQuery} />}
                 {selectedIndex === 2 && <ProductList data={data2} searchQuery={searchQuery} />}
                 {selectedIndex === 3 && <RestaurantList data={data3} searchQuery={searchQuery} />}
+                {selectedIndex === 4 && <MercatList data={data4} searchQuery={searchQuery} />}
             </View>
         </SafeAreaView>
     )

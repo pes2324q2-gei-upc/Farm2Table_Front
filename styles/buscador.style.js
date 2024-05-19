@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
       height: (SIZES.height)/100*80,
       paddingTop: 30,
       alignItems: 'center',
+      backgroundColor: COLORS.primary
   },
   searchBar:{
       paddingHorizontal: 10,
@@ -45,18 +46,18 @@ const styles = StyleSheet.create({
       borderRadius: 20,
       paddingHorizontal: 20,
       paddingVertical: 10,
-  },
-  filtros: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
+      marginRight: 15,
+      backgroundColor: 'transparent'
   },
   row: {
-      paddingTop: 20,
+      paddingTop: 10,
+      maxHeight: '50%',
       flexDirection: 'row',
+      alignItems: 'center',
       justifyContent: 'space-between',
-      width: '80%',
+      width: '90%',
       paddingBottom: 20,
+      backgroundColor: 'transparent'
   },
   text: {
       fontSize: SIZES.xsmall,
@@ -76,6 +77,18 @@ const styles = StyleSheet.create({
       fontSize: SIZES.large,
       marginLeft: 10,
       color: "grey"
+  },
+  empty: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '70%',
+    //backgroundColor: 'pink',
+  },
+  activityIndicator: {
+    position: 'absolute',
+    top: '45%',
+    left: '10%',
+    transform: [{ translateX: -12 }, { translateY: -12 }],
   },
 });
 
