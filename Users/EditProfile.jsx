@@ -1,23 +1,27 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, ScrollView, SafeAreaView } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, ScrollView, SafeAreaView, Alert } from "react-native";
 import * as ImagePicker from 'expo-image-picker';
 
 import { getPalabra } from "../informacion/User";
 import { COLORS, SIZES } from "../constants/theme";
 
+import { submitPerfil } from "../api_service/ApiEditarPerfil";
+
 import Header from "../navigation/header_back";
 
-const EditProfile = ({ route }) => {
+const EditProfile = ({ route, navigation }) => {
     const userData = route.params.userData
-    console.log(userData);
+    console.log(userData.reach);
     
     const [profileImage, setProfileImage] = useState(userData.avatar || null);
     const [username, setUsername] = useState(userData.username || '');
-    const [description, setDescription] = useState(userData.description || '');
+    const [description, setDescription] = useState(userData.brief_description || '');
     const [aboutMe, setAboutMe] = useState(userData.about_me || '');
     const [phone, setPhone] = useState(userData.telephone || '');
-    const [reach, setReach] = useState(userData.reach || '');
+    const [reach, setReach] = useState(userData.reach.toString() || '');
     const [address, setAddress] = useState(userData.address || '');
+
+    console.log(profileImage, username, description, aboutMe, phone, reach, address);
 
     const pickImage = async () => {
 
@@ -50,6 +54,43 @@ const EditProfile = ({ route }) => {
         setAddress(userData.address || '');
         setProfileImage(userData.avatar || null);
     };
+
+    const handleSave = async () => {
+
+        if(!username.trim() || !description.trim() || !aboutMe.trim() || !phone.trim()) {
+            Alert.alert('Error', 'Omple tots els camps.');
+            return;
+          }
+
+        const formData = new FormData();
+        formData.append('username', username);
+        formData.append('brief_description', description);
+        formData.append('about_me', aboutMe);
+        formData.append('telephone', phone);
+        formData.append('reach', reach);
+        formData.append('address', address);
+        
+        if (profileImage) {
+            const filename = profileImage.split('/').pop();
+            const match = /\.(\w+)$/.exec(filename);
+            const type = match ? `image/${match[1]}` : `image`;
+
+            formData.append('avatar', {
+                uri: profileImage,
+                name: `photo.${type}`,
+                type: `image/${type}`,
+            });
+        }
+
+        try {
+
+            await submitPerfil(formData, userData.id);
+            navigation.goBack();
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
 
     return (
         <SafeAreaView style={styles.outercontainer}>
@@ -126,7 +167,7 @@ const EditProfile = ({ route }) => {
                 <TouchableOpacity onPress={resetFields} style={styles.button}>
                     <Text style={styles.buttonText}>Reset</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={handleSave}>
                     <Text style={styles.buttonText}>Save</Text>
                 </TouchableOpacity>
             </View>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, Image, ScrollView, StyleSheet, SafeAreaView } from 'react-native';
 import { COLORS, SIZES } from '../constants/theme';
 import Header from '../navigation/header_back';
 import { Ionicons } from '@expo/vector-icons';
@@ -38,7 +38,7 @@ const ProfileScreen = ({ navigation, idUser, typeUser}) => {
             <View style={{ flex: 1, backgroundColor: COLORS.secondary }}>
                 <View style={styles.profileContainer}>
                     {userData.avatar ? (
-                        <Image source={require('../assets/images/149071.png')} style={styles.avatar} />
+                        <Image source={userData.avatar} style={styles.avatar} />
                     ) : null}
                     <Text style={styles.usernameLarge}>{userData.username}</Text>
                     {userData.telephone && (

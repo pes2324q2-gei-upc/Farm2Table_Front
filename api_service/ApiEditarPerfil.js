@@ -11,8 +11,6 @@ export const submitPerfil = async (formData, id) => {
           body: formData,
         });
         const data = await response.json();
-        item.avatar = data.data.avatar;
-        console.log(item.avatar);
         if (!response.ok) {
             console.log('Product added successfully:', data);
             throw new Error('Something went wrong');
