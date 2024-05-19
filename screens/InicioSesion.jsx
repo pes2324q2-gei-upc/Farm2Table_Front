@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, Image, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import logo from '../assets/Farm2Table.png';
 import google from '../assets/Google.png';
-import { setUserId, setUserType, userId, userType, getPalabra, setIdioma, TIPUS_IDIOMA, getIdioma } from '../informacion/User';
+import { setUserId, setUserType, getPalabra, setIdioma, TIPUS_IDIOMA, renderFlagImage, renderEspaña, renderCataluña, renderInglaterra, getIdioma } from '../informacion/User';
 import { useNavigation } from '@react-navigation/native';
 import { loginService } from '../api_service/ApiInicioSesion';
 import STYLES from '../styles/inici_registre.style';
-import { SelectList } from 'react-native-dropdown-select-list';
+import SeleccioIdioma from '../components/seleccioIdioma';
 
 const InicioSesion = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [secure_text_entry, setSecureTextEntry] = useState(true); 
-  const [refresh, setRefresh] = useState(false);
   const NAVIGATOR = useNavigation();
   const [error_message, setError] = useState('');
+  const [cambioIdioma, setCambioIdioma] = useState(false);
 
   const handleLogin = async () => {
 
@@ -40,10 +40,6 @@ const InicioSesion = () => {
     setSecureTextEntry(!secure_text_entry);
   };
 
-  const contrasenyaOlvidada = () => {
-
-  };
-
   const inicioConGoogle = () => {
     
   };
@@ -52,9 +48,8 @@ const InicioSesion = () => {
     NAVIGATOR.navigate('Registre');
   };
 
-  const handleIdioma = (idioma) => {
-    setIdioma(idioma);
-    setRefresh(!refresh);
+  const handleCambioIdioma = () => {
+    setCambioIdioma(!cambioIdioma)
   };
 
   return (
@@ -62,18 +57,11 @@ const InicioSesion = () => {
 
       <Image source={logo} style={STYLES.logo} />
 
-      <View style={STYLES.cambio_idioma}> 
-        <SelectList 
-            placeholder = {getIdioma()}
-            boxStyles={{backgroundColor: '#bc6c25', opacity:  0.9}}
-            setSelected={ (val) => handleIdioma(val)}
-            data={TIPUS_IDIOMA} 
-            save="value"     
-            dropdownStyles={{backgroundColor: '#bc6c25' , maxHeight: 80, maxWidth: 100}}
-            dropdownTextStyles={{backgroundColor: '#bc6c25'}}
-            search={false}
-        />
-      </View>
+      { cambioIdioma && <SeleccioIdioma handleCambioIdioma={handleCambioIdioma} />}      
+
+      <TouchableOpacity style={STYLES.cambio_idioma} onPress={handleCambioIdioma}>
+        <Image source={renderFlagImage()} style={STYLES.bandera} />
+      </TouchableOpacity>
 
       <Text style={STYLES.error_message}>{getPalabra(error_message)}</Text>
 
@@ -100,10 +88,6 @@ const InicioSesion = () => {
           <Icon name={secure_text_entry ? "visibility-off" : "visibility"} size={20} color="black" />
         </TouchableOpacity>
       </View>
-
-      <TouchableOpacity onPress={contrasenyaOlvidada}>
-        <Text style={STYLES.contrasenya_olvidada}>{getPalabra("password_forgotten")}</Text>
-      </TouchableOpacity>
 
       <TouchableOpacity onPress={handleLogin} style={STYLES.inicio_sesion}>
         <Text style={STYLES.inicio_registro_texto}>{getPalabra("logging_button")}</Text>

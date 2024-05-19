@@ -24,8 +24,20 @@ const STYLES = StyleSheet.create({
     cambio_idioma: {
         backgroundColor: 'rgba(52, 52, 52, 0.2)',
         position: 'absolute',
-        right: 10,
-        top: 30,
+        right: 32,
+        top: 40,
+    },
+    base_banderas_desplegable: {
+        position: 'absolute', 
+        right: 27, 
+        top: 80, 
+        backgroundColor: '#bc6c25', 
+        alignItems: 'center'
+    },
+    fondo_banderas: {width: 50, height: 120, alignItems: 'center'},
+    bandera: {
+        width: 40,
+        height: 28
     },
     error_message: {
         fontSize: 19,
@@ -72,7 +84,7 @@ const STYLES = StyleSheet.create({
         fontSize: 18,
     },
     inicio_sesion: {
-        marginTop: 20,
+        marginTop: 40,
         width: 280,
         height: 40,
         alignItems: 'center',
