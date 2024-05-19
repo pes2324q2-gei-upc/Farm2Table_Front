@@ -34,8 +34,8 @@ const Restaurante = ({ route }) => {
         <SafeAreaView style={styles.safe}>
             <View style={styles.cabecera}>
                 {React.cloneElement(icon, { size: 80, style: { marginLeft: 20, color:COLORS.primary }})}
-                <Text style={[styles.restaurantName, { fontSize: calculateFontSize(item.name) }]}>
-                    {item.name}
+                <Text style={[styles.restaurantName, { fontSize: calculateFontSize(item.service_name) }]}>
+                    {item.service_name}
                 </Text>
                 {/* Display the restaurant icon */}
             </View>

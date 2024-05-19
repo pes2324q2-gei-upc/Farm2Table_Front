@@ -82,5 +82,12 @@
     "modify_order": "Modify order",
     "unable": "Unable to connect to chat service",
     "load": "Failed to load chat history",
-    "my_favs": "Favourites"
+    "my_favs": "Favourites",
+    "restaurants": "Restaurants",
+    "markets": "Markets",
+    "farmers": "Farmers",
+    "products": "Products",
+    "search_by_name": "Search by name",
+    "no_markets": "No markets available"
+
 }

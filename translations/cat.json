@@ -81,5 +81,11 @@
     "modify_order": "Modifificar comanda",
     "unable": "No es pot connectar al servei xat",
     "load": "Error al carregar l'historial del xat",
-    "my_favs": "Preferits"
+    "my_favs": "Preferits",
+    "restaurants": "Restaurants",
+    "markets": "Mercats",
+    "farmers": "Pagesos",
+    "products": "Productes",
+    "search_by_name": "Busca per nom",
+    "no_markets": "No hi han mercats disponibles"
 }
