@@ -1,7 +1,12 @@
 import React, { useState } from "react";
+import { Image } from "react-native";
 import esp from "../translations/esp.json"
 import eng from "../translations/engl.json"
 import cat from "../translations/cat.json"
+import banderaCat from '../assets/Cataluña.png'
+import banderaEsp from '../assets/España.png'
+import banderaIng from '../assets/Inglaterra.png'
+import STYLES from '../styles/inici_registre.style'
 
 id = null;
 user_type = null;
@@ -9,9 +14,14 @@ correo = null;
 idioma = "esp";
 export const TIPUS_IDIOMA = ["Español", "Català", "English"];
 
+const imagenesPorIdioma = {
+    esp: banderaEsp,
+    cat: banderaCat,
+    eng: banderaIng,
+};
+
 export const setUserId = (idd) => {
     id = idd;
-    console.log("Id:", id);
 } 
 
 export const userId = () => {
@@ -35,7 +45,6 @@ export const email = () => {
 }
 
 export const setIdioma = (idioma) => {
-    console.log("Idioma", idioma)
     switch (idioma) {
         case "Español":
             this.idioma = "esp"; break;
@@ -46,7 +55,6 @@ export const setIdioma = (idioma) => {
         default:
             this.idioma = idioma;
     }
-    console.log("Idioma por tanto", this.idioma)
 }
 
 export const getIdioma = () => {
@@ -94,6 +102,22 @@ export const getRestaurantOrMercat = (palabra) => {
             return palabra;
     }
 }
+
+export const renderFlagImage = () => {
+    return imagenesPorIdioma[idioma] || null;
+};
+
+export const renderEspaña = () => {
+    return imagenesPorIdioma["esp"];
+};
+
+export const renderCataluña = () => {
+    return imagenesPorIdioma["cat"];
+};
+
+export const renderInglaterra = () => {
+    return imagenesPorIdioma["eng"];
+};
 
 const User = () => {
   

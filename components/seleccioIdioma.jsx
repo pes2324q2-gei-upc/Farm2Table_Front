@@ -1,30 +1,38 @@
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { SelectList } from 'react-native-dropdown-select-list';
-import { TIPUS_IDIOMA, getIdioma, setIdioma } from '../informacion/User';
+import React, {  useState } from 'react';
+import { TouchableOpacity, View, Image } from 'react-native';
+import { TIPUS_IDIOMA, renderCataluña, renderEspaña, renderInglaterra, setIdioma } from '../informacion/User';
+import STYLES from '../styles/inici_registre.style'
 
-const SeleccioIdioma = () => {
+const SeleccioIdioma = ( { handleCambioIdioma } ) => {
+
+    const [cambioIdioma, setCambioIdioma] = useState(false);
+
+    const handleIdioma = (idioma) => {
+        setIdioma(idioma);
+        handleCambioIdioma()
+        setCambioIdioma(!cambioIdioma)
+    };
+
     return (
-        <View style={STYLES.cambio_idioma}> 
-        <SelectList 
-            placeholder = {getIdioma()}
-            boxStyles={{backgroundColor: '#bc6c25', opacity:  0.9}}
-            inputStyles={STYLES.sector_texto}
-            setSelected={ (val) => setIdioma(val)}
-            data={TIPUS_IDIOMA} 
-            save="value"     
-            dropdownStyles={{backgroundColor: '#bc6c25' , maxHeight: 80, maxWidth: 100}}
-            dropdownTextStyles={{backgroundColor: '#bc6c25'}}
-            search={false}
-        />
-      </View>
+
+        <View style={STYLES.base_banderas_desplegable}>
+
+            <View style={STYLES.fondo_banderas}>
+                <TouchableOpacity onPress={() => handleIdioma(TIPUS_IDIOMA[0])} style={{marginTop: 10}}> 
+                <Image source={renderEspaña()} style={STYLES.bandera}></Image> 
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => handleIdioma(TIPUS_IDIOMA[1])} style={{marginTop: 10}}> 
+                <Image source={renderCataluña()} style={STYLES.bandera}></Image> 
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => handleIdioma(TIPUS_IDIOMA[2])} style={{marginTop: 10}}> 
+                <Image source={renderInglaterra()} style={STYLES.bandera}></Image> 
+                </TouchableOpacity>
+            </View>
+
+        </View>
     );
 };
-
-const STYLES = StyleSheet.create({
-    cambio_idioma: {
-        backgroundColor: 'rgba(52, 52, 52, 0.2)',
-    },
-});
 
 export default SeleccioIdioma;
