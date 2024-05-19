@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, } from 'react-native';
+import { View, Text, Image, TouchableOpacity, TextInput, } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import logo from '../assets/Farm2Table.png';
-import { userId, getPalabra, renderFlagImage } from '../informacion/User';
+import {  getPalabra, renderFlagImage } from '../informacion/User';
 import { useNavigation } from '@react-navigation/native';
 import { registerProductorService } from '../api_service/ApiRegistroProductor';
 import STYLES from '../styles/inici_registre.style';

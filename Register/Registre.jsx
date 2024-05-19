@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Image, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import logo from '../assets/Farm2Table.png';
-import { TIPUS_IDIOMA, getIdioma, getPalabra, renderFlagImage, setEmail, setIdioma, setUserId, userId } from '../informacion/User';
+import {  getPalabra, renderFlagImage, setEmail, setUserId } from '../informacion/User';
 import { useNavigation } from '@react-navigation/native';
 import { registerService } from '../api_service/ApiRegistro';
 import STYLES from '../styles/inici_registre.style';
-import { SelectList } from 'react-native-dropdown-select-list';
 import SeleccioIdioma from '../components/seleccioIdioma';
 
 const Registre = () => {
