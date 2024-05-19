@@ -46,7 +46,6 @@ const ChatStackScreen = () => {
             screenOptions={{headerShown: false }}>
             <ChatStack.Screen name="Chat" component={Chat} />
             <ChatStack.Screen name="MensajesChat" component={MensajesChat} />
-            <ChatStack.Screen name="OpenChat" component={OpenChat} />
         </ChatStack.Navigator>
     );
 };

@@ -37,6 +37,22 @@ const styles = StyleSheet.create({
         color: "#cbc0bb",
         marginTop: 6,
     },
+    actionsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+    },
+    deleteButton: {
+        backgroundColor: COLORS.red,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 75,
+        height: '100%',
+    },
+    separator: {
+        height: 1,
+        backgroundColor: COLORS.black,
+    },
 });
 
 export default styles;
