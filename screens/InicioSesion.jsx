@@ -13,7 +13,6 @@ const InicioSesion = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [secure_text_entry, setSecureTextEntry] = useState(true); 
-  const [refresh, setRefresh] = useState(false)
   const NAVIGATOR = useNavigation();
   const [error_message, setError] = useState('');
   const [cambioIdioma, setCambioIdioma] = useState(false);
@@ -58,7 +57,7 @@ const InicioSesion = () => {
 
       <Image source={logo} style={STYLES.logo} />
 
-      { cambioIdioma && <SeleccioIdioma handleCambioIdioma={handleCambioIdioma} refresh />}      
+      { cambioIdioma && <SeleccioIdioma handleCambioIdioma={handleCambioIdioma} />}      
 
       <TouchableOpacity style={STYLES.cambio_idioma} onPress={handleCambioIdioma}>
         <Image source={renderFlagImage()} style={STYLES.bandera} />
