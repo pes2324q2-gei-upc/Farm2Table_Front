@@ -82,5 +82,13 @@
     "modify_order": "Modify order",
     "unable": "Unable to connect to chat service",
     "load": "Failed to load chat history",
-    "my_favs": "Favourites"
+    "my_favs": "Favourites",
+    "my_products": "My products",
+    "products": "Products",
+    "reviews": "Reviews",
+    "no_reviews": "No reviews",
+    "add_review": "Add review",
+    "review": "Review",
+    "Add_favorite": "Add to favorites",
+    "Remove_favorite": "Remove from favorites"
 }

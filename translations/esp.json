@@ -81,5 +81,13 @@
     "modify_order": "Modificar pedido",
     "unable": "No se puede conectar al servicio chat",
     "load": "Error al cargar el historial de chat",
-    "my_favs": "Favoritos"
+    "my_favs": "Favoritos",
+    "my_products": "Mis productos",
+    "products": "Productos",
+    "reviews": "Reseñas",
+    "no_reviews": "No hay reseñas",
+    "add_review": "Añadir reseña",
+    "review": "Reseña",
+    "Add_favorite": "Añadir a favoritos",
+    "Remove_favorite": "Eliminar de favoritos"
 }

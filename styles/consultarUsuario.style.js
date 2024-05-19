@@ -43,16 +43,15 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
         paddingHorizontal: 10,
     },
     button: {
-        flex: 1,  // Allows the buttons to take equal space
         alignItems: "center",
         justifyContent: 'center',
-        height: 40,
+        paddingHorizontal: 5,
         marginHorizontal: 5,
         borderBottomWidth: 2,
+        height: 40,
     },
     buttonText: {
         textAlign: 'center',

@@ -81,5 +81,14 @@
     "modify_order": "Modifificar comanda",
     "unable": "No es pot connectar al servei xat",
     "load": "Error al carregar l'historial del xat",
-    "my_favs": "Preferits"
+    "my_favs": "Preferits",
+    "my_products": "Els meus productes",
+    "products": "Productes",
+    "reviews": "Ressenyes",
+    "no_reviews": "No hi ha ressenyes",
+    "add_review": "Afegir ressenya",
+    "review": "Ressenya",
+    "Add_favorite": "Afegir a preferits",
+    "Remove_favorite": "Eliminar de preferits"
+
 }

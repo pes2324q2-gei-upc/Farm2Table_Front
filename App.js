@@ -31,6 +31,7 @@ import Particular from './Register/Particular';
 import EditarPerfil from './Users/EditarPerfil';
 import OrderSummary from './Users/orderSummary';
 import Orders from './Users/orderedProduct';
+import EditProfile from './Users/EditProfile';
 
 
 
@@ -72,6 +73,7 @@ export default function App() {
         <Stack.Screen name="EditarPerfil" component={EditarPerfil} options={{headerShown: false}} />
         <Stack.Screen name="Orders" component={Orders} options={{headerShown: false}} />
         <Stack.Screen name="OrderSummary" component={OrderSummary} options={{headerShown: false}} />
+        <Stack.Screen name="EditProfile" component={EditProfile} options={{headerShown: false}} />
       </Stack.Navigator>
     </NavigationContainer>
   );

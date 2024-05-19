@@ -8,6 +8,7 @@ import { userId, getPalabra, userType } from '../informacion/User';
 
 import ConsumerCheck from './consumerCheck';
 import ProductorCheck from './productorCheck';
+import MinoristaCheck from './minoristaCheck';
 
 
 const ProfileScreen = ({ navigation, idUser, typeUser}) => {
@@ -51,7 +52,10 @@ const ProfileScreen = ({ navigation, idUser, typeUser}) => {
                     <ConsumerCheck navigation={navigation} userData={userData} />
                 ) : typeUser === 'Productor' ? (
                     <ProductorCheck navigation={navigation} userData={userData} />
-                ) : null}
+                ) : typeUser === 'Minorista' ? (
+                    <MinoristaCheck navigation={navigation} userData={userData} />
+                )
+                : null}
             </View>
         </SafeAreaView>
     );

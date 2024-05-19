@@ -22,6 +22,8 @@ const EditarPerfil = () => {
   const navigation = useNavigation();
 
   const handleAccepta = async () => {
+    console.log("llega");
+    console.log(username, descripcio, resum, number, imageUri);
     if(!username.trim() || !descripcio.trim() || !resum.trim() || !number.trim()) {
       Alert.alert('Error', 'Omple tots els camps.');
       return;

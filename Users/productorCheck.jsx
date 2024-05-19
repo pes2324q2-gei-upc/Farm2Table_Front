@@ -14,6 +14,7 @@ import Favoritos from "./Favoritos";
 import UserProfile from "./userInfo";
 
 import { getIP } from "../informacion/Constants";
+import { userId } from "../informacion/User";
 
 
 const API_URL = `http://${getIP()}`;
@@ -23,6 +24,7 @@ const API_URL = `http://${getIP()}`;
 const ProductorCheck = ({ navigation, userData }) => {
     const [activeTab, setActiveTab] = useState('Productos');
     const [shopData, setShopData] = useState([]);
+    const [activeUser, setActiveUser] = useState(userId());
 
     const onPress = (tabName) => {
         setActiveTab(tabName);
@@ -81,7 +83,7 @@ const ProductorCheck = ({ navigation, userData }) => {
                 </View>
             )}
 
-            {activeTab === 'Datos' && (
+            {activeTab === 'Datos' && userData.id === activeUser && (
                 <View style={styles.tabContent}>
                     <UserProfile
                         username={userData.username}
