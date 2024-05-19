@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
       backgroundColor: 'transparent'
   },
   row: {
+      paddingTop: 10,
       maxHeight: '50%',
       flexDirection: 'row',
       alignItems: 'center',

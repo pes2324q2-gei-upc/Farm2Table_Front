@@ -56,7 +56,7 @@ const RestaurantList = ({ data, searchQuery }) => {
       ) : (
           <FlatList
             data={data.filter(item => item.service_name.toLowerCase().includes(searchQuery.toLowerCase()))}
-            keyExtractor={item => item._id}
+            keyExtractor={item => item.id}
             renderItem={renderItem}
           />
       )}
