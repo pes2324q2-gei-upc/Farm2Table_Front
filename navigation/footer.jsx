@@ -13,6 +13,7 @@ import Buscador from '../Buscador/Buscador'
 import Consultar_Usuario from '../screens/Consultar_Usuario';
 import { COLORS, SIZES } from '../constants/theme' 
 import EditarPerfil from '../Users/EditarPerfil';
+import AfegirFrases from '../Users/AfegirFrases';
 import MensajesChat from "../Chat/MensajesChat";
 import OpenChat from "../Chat/OpenChat";
 
@@ -50,6 +51,7 @@ const ChatStackScreen = () => {
     );
 };
 const BuscadorStackScreen = () => {
+    console.log("entro aqui")
     return (
       <BuscadorStack.Navigator 
         initialRouteName="BuscadorScreen"
@@ -66,13 +68,15 @@ const BuscadorStackScreen = () => {
       >
         <Stack.Screen name="BuscadorScreen" component={Buscador} />
         <Stack.Screen name="Consultar_Usuario" component={Consultar_Usuario} />
-        <Stack.Screen name="EditarPerfil" component={EditarPerfil} /> 
+        <Stack.Screen name="EditarPerfil" component={EditarPerfil} />
+        <Stack.Screen name="AfegirFrases" component={AfegirFrases} />
         <Stack.Screen name="Restaurante" component={Restaurante} />
       </BuscadorStack.Navigator>
     );
 }
 
 const Footer = () => {
+    console.log("entro aqui 2")
   return (
     <Tab.Navigator screenOptions={screenOptions}>
         <Tab.Screen name="Home" component={Home} options={{

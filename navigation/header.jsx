@@ -12,7 +12,6 @@ import { useNavigation } from '@react-navigation/native';
 
 
 const Header = () => {
-
     const navigation = useNavigation();
 
     const handleCartPress = () => {

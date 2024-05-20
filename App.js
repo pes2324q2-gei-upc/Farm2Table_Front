@@ -22,6 +22,7 @@ import Productor from './Register/Productor';
 import Minorista from './Register/Minorista';
 import Particular from './Register/Particular';
 import EditarPerfil from './Users/EditarPerfil';
+import AfegirFrases from './Users/AfegirFrases';
 import OrderSummary from './Users/orderSummary';
 import Orders from './Users/orderedProduct';
 import Chat from './Chat/Chat'; // Ajusta la ruta según tu estructura de archivos
@@ -63,6 +64,7 @@ export default function App() {
             <Stack.Screen name="AddCoinsScreen" component={AddCoinsScreen} options={{ headerShown: false }} />
             <Stack.Screen name="CheckUser" component={CheckUser} options={{ headerShown: false }} />
             <Stack.Screen name="EditarPerfil" component={EditarPerfil} options={{ headerShown: false }} />
+            <Stack.Screen name="AfegirFrases" component={AfegirFrases} options={{ headerShown: false }} />
             <Stack.Screen name="Orders" component={Orders} options={{ headerShown: false }} />
             <Stack.Screen name="OrderSummary" component={OrderSummary} options={{ headerShown: false }} />
             <Stack.Screen name="Chat" component={Chat} options={{ headerShown: false }} />

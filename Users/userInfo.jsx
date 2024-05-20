@@ -4,7 +4,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { COLORS, SIZES } from '../constants/theme'; // Asegúrate de que la ruta es correcta
 
 const UserProfile = ({ username, telephone, avatar, description, reach, user, navigation }) => {
-
     return (
         <View style={styles.container}>
             <View style={styles.capsule}>
@@ -28,6 +27,11 @@ const UserProfile = ({ username, telephone, avatar, description, reach, user, na
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.boton} onPress={() => navigation.navigate('EditarPerfil', { item: user })}>
                     <Text style={styles.botonEditar}>Editar Perfil</Text>
+                </TouchableOpacity>
+            </View>
+            <View style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.boton} onPress={() => navigation.navigate('AfegirFrases', { item: user })}>
+                    <Text style={styles.botonEditar}>Afegir frases predefinides</Text>
                 </TouchableOpacity>
             </View>
         </View>

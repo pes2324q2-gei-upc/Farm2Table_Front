@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, Button, ScrollView } from 'react-native'
 import FormData from "form-data"
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -68,6 +68,7 @@ const EditarPerfil = () => {
     }
     console.log("va");
   };
+
   return (
     <SafeAreaView style={styles.container}>
       <Header />
@@ -126,7 +127,8 @@ const EditarPerfil = () => {
             inputMode="numeric"
           />
         </View>
-        <View style ={styles.bottom}>
+        
+      <View style ={styles.bottom}>
         <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
           <Text style={styles.buttontext}>Torna</Text>
         </TouchableOpacity>
@@ -234,6 +236,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 10,
   },
+  
 })
 
 export default EditarPerfil
