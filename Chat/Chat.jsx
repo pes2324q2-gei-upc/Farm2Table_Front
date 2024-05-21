@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { SafeAreaView, Alert } from 'react-native';
+import { SafeAreaView, Alert, ScrollView } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import Header from '../navigation/header';
 import { getPalabra, userId as fetchUserId } from '../informacion/User';
 import { fetchChats, deleteChat } from "../api_service/ApiChat";
-import SwipeableRow from '../components/swipeableRow'; // Ajusta la ruta según tu estructura de archivos
+import SwipeableRow from '../components/swipeableRow';
 import styles from "../styles/chat.style";
 
 const Chat = ({ navigation }) => {
@@ -80,9 +80,9 @@ const Chat = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
             <Header />
-            <SafeAreaView style={styles.containerIn}>
+            <ScrollView style={styles.containerIn}>
                 {chats.map((chat) => renderItem({ item: chat }))}
-            </SafeAreaView>
+            </ScrollView>
         </SafeAreaView>
     );
 };
