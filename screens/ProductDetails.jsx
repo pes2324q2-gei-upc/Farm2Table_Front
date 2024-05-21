@@ -57,11 +57,14 @@ const ProductDetails = ({ navigation, route }) => {
   };
 
   const handleOpenChatPress = () => {
-    navigation.navigate("OpenChat", {
-      productId: product.id,
-      authorId: user,
-      receiverId: product.productor_info.id,
-      receiverUsername: product.productor_info.username
+    navigation.navigate("ChatStackScreen", {
+      screen: "OpenChat",
+      params: {
+        productId: product.id,
+        authorId: user,
+        receiverId: product.productor_info.id,
+        receiverUsername: product.productor_info.username
+      }
     });
   };
 

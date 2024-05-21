@@ -49,7 +49,7 @@ const OpenChat = ({ navigation }) => {
                 receiver_id: receiverId,
             }));
             setMessage('');
-            navigation.navigate("Chat");
+            navigation.navigate("Footer", {screen: "ChatTab"});
         }
     };
 
