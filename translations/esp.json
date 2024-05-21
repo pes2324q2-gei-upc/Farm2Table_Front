@@ -87,5 +87,8 @@
     "farmers": "Granjeros",
     "products": "Productos",
     "search_by_name": "Busca por nombre",
-    "no_markets": "No hay mercados disponibles"
+    "no_markets": "No hay mercados disponibles",
+    "type_message": "Escribe un mensaje",
+    "confirmeliminar": "Confirmar eliminación",
+    "segeliminar": "¿Estás seguro de que deseas eliminar este chat?"
 }

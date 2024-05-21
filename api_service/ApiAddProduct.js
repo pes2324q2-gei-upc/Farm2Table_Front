@@ -27,12 +27,10 @@ export const addNewProduct = async (formData) => {
 
         const data = await response.json();
         if (!response.ok) {
-            console.error('API call error:', data);
             throw new Error('Failed to add the product');
         }
         return data;
     } catch (error) {
-        console.error('Error adding product:', error);
         throw error;
     }
 };

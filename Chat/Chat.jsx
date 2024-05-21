@@ -1,12 +1,11 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { View, SafeAreaView, Alert } from 'react-native';
+import { SafeAreaView, Alert } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import Header from '../navigation/header';
 import { getPalabra, userId as fetchUserId } from '../informacion/User';
 import { fetchChats, deleteChat } from "../api_service/ApiChat";
 import SwipeableRow from '../components/swipeableRow'; // Ajusta la ruta según tu estructura de archivos
 import styles from "../styles/chat.style";
-import Footer from "../navigation/footer";
 
 const Chat = ({ navigation }) => {
     const [chats, setChats] = useState([]);
@@ -25,7 +24,6 @@ const Chat = ({ navigation }) => {
                 const data = await fetchChats(userId);
                 setChats(data);
             } catch (error) {
-                console.error('Error loading chats:', error);
                 Alert.alert('Error', getPalabra("errorChat"));
             }
         }
@@ -42,22 +40,21 @@ const Chat = ({ navigation }) => {
             await deleteChat(chatId);
             setChats(prevChats => prevChats.filter(chat => chat.id !== chatId));
         } catch (error) {
-            console.error('Error deleting chat:', error);
             Alert.alert('Error', getPalabra("errorDeleteChat"));
         }
     };
 
     const confirmDelete = (chatId) => {
         Alert.alert(
-            "Confirmar eliminación",
-            "¿Estás seguro de que deseas eliminar este chat?",
+            getPalabra("confirmeliminar"),
+            getPalabra("segeliminar"),
             [
                 {
-                    text: "Cancelar",
+                    text: getPalabra("cancel"),
                     style: "cancel"
                 },
                 {
-                    text: "Eliminar",
+                    text: getPalabra("remove"),
                     onPress: () => handleDelete(chatId),
                     style: "destructive"
                 }

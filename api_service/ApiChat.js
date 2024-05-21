@@ -8,8 +8,7 @@ export const fetchChats = async (userId) => {
         }
         return await response.json();
     } catch (error) {
-        console.error('Failed to fetch chats:', error);
-        throw error; // Re-throw to handle it in the component
+        throw error;
     }
 };
 
@@ -23,7 +22,6 @@ export const deleteChat = async (chatId) => {
         }
         return await response.json();
     } catch (error) {
-        console.error('Failed to delete chat:', error);
-        throw error; // Re-throw to handle it in the component
+        throw error;
     }
 };
