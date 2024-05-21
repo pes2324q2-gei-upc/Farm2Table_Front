@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { COLORS, SIZES } from '../constants/theme'; // Asegúrate de que la ruta es correcta
+
+import styles from '../styles/userCard.styles';
 
 
 import { fetchUser } from '../api_service/ApiConsultar_Usuario';
@@ -58,81 +59,5 @@ const UserProfile = ({navigation, idUser}) => {
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        justifyContent: 'flex-start',
-        flex: 1,
-        alignItems: 'center',
-        backgroundColor: COLORS.primary,
-    },
-    capsule: {
-        padding: 20,
-        width: '90%',
-        backgroundColor: COLORS.primary,
-        borderRadius: 10,
-        borderWidth: 2,
-        borderColor: COLORS.secondary,
-        alignItems: 'center',
-        marginTop: 20,
-    },
-    avatar: {
-        width: 100,
-        height: 100,
-        borderRadius: 50,
-        marginBottom: 20,
-    },
-    usernameLarge: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: 'black',
-    },
-    username: {
-        fontSize: 20,
-        color: 'white',
-        marginTop: 10,
-    },
-    telephoneContainer: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 10,
-    },
-    telephone: {
-        color: 'black',
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginLeft: 10,
-    },
-    description: {
-        fontSize: 16,
-        color: 'black',
-        marginTop: 10,
-        textAlign: 'center',
-        paddingHorizontal: 20,
-    },
-    reach: {
-        fontSize: 16,
-        color: 'black',
-        marginTop: 10,
-    },
-    botonEditar: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: 'white',
-        textAlign: 'center',
-    },
-    boton: {
-        backgroundColor: COLORS.secondary,
-        padding: 10,
-        borderRadius: 5,
-        marginTop: 20,
-        width: '90%',
-    },
-    buttonContainer: {
-        flexDirection: 'row',
-        width: '100%'
-    },
-});
 
 export default UserProfile;
