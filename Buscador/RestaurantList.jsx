@@ -2,7 +2,7 @@ import React from 'react';
 import { FlatList, View, Text, Image } from 'react-native';
 import styles from '../styles/buscador.style';
 import { TouchableOpacity } from 'react-native'
-import Restaurante from '../screens/Restaurante';
+import Restaurante from '../Restaurants/Restaurante';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 

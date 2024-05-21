@@ -7,7 +7,7 @@ import {Ionicons} from "@expo/vector-icons"
 import Home from '../screens/Home'
 import Map from '../Map/Map'
 import Chat from '../Chat/Chat'
-import Restaurante from '../screens/Restaurante'
+import Restaurante from '../Restaurants/Restaurante'
 import Product from '../Products/Product'
 import Buscador from '../Buscador/Buscador'
 import Consultar_Usuario from '../screens/Consultar_Usuario';
@@ -15,7 +15,7 @@ import { COLORS, SIZES } from '../constants/theme'
 import EditarPerfil from '../Users/EditarPerfil';
 import MensajesChat from "../Chat/MensajesChat";
 import OpenChat from "../Chat/OpenChat";
-
+import Valorar from "../Restaurants/Valorar"
 import Ticket from '../Shopping/ticket';
 
 const Stack = createNativeStackNavigator();
@@ -68,6 +68,7 @@ const BuscadorStackScreen = () => {
         <Stack.Screen name="Consultar_Usuario" component={Consultar_Usuario} />
         <Stack.Screen name="EditarPerfil" component={EditarPerfil} /> 
         <Stack.Screen name="Restaurante" component={Restaurante} />
+        <Stack.Screen name='Valorar' component={Valorar}/>
       </BuscadorStack.Navigator>
     );
 }
