@@ -1,16 +1,27 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import SliderProducts from './SliderProducts'; // Import the SliderProducts component
 import {COLORS,  SIZES} from "../constants/theme";
 
-const ShopFeed = ({ shopName, products }) => {
+
+const ShopFeed = ({ navigation, data }) => {
+
+  console.log(data);
+  console.log(data.products_info)
+  console.log(data.productor_id)
+  console.log(data.productor_name)
+
+  const handleProductor = () => {
+    navigation.navigate('CheckUser', { idUser: data.id, typeUser: 'Productor' });
+  };
+
   return (
     <View style={styles.container}>
-      {/* Shop name */}
-      <Text style={styles.shopName}>{shopName}</Text>
-      {/* SliderProducts */}
+      <TouchableOpacity onPress={handleProductor}>
+        <Text style={styles.shopName}>{data.productor_name}</Text>
+      </TouchableOpacity>
       <View  style={styles.width}>
-        <SliderProducts productData={products} />
+        <SliderProducts productData={data.products_info} />
       </View>
     </View>
   );

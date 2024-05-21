@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
-import { COLORS } from "../constants/theme";
+import { COLORS, SIZES } from "../constants/theme";
 
 const ProductItem = ({ navigation, item }) => {
 
@@ -30,6 +30,8 @@ const ProductItem = ({ navigation, item }) => {
 const styles = StyleSheet.create({
     capsule: {
         flexDirection: "row",
+        height: 75,
+        width: SIZES.width - 60,
         backgroundColor: COLORS.primary,
         borderRadius: 10,
         padding: 10,

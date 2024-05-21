@@ -24,8 +24,16 @@ const Favoritos = ({ navigation, userId, userType }) => {
     });
     const [selectedType, setSelectedType] = useState("Products");
 
+
     useEffect(() => {
-        setSearchParty(["Types", "Minoristas", "Productors", "Products"]);
+        if (userType === "Productors") {
+            setSearchParty(["Types", "Minoristas", "Products"]);
+        } else if (userType === "Minoristas") {
+            setSearchParty(["Productors", "Products", "Types"]);
+        }
+        else {
+            setSearchParty(["Types", "Minoristas", "Productors", "Products"]);
+        }
     }, []);
 
     useEffect(() => {

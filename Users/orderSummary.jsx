@@ -1,11 +1,13 @@
 import React from 'react';
 import { View, Text, ScrollView, SafeAreaView } from 'react-native';
-import { COLORS } from '../constants/theme'; // Adjust the import path as needed
+import { COLORS } from '../constants/theme';
 import HeaderHome from '../navigation/header_backHome';
-import styles from '../styles/ticket.styles'; // Adjust the import path as needed
+import styles from '../styles/ticket.styles';
+
+import { getPalabra } from '../informacion/User';
 
 const OrderSummary = ({ navigation, route }) => {
-    const { items, storeName } = route.params; // Asegúrate de que los nombres de las propiedades coincidan con los que se pasan desde la pantalla de carrito
+    const { items, storeName } = route.params;
 
     const getTotal = () => {
         return items.reduce((acc, item) => acc + (item.quantity * item.price), 0).toFixed(2);
@@ -20,9 +22,9 @@ const OrderSummary = ({ navigation, route }) => {
 
                     <Text>------------------------------------------------</Text>
                     <View style={styles.tableHeader}>
-                        <Text style={styles.producteHeader}>Producto</Text>
-                        <Text style={styles.headerText}>Cantidad</Text>
-                        <Text style={styles.headerText}>Precio</Text>
+                        <Text style={styles.producteHeader}>{getPalabra('product')}</Text>
+                        <Text style={styles.headerText}>{getPalabra('quantity')}</Text>
+                        <Text style={styles.headerText}>{getPalabra('price')}</Text>
                     </View>
                     <Text>------------------------------------------------</Text>
                     {items.map((item, index) => (

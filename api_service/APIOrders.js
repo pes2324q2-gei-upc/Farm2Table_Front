@@ -62,3 +62,39 @@ const groupOrdersBySellerAndTime = (data) => {
 
     return groupedData;
 };
+
+export const fetchUserBoughtProducts = async (userId) => {
+    try {
+        const response = await fetch(`${API_URL}/users/${userId}/bought`);
+        const data = await response.json();
+        console.log(data);
+        if (response.ok) {
+            const latestPurchases = getLatestPurchases(data.data);
+            console.log('latestPurchases: ', latestPurchases);
+            return latestPurchases;
+        } else {
+            throw new Error(data.message);
+        }
+    } catch (error) {
+        console.error("Failed to fetch user bought products: ", error);
+        throw error;
+    }
+};
+
+const getLatestPurchases = (data) => {
+    const parseDate = (dateStr) => new Date(dateStr);
+    const latestPurchases = {};
+
+    data.forEach((item) => {
+        const productId = item.product.id;
+        const boughtAt = parseDate(item.bought_at);
+
+        if (!latestPurchases[productId] || boughtAt > parseDate(latestPurchases[productId].bought_at)) {
+            latestPurchases[productId] = { ...item, bought_at: boughtAt };
+        }
+    });
+
+    // Convert object to array sorted by the latest purchase date
+    const sortedLatestPurchases = Object.values(latestPurchases).sort((a, b) => b.bought_at - a.bought_at);
+    return sortedLatestPurchases;
+};

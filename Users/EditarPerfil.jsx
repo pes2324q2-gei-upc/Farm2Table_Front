@@ -22,10 +22,9 @@ const EditarPerfil = () => {
   const navigation = useNavigation();
 
   const handleAccepta = async () => {
-    if(!username.trim() || !descripcio.trim() || !resum.trim() || !number.trim()) {
-      Alert.alert('Error', 'Omple tots els camps.');
-      return;
-    }
+    console.log("llega");
+    console.log(username, descripcio, resum, number, imageUri);
+    
     item.username = username;
     item.brief_description = resum;
     item.about_me = descripcio;

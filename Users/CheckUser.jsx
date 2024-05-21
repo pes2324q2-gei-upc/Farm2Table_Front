@@ -1,16 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, Image, ScrollView, StyleSheet, SafeAreaView } from 'react-native';
 import { COLORS, SIZES } from '../constants/theme';
 import Header from '../navigation/header_back';
 import { Ionicons } from '@expo/vector-icons';
 import { fetchUser } from '../api_service/ApiConsultar_Usuario';
-import { userId, getPalabra } from '../informacion/User';
+import { userId, getPalabra, userType } from '../informacion/User';
 
 import ConsumerCheck from './consumerCheck';
+import ProductorCheck from './productorCheck';
+import MinoristaCheck from './minoristaCheck';
 
 
-const ProfileScreen = ({ navigation, idUser, typeUser}) => {
+const ProfileScreen = ({ navigation, route }) => {
+
+    const { idUser, typeUser } = route.params;
+
+
     const [userData, setUserData] = useState([]);
+
+    if (typeUser === undefined) {
+        typeUser = userType();
+    }
+
 
     useEffect(() => {
         const userLoad = async () => {
@@ -31,7 +42,7 @@ const ProfileScreen = ({ navigation, idUser, typeUser}) => {
             <View style={{ flex: 1, backgroundColor: COLORS.secondary }}>
                 <View style={styles.profileContainer}>
                     {userData.avatar ? (
-                        <Image source={require('../assets/images/149071.png')} style={styles.avatar} />
+                        <Image source={userData.avatar} style={styles.avatar} />
                     ) : null}
                     <Text style={styles.usernameLarge}>{userData.username}</Text>
                     {userData.telephone && (
@@ -41,7 +52,14 @@ const ProfileScreen = ({ navigation, idUser, typeUser}) => {
                         </View>
                     )}
                 </View>
-                <ConsumerCheck navigation={navigation} userData={userData}/>
+                {typeUser === 'Consumer' ? (
+                    <ConsumerCheck navigation={navigation} userData={userData} />
+                ) : typeUser === 'Productor' ? (
+                    <ProductorCheck navigation={navigation} userData={userData} />
+                ) : typeUser === 'Minorista' ? (
+                    <MinoristaCheck navigation={navigation} userData={userData} />
+                )
+                : null}
             </View>
         </SafeAreaView>
     );

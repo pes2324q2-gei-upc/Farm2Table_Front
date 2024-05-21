@@ -22,8 +22,10 @@ import CheckUser from './Users/CheckUser';
 import EditarPerfil from './Users/EditarPerfil';
 import OrderSummary from './Users/orderSummary';
 import Orders from './Users/orderedProduct';
+import EditProfile from './Users/EditProfile';
 import ChatStackScreen from './navigation/ChatStackScreen';
 import { COLORS, SIZES } from './constants/theme';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -65,6 +67,7 @@ export default function App() {
             <Stack.Screen name="Orders" component={Orders} options={{ headerShown: false }} />
             <Stack.Screen name="OrderSummary" component={OrderSummary} options={{ headerShown: false }} />
             <Stack.Screen name="ChatStackScreen" component={ChatStackScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="EditProfile" component={EditProfile} options={{headerShown: false}} />
           </Stack.Navigator>
         </NavigationContainer>
       </GestureHandlerRootView>

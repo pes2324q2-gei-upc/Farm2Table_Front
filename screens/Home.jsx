@@ -62,7 +62,7 @@ const MainFeed = () => {
       <SafeAreaView style={styles.containerIn}>
         <ScrollView contentContainerStyle={styles.feedContainer}>
           {shopData.map((shop, index) => (
-            shop.products_info.length > 0 && <ShopFeed key={index} shopName={shop.username} products={shop.products_info} />
+            shop.products_info.length > 0 && <ShopFeed key={index} navigation={navigation} data={shop} />
           ))}
         </ScrollView>
         {tipo === 'Productor' && (
