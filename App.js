@@ -25,8 +25,24 @@ import EditarPerfil from './Users/EditarPerfil';
 import OrderSummary from './Users/orderSummary';
 import Orders from './Users/orderedProduct';
 import Chat from './Chat/Chat'; // Ajusta la ruta según tu estructura de archivos
-
+import ProfileScreen from './Users/CheckUser';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+
+function DrawerNavigator() {
+  return (
+    <Drawer.Navigator initialRouteName="Tabs" screenOptions={{
+      drawerStyle: {
+        backgroundColor: COLORS.primary,
+        width: 240,
+      },
+    }}>
+      <Drawer.Screen name="Home" component={Footer} options={{ headerShown: false }} />
+      <Drawer.Screen name="Perfil" component={ProfileScreen} options={{ headerShown: false }} />
+    </Drawer.Navigator>
+  );
+}
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -53,7 +69,7 @@ export default function App() {
             <Stack.Screen name="Productor" component={Productor} options={{ headerShown: false }} />
             <Stack.Screen name="Minorista" component={Minorista} options={{ headerShown: false }} />
             <Stack.Screen name="Particular" component={Particular} options={{ headerShown: false }} />
-            <Stack.Screen name="Footer" component={Footer} options={{ headerShown: false }} />
+            <Stack.Screen name="Footer" component={DrawerNavigator} options={{ headerShown: false }} />
             <Stack.Screen name="MainFeed" component={MainFeed} options={{ headerShown: false }} />
             <Stack.Screen name="AddProduct" component={AddProduct} options={{ headerShown: false }} />
             <Stack.Screen name="ProductDetails" component={ProductDetails} options={{ headerShown: false }} />

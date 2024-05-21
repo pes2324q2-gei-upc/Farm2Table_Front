@@ -87,5 +87,9 @@
     "farmers": "Granjeros",
     "products": "Productos",
     "search_by_name": "Busca por nombre",
-    "no_markets": "No hay mercados disponibles"
+    "no_markets": "No hay mercados disponibles",
+    "submit": "Envía",
+    "rating": "Nota",
+    "comment": "Comentario",
+    "write_your_comment": "Escribe tu comentario"
 }

@@ -23,7 +23,7 @@ const Header = () => {
     return (
         <View style={styles.container}>
             <View style={styles.innerContainer}>
-                <TouchableOpacity onPress={() => navigation.navigate('CheckUser')}>
+                <TouchableOpacity onPress={() => navigation.openDrawer()}>
                     <Image
                         source={require('../assets/images/149071.png')}
                         style={styles.profileImage}

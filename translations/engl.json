@@ -88,6 +88,9 @@
     "farmers": "Farmers",
     "products": "Products",
     "search_by_name": "Search by name",
-    "no_markets": "No markets available"
-
+    "no_markets": "No markets available",
+    "submit": "Submit",
+    "rating": "Rating",
+    "comment": "Comment",
+    "write_your_comment": "Write your comment"
 }

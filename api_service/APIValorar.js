@@ -8,16 +8,15 @@ const getCurrentDate = () => {
   return now.toISOString(); // Formats the date as 'YYYY-MM-DDTHH:mm:ss.sssZ'
 };
 
-export const submitComment = async (id, comment) => {
+export const submitComment = async (id, comment, tipus) => {
 
   const commentData = {
-    commentor_id: 9,
+    commentor_id: userId(),
     comment: comment,
     date: getCurrentDate()
   };
-
   try {
-    const response = await fetch("http://"+URL+"/users/minorista/"+id +"/comment", {
+    const response = await fetch("http://"+URL+"/users/"+tipus+"/"+id +"/comment", {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -49,7 +48,7 @@ export const submitRating = async(id, stars) => {
     //console.log("llega este rating: " + stars )
     //console.log("http://"+URL+"/users/minorista/rating/"+id);
 
-    const response = await fetch("http://"+URL+"/users/minorista/rating/"+id, {
+    const response = await fetch("http://"+URL+"/users/"+tipus+"/rating/"+id, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
