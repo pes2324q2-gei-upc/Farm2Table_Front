@@ -81,5 +81,8 @@
     "modify_order": "Modifificar comanda",
     "unable": "No es pot connectar al servei xat",
     "load": "Error al carregar l'historial del xat",
-    "my_favs": "Preferits"
+    "my_favs": "Preferits",
+    "type_message": "Escriu un missatge",
+    "confirmeliminar": "Confirmar eliminació",
+    "segeliminar": "Estàs segur que vols eliminar aquest xat?"
 }

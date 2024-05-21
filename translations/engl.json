@@ -82,5 +82,8 @@
     "modify_order": "Modify order",
     "unable": "Unable to connect to chat service",
     "load": "Failed to load chat history",
-    "my_favs": "Favourites"
+    "my_favs": "Favourites",
+    "type_message": "Type a message",
+    "confirmeliminar": "Confirm deletion",
+    "segeliminar": "Are you sure you want to delete this chat?"
 }

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, SafeAreaView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
+import { ScrollView, Text, TextInput, TouchableOpacity, View, SafeAreaView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPaperPlane, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useRoute } from '@react-navigation/native';
-import { format, parseISO, isSameDay } from 'date-fns';
-import { COLORS, SIZES } from '../constants/theme'
+import { format, parseISO } from 'date-fns';
 import styles from "../styles/mensajesChat.style";
 import {getPalabra} from '../informacion/User';
+import { URL } from "../constants/theme";
 const MensajesChat = ({ navigation }) => {
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
@@ -15,7 +15,7 @@ const MensajesChat = ({ navigation }) => {
     const { chatId, productId, authorId, receiverId, receiverUsername } = route.params;
 
     useEffect(() => {
-        const websocketURL = `ws://13.37.224.132/ws/${authorId}/chat/messages/`;
+        const websocketURL = `ws://${URL}/ws/${authorId}/chat/messages/`;
         const newSocket = new WebSocket(websocketURL);
 
         newSocket.onopen = () => {
@@ -46,7 +46,7 @@ const MensajesChat = ({ navigation }) => {
     }, [authorId, chatId]);
 
     const fetchInitialMessages = async () => {
-        const url = `http://13.37.224.132/chats/rooms/${chatId}`;
+        const url = `http://${URL}/chats/rooms/${chatId}`;
         try {
             const response = await fetch(url);
             const data = await response.json();
@@ -119,7 +119,7 @@ const MensajesChat = ({ navigation }) => {
                 <View style={styles.inputContainer}>
                     <TextInput
                         style={styles.input}
-                        placeholder="Type a message"
+                        placeholder={getPalabra("type_message")}
                         onChangeText={setMessage}
                         value={message}
                         multiline

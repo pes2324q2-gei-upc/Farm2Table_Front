@@ -81,5 +81,8 @@
     "modify_order": "Modificar pedido",
     "unable": "No se puede conectar al servicio chat",
     "load": "Error al cargar el historial de chat",
-    "my_favs": "Favoritos"
+    "my_favs": "Favoritos",
+    "type_message": "Escribe un mensaje",
+    "confirmeliminar": "Confirmar eliminación",
+    "segeliminar": "¿Estás seguro de que deseas eliminar este chat?"
 }

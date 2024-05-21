@@ -1,4 +1,3 @@
-import { View, Text} from 'react-native'
 import React from 'react'
 import { createBottomTabNavigator }from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -8,15 +7,12 @@ import Home from '../screens/Home'
 import Map from '../Map/Map'
 import Chat from '../Chat/Chat'
 import Restaurante from '../screens/Restaurante'
-import Product from '../Products/Product'
 import Buscador from '../Buscador/Buscador'
 import Consultar_Usuario from '../screens/Consultar_Usuario';
 import { COLORS, SIZES } from '../constants/theme' 
 import EditarPerfil from '../Users/EditarPerfil';
 import MensajesChat from "../Chat/MensajesChat";
-import OpenChat from "../Chat/OpenChat";
 
-import Ticket from '../Shopping/ticket';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
