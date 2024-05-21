@@ -83,7 +83,6 @@
     "load": "Error al cargar el historial de chat",
     "my_favs": "Favoritos",
     "my_products": "Productos",
-    "products": "Productos",
     "reviews": "Reseñas",
     "no_reviews": "No hay reseñas",
     "add_review": "Añadir reseña",
@@ -109,5 +108,14 @@
     "Reached": "Alcance",
     "placeholder_reached": "Introduce tu alcance",
     "Address": "Dirección",
-    "placeholder_address": "Introduce tu dirección"
+    "placeholder_address": "Introduce tu dirección",
+    "restaurants": "Restaurantes",
+    "markets": "Mercados",
+    "farmers": "Granjeros",
+    "products": "Productos",
+    "search_by_name": "Busca por nombre",
+    "no_markets": "No hay mercados disponibles",
+    "type_message": "Escribe un mensaje",
+    "confirmeliminar": "Confirmar eliminación",
+    "segeliminar": "¿Estás seguro de que deseas eliminar este chat?"
 }

@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, SafeAreaView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { ScrollView, Text, TextInput, TouchableOpacity, View, SafeAreaView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPaperPlane, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useRoute } from '@react-navigation/native';
-import { format, parseISO, isSameDay } from 'date-fns';
-import { COLORS, SIZES } from '../constants/theme'
+import { format, parseISO } from 'date-fns';
 import styles from "../styles/mensajesChat.style";
-import {getPalabra} from '../informacion/User';
-import {ChatStackScreen} from "../navigation/footer"
+import { getPalabra } from '../informacion/User';
+import { createSocketConnection } from '../api_service/ApiChat';
+
 const OpenChat = ({ navigation }) => {
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
@@ -16,31 +16,17 @@ const OpenChat = ({ navigation }) => {
     const { productId, authorId, receiverId, receiverUsername } = route.params;
 
     useEffect(() => {
-        const websocketURL = `ws://13.37.224.132/ws/${authorId}/chat/messages/`;
-        const newSocket = new WebSocket(websocketURL);
-
-        newSocket.onopen = () => {
-            console.log('WebSocket connection established');
+        const onMessageReceived = (data) => {
+            setMessages(prevMessages => [...prevMessages, data]);
         };
 
-        newSocket.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-        };
-
-        newSocket.onerror = error => {
-            console.error('WebSocket error:', error);
-            Alert.alert("Error", getPalabra("unable"));
-        };
-
-        newSocket.onclose = () => {
-            console.log('WebSocket connection closed');
-        };
-
+        const newSocket = createSocketConnection(authorId, onMessageReceived);
         setSocket(newSocket);
+
         return () => newSocket.close();
     }, [authorId]);
 
-    const sendMessage = () => {
+    const sendMessage = useCallback(() => {
         if (message.trim() && socket) {
             socket.send(JSON.stringify({
                 product_id: productId,
@@ -49,9 +35,9 @@ const OpenChat = ({ navigation }) => {
                 receiver_id: receiverId,
             }));
             setMessage('');
-            navigation.navigate("Chat");
+            navigation.navigate("Footer", { screen: "ChatTab" });
         }
-    };
+    }, [message, socket, productId, authorId, receiverId, navigation]);
 
     const groupedMessages = messages.reduce((acc, message) => {
         if (message.timestamp) {
@@ -95,7 +81,7 @@ const OpenChat = ({ navigation }) => {
                 <View style={styles.inputContainer}>
                     <TextInput
                         style={styles.input}
-                        placeholder="Type a message"
+                        placeholder={getPalabra("type_message")}
                         onChangeText={setMessage}
                         value={message}
                         multiline
@@ -109,4 +95,5 @@ const OpenChat = ({ navigation }) => {
         </SafeAreaView>
     );
 };
+
 export default OpenChat;

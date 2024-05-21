@@ -1,16 +1,16 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, SafeAreaView, Alert } from 'react-native';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { COLORS, SIZES } from '../constants/theme';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
+import { SafeAreaView, Alert, ScrollView } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import Header from '../navigation/header';
-import MensajesChat from './MensajesChat';
 import { getPalabra, userId as fetchUserId } from '../informacion/User';
-import { fetchChats } from "../api_service/ApiChat";
+import { fetchChats, deleteChat } from "../api_service/ApiChat";
+import SwipeableRow from '../components/swipeableRow';
 import styles from "../styles/chat.style";
 
 const Chat = ({ navigation }) => {
     const [chats, setChats] = useState([]);
     const [userId, setUserId] = useState(null);
+    const scrollViewRef = useRef(null);
 
     useEffect(() => {
         const initUserId = fetchUserId();
@@ -23,9 +23,12 @@ const Chat = ({ navigation }) => {
         if (userId) {
             try {
                 const data = await fetchChats(userId);
-                setChats(data);
+                const sortedData = data.sort((a, b) => new Date(b.last_message.sent_date) - new Date(a.last_message.sent_date));
+                setChats(sortedData);
+                if (scrollViewRef.current) {
+                    scrollViewRef.current.scrollTo({ x: 0, y: 0, animated: true });
+                }
             } catch (error) {
-                console.error('Error loading chats:', error);
                 Alert.alert('Error', getPalabra("errorChat"));
             }
         }
@@ -37,8 +40,37 @@ const Chat = ({ navigation }) => {
         }, [loadData])
     );
 
+    const handleDelete = async (chatId) => {
+        try {
+            await deleteChat(chatId);
+            setChats(prevChats => prevChats.filter(chat => chat.id !== chatId));
+        } catch (error) {
+            Alert.alert('Error', getPalabra("errorDeleteChat"));
+        }
+    };
+
+    const confirmDelete = (chatId) => {
+        Alert.alert(
+            getPalabra("confirmeliminar"),
+            getPalabra("segeliminar"),
+            [
+                {
+                    text: getPalabra("cancel"),
+                    style: "cancel"
+                },
+                {
+                    text: getPalabra("remove"),
+                    onPress: () => handleDelete(chatId),
+                    style: "destructive"
+                }
+            ],
+            { cancelable: true }
+        );
+    };
+
     const renderItem = ({ item }) => (
-        <TouchableOpacity
+        <SwipeableRow
+            item={item}
             onPress={() => navigation.navigate('MensajesChat', {
                 chatId: item.id,
                 productId: item.product.id,
@@ -46,34 +78,19 @@ const Chat = ({ navigation }) => {
                 receiverId: (userId !== item.user1.id ? item.user1.id : item.user2.id),
                 receiverUsername: (userId !== item.user1.id ? item.user1.username : item.user2.username)
             })}
-            style={styles.chatItem}
-        >
-            <Image
-                source={{ uri: item.product.image }}
-                style={styles.image}
-            />
-            <View style={styles.textContainer}>
-                <Text style={styles.name}>
-                    {(userId !== item.user1.id ? item.user1 : item.user2).username + ', ' + item.product.name}
-                </Text>
-                <Text style={styles.lastMessage} numberOfLines={1}>
-                    {item.last_message ? item.last_message.text : ""}
-                </Text>
-            </View>
-        </TouchableOpacity>
+            onDelete={(chatId) => confirmDelete(chatId)}
+        />
     );
 
     return (
         <SafeAreaView style={styles.container}>
             <Header />
-            <SafeAreaView style={styles.containerIn}>
-                <FlatList
-                    data={chats}
-                    renderItem={renderItem}
-                    keyExtractor={item => item.id.toString()}
-                    showsVerticalScrollIndicator={false}
-                />
-            </SafeAreaView>
+            <ScrollView
+                style={styles.containerIn}
+                ref={scrollViewRef}
+            >
+                {chats.map((chat) => renderItem({ item: chat }))}
+            </ScrollView>
         </SafeAreaView>
     );
 };

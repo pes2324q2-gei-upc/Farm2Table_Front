@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Image, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import logo from '../assets/Farm2Table.png';
-import { TIPUS_IDIOMA, getIdioma, getPalabra, setEmail, setIdioma, setUserId, userId } from '../informacion/User';
+import {  getPalabra, renderFlagImage, setEmail, setUserId } from '../informacion/User';
 import { useNavigation } from '@react-navigation/native';
 import { registerService } from '../api_service/ApiRegistro';
 import STYLES from '../styles/inici_registre.style';
-import { SelectList } from 'react-native-dropdown-select-list';
+import SeleccioIdioma from '../components/seleccioIdioma';
 
 const Registre = () => {
   const [username, setUsername] = useState('');
@@ -16,7 +16,7 @@ const Registre = () => {
   const [secure_text_entry_2, setSecureTextEntry2] = useState(true);
   const [error_message, setError] = useState('');
   const NAVIGATOR = useNavigation();
-  const [refresh, setRefresh] = useState(false);
+  const [cambioIdioma, setCambioIdioma] = useState(false);
   
   const handleRegister = async () => {
 
@@ -47,9 +47,8 @@ const Registre = () => {
     NAVIGATOR.navigate("InicioSesion");
   };
 
-  const handleIdioma = (idioma) => {
-    setIdioma(idioma);
-    setRefresh(!refresh);
+  const handleCambioIdioma = () => {
+    setCambioIdioma(!cambioIdioma)
   };
 
   return (
@@ -57,22 +56,15 @@ const Registre = () => {
           
       <Image source={logo} style={STYLES.logo} />
 
-      <TouchableOpacity style={STYLES.flecha_posicion} onPress={handleGoBack}>
-        <Icon  name="arrow-back" style={STYLES.flecha} />  
+      { cambioIdioma && <SeleccioIdioma handleCambioIdioma={handleCambioIdioma} />}      
+
+      <TouchableOpacity style={STYLES.cambio_idioma} onPress={handleCambioIdioma}>
+        <Image source={renderFlagImage()} style={STYLES.bandera} />
       </TouchableOpacity>
-      
-      <View style={STYLES.cambio_idioma}> 
-        <SelectList 
-            placeholder = {getIdioma()}
-            boxStyles={{backgroundColor: '#bc6c25', opacity:  0.9}}
-            setSelected={ (val) => handleIdioma(val)}
-            data={TIPUS_IDIOMA} 
-            save="value"     
-            dropdownStyles={{backgroundColor: '#bc6c25' , maxHeight: 80, maxWidth: 100}}
-            dropdownTextStyles={{backgroundColor: '#bc6c25'}}
-            search={false}
-        />
-      </View>
+
+      <TouchableOpacity style={STYLES.flecha_posicion} onPress={handleGoBack}>
+          <Icon  name="arrow-back" style={STYLES.flecha} />  
+      </TouchableOpacity>
 
       <Text style={STYLES.error_message}>{getPalabra(error_message)}</Text>
 

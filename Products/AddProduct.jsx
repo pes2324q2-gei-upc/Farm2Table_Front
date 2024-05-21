@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, Image, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { SelectList } from 'react-native-dropdown-select-list';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCamera, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Picker } from '@react-native-picker/picker';
 import HeaderBack from '../navigation/header_back';
-import { COLORS, URL } from '../constants/theme';
-import {useFocusEffect, useNavigation} from '@react-navigation/native';
-//import {userId} from "../informacion/User";
+import {useNavigation} from '@react-navigation/native';
 import {getPalabra, userId} from '../informacion/User';
 import { fetchProductTypes, addNewProduct } from '../api_service/ApiAddProduct';
 import styles from '../styles/addProduct.style';
@@ -38,7 +36,6 @@ const AddProduct = () => {
     };
 
     useEffect(() => {
-        // Get Values from database using the new service
         fetchProductTypes()
             .then(setData)
             .catch(error => {

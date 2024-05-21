@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, SafeAreaView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
+import { ScrollView, Text, TextInput, TouchableOpacity, View, SafeAreaView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPaperPlane, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useRoute } from '@react-navigation/native';
-import { format, parseISO, isSameDay } from 'date-fns';
-import { COLORS, SIZES } from '../constants/theme'
+import { format, parseISO } from 'date-fns';
 import styles from "../styles/mensajesChat.style";
-import {getPalabra} from '../informacion/User';
+import { getPalabra } from '../informacion/User';
+import { URL } from "../constants/theme";
+import { fetchInitialMessages, initializeWebSocket } from '../api_service/ApiChat';
+
 const MensajesChat = ({ navigation }) => {
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
@@ -15,55 +17,9 @@ const MensajesChat = ({ navigation }) => {
     const { chatId, productId, authorId, receiverId, receiverUsername } = route.params;
 
     useEffect(() => {
-        const websocketURL = `ws://13.37.224.132/ws/${authorId}/chat/messages/`;
-        const newSocket = new WebSocket(websocketURL);
-
-        newSocket.onopen = () => {
-            console.log('WebSocket connection established');
-            fetchInitialMessages();
-        };
-
-        newSocket.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-            if (data.message_text) {
-                fetchInitialMessages();
-            } else {
-                console.error('Message missing timestamp or text:', data);
-            }
-        };
-
-        newSocket.onerror = error => {
-            console.error('WebSocket error:', error);
-            Alert.alert("Error", getPalabra("unable"));
-        };
-
-        newSocket.onclose = () => {
-            console.log('WebSocket connection closed');
-        };
-
-        setSocket(newSocket);
-        return () => newSocket.close();
+        const cleanupWebSocket = initializeWebSocket(URL, authorId, () => fetchInitialMessages(chatId, authorId).then(setMessages), setMessages, setSocket);
+        return cleanupWebSocket;
     }, [authorId, chatId]);
-
-    const fetchInitialMessages = async () => {
-        const url = `http://13.37.224.132/chats/rooms/${chatId}`;
-        try {
-            const response = await fetch(url);
-            const data = await response.json();
-            if (!response.ok) {
-                throw new Error('Failed to fetch chat messages: ' + response.statusText);
-            }
-            setMessages(data.map(msg => ({
-                ...msg,
-                sender: msg.author.id === authorId ? 'user' : 'server',
-                timestamp: msg.sent_date
-
-            })));
-        } catch (error) {
-            console.error('Fetch error:', error);
-            Alert.alert("Error", getPalabra("load"));
-        }
-    };
 
     const sendMessage = () => {
         if (message.trim() && socket) {
@@ -119,7 +75,7 @@ const MensajesChat = ({ navigation }) => {
                 <View style={styles.inputContainer}>
                     <TextInput
                         style={styles.input}
-                        placeholder="Type a message"
+                        placeholder={getPalabra("type_message")}
                         onChangeText={setMessage}
                         value={message}
                         multiline
@@ -133,4 +89,5 @@ const MensajesChat = ({ navigation }) => {
         </SafeAreaView>
     );
 };
+
 export default MensajesChat;

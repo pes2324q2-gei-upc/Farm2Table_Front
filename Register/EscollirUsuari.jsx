@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import logo from '../assets/Farm2Table.png';
-import { TIPUS_IDIOMA, getIdioma, getPalabra, setIdioma } from '../informacion/User';
+import { TIPUS_IDIOMA, getIdioma, getPalabra, renderFlagImage, setIdioma } from '../informacion/User';
 import { useNavigation } from '@react-navigation/native';
 import STYLES from '../styles/inici_registre.style';
 import { SelectList } from 'react-native-dropdown-select-list';
+import SeleccioIdioma from '../components/seleccioIdioma';
 
 
 const EscollirUsuari = () => {
   const NAVIGATOR = useNavigation();
   const [refresh, setRefresh] = useState(false);
+  const [cambioIdioma, setCambioIdioma] = useState(false);
 
   const handleProductor = () => {
     NAVIGATOR.navigate("Productor");
@@ -23,9 +25,8 @@ const EscollirUsuari = () => {
     NAVIGATOR.navigate("Particular");
   };
 
-  const handleIdioma = (idioma) => {
-    setIdioma(idioma);
-    setRefresh(!refresh);
+  const handleCambioIdioma = () => {
+    setCambioIdioma(!cambioIdioma)
   };
 
   return (
@@ -33,18 +34,11 @@ const EscollirUsuari = () => {
 
       <Image source={logo} style={STYLES.logo} />
 
-      <View style={STYLES.cambio_idioma}> 
-        <SelectList 
-            placeholder = {getIdioma()}
-            boxStyles={{backgroundColor: '#bc6c25', opacity:  0.9}}
-            setSelected={ (val) => handleIdioma(val)}
-            data={TIPUS_IDIOMA} 
-            save="value"     
-            dropdownStyles={{backgroundColor: '#bc6c25' , maxHeight: 80, maxWidth: 100}}
-            dropdownTextStyles={{backgroundColor: '#bc6c25'}}
-            search={false}
-        />
-      </View>
+      { cambioIdioma && <SeleccioIdioma handleCambioIdioma={handleCambioIdioma} />}      
+
+      <TouchableOpacity style={STYLES.cambio_idioma} onPress={handleCambioIdioma}>
+        <Image source={renderFlagImage()} style={STYLES.bandera} />
+      </TouchableOpacity>
 
       <Text style={STYLES.escollir_usuari}>
           {getPalabra("choose_user")}

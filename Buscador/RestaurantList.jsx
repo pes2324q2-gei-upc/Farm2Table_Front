@@ -2,7 +2,7 @@ import React from 'react';
 import { FlatList, View, Text, Image } from 'react-native';
 import styles from '../styles/buscador.style';
 import { TouchableOpacity } from 'react-native'
-import Restaurante from '../screens/Restaurante';
+import Restaurante from '../Restaurants/Restaurante';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
@@ -16,7 +16,7 @@ const RestaurantList = ({ data, searchQuery }) => {
     // Define the default icon
     let icon = null;
     // Check if the name contains the specified keywords and set the appropriate icon
-    const lowerCaseName = item.name.toLowerCase();
+    const lowerCaseName = item.service.toLowerCase();
   
     if (lowerCaseName.includes('bar')) {
       icon = <MaterialIcons name="local-bar" size={35} color="black" />;
@@ -42,7 +42,7 @@ const RestaurantList = ({ data, searchQuery }) => {
             {/* Render the icon */}
             {icon}
             {/* Render the item's name */}
-            <Text style={styles.textName}>{item.name}</Text>
+            <Text style={styles.textName}>{item.service_name}</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -50,11 +50,17 @@ const RestaurantList = ({ data, searchQuery }) => {
   };
 
   return (
-    <FlatList
-      data={data.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()))}
-      keyExtractor={item => item._id}
-      renderItem={renderItem}
-    />
+    <>
+      {data.length === 0 ? (
+        <Text style={styles.emptyMessage}>No restaurants available</Text>
+      ) : (
+          <FlatList
+            data={data.filter(item => item.service_name.toLowerCase().includes(searchQuery.toLowerCase()))}
+            keyExtractor={item => item.id}
+            renderItem={renderItem}
+          />
+      )}
+    </>
   );
 };
 

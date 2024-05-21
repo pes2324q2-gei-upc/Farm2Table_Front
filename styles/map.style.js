@@ -81,7 +81,12 @@ const STYLES = StyleSheet.create({
       height: SIZES.height/100*5,
       alignSelf: 'center',
       alignItems: 'center'
-  }
+    },
+    loadingContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
   });
 
 export default STYLES;

@@ -3,17 +3,19 @@ import { View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
 import logo from '../assets/Farm2Table.png';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { SelectList } from 'react-native-dropdown-select-list';
-import { getPalabra } from '../informacion/User';
+import { getPalabra, renderFlagImage } from '../informacion/User';
 import { getTipusProductes } from '../informacion/Constants';
 import { useNavigation } from '@react-navigation/native';
 import { registerParticularService } from '../api_service/ApiRegistroParticular';
 import STYLES from '../styles/inici_registre.style';
+import SeleccioIdioma from '../components/seleccioIdioma';
 
 const Particular = () => {
   const [abast, setAbast] = useState("");
   const [error_message, setError] = useState('');
   const [favourite_prod, setFavourite] = useState("");
   const NAVIGATOR = useNavigation();
+  const [cambioIdioma, setCambioIdioma] = useState(false);
 
   const handleGoBack = () => {
     NAVIGATOR.goBack();
@@ -34,10 +36,20 @@ const Particular = () => {
 
   };
 
+  const handleCambioIdioma = () => {
+    setCambioIdioma(!cambioIdioma)
+  };
+
   return (
     <View style={STYLES.container}>
 
         <Image source={logo} style={STYLES.logo} />
+
+        { cambioIdioma && <SeleccioIdioma handleCambioIdioma={handleCambioIdioma} />}      
+
+        <TouchableOpacity style={STYLES.cambio_idioma} onPress={handleCambioIdioma}>
+            <Image source={renderFlagImage()} style={STYLES.bandera} />
+        </TouchableOpacity>
 
         <TouchableOpacity style={STYLES.flecha_posicion} onPress={handleGoBack}>
             <Icon  name="arrow-back" style={STYLES.flecha} />  

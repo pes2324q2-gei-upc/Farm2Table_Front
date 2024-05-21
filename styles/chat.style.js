@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
     containerIn: {
         backgroundColor: COLORS.primary,
         flex: 1,
+        marginBottom: 50,
     },
     chatItem: {
         flexDirection: 'row',
@@ -36,6 +37,22 @@ const styles = StyleSheet.create({
         fontSize: SIZES.medium,
         color: "#cbc0bb",
         marginTop: 6,
+    },
+    actionsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+    },
+    deleteButton: {
+        backgroundColor: COLORS.red,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 75,
+        height: '100%',
+    },
+    separator: {
+        height: 1,
+        backgroundColor: COLORS.black,
     },
 });
 
