@@ -23,7 +23,9 @@ const Chat = ({ navigation }) => {
         if (userId) {
             try {
                 const data = await fetchChats(userId);
-                setChats(data);
+                // Ordenar los chats por last_message.sent_date en orden descendente
+                const sortedData = data.sort((a, b) => new Date(b.last_message.sent_date) - new Date(a.last_message.sent_date));
+                setChats(sortedData);
                 if (scrollViewRef.current) {
                     scrollViewRef.current.scrollTo({ x: 0, y: 0, animated: true });
                 }
