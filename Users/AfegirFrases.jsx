@@ -5,16 +5,17 @@ import Header from '../navigation/header_back'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Alert, TextInput, TouchableOpacity } from 'react-native'
 import { COLORS, SIZES } from '../constants/theme'
+import {createWord, getMatchPhrase} from '../api_service/API_ServeiExtern'
 
 const AfegirFrases = () => {
     const route = useRoute();
     const {item} = route.params
     const navigation = useNavigation();
-    const [pairs, setPairs] = useState([{ keys: [], phrase: '' }]);
+    const [pairs, setPairs] = useState([{ keys: '', phrase: '' }]);
 
     const handleKeyChange = (index, value) => {
         const newPairs = [...pairs];
-        newPairs[index].key = value;
+        newPairs[index].keys = value;
         setPairs(newPairs);
       };
     
@@ -25,22 +26,28 @@ const AfegirFrases = () => {
       };
     
       const addPair = () => {
-        setPairs([...pairs, { key: '', phrase: '' }]);
+        setPairs([...pairs, { keys: '', phrase: '' }]);
       };
+
+      const handleAccepta = async () => {
+        const data = await createWord(pairs)
+        //return navigation.goBack()
+        return data
+      }
 
       return (
         <SafeAreaView >
             <Header />
             <View style={styles.container_bot}>
                 <View style={styles.headerRow_bot}>
-                <Text style={styles.headerCell_bot}>Key</Text>
+                <Text style={styles.headerCell_bot}>Claus (' , ' entre elles)</Text>
                 <Text style={styles.headerCell_bot}>Frase</Text>
                 </View>
                 {pairs.map((pair, index) => (
                 <View key={index} style={styles.row_bot}>
                     <TextInput
-                    placeholder='Key'
-                    value={pair.key}
+                    placeholder='Claus'
+                    value={pair.keys}
                     onChangeText={(text) => handleKeyChange(index, text)}
                     style={styles.input_bot}
                     />
@@ -52,12 +59,15 @@ const AfegirFrases = () => {
                     />
                 </View>
                 ))}
-                <Button title="Add Pair" onPress={addPair} />
+                <TouchableOpacity style={styles.button} onPress={addPair}>
+                    <Text style={styles.buttontext}>Afegir fila</Text>
+                </TouchableOpacity>
+                {/* <Button title="Add Pair" style={styles.button} onPress={addPair} /> */}
             </View>
 
             <View style ={styles.bottom}>
-                {/* <TouchableOpacity style={styles.button} onPress={handleAccepta}> este es el bueno */}
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={handleAccepta}> 
+                {/* <TouchableOpacity style={styles.button}> */}
                     <Text style={styles.buttontext}>Accepta</Text>
                 </TouchableOpacity>
             </View>
