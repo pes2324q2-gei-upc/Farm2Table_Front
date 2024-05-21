@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
     containerIn: {
         backgroundColor: COLORS.primary,
         flex: 1,
+        marginBottom: 50,
     },
     chatItem: {
         flexDirection: 'row',

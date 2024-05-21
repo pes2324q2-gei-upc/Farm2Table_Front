@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { SafeAreaView, Alert, ScrollView } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import Header from '../navigation/header';
@@ -10,6 +10,7 @@ import styles from "../styles/chat.style";
 const Chat = ({ navigation }) => {
     const [chats, setChats] = useState([]);
     const [userId, setUserId] = useState(null);
+    const scrollViewRef = useRef(null);
 
     useEffect(() => {
         const initUserId = fetchUserId();
@@ -23,6 +24,9 @@ const Chat = ({ navigation }) => {
             try {
                 const data = await fetchChats(userId);
                 setChats(data);
+                if (scrollViewRef.current) {
+                    scrollViewRef.current.scrollTo({ x: 0, y: 0, animated: true });
+                }
             } catch (error) {
                 Alert.alert('Error', getPalabra("errorChat"));
             }
@@ -80,7 +84,10 @@ const Chat = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
             <Header />
-            <ScrollView style={styles.containerIn}>
+            <ScrollView
+                style={styles.containerIn}
+                ref={scrollViewRef}
+            >
                 {chats.map((chat) => renderItem({ item: chat }))}
             </ScrollView>
         </SafeAreaView>
