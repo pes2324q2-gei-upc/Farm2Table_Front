@@ -2,12 +2,14 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image, FlatList } from "react-native";
 import { COLORS, SIZES } from "../constants/theme";
 
+const ProductList = ({ navigation, shopData }) => {
+    // Filter out any null or undefined items
+    const validShopData = shopData.filter(item => item && item.id);
 
-const ProductList = ({navigation, shopData }) => {
     return (
         <FlatList   
-            data={shopData}
-            keyExtractor={(item) => item.product.id.toString()} // Ensure each key is unique
+            data={validShopData}
+            keyExtractor={(item) => item.id.toString()} // Ensure each key is unique and a string
             renderItem={({ item }) => (
                 <View style={styles.lista}>
                     <TouchableOpacity>
@@ -16,8 +18,8 @@ const ProductList = ({navigation, shopData }) => {
                                 <Image source={{ uri: item.image }} style={styles.image} />
                             </View>
                             <View style={styles.infoProducto}>
-                                <Text style={styles.productName}>{item.product.type.name}</Text>
-                                <Text style={styles.productPrice}>{item.product.price} €/kg</Text>
+                                <Text style={styles.productName}>{item.name}</Text>
+                                <Text style={styles.productPrice}>{item.price} €/kg</Text>
                             </View>
                         </View>
                     </TouchableOpacity>
@@ -31,12 +33,12 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: COLORS.secondary,
         flex: 1, 
-        paddingTop: (SIZES.height/100) * 8, 
+        paddingTop: (SIZES.height / 100) * 8, 
     },
     container2: {
-        height: (SIZES.height/100)*64.5,
+        height: (SIZES.height / 100) * 64.5,
         backgroundColor: COLORS.primary,
-        width:'100%',
+        width: '100%',
     },
     buttonContainer: {
         flexDirection: 'row',
@@ -56,13 +58,15 @@ const styles = StyleSheet.create({
         fontSize: SIZES.xlarge
     },
     imageContainer: {
-        width: 100, 
-        height: 100,
+        width: 110, 
+        height: 110,
         borderRadius: 75,
         overflow: 'hidden', 
         borderWidth: 5, 
         borderColor: COLORS.tertiary, 
         position: 'absolute',
+        top: (SIZES.height / 100) * 0,
+        left: (SIZES.width / 100) * 5,
     },
     image_profile: {
         width: '100%',
@@ -73,7 +77,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        height: (SIZES.height/100) * 14,
+        height: (SIZES.height / 100) * 14,
     },
     info: {
         position: 'absolute',
@@ -84,17 +88,17 @@ const styles = StyleSheet.create({
     },
     ajustes: {
         position: 'absolute',
-        right:(SIZES.width/100) * 7,
-        top: (SIZES.height/100) * -1,
+        right: (SIZES.width / 100) * 7,
+        top: (SIZES.height / 100) * -1,
         width: '10%',
         height: '35%',
         backgroundColor: 'transparent',
     },
     nombre: {
         color: 'white',
-        fontSize:  (SIZES.height/100) * 2,
+        fontSize: (SIZES.height / 100) * 2,
         fontWeight: 'bold',
-        paddingBottom:  (SIZES.height/100) * 1,
+        paddingBottom: (SIZES.height / 100) * 1,
     },
     locationInfo: {
         flexDirection: 'row',
@@ -102,22 +106,22 @@ const styles = StyleSheet.create({
     },
     locationText: {
         color: 'white',
-        fontSize:  (SIZES.height/100) * 2, 
+        fontSize: (SIZES.height / 100) * 2, 
         marginLeft: 1,
     },
-    width:{
+    width: {
         width: SIZES.width - 20,
     },
-    lista:{
+    lista: {
         marginTop: 12,
-        width:(SIZES.width/100)*100,
-        height: (SIZES.height/100)*20,  
+        width: (SIZES.width / 100) * 100,
+        height: (SIZES.height / 100) * 20,  
         justifyContent: 'center',
         alignItems: 'center',
     },
     image: {
-        width: 135, 
-        height: 135,
+        width: '100%', 
+        height: '80%',
         resizeMode: 'contain',
         position: 'absolute', 
     },
@@ -153,10 +157,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10
     },
     vista_imagen: {
-        width: '75px',
+        width: '100%',
         height: '75%',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
 });
 

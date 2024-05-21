@@ -29,3 +29,18 @@ export const fetchUser = async (userId) => {
         throw error;
     }
 }
+
+export const fetchProducts = async (userId) => {
+    try {
+        console.log(userId);
+        console.log(`${API_URL}/users/productor/${userId}/products`);
+        const response = await fetch(`${API_URL}/users/productor/${userId}/products`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch products');
+        }
+        const json = await response.json();
+        return json.data;
+    } catch (error) {
+        throw error;
+    }
+}

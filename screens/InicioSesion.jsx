@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Image, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Image, TouchableOpacity, SafeAreaView } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import logo from '../assets/Farm2Table.png';
 import google from '../assets/Google.png';
@@ -53,7 +53,7 @@ const InicioSesion = () => {
   };
 
   return (
-    <View style={STYLES.container}>
+    <SafeAreaView style={STYLES.container}>
 
       <Image source={logo} style={STYLES.logo} />
 
@@ -108,7 +108,7 @@ const InicioSesion = () => {
         </TouchableOpacity>
       </View>
 
-    </View>
+    </SafeAreaView>
   );
 
 };

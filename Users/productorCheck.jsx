@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from "react";
+import React, {useState, useCallback, useEffect} from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet, SafeAreaView } from "react-native";
 
 import { useFocusEffect } from "@react-navigation/native";
@@ -6,41 +6,41 @@ import { useFocusEffect } from "@react-navigation/native";
 import { getPalabra } from "../informacion/User";
 
 import styles from "../styles/consultarUsuario.style";
-import { fetchData } from '../api_service/ApiConsultar_Usuario';
+import { fetchProducts } from '../api_service/ApiConsultar_Usuario';
 
 import ProductList from "./ProductList";
 
 import Favoritos from "./Favoritos";
 import UserProfile from "./userInfo";
 
-import { getIP } from "../informacion/Constants";
 import { userId } from "../informacion/User";
 
 
-const API_URL = `http://${getIP()}`;
+
 
 
 
 const ProductorCheck = ({ navigation, userData }) => {
-    const [activeTab, setActiveTab] = useState('Productos');
+    const [activeTab, setActiveTab] = useState('Datos');
     const [shopData, setShopData] = useState([]);
     const [activeUser, setActiveUser] = useState(userId());
+    const [productorId, setProductorId] = useState(userData.id)
 
     const onPress = (tabName) => {
         setActiveTab(tabName);
     };
 
-    useFocusEffect(
-        useCallback(() => {
-            fetchData(API_URL + "/users/productor/" + userData.id + "/products")
-                .then(data => {
-                    setShopData(data);
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                });
-        }, [userData])
-    );
+    useEffect(() => {
+        const productsLoad = async () => {
+            try {
+                const data = await fetchProducts(productorId);
+                setShopData(data);
+            } catch (error) {
+                console.error("Failed to fetch products: ", error);
+            }
+        }
+        productsLoad();
+    }, [productorId]);
 
 
 

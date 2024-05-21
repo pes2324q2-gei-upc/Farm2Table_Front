@@ -39,6 +39,8 @@ export const addFavourite = async (userId, favType, userType, favId) => {
             bodyJson = { type_id: favId };
         }
 
+        console.log("URL: ", `${API_URL}/users/${userType}/favourite/${favType}/${userId}/add`);
+        console.log("BODY", bodyJson);
         const response = await fetch(`${API_URL}/users/${userType}/favourite/${favType}/${userId}/add`, {
             method: "POST",
             headers: {

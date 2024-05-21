@@ -1,40 +1,59 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, ScrollView, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ActivityIndicator, SafeAreaView, StyleSheet } from 'react-native';
 import { COLORS, SIZES } from '../constants/theme';
 import Header from '../navigation/header_back';
 import { Ionicons } from '@expo/vector-icons';
 import { fetchUser } from '../api_service/ApiConsultar_Usuario';
 import { userId, getPalabra, userType } from '../informacion/User';
+import { addFavourite } from '../api_service/APIFavoritos';
 
 import ConsumerCheck from './consumerCheck';
 import ProductorCheck from './productorCheck';
 import MinoristaCheck from './minoristaCheck';
 
-
 const ProfileScreen = ({ navigation, route }) => {
+    const { idUser: routeIdUser, typeUser: routeTypeUser } = route.params;
 
-    const { idUser, typeUser } = route.params;
+    const [userData, setUserData] = useState(null);  // Initialize as null
+    const [activeUser, setActiveUser] = useState(userId());
+    const [loading, setLoading] = useState(true);
 
 
-    const [userData, setUserData] = useState([]);
-
-    if (typeUser === undefined) {
-        typeUser = userType();
-    }
-
+    const handleAddFavourite = async () => {
+        try {
+          const tipo = userType().toLowerCase() + 's';
+          const type = routeTypeUser.toLowerCase() + 's';
+          console.log("favType", tipo, "userType", type)
+          const response = await addFavourite(activeUser, type, tipo, routeIdUser);
+        } catch (error) {
+          console.error("Failed to add favourite:", error);
+        }
+      };
 
     useEffect(() => {
         const userLoad = async () => {
-            const user = idUser ? idUser : userId();
             try {
-                const data = await fetchUser(user);
+                const data = await fetchUser(routeIdUser);
+                console.log(data);
                 setUserData(data);
+                setLoading(false);
+
             } catch (error) {
-                console.error("Failed to fetch user data: ", error);
+                console.error("Failed to fetch user data:", error);
+                setLoading(false);
             }
         };
         userLoad();
-    });
+    }, [routeIdUser]);
+
+    if (loading) {
+        return (
+            <View style={styles.loadingContainer}>
+                <ActivityIndicator size="large" color={COLORS.secondary} />
+                <Text>Loading...</Text>
+            </View>
+        );
+    }
 
     return (
         <SafeAreaView style={styles.safecontainer}>
@@ -42,7 +61,7 @@ const ProfileScreen = ({ navigation, route }) => {
             <View style={{ flex: 1, backgroundColor: COLORS.secondary }}>
                 <View style={styles.profileContainer}>
                     {userData.avatar ? (
-                        <Image source={userData.avatar} style={styles.avatar} />
+                        <Image source={{ uri: userData.avatar }} style={styles.avatar} />
                     ) : null}
                     <Text style={styles.usernameLarge}>{userData.username}</Text>
                     {userData.telephone && (
@@ -51,15 +70,19 @@ const ProfileScreen = ({ navigation, route }) => {
                             <Text style={styles.telephone}>{userData.telephone}</Text>
                         </View>
                     )}
+                    {activeUser !== routeIdUser && (
+                        <TouchableOpacity style={styles.addButton} onPress={handleAddFavourite}>
+                            <Text style={styles.buttonFavouriteText}>{getPalabra("Add_favorite")}</Text>
+                        </TouchableOpacity>
+                    )}
                 </View>
-                {typeUser === 'Consumer' ? (
+                {routeTypeUser === 'Consumer' ? (
                     <ConsumerCheck navigation={navigation} userData={userData} />
-                ) : typeUser === 'Productor' ? (
+                ) : routeTypeUser === 'Productor' ? (
                     <ProductorCheck navigation={navigation} userData={userData} />
-                ) : typeUser === 'Minorista' ? (
+                ) : routeTypeUser === 'Minorista' ? (
                     <MinoristaCheck navigation={navigation} userData={userData} />
-                )
-                : null}
+                ) : null}
             </View>
         </SafeAreaView>
     );
@@ -80,6 +103,17 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         borderWidth: 5,
         borderColor: COLORS.tertiary,
+    },
+    addButton: {
+        backgroundColor: COLORS.secondary,
+        padding: 10,
+        marginVertical: 10,
+        borderRadius: 5,
+    },
+    buttonFavouriteText: {
+        color: 'white',
+        fontSize: 20,
+        fontWeight: 'bold',
     },
     usernameLarge: {
         fontSize: 24,
@@ -133,8 +167,12 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: 'bold',
     },
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: COLORS.secondary,
+    },
 });
 
 export default ProfileScreen;
-
-
