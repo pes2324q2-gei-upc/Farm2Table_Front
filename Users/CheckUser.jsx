@@ -23,7 +23,6 @@ const ProfileScreen = ({ navigation, route }) => {
         try {
           const tipo = userType().toLowerCase() + 's';
           const type = routeTypeUser.toLowerCase() + 's';
-          console.log("favType", tipo, "userType", type)
           const response = await addFavourite(activeUser, type, tipo, routeIdUser);
         } catch (error) {
           console.error("Failed to add favourite:", error);

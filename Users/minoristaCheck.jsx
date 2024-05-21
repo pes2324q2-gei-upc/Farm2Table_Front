@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from "react";
+import React, {useState, useEffect} from "react";
 import { View, Text, Image, TouchableOpacity, ScrollView, SafeAreaView } from "react-native";
 
 import { useFocusEffect } from "@react-navigation/native";
@@ -32,18 +32,18 @@ const MinoristaCheck = ({ navigation, userData }) => {
         setActiveTab(tabName);
     };
 
-
-    const handleProducts = async () => {
-        try {
-            console.log("llega a consultar");
-            console.log(API_URL + "/users/" + userData.id + "/bought");
-            const data = await fetchUserBoughtProducts(userData.id);
-            setShopData(data);
-            onPress('Productos');
-        } catch (error) {
-            console.error('Error fetching data:', error);
+    useEffect(() => {
+        const productsLoad = async () => {
+            try {
+                const data = await fetchUserBoughtProducts(userData.id);
+                console.log(data);
+                setShopData(data);
+            } catch (error) {
+                console.error("Failed to fetch products: ", error);
+            }
         }
-    };
+        productsLoad();
+    }, [userData.id]);
 
     return (
         <View style={{ flex: 1 }}>
@@ -55,7 +55,7 @@ const MinoristaCheck = ({ navigation, userData }) => {
                 >
                     <TouchableOpacity
                         style={[styles.button, { borderColor: activeTab === 'Productos' ? 'orange' : '#1e4d2b' }]}
-                        onPress={handleProducts}
+                        onPress={() => onPress('Productos')}
                     >
                         <Text style={[styles.buttonText, { color: activeTab === 'Productos' ? 'orange' : 'white' }]}>
                             {getPalabra("Products")}
