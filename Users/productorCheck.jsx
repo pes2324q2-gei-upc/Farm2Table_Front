@@ -32,8 +32,6 @@ const ProductorCheck = ({ navigation, userData }) => {
 
     useFocusEffect(
         useCallback(() => {
-            console.log("llega a consultar");
-            console.log(API_URL + "/users/productor/" + userData.id + "/products");
             fetchData(API_URL + "/users/productor/" + userData.id + "/products")
                 .then(data => {
                     setShopData(data);
@@ -83,23 +81,18 @@ const ProductorCheck = ({ navigation, userData }) => {
                 </View>
             )}
 
-            {activeTab === 'Datos' && userData.id === activeUser && (
+            {activeTab === 'Datos' && (
                 <View style={styles.tabContent}>
                     <UserProfile
-                        username={userData.username}
-                        telephone={userData.telephone}
-                        avatar={userData.avatar}
-                        description={userData.description}
-                        reach={userData.reach}
-                        user={userData}
                         navigation={navigation}
+                        idUser={userData.id}
                     />
                 </View>
             )}
 
             {activeTab === 'Favoritos' && (
                 <View style={styles.tabContent}>
-                    <Favoritos userId={userData.id} userType="Productor" navigation={navigation} />
+                    <Favoritos userId={userData.id} userType="Productors" navigation={navigation} />
                 </View>
             )}
         </View>

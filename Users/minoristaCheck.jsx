@@ -33,13 +33,11 @@ const MinoristaCheck = ({ navigation, userData }) => {
     };
 
 
-
     const handleProducts = async () => {
         try {
             console.log("llega a consultar");
             console.log(API_URL + "/users/" + userData.id + "/bought");
             const data = await fetchUserBoughtProducts(userData.id);
-            console.log(data.undefined);
             setShopData(data);
             onPress('Productos');
         } catch (error) {
@@ -105,23 +103,18 @@ const MinoristaCheck = ({ navigation, userData }) => {
                 </View>
             )}
 
-            {activeTab === 'Datos' && userData.id === activeUser && (
+            {activeTab === 'Datos'  && (
                 <View style={styles.tabContent}>
                     <UserProfile
-                        username={userData.username}
-                        telephone={userData.telephone}
-                        avatar={userData.avatar}
-                        description={userData.description}
-                        reach={userData.reach}
-                        user={userData}
                         navigation={navigation}
+                        idUser={userData.id}
                     />
                 </View>
             )}
 
             {activeTab === 'Favoritos' && (
                 <View style={styles.tabContent}>
-                    <Favoritos userId={userData.id} userType="Minorista" navigation={navigation} />
+                    <Favoritos userId={userData.id} userType="Minoristas" navigation={navigation} />
                 </View>
             )}
         </View>

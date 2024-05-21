@@ -8,6 +8,8 @@ const API_URL = `http://${getIP()}`;
 
 export const getFavourites = async (userId, favType, userType) => {
     try {
+        console.log("Fetching favourites");
+        console.log(`${API_URL}/users/${userType}/favourite/${favType}/${userId}`)
         const url = `${API_URL}/users/${userType}/favourite/${favType}/${userId}`;
         console.log(url);
         const response = await fetch(url);

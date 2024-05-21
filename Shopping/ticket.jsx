@@ -5,7 +5,7 @@ import HeaderHome from '../navigation/header_backHome';
 import ConfirmModal from '../PopUps/endPurchase';
 import AddFundsModal from '../PopUps/insufficientFunds';
 import OutOfStockModal from '../PopUps/outOfStock';
-import { userId } from '../informacion/User';
+import { userId, getPalabra } from '../informacion/User';
 import { loadCart, removeStoreFromCart } from '../informacion/cartInfo';
 import styles from '../styles/ticket.styles'; // Adjust the import path as needed
 import { fetchUserFunds, fetchProductStock, buyProduct, processPurchase } from '../api_service/API_Cart';
@@ -103,9 +103,9 @@ const Ticket = ({ navigation, route }) => {
 
                     <Text>------------------------------------------------</Text>
                     <View style={styles.tableHeader}>
-                        <Text style={styles.producteHeader}>Producte</Text>
-                        <Text style={styles.headerText}>Quantitat</Text>
-                        <Text style={styles.headerText}>Preu</Text>
+                    <Text style={styles.producteHeader}>{getPalabra('product')}</Text>
+                        <Text style={styles.headerText}>{getPalabra('quantity')}</Text>
+                        <Text style={styles.headerText}>{getPalabra('price')}</Text>
                     </View>
                     <Text>------------------------------------------------</Text>
                     {items.map((item, index) => (

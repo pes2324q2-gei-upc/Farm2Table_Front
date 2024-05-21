@@ -8,6 +8,7 @@ import { COLORS, SIZES } from "../constants/theme";
 import { submitPerfil } from "../api_service/ApiEditarPerfil";
 
 import Header from "../navigation/header_back";
+import styles from "../styles/editProfile.style";
 
 const EditProfile = ({ route, navigation }) => {
     const userData = route.params.userData
@@ -101,161 +102,79 @@ const EditProfile = ({ route, navigation }) => {
                     <Image source={{ uri: profileImage }} style={styles.avatar} />
                 ) : (
                     <TouchableOpacity onPress={pickImage} style={styles.avatarPlaceholder}>
-                        <Text style={styles.avatarPlaceholderText}>Add Photo</Text>
+                        <Text style={styles.avatarPlaceholderText}>{getPalabra("add_Photo")}</Text>
                     </TouchableOpacity>
                 )}
                 <TouchableOpacity onPress={pickImage} style={styles.editButton}>
-                    <Text style={styles.editButtonText}>Edit Photo</Text>
+                    <Text style={styles.editButtonText}>{getPalabra("edit_photo")}</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.fieldContainer}>
-                <Text style={styles.label}>Username</Text>
+                <Text style={styles.label}>{getPalabra("username")}</Text>
                 <TextInput
                     style={styles.input}
                     value={username}
                     onChangeText={setUsername}
-                    placeholder="Enter your username"
+                    placeholder={getPalabra("placeholder_username")}
                 />
             </View>
             <View style={styles.fieldContainer}>
-                <Text style={styles.label}>Description</Text>
+                <Text style={styles.label}>{getPalabra("description")}</Text>
                 <TextInput
                     style={styles.input}
                     value={description}
                     onChangeText={setDescription}
-                    placeholder="Enter a short description"
+                    placeholder={getPalabra("placeholder_description")}
                 />
             </View>
             <View style={styles.fieldContainer}>
-                <Text style={styles.label}>About Me</Text>
+                <Text style={styles.label}>{getPalabra("About_me")}</Text>
                 <TextInput
                     style={styles.input}
                     value={aboutMe}
                     onChangeText={setAboutMe}
-                    placeholder="Tell something about yourself"
+                    placeholder={getPalabra("placeholder_about_me")}
                 />
             </View>
             <View style={styles.fieldContainer}>
-                <Text style={styles.label}>Phone</Text>
+                <Text style={styles.label}>{getPalabra("phone")}</Text>
                 <TextInput
                     style={styles.input}
                     value={phone}
                     onChangeText={setPhone}
-                    placeholder="Enter your phone number"
+                    placeholder={getPalabra("placeholder_phone")}
                     keyboardType="phone-pad"
                 />
             </View>
             <View style={styles.fieldContainer}>
-                <Text style={styles.label}>Reach</Text>
+                <Text style={styles.label}>{getPalabra("Reached")}</Text>
                 <TextInput
                     style={styles.input}
                     value={reach}
                     onChangeText={setReach}
-                    placeholder="Enter your reach"
+                    placeholder={getPalabra("placeholder_reached")}
                 />
             </View>
             <View style={styles.fieldContainer}>
-                <Text style={styles.label}>Address</Text>
+                <Text style={styles.label}>{getPalabra("Address")}</Text>
                 <TextInput
                     style={styles.input}
                     value={address}
                     onChangeText={setAddress}
-                    placeholder="Enter your address"
+                    placeholder={getPalabra("placeholder_address")}
                 />
             </View>
             <View style={styles.buttonsContainer}>
                 <TouchableOpacity onPress={resetFields} style={styles.button}>
-                    <Text style={styles.buttonText}>Reset</Text>
+                    <Text style={styles.buttonText}>{getPalabra("Reset")}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.button} onPress={handleSave}>
-                    <Text style={styles.buttonText}>Save</Text>
+                    <Text style={styles.buttonText}>{getPalabra("save")}</Text>
                 </TouchableOpacity>
             </View>
         </ScrollView>
         </SafeAreaView>
     );
 };
-
-const styles = StyleSheet.create({
-    outercontainer: {
-        flex: 1,
-        backgroundColor: COLORS.secondary,
-    },
-    container: {
-        flex: 1,
-        backgroundColor: COLORS.primary,
-        padding: 10,
-    },
-    profileContainer: {
-        alignItems: 'center',
-    },
-    avatar: {
-        width: 125,
-        height: 125,
-        borderRadius: 30,
-        borderWidth: 5,
-        borderColor: COLORS.tertiary,
-    },
-    avatarPlaceholder: {
-        width: 125,
-        height: 124,
-        borderRadius: 30,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: COLORS.tertiary,
-    },
-    avatarPlaceholderText: {
-        color: COLORS.primary,
-        fontSize: 16,
-    },
-    editButton: {
-        marginTop: 10,
-        paddingVertical: 5,
-        paddingHorizontal: 10,
-        borderWidth: 1,
-        borderColor: COLORS.primary,
-        borderRadius: 5,
-    },
-    editButtonText: {
-        color: COLORS.primary,
-        fontSize: 14,
-    },
-    fieldContainer: {
-        marginTop: 10,
-        paddingHorizontal: 20,
-    },
-    label: {
-        color: COLORS.secondary,
-        fontWeight: 'bold',
-        fontSize: 16,
-        marginBottom: 5,
-    },
-    input: {
-        backgroundColor: COLORS.primary,
-        borderRadius: 5,
-        padding: 10,
-        fontSize: 16,
-        borderWidth: 1,
-        borderColor: COLORS.tertiary,
-        color: COLORS.secondary,
-    },
-    buttonsContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        margin: 20,
-    },
-    button: {
-        backgroundColor: COLORS.tertiary,
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderRadius: 5,
-        borderWidth: 1,
-        borderColor: COLORS.tertiary,
-    },
-    buttonText: {
-        color: 'white',
-        fontSize: 16,
-    },
-});
 
 export default EditProfile;

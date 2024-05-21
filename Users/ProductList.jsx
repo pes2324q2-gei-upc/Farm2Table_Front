@@ -7,17 +7,17 @@ const ProductList = ({navigation, shopData }) => {
     return (
         <FlatList   
             data={shopData}
-            keyExtractor={(item) => item.id}
-            renderItem={({item}) => (     
+            keyExtractor={(item) => item.product.id.toString()} // Ensure each key is unique
+            renderItem={({ item }) => (
                 <View style={styles.lista}>
                     <TouchableOpacity>
                         <View style={styles.capsule}>
                             <View style={styles.vista_imagen}>
-                                <Image source = {{uri: item.image}} style={styles.image} />
+                                <Image source={{ uri: item.image }} style={styles.image} />
                             </View>
                             <View style={styles.infoProducto}>
-                            <Text style={styles.productName}>{item.name}</Text>
-                            <Text style={styles.productPrice}>{item.price} €/kg</Text>
+                                <Text style={styles.productName}>{item.product.type.name}</Text>
+                                <Text style={styles.productPrice}>{item.product.price} €/kg</Text>
                             </View>
                         </View>
                     </TouchableOpacity>
@@ -56,15 +56,13 @@ const styles = StyleSheet.create({
         fontSize: SIZES.xlarge
     },
     imageContainer: {
-        width: 110, 
-        height: 110,
+        width: 100, 
+        height: 100,
         borderRadius: 75,
         overflow: 'hidden', 
         borderWidth: 5, 
         borderColor: COLORS.tertiary, 
         position: 'absolute',
-        top: (SIZES.height/100) * 0,
-        left:(SIZES.width/100) * 5,
     },
     image_profile: {
         width: '100%',
@@ -118,8 +116,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     image: {
-        width: '100%', 
-        height: '100%',
+        width: 135, 
+        height: 135,
         resizeMode: 'contain',
         position: 'absolute', 
     },
@@ -155,7 +153,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10
     },
     vista_imagen: {
-        width: '100%',
+        width: '75px',
         height: '75%',
         alignItems: 'center',
         justifyContent: 'center'

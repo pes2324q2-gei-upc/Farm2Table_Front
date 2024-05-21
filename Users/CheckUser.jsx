@@ -11,7 +11,11 @@ import ProductorCheck from './productorCheck';
 import MinoristaCheck from './minoristaCheck';
 
 
-const ProfileScreen = ({ navigation, idUser, typeUser}) => {
+const ProfileScreen = ({ navigation, route }) => {
+
+    const { idUser, typeUser } = route.params;
+
+
     const [userData, setUserData] = useState([]);
 
     if (typeUser === undefined) {

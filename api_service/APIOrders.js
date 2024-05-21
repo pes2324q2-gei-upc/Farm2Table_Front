@@ -63,15 +63,15 @@ const groupOrdersBySellerAndTime = (data) => {
     return groupedData;
 };
 
-export const fetchUserBoughtProducts = async(userId) => {
+export const fetchUserBoughtProducts = async (userId) => {
     try {
         const response = await fetch(`${API_URL}/users/${userId}/bought`);
         const data = await response.json();
         console.log(data);
         if (response.ok) {
-            const groupedData = groupOrdersByProduct(data.data);
-            console.log(groupedData);
-            return groupedData;
+            const latestPurchases = getLatestPurchases(data.data);
+            console.log('latestPurchases: ', latestPurchases);
+            return latestPurchases;
         } else {
             throw new Error(data.message);
         }
@@ -79,36 +79,22 @@ export const fetchUserBoughtProducts = async(userId) => {
         console.error("Failed to fetch user bought products: ", error);
         throw error;
     }
-}
+};
 
-const groupOrdersByProduct = (data) => {
+const getLatestPurchases = (data) => {
     const parseDate = (dateStr) => new Date(dateStr);
-    const groupedData = {};
+    const latestPurchases = {};
+
     data.forEach((item) => {
-        const productId = item.product_id;
+        const productId = item.product.id;
         const boughtAt = parseDate(item.bought_at);
-        if (!groupedData[productId]) {
-            groupedData[productId] = [];
-        }
-        let groupFound = false;
-        for (const group of groupedData[productId]) {
-            if (group[0].user_id === item.user_id) {
-                group.push({ ...item, bought_at: boughtAt });
-                groupFound = true;
-                break;
-            }
-        }
-        if (!groupFound) {
-            groupedData[productId].push([{ ...item, bought_at: boughtAt }]);
+
+        if (!latestPurchases[productId] || boughtAt > parseDate(latestPurchases[productId].bought_at)) {
+            latestPurchases[productId] = { ...item, bought_at: boughtAt };
         }
     });
-    // Ordenar los grupos por la fecha más reciente
-    for (const productId in groupedData) {
-        groupedData[productId].sort((a, b) => {
-            const dateA = new Date(a[0].bought_at);
-            const dateB = new Date(b[0].bought_at);
-            return dateB - dateA;
-        });
-    }
-    return groupedData;
-}
+
+    // Convert object to array sorted by the latest purchase date
+    const sortedLatestPurchases = Object.values(latestPurchases).sort((a, b) => b.bought_at - a.bought_at);
+    return sortedLatestPurchases;
+};

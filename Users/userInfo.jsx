@@ -6,11 +6,14 @@ import { COLORS, SIZES } from '../constants/theme'; // Asegúrate de que la ruta
 
 import { fetchUser } from '../api_service/ApiConsultar_Usuario';
 import { userId } from '../informacion/User';
+import { getPalabra } from '../informacion/User';
 
 
-const UserProfile = ({navigation, idUser }) => {
+const UserProfile = ({navigation, idUser}) => {
 
     const [userData, setUserData] = useState([]);
+    const [activeUser, setActiveUser] = useState(userId());
+
 
     useEffect(() => {
         const userLoad = async () => {
@@ -45,11 +48,13 @@ const UserProfile = ({navigation, idUser }) => {
                     <Text style={styles.reach}>Alcance: {userData.reach} km</Text>
                 )}
             </View>
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.boton} onPress={() => navigation.navigate('EditProfile', {userData, navigation})}>
-                    <Text style={styles.botonEditar}>Editar Perfil</Text>
-                </TouchableOpacity>
-            </View>
+            {activeUser === idUser && (
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity style={styles.boton} onPress={() => navigation.navigate('EditProfile', {userData, navigation})}>
+                        <Text style={styles.botonEditar}>{getPalabra("edit_profile")}</Text>
+                    </TouchableOpacity>
+                </View>
+            )}
         </View>
     );
 };
