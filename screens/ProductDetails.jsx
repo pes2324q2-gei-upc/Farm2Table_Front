@@ -111,7 +111,7 @@ const ProductDetails = ({ navigation, route }) => {
     console.log('Cart Items:', cart);
     const updatedCart = addProductToCart(cart, product.productor_info.id, newCartItem, product.productor_info.username, product.productor_info.avatar);
     console.log('Updated cart:', updatedCart);
-    await saveCart(userId(), updatedCart); // Asumiendo que saveCart maneja el guardado en AsyncStorage o similar
+    await saveCart(userId(), updatedCart);
   }
   return (
     <SafeAreaView style={styles.container}>
@@ -161,7 +161,9 @@ const ProductDetails = ({ navigation, route }) => {
               </View>
 
               <View style={styles.button_bottom_row}>
-                <OpenChat onPress={handleOpenChatPress} />
+                {user !== product.productor_info.id && (
+                    <OpenChat onPress={handleOpenChatPress} />
+                )}
                 <TouchableOpacity style={styles.buttonLove} onPress={handleAddFavourite}>
                   <Text style={styles.button_text}>Add Favourite</Text>
                   <Ionicons name="heart" size={20} color={COLORS.primary} />
