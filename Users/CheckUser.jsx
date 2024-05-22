@@ -11,10 +11,9 @@ import ProductorCheck from './productorCheck';
 import MinoristaCheck from './minoristaCheck';
 
 
-const CheckUser = ({ navigation, route }) => {
+const ProfileScreen = ({ navigation, route }) => {
 
-    const idUser = userId();
-    const typeUser = userType();
+    const { idUser, typeUser } = route.params;
 
 
     const [userData, setUserData] = useState([]);
@@ -136,6 +135,6 @@ const styles = StyleSheet.create({
     },
 });
 
-export default CheckUser;
+export default ProfileScreen;
 
 

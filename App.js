@@ -39,7 +39,7 @@ function DrawerNavigator() {
       },
     }}>
       <Drawer.Screen name="Home" component={Footer} options={{ headerShown: false }} />
-      <Drawer.Screen name="Perfil" component={CheckUser} options={{ headerShown: false }} />
+      {/*<Drawer.Screen name="Perfil" component={CheckUser} options={{ headerShown: false }} />*/}
     </Drawer.Navigator>
   );
 }
