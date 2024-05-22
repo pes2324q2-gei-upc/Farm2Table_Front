@@ -7,15 +7,15 @@ import { SIZES, COLORS } from '../constants/theme';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '../navigation/header_back';
 import { submitRating, submitComment } from '../api_service/APIValorar';
-
+import { getPalabra } from '../informacion/User';
 const Valorar = ({ route, navigation }) => {
-    const { restaurantId, nomRestaurant} = route.params;
+    const { restaurantId, nomRestaurant, tipus} = route.params;
     const [comment, setComment] = useState('');
     const [rating, setRating] = useState(1); // Default rating is 2
     const handleCommentSubmit = () => {
         console.log(rating)
-        submitComment(restaurantId, comment);
-        submitRating(restaurantId, rating);
+        submitComment(restaurantId, comment, tipus);
+        submitRating(restaurantId, rating, tipus);
     };
     const handleRatingCompleted = (rating) => {
       setRating(rating);
@@ -27,7 +27,7 @@ const Valorar = ({ route, navigation }) => {
         <SafeAreaView style={styles.containerIn}>
             <Text style={styles.nameRest}>{nomRestaurant}</Text>
             <View style={styles.v1}>
-            <Text style={styles.title}>Rating</Text>
+            <Text style={styles.title}>{getPalabra("rating")}</Text>
             </View>
             <Rating
               type='custom'
@@ -43,17 +43,17 @@ const Valorar = ({ route, navigation }) => {
               tintColor ={COLORS.primary}
             />
             <View style={styles.v1}>
-            <Text style={styles.title}>Comentari</Text>
+            <Text style={styles.title}>{getPalabra("Comment")}</Text>
             </View>
             <TextInput
                 style={styles.input}
-                placeholder="Write your comment"
+                placeholder={getPalabra("write_your_comment")}
                 placeholderTextColor={'black'}
                 value={comment}
                 onChangeText={setComment}
             />
             <TouchableOpacity onPress={handleCommentSubmit} style={styles.button2}>
-              <Text style={styles.buttontext2}>Submit</Text>
+              <Text style={styles.buttontext2}>{getPalabra("submit")}</Text>
             </TouchableOpacity>
         </SafeAreaView>
     </SafeAreaView>

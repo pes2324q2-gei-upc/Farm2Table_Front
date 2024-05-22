@@ -115,6 +115,10 @@
     "products": "Productos",
     "search_by_name": "Busca por nombre",
     "no_markets": "No hay mercados disponibles",
+    "submit": "Envía",
+    "rating": "Nota",
+    "comment": "Comentario",
+    "write_your_comment": "Escribe tu comentario",
     "type_message": "Escribe un mensaje",
     "confirmeliminar": "Confirmar eliminación",
     "segeliminar": "¿Estás seguro de que deseas eliminar este chat?"

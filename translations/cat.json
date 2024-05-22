@@ -115,6 +115,10 @@
     "farmers": "Pagesos",
     "search_by_name": "Busca per nom",
     "no_markets": "No hi han mercats disponibles",
+    "submit": "Envia",
+    "rating": "Nota",
+    "comment": "Comentari",
+    "write_your_comment": "Escriu el teu comentari",
     "type_message": "Escriu un missatge",
     "confirmeliminar": "Confirmar eliminació",
     "segeliminar": "Estàs segur que vols eliminar aquest xat?"

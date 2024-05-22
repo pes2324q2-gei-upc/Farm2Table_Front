@@ -4,20 +4,23 @@ import {COLORS, SIZES, URL} from "../constants/theme";
 import { AntDesign} from '@expo/vector-icons';
 import { useRoute, useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Foundation } from '@expo/vector-icons';
-import { fetchData } from '../api_service/ApiConsultar_Usuario';
+import { fetchData, fetchProductorComments } from '../api_service/ApiConsultar_Usuario';
 import { userId, email } from '../informacion/User';
+import ProductList from './ProductList';
+import ValoracionsComponent from '../Restaurants/ValoracionsComponent';
+import Valorar from '../Restaurants/Valorar';
 const API_ENDPOINT = "http://"+URL+"/users/productor/";
 
 const Consultar_Usuario = () => {
-    const [activeButton, setActiveButton] = useState('Productes');
+    const [activeButton, setActiveButton] = useState('Ubicació');
     const [shopData, setShopData] = useState([]);
+    const[comments, setComments] = useState([]);
     const navigation = useNavigation();
     const route = useRoute();
 
     const { item } = route.params;
     useFocusEffect(
         useCallback(() => {
-            console.log("llega a consultar");
             fetchData(API_ENDPOINT + item.id + "/products")
                 .then(data => {
                     setShopData(data);
@@ -25,7 +28,17 @@ const Consultar_Usuario = () => {
                 .catch(error => {
                     console.error('Error fetching data:', error);
                 });
-            console.log(item.avatar)
+            console.log("buenas");
+            fetchProductorComments(item.id)
+            .then(data => {
+                setComments(data);
+                console.log("hola");
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+            //console.log(comments);
+            console.log(shopData)
             const v = userId();
             console.log(v);
         }, [item])
@@ -38,16 +51,26 @@ const Consultar_Usuario = () => {
     }
 
     const goToEditarPerfil = () => {
-        const v = userId();
-        if(v === item.id) {
-            navigation.navigate('EditarPerfil', {item});
-        }
+            navigation.navigate("Valorar",  { restaurantId: item.id, nomRestaurant: item.username, tipus: "productor"} )
     };
     
     const isButtonActive = (buttonName) => {
         return buttonName === activeButton;
     }
     
+    const renderContent = () => {
+        switch (activeButton) {
+            case 'Productes':
+                return  <ProductList navigation={navigation} shopData={shopData} />;
+            case 'Ubicació':
+                return <Text>HOLA</Text>;
+            case 'Sobre mí':
+                return <ValoracionsComponent comments={comments} />;
+            default:
+                return null;
+        }
+    };
+
     const buttonWidth = Dimensions.get('window').width / 3;
 
     return (
@@ -116,7 +139,7 @@ const Consultar_Usuario = () => {
                 )}
                 {isButtonActive('Sobre mí') && (
                     <View>
-                        <Text>{item.about_me}</Text>
+                        {renderContent()}
                     </View>
                 )}
             </View>

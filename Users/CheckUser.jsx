@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, ScrollView, StyleSheet, SafeAreaView } from 'react-native';
 import { COLORS, SIZES } from '../constants/theme';
-import Header from '../navigation/header_back';
+import Header from '../navigation/header';
 import { Ionicons } from '@expo/vector-icons';
 import { fetchUser } from '../api_service/ApiConsultar_Usuario';
 import { userId, getPalabra, userType } from '../informacion/User';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Buscador from '../Buscador/Buscador';
-import Consultar_Usuario from '../screens/Consultar_Usuario';
+import Consultar_Usuario from '../Users/Consultar_Usuario';
 import EditarPerfil from '../Users/EditarPerfil';
 import Restaurante from '../Restaurants/Restaurante';
 import Valorar from '../Restaurants/Valorar';
