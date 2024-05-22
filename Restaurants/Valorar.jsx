@@ -9,13 +9,13 @@ import Header from '../navigation/header_back';
 import { submitRating, submitComment } from '../api_service/APIValorar';
 import { getPalabra } from '../informacion/User';
 const Valorar = ({ route, navigation }) => {
-    const { restaurantId, nomRestaurant} = route.params;
+    const { restaurantId, nomRestaurant, tipus} = route.params;
     const [comment, setComment] = useState('');
     const [rating, setRating] = useState(1); // Default rating is 2
     const handleCommentSubmit = () => {
         console.log(rating)
-        submitComment(restaurantId, comment, "minorista");
-        submitRating(restaurantId, rating, "minorista");
+        submitComment(restaurantId, comment, tipus);
+        submitRating(restaurantId, rating, tipus);
     };
     const handleRatingCompleted = (rating) => {
       setRating(rating);

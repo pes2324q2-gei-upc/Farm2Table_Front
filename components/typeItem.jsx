@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { COLORS } from "../constants/theme";
+import { COLORS, SIZES } from "../constants/theme";
 
 const TypeItem = ({ type }) => {
     return (
@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.primary,
         borderRadius: 10,
         marginBottom: 10,
+        width: SIZES.width - 60,
     },
     typeText: {
         fontSize: 18,

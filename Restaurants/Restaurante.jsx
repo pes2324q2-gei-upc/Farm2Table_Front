@@ -67,7 +67,7 @@ const Restaurante = ({ route }) => {
                 <Text style={[styles.restaurantName, { fontSize: calculateFontSize(item.service_name) }]}>
                     {item.service_name}
                 </Text>
-                    <TouchableOpacity onPress={() => navigation.navigate("Valorar",  { restaurantId: item.id, nomRestaurant: item.service_name })}><Text>Valora</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate("Valorar",  { restaurantId: item.id, nomRestaurant: item.service_name, tipus:"minorista" })}><Text>Valora</Text></TouchableOpacity>
                 
             </View>
             <View style={styles.buttonContainer}>

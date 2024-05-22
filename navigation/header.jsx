@@ -5,6 +5,9 @@ import { COLORS } from '../constants/theme';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
+import { userType } from '../informacion/User';
+import { userId } from '../informacion/User';
+
 
 //Este es el componente que se encarga de mostrar el header de la aplicación
 //Este header se muestra en todas las pantallas de la aplicación
@@ -23,7 +26,7 @@ const Header = () => {
     return (
         <View style={styles.container}>
             <View style={styles.innerContainer}>
-                <TouchableOpacity onPress={() => navigation.openDrawer()}>
+            <TouchableOpacity onPress={() => navigation.openDrawer()}>
                     <Image
                         source={require('../assets/images/149071.png')}
                         style={styles.profileImage}

@@ -5,28 +5,28 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Footer from './navigation/footer';
-import MainFeed from './screens/Home';
-import AddProduct from './Products/AddProduct';
-import { COLORS, SIZES } from './constants/theme';
-import ProductDetails from './screens/ProductDetails';
-import Consultar_Usuario from './screens/Consultar_Usuario';
-import CartScreen from './Shopping/cart';
-import Ticket from './Shopping/ticket';
-import AddCoinsScreen from './Shopping/funds';
-import CheckUser from './Users/CheckUser';
-import OpenChat from "./Chat/OpenChat";
 import InicioSesion from "./screens/InicioSesion";
 import Registre from "./Register/Registre";
 import EscollirUsuari from './Register/EscollirUsuari';
 import Productor from './Register/Productor';
 import Minorista from './Register/Minorista';
 import Particular from './Register/Particular';
+import MainFeed from './screens/Home';
+import AddProduct from './Products/AddProduct';
+import ProductDetails from './screens/ProductDetails';
+import Consultar_Usuario from './Users/Consultar_Usuario';
+import CartScreen from './Shopping/cart';
+import Ticket from './Shopping/ticket';
+import AddCoinsScreen from './Shopping/funds';
+import CheckUser from './Users/CheckUser';
 import EditarPerfil from './Users/EditarPerfil';
 import OrderSummary from './Users/orderSummary';
 import Orders from './Users/orderedProduct';
-import Chat from './Chat/Chat'; // Ajusta la ruta según tu estructura de archivos
-import ProfileScreen from './Users/CheckUser';
+import EditProfile from './Users/EditProfile';
+import ChatStackScreen from './navigation/ChatStackScreen';
+import { COLORS, SIZES } from './constants/theme';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -39,7 +39,7 @@ function DrawerNavigator() {
       },
     }}>
       <Drawer.Screen name="Home" component={Footer} options={{ headerShown: false }} />
-      <Drawer.Screen name="Perfil" component={ProfileScreen} options={{ headerShown: false }} />
+      <Drawer.Screen name="Perfil" component={CheckUser} options={{ headerShown: false }} />
     </Drawer.Navigator>
   );
 }
@@ -81,8 +81,8 @@ export default function App() {
             <Stack.Screen name="EditarPerfil" component={EditarPerfil} options={{ headerShown: false }} />
             <Stack.Screen name="Orders" component={Orders} options={{ headerShown: false }} />
             <Stack.Screen name="OrderSummary" component={OrderSummary} options={{ headerShown: false }} />
-            <Stack.Screen name="Chat" component={Chat} options={{ headerShown: false }} />
-            <Stack.Screen name="OpenChat" component={OpenChat} options={{ headerShown: false }} />
+            <Stack.Screen name="ChatStackScreen" component={ChatStackScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="EditProfile" component={EditProfile} options={{headerShown: false}} />
           </Stack.Navigator>
         </NavigationContainer>
       </GestureHandlerRootView>

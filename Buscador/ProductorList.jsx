@@ -2,7 +2,7 @@ import React from 'react';
 import { FlatList, View, Text, Image } from 'react-native';
 import styles  from '../styles/buscador.style';
 import { TouchableOpacity } from 'react-native'
-import Consultar_Usuario from '../screens/Consultar_Usuario';
+import Consultar_Usuario from '../Users/Consultar_Usuario';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 const ProductorList = ({ data, searchQuery }) => {

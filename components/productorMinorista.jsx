@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { COLORS } from "../constants/theme";
+import { COLORS, SIZES } from "../constants/theme";
 import { Ionicons } from '@expo/vector-icons';
 
 const ProductorMinoristaItem = ({ name, username }) => {
@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.primary,
         borderRadius: 10,
         marginBottom: 10,
+        width: SIZES.width - 30,
     },
     name: {
         fontSize: 18,

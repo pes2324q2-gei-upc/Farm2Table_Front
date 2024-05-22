@@ -7,6 +7,8 @@ const OrderTab = ({ productorName, orderDate, onPress }) => {
     const formattedDate = new Date(orderDate).toLocaleDateString();
     const formattedTime = new Date(orderDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
+    
+
     return (
         <TouchableOpacity style={styles.container} onPress={onPress}>
             <View style={styles.infoContainer}>

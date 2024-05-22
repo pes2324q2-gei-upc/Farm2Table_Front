@@ -1,16 +1,16 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { View, SafeAreaView, Alert } from 'react-native';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
+import { SafeAreaView, Alert, ScrollView } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import Header from '../navigation/header';
 import { getPalabra, userId as fetchUserId } from '../informacion/User';
 import { fetchChats, deleteChat } from "../api_service/ApiChat";
-import SwipeableRow from '../components/swipeableRow'; // Ajusta la ruta según tu estructura de archivos
+import SwipeableRow from '../components/swipeableRow';
 import styles from "../styles/chat.style";
-import Footer from "../navigation/footer";
 
 const Chat = ({ navigation }) => {
     const [chats, setChats] = useState([]);
     const [userId, setUserId] = useState(null);
+    const scrollViewRef = useRef(null);
 
     useEffect(() => {
         const initUserId = fetchUserId();
@@ -23,9 +23,12 @@ const Chat = ({ navigation }) => {
         if (userId) {
             try {
                 const data = await fetchChats(userId);
-                setChats(data);
+                const sortedData = data.sort((a, b) => new Date(b.last_message.sent_date) - new Date(a.last_message.sent_date));
+                setChats(sortedData);
+                if (scrollViewRef.current) {
+                    scrollViewRef.current.scrollTo({ x: 0, y: 0, animated: true });
+                }
             } catch (error) {
-                console.error('Error loading chats:', error);
                 Alert.alert('Error', getPalabra("errorChat"));
             }
         }
@@ -42,22 +45,21 @@ const Chat = ({ navigation }) => {
             await deleteChat(chatId);
             setChats(prevChats => prevChats.filter(chat => chat.id !== chatId));
         } catch (error) {
-            console.error('Error deleting chat:', error);
             Alert.alert('Error', getPalabra("errorDeleteChat"));
         }
     };
 
     const confirmDelete = (chatId) => {
         Alert.alert(
-            "Confirmar eliminación",
-            "¿Estás seguro de que deseas eliminar este chat?",
+            getPalabra("confirmeliminar"),
+            getPalabra("segeliminar"),
             [
                 {
-                    text: "Cancelar",
+                    text: getPalabra("cancel"),
                     style: "cancel"
                 },
                 {
-                    text: "Eliminar",
+                    text: getPalabra("remove"),
                     onPress: () => handleDelete(chatId),
                     style: "destructive"
                 }
@@ -83,9 +85,12 @@ const Chat = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
             <Header />
-            <SafeAreaView style={styles.containerIn}>
+            <ScrollView
+                style={styles.containerIn}
+                ref={scrollViewRef}
+            >
                 {chats.map((chat) => renderItem({ item: chat }))}
-            </SafeAreaView>
+            </ScrollView>
         </SafeAreaView>
     );
 };

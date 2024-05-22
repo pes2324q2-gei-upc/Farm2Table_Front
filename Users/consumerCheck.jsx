@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import styles from '../styles/consultarUsuario.style';
 
@@ -11,6 +11,7 @@ import { getPalabra } from '../informacion/User';
 
 const ConsumerCheck = ({ navigation, userData }) => {
     const [activeTab, setActiveTab] = useState('Pedidos');
+    const [dataUser, setUserData] = useState(userData);
 
     const onPress = (tabName) => {
         setActiveTab(tabName);
@@ -56,13 +57,8 @@ const ConsumerCheck = ({ navigation, userData }) => {
             {activeTab === 'Datos' && (
                 <View style={styles.tabContent}>
                     <UserProfile
-                        username={userData.username}
-                        telephone={userData.telephone}
-                        avatar={userData.avatar}
-                        description={userData.description}
-                        reach={userData.reach}
-                        user={userData}
                         navigation={navigation}
+                        idUser={userData.id}
                     />
                 </View>
             )}
