@@ -51,6 +51,9 @@ const Minorista = () => {
 
   const handleCambioIdioma = () => {
     setCambioIdioma(!cambioIdioma)
+
+    if (getRestaurantOrMercat(tipus) === "Restaurant") setPlaceholder(getPalabra("restaurant_type"))
+    else setPlaceholder(getPalabra("market_type"))
   };
 
   return (
