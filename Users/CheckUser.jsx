@@ -19,6 +19,7 @@ const ProfileScreen = ({ navigation, route }) => {
     const [userData, setUserData] = useState([]);
 
     if (typeUser === undefined) {
+        console.log("buenastardes");
         typeUser = userType();
     }
 
@@ -26,15 +27,17 @@ const ProfileScreen = ({ navigation, route }) => {
     useEffect(() => {
         const userLoad = async () => {
             const user = idUser ? idUser : userId();
+            console.log("user:" +user);
             try {
                 const data = await fetchUser(user);
                 setUserData(data);
+                console.log("data.id:"+ data.id);
             } catch (error) {
                 console.error("Failed to fetch user data: ", error);
             }
         };
         userLoad();
-    });
+    }, []); 
 
     return (
         <SafeAreaView style={styles.safecontainer}>
@@ -55,9 +58,9 @@ const ProfileScreen = ({ navigation, route }) => {
                 {typeUser === 'Consumer' ? (
                     <ConsumerCheck navigation={navigation} userData={userData} />
                 ) : typeUser === 'Productor' ? (
-                    <ProductorCheck navigation={navigation} userData={userData} />
+                    <ProductorCheck navigation={navigation} userData={userData} id={idUser}/>
                 ) : typeUser === 'Minorista' ? (
-                    <MinoristaCheck navigation={navigation} userData={userData} />
+                    <MinoristaCheck navigation={navigation} userData={userData} id={idUser} />
                 )
                 : null}
             </View>

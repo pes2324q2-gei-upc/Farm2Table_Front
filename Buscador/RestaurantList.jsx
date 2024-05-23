@@ -5,10 +5,10 @@ import { TouchableOpacity } from 'react-native'
 import Restaurante from '../Restaurants/Restaurante';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
-
+import ProfileScreen from '../Users/CheckUser';
 const RestaurantList = ({ data, searchQuery }) => {
   const handlePressRestaurant = (item, icon) => {
-    navigation.navigate('Restaurante', { item, icon });
+    navigation.navigate('ProfileScreen', { idUser: item.id, typeUser: "Minorista" });
   };
   const navigation = useNavigation();
 

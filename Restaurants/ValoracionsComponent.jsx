@@ -4,7 +4,6 @@ import defaultAvatar from '../assets/images/149071.png'
 import styles from '../styles/restaurante.style'
 const ValoracionsComponent = ({ comments }) => {
     return (
-        <View style={styles.lista}>
             <FlatList
                 data={comments}
                 keyExtractor={(item, index) => index.toString()}
@@ -26,7 +25,6 @@ const ValoracionsComponent = ({ comments }) => {
                     </View>
                 )}
             />
-        </View>
     );
 };
 

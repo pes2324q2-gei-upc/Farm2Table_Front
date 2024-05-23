@@ -16,17 +16,17 @@ import UserProfile from "./userInfo";
 
 import { getIP } from "../informacion/Constants";
 import { userId } from "../informacion/User";
-
-
+import { fetchProductorComments } from "../api_service/ApiConsultar_Usuario";
+import ValoracionsComponent from "../Restaurants/ValoracionsComponent";
 const API_URL = `http://${getIP()}`;
 
 
 
-const MinoristaCheck = ({ navigation, userData }) => {
+const MinoristaCheck = ({ navigation, userData, id }) => {
     const [activeTab, setActiveTab] = useState('Pedidos');
     const [shopData, setShopData] = useState([]);
     const [activeUser, setActiveUser] = useState(userId());
-
+    const [comments, setComments] = useState([]);
 
     const onPress = (tabName) => {
         setActiveTab(tabName);
@@ -44,6 +44,19 @@ const MinoristaCheck = ({ navigation, userData }) => {
             console.error('Error fetching data:', error);
         }
     };
+
+    useFocusEffect(
+        useCallback(() => {
+                fetchProductorComments(id,"minorista")
+                .then(data => {
+                    setComments(data);
+                    console.log("hola");
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        }, [])
+    );
 
     return (
         <View style={{ flex: 1 }}>
@@ -88,6 +101,15 @@ const MinoristaCheck = ({ navigation, userData }) => {
                             {getPalabra("my_favs")}
                         </Text>
                     </TouchableOpacity>
+
+                    <TouchableOpacity
+                    style={[styles.button, { borderColor: activeTab === 'Valoraciones' ? 'orange' : '#1e4d2b' }]}
+                    onPress={() => onPress('Valoraciones')}
+                    >
+                        <Text style={[styles.buttonText, { color: activeTab === 'Valoraciones' ? 'orange' : 'white' }]}>
+                            Valoraciones
+                        </Text>
+                    </TouchableOpacity>
                 </ScrollView>
             </View>
 
@@ -115,6 +137,12 @@ const MinoristaCheck = ({ navigation, userData }) => {
             {activeTab === 'Favoritos' && (
                 <View style={styles.tabContent}>
                     <Favoritos userId={userData.id} userType="Minoristas" navigation={navigation} />
+                </View>
+            )}
+
+            {activeTab === 'Valoraciones' && (
+                <View style={styles.tabContent}>
+                    <ValoracionsComponent comments={comments} />
                 </View>
             )}
         </View>
