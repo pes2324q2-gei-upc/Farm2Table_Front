@@ -30,6 +30,8 @@
     "Productor is not registered as User": "El productor no ha sigut registrat",
     "restaurant": "Restaurant",
     "market": "Mercat",
+    "market_type": "Id del mercat",
+    "restaurant_type": "Nom del teu restaurant",
     "retail": "Minorista",
     "service_type": "Tipus de servei",
     "service_name": "Nom del teu servei",
