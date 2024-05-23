@@ -6,24 +6,24 @@ import { COLORS, SIZES } from "../constants/theme";
 const ProductList = ({navigation, shopData }) => {
     return (
         <FlatList   
-            data={shopData}
-            keyExtractor={(item) => item.product.id.toString()} // Ensure each key is unique
-            renderItem={({ item }) => (
-                <View style={styles.lista}>
-                    <TouchableOpacity>
-                        <View style={styles.capsule}>
-                            <View style={styles.vista_imagen}>
-                                <Image source={{ uri: item.image }} style={styles.image} />
-                            </View>
-                            <View style={styles.infoProducto}>
-                                <Text style={styles.productName}>{item.product.type.name}</Text>
-                                <Text style={styles.productPrice}>{item.product.price} €/kg</Text>
-                            </View>
-                        </View>
-                    </TouchableOpacity>
+        data={shopData}
+        keyExtractor={(item) => item.id}
+        renderItem={({item}) => (     
+            <View style={styles.lista}>
+                <TouchableOpacity>
+                <View style={styles.capsule}>
+                    <View style={styles.vista_imagen}>
+                        <Image source = {{uri: item.image}} style={styles.image} />
+                    </View>
+                    <View style={styles.infoProducto}>
+                    <Text style={styles.productName}>{item.name}</Text>
+                    <Text style={styles.productPrice}>{item.price} €/kg</Text>
+                    </View>
                 </View>
-            )}
-        />
+                </TouchableOpacity>
+            </View>
+        )}
+    />
     );
 };
 

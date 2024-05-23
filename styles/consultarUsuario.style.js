@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     button: {
         alignItems: "center",
         justifyContent: 'center',
-        paddingHorizontal: 5,
+        paddingHorizontal: 0,
         marginHorizontal: 5,
         borderBottomWidth: 2,
         height: 40,
@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: COLORS.primary,
+        maxHeight: '86.5%'
     },
     tabTitle: {
         fontSize: 22,

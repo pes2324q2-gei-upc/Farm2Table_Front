@@ -5,7 +5,12 @@ const API_ENDPOINT = "http://"+URL+"/users/productor/";
 
 const fetchData = async (url) => {
     try {
+        console.log(url);
         const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error('Failed to fetch data xd' +  response);
+        }
+        console.log("bien");
         const json = await response.json();
         return json.data;
     } catch (error) {
@@ -30,13 +35,13 @@ export const fetchUser = async (userId) => {
     }
 }
 
-const API_COMMENTS = "http://"+getIP()+"/users/productor/";
-export const fetchProductorComments = async(userId) => {
-    console.log(API_COMMENTS+userId+"/comments");
+const API_COMMENTS = "http://"+getIP()+"/users/";
+export const fetchProductorComments = async(userId, tipus) => {
+    console.log("api comentarios:" +API_COMMENTS+tipus+"/"+userId+"/comments");
     try {
         console.log("llega a consultar");
         console.log(API_COMMENTS+userId+"/comments");
-        const response = await fetch(API_COMMENTS+userId+"/comments");
+        const response = await fetch(API_COMMENTS+tipus+"/"+userId+"/comments");
         console.log(API_COMMENTS);
         const data = await response.json();
         console.log(data);

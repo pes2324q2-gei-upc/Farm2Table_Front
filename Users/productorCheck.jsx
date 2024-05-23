@@ -6,7 +6,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { getPalabra } from "../informacion/User";
 
 import styles from "../styles/consultarUsuario.style";
-import { fetchData } from '../api_service/ApiConsultar_Usuario';
+import { fetchData, fetchProductorComments } from '../api_service/ApiConsultar_Usuario';
 
 import ProductList from "./ProductList";
 
@@ -15,26 +15,35 @@ import UserProfile from "./userInfo";
 
 import { getIP } from "../informacion/Constants";
 import { userId } from "../informacion/User";
+import ValoracionsComponent from '../Restaurants/ValoracionsComponent';
 
 
-const API_URL = `http://${getIP()}`;
+const API_URL = "http://" +getIP();
 
 
 
-const ProductorCheck = ({ navigation, userData }) => {
+const ProductorCheck = ({ navigation, userData, id }) => {
     const [activeTab, setActiveTab] = useState('Productos');
     const [shopData, setShopData] = useState([]);
     const [activeUser, setActiveUser] = useState(userId());
-
+    const [comments, setComments] = useState([]);
     const onPress = (tabName) => {
         setActiveTab(tabName);
     };
 
     useFocusEffect(
         useCallback(() => {
-            fetchData(API_URL + "/users/productor/" + userData.id + "/products")
+            fetchData(API_URL + "/users/productor/" + id + "/products")
                 .then(data => {
                     setShopData(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+                fetchProductorComments(id,"productor")
+                .then(data => {
+                    setComments(data);
+                    console.log("hola");
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
@@ -73,6 +82,15 @@ const ProductorCheck = ({ navigation, userData }) => {
                         {getPalabra("my_favs")}
                     </Text>
                 </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={[styles.button, { borderColor: activeTab === 'Valoraciones' ? 'orange' : '#1e4d2b' }]}
+                    onPress={() => onPress('Valoraciones')}
+                >
+                    <Text style={[styles.buttonText, { color: activeTab === 'Valoraciones' ? 'orange' : 'white' }]}>
+                        Valoraciones
+                    </Text>
+                </TouchableOpacity>
             </View>
 
             {activeTab === 'Productos' && (
@@ -85,14 +103,20 @@ const ProductorCheck = ({ navigation, userData }) => {
                 <View style={styles.tabContent}>
                     <UserProfile
                         navigation={navigation}
-                        idUser={userData.id}
+                        idUser={id}
                     />
                 </View>
             )}
 
             {activeTab === 'Favoritos' && (
                 <View style={styles.tabContent}>
-                    <Favoritos userId={userData.id} userType="Productors" navigation={navigation} />
+                    <Favoritos userId={id} userType="Productors" navigation={navigation} />
+                </View>
+            )}
+
+            {activeTab === 'Valoraciones' && (
+                <View style={styles.tabContent}>
+                    <ValoracionsComponent comments={comments} />
                 </View>
             )}
         </View>

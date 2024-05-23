@@ -28,7 +28,7 @@ const screenOptions = {
 const Footer = () => {
     return (
         <Tab.Navigator screenOptions={screenOptions}>
-            <Tab.Screen name="Home" component={Home} options={{
+            <Tab.Screen name="MainFeed" component={Home} options={{
                 tabBarIcon: ({ focused }) => (
                     <Ionicons
                         name={focused ? "home" : "home-outline"}

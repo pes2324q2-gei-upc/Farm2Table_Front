@@ -5,7 +5,7 @@ import Consultar_Usuario from '../Users/Consultar_Usuario';
 import EditarPerfil from '../Users/EditarPerfil';
 import Restaurante from '../Restaurants/Restaurante';
 import Valorar from '../Restaurants/Valorar';
-
+import ProfileScreen from '../Users/CheckUser';
 const BuscadorStack = createNativeStackNavigator();
 
 const BuscadorStackScreen = () => {
@@ -18,6 +18,7 @@ const BuscadorStackScreen = () => {
             <BuscadorStack.Screen name="EditarPerfil" component={EditarPerfil} />
             <BuscadorStack.Screen name="Restaurante" component={Restaurante} />
             <BuscadorStack.Screen name="Valorar" component={Valorar} />
+            <BuscadorStack.Screen name="ProfileScreen" component={ProfileScreen} />
         </BuscadorStack.Navigator>
     );
 };
