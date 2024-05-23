@@ -70,6 +70,7 @@ const Chat = ({ navigation }) => {
 
     const renderItem = ({ item }) => (
         <SwipeableRow
+            key={item.id}
             item={item}
             onPress={() => navigation.navigate('MensajesChat', {
                 chatId: item.id,
