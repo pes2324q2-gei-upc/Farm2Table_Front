@@ -17,9 +17,9 @@ export const createWord = async (list) => {
             keys[i] = keys[i] + `_${user_id}`
         }
         
-        console.log(keys)
+        console.log("keys: " + keys)
         const phrase = element.phrase + `_${user_id}`;
-        console.log(phrase)
+        console.log("frase: " + phrase)
         
         try {
             const response = await fetch(url_post, {
@@ -55,8 +55,8 @@ export const getMatchPhrase = async (phrase) => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({})
         });
+        console.log(response.ok)
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
