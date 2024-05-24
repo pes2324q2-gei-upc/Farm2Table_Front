@@ -16,7 +16,7 @@ const Minorista = () => {
   const TIPUS = [getPalabra("restaurant"),getPalabra("market")];
   const [servei, setServei] = useState("");
   const [error_message, setError] = useState('');
-  const [favourite_prod, setFavourite] = useState("");
+  const [favourite_prod, setFavourite] = useState([]);
   const NAVIGATOR = useNavigation();
   const [cambioIdioma, setCambioIdioma] = useState(false);
   const [placeholderNombre, setPlaceholder] = useState(getPalabra("restaurant_type"));

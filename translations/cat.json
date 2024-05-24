@@ -38,6 +38,7 @@
     "Service must be a Restaurant or a Mercat": "El servei ha de ser Restaurant o Mercat",
     "Minorista is not registered as User": "Encara no t'has registrat",
     "Mercat does not exist": "El mercat no existeix",
+    "Mercat already registered": "El mercat ja està registrat",
     "Restaurants does not exist": "El restaurant no existeix",
     "particular": "Particular",
     "direction": "La teva direcció",
