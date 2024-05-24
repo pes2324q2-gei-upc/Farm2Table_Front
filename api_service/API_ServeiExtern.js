@@ -1,10 +1,5 @@
 import {userId} from '../informacion/User'
-
-const url_get = "http://nattech.fib.upc.edu:40390/api/v1/adj/chatbot/consultaExterna"
-const url_post = "http://nattech.fib.upc.edu:40390/api/v1/adj/chatbot/nuevaPalabra"
-const prueba = "http://nattech.fib.upc.edu:40390/api/v1/adj/chatbot/consultaExterna?mensaje=hola"
-
-
+import {url_get_service,url_post_service,url_login_service} from '../informacion/Constants'
 
 
 export const createWord = async (list) => {
@@ -22,10 +17,11 @@ export const createWord = async (list) => {
         console.log("frase: " + phrase)
         
         try {
-            const response = await fetch(url_post, {
+            const response = await fetch(url_post_service, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    // 'Authorization' : //aqui va el token
                 },
                 body: JSON.stringify({
                     "frase": phrase,
@@ -46,14 +42,19 @@ export const createWord = async (list) => {
 };
 
 export const getMatchPhrase = async (phrase) => {
+    const user_id = userId()
+    for (let i = 0; i < phrase.length(); ++i) {
+        phrase[i] = phrase[i] + `_${user_id}`
+    }
     console.log(phrase)
     try {
-        const url = url_get + `?mensaje=${phrase}`
+        const url = url_get_service + `?mensaje=${phrase}`
         console.log(url)
         const response = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                // 'Authorization' : //aqui va el token
             },
         });
         console.log(response.ok)
@@ -68,3 +69,29 @@ export const getMatchPhrase = async (phrase) => {
         throw error;
     }
 }
+
+
+export const login = async () => {
+    try {
+        const url = url_login_service
+        console.log(url)
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                // 'Authorization' : //aqui va el token
+            },
+        });
+        console.log(response.ok)
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        return data;
+    }
+    catch (error) {
+        console.error('Error login:', error);
+        throw error;
+    }
+}
+
