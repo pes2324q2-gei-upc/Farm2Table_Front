@@ -3,7 +3,7 @@ import { View, Text, TextInput, Image, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import logo from '../assets/Farm2Table.png';
 import google from '../assets/Google.png';
-import { setUserId, setUserType, getPalabra, setIdioma, TIPUS_IDIOMA, renderFlagImage, renderEspaña, renderCataluña, renderInglaterra, getIdioma } from '../informacion/User';
+import { setUserId, setUserType, getPalabra, renderFlagImage,  } from '../informacion/User';
 import { useNavigation } from '@react-navigation/native';
 import { loginService } from '../api_service/ApiInicioSesion';
 import STYLES from '../styles/inici_registre.style';
@@ -30,6 +30,8 @@ const InicioSesion = () => {
         if (data.data.user_type === null) { NAVIGATOR.navigate("EscollirUsuari"); }
         else {
           setUserType(data.data.user_type);
+          console.log("ID = ", data.data.user_id);
+          console.log("TYPE = ", data.data.user_type);
           NAVIGATOR.navigate('Footer');
         }
       }

@@ -4,7 +4,7 @@ import { userId, setUserType } from "../informacion/User";
 
 export const registerParticularService = (addres, productes) => {
 
-    setUserType("Consumer");
+    setUserType("Particular");
 
     return new Promise ((resolve, reject) => {
         

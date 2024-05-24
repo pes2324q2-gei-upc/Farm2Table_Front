@@ -5,7 +5,8 @@ import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import SearchTab from '../components/searchTab';
 import mapStyle from '../styles/mapStyle';
 import STYLES from '../styles/map.style';
-import { direccionCoordenadas, informacionUsuario } from '../api_service/API_Map';
+import { direccionCoordenadas, informacionMinorista, informacionUsuario, vendedoresEnRango } from '../api_service/API_Map';
+import { userId, userType } from '../informacion/User';
 
 const Map = () => {
     const [latitud, setLatitud] = useState(41.1);
@@ -14,6 +15,13 @@ const Map = () => {
     const [address, setAddress] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [marcadores, setMarcadores] = useState([]);
+
+    const items = [
+        { title: 'Productors', index: 1 },
+        { title: 'Mercats', index: 2 },
+        { title: 'Restaurants', index: 3 },
+    ];
 
     async function infoUsuario() {
         try {
@@ -48,9 +56,49 @@ const Map = () => {
         }
     }
 
+    async function infoMinorista() {
+        try {
+            const data = await informacionMinorista(userId());
+            if (data.error) {
+                setError(data.error);
+                console.log(data.error);
+            } else {
+                console.log("Address =", data.address)
+                setAddress(data.address)
+            }
+        } catch (err) {
+            console.log(err.message);
+            setError(err.message);
+        }
+    }
+
+    async function vendedoresRango(type) {
+        try {
+            const data = await vendedoresEnRango(type, 50, latitud, longitud);
+            if (data.error) {
+                setError(data.error);
+                console.log(data.error);
+            } else {
+                const marcadoresNuevos = data.map((item) => ({
+                    latitude: item[0][0],
+                    longitude: item[0][1],
+                    title: item[1].username,
+                }));
+                setMarcadores(marcadoresNuevos);
+            }
+        } catch (err) {
+            console.log(err.message);
+            setError(err.message);
+        }
+    }
+
     useEffect(() => {
         async function fetchData() {
-            await infoUsuario();
+            
+            if (address === '') {
+                if (userType() === "Consumer") await infoUsuario();
+                else await infoMinorista();
+            }
             if (!error) {
                 await infoCoordenadas();
             }
@@ -58,21 +106,24 @@ const Map = () => {
         }
         fetchData();
 
+        if (address === '') fetchData();
+
         console.log(latitud)
         console.log(longitud)
     }, [address]);
-
-    const items = [
-        { title: 'Productors', index: 1 },
-        { title: 'Mercats', index: 2 },
-        { title: 'Restaurants', index: 3 },
-    ];
 
     const handleSearch = (text) => {
         console.log(text);
     };
 
-    if (loading) {
+    const handleFilter = (item) => {
+        console.log("ITEM =", item);
+        if (item.title === "Restaurants") vendedoresRango("restaurant");
+        else if (item.title === "Productors") vendedoresRango("productor");
+        else vendedoresRango("mercat");
+    };
+
+    if (loading || address === '') {
         return (
             <View style={STYLES.loadingContainer}>
                 <ActivityIndicator size="large" color="#0000ff" />
@@ -102,6 +153,17 @@ const Map = () => {
                     title="Tú"
                     pinColor="blue"
                 />
+                {marcadores.map((marker, index) => (
+                    <Marker
+                        key={index}
+                        coordinate={{
+                            latitude: marker.latitude,
+                            longitude: marker.longitude,
+                        }}
+                        title={marker.title}
+                        pinColor='red'
+                    />
+                ))}
             </MapView>
 
             <View style={STYLES.searchTab}>
@@ -117,7 +179,7 @@ const Map = () => {
                 height={50} 
                 style={STYLES.scroll}>
                 {items.map((item, index) => (
-                    <TouchableOpacity key={index} style={STYLES.filtro}>
+                    <TouchableOpacity key={index} style={STYLES.filtro} onPress={() => handleFilter(item)}>
                         <Text>{item.title}</Text>
                     </TouchableOpacity>
                 ))}
