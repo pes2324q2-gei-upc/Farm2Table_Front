@@ -117,7 +117,6 @@ const Map = () => {
     };
 
     const handleFilter = (item) => {
-        console.log("ITEM =", item);
         if (item.title === "Restaurants") vendedoresRango("restaurant");
         else if (item.title === "Productors") vendedoresRango("productor");
         else vendedoresRango("mercat");

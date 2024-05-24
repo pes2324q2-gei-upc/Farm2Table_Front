@@ -132,7 +132,6 @@ export const vendedoresEnRango = (type, reach, latitude, longitude) => {
             return response.json();
             })
             .then(data => {
-                console.log("DATAZO =", data)
             resolve(data);
     
             })
