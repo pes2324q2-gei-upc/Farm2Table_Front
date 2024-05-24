@@ -126,5 +126,7 @@
     "write_your_comment": "Write your comment",
     "type_message": "Type a message",
     "confirmeliminar": "Confirm deletion",
-    "segeliminar": "Are you sure you want to delete this chat?"
+    "segeliminar": "Are you sure you want to delete this chat?",
+    "you": "You",
+    "from_you": "from you"
 }

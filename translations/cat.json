@@ -124,5 +124,7 @@
     "write_your_comment": "Escriu el teu comentari",
     "type_message": "Escriu un missatge",
     "confirmeliminar": "Confirmar eliminació",
-    "segeliminar": "Estàs segur que vols eliminar aquest xat?"
+    "segeliminar": "Estàs segur que vols eliminar aquest xat?",
+    "you": "Tú",
+    "from_you": "de la teva posició"
 }

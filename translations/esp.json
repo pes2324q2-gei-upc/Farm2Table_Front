@@ -125,5 +125,7 @@
     "write_your_comment": "Escribe tu comentario",
     "type_message": "Escribe un mensaje",
     "confirmeliminar": "Confirmar eliminación",
-    "segeliminar": "¿Estás seguro de que deseas eliminar este chat?"
+    "segeliminar": "¿Estás seguro de que deseas eliminar este chat?",
+    "you": "Tú",
+    "from_you": "de tu posición"
 }

@@ -124,7 +124,40 @@ export const vendedoresEnRango = (type, reach, latitude, longitude) => {
         };
         
         const url = 'http://'+URL+'/locations/'+type+'/range?range='+reach+'&latitude='+latitude+'&longitude='+longitude;
-        console.log(url);
+
+        fetch(url, requestOptions)
+            .then(response => {
+              
+            return response.json();
+            })
+            .then(data => {
+            resolve(data);
+    
+            })
+            .catch(error => {
+            console.error('There was a problem with your fetch operation:', error);
+            reject(new Error(error));
+            });
+    })
+    
+}
+
+export const calculoDistancias = (latitude1, longitude1, latitude2, longitude2) => {
+
+    return new Promise ((resolve, reject) => {
+
+        const csrfToken = '';
+        
+        const requestOptions = {
+            method: 'GET',
+            headers: {
+                'accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
+              }
+        };
+        
+        const url = 'http://'+URL+'/locations/distance?origin_lat='+latitude1+'&origin_long='+longitude1+'&destination_lat='+latitude2+'&destination_long='+longitude2;
 
         fetch(url, requestOptions)
             .then(response => {

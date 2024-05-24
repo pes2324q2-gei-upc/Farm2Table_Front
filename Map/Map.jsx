@@ -5,8 +5,8 @@ import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import SearchTab from '../components/searchTab';
 import mapStyle from '../styles/mapStyle';
 import STYLES from '../styles/map.style';
-import { direccionCoordenadas, informacionMinorista, informacionUsuario, vendedoresEnRango } from '../api_service/API_Map';
-import { userId, userType } from '../informacion/User';
+import { calculoDistancias, direccionCoordenadas, informacionMinorista, informacionUsuario, vendedoresEnRango } from '../api_service/API_Map';
+import { getPalabra, userId, userType } from '../informacion/User';
 
 const Map = () => {
     const [latitud, setLatitud] = useState(41.1);
@@ -16,6 +16,8 @@ const Map = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [marcadores, setMarcadores] = useState([]);
+    const [selectedIndex, setSelectedIndex] = useState(null);
+    const [distancia, setDistancia] = useState("");
 
     const items = [
         { title: 'Productors', index: 1 },
@@ -83,8 +85,24 @@ const Map = () => {
                     latitude: item[0][0],
                     longitude: item[0][1],
                     title: item[1].username,
+                    id: item[1].id
                 }));
                 setMarcadores(marcadoresNuevos);
+            }
+        } catch (err) {
+            console.log(err.message);
+            setError(err.message);
+        }
+    }
+
+    async function calculaDistancia(latitudMarcador, longitudMarcador) {
+        try {
+            const data = await calculoDistancias(latitudMarcador, longitudMarcador, latitud, longitud);
+            if (data.error) {
+                setError(data.error);
+                console.log(data.error);
+            } else {
+                setDistancia(data)
             }
         } catch (err) {
             console.log(err.message);
@@ -99,27 +117,32 @@ const Map = () => {
                 if (userType() === "Consumer") await infoUsuario();
                 else await infoMinorista();
             }
-            if (!error) {
+            if (!error && address != '') {
                 await infoCoordenadas();
             }
             setLoading(false);
         }
         fetchData();
 
-        if (address === '') fetchData();
-
         console.log(latitud)
         console.log(longitud)
     }, [address]);
+
+    useEffect(() => {
+        
+    }, [distancia]);
 
     const handleSearch = (text) => {
         console.log(text);
     };
 
     const handleFilter = (item) => {
-        if (item.title === "Restaurants") vendedoresRango("restaurant");
-        else if (item.title === "Productors") vendedoresRango("productor");
-        else vendedoresRango("mercat");
+        if (item.index != selectedIndex) {
+            setSelectedIndex(item.index)
+            if (item.title === "Restaurants") vendedoresRango("restaurant");
+            else if (item.title === "Productors") vendedoresRango("productor");
+            else vendedoresRango("mercat");
+        }
     };
 
     if (loading || address === '') {
@@ -149,7 +172,7 @@ const Map = () => {
                         latitude: latitud,
                         longitude: longitud,
                     }}
-                    title="Tú"
+                    title={getPalabra("you")}
                     pinColor="blue"
                 />
                 {marcadores.map((marker, index) => (
@@ -160,6 +183,8 @@ const Map = () => {
                             longitude: marker.longitude,
                         }}
                         title={marker.title}
+                        description={(distancia === "" ? "Loading": distancia+' '+getPalabra("from_you"))}
+                        onPress={() => calculaDistancia(marker.latitude, marker.longitude)}
                         pinColor='red'
                     />
                 ))}
@@ -178,7 +203,9 @@ const Map = () => {
                 height={50} 
                 style={STYLES.scroll}>
                 {items.map((item, index) => (
-                    <TouchableOpacity key={index} style={STYLES.filtro} onPress={() => handleFilter(item)}>
+                    <TouchableOpacity key={index} 
+                    style={[STYLES.filtro, {backgroundColor: (item.index === selectedIndex ? 'orange': 'white')}]} o
+                    onPress={() => handleFilter(item)}>
                         <Text>{item.title}</Text>
                     </TouchableOpacity>
                 ))}
