@@ -13,7 +13,7 @@ export const createWord = async (list,token) => {
         }
         
         console.log("keys: " + keys)
-        const phrase = element.phrase + `_${user_id}`;
+        const phrase = element.phrase;
         console.log("frase: " + phrase)
         
         try {
@@ -29,9 +29,12 @@ export const createWord = async (list,token) => {
                 }),
             });
             if (!response.ok) {
+                console.log(response)
                 throw new Error('Network response was not ok');
+                
             }
             const data = await response.json();
+            console.log(data)
             return data;
         }
         catch (error) {
@@ -50,6 +53,7 @@ export const getMatchPhrase = async (phrase) => {
     try {
         const url = url_get_service + `?mensaje=${phrase}`
         console.log(url)
+        const token = getToken()
         const response = await fetch(url, {
             method: 'POST',
             headers: {

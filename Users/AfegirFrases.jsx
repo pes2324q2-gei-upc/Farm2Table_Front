@@ -6,16 +6,17 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { Alert, TextInput, TouchableOpacity } from 'react-native'
 import { COLORS, SIZES } from '../constants/theme'
 import {createWord, getMatchPhrase,loginInService} from '../api_service/API_ServeiExtern'
+import {getToken,setToken} from '../informacion/Constants'
 
 const AfegirFrases = () => {
     const route = useRoute();
     const {item} = route.params
     const navigation = useNavigation();
     const [pairs, setPairs] = useState([{ keys: '', phrase: '' }]);
-    const [token,setToken] = useState('')
+    //const [token,setToken] = useState('')
 
     useEffect(() => {
-      if (token == '') {
+      if (getToken() == '') {
         const login = async() => {
             const data = await loginInService()
             console.log(data.token)
@@ -42,6 +43,7 @@ const AfegirFrases = () => {
       };
 
       const handleAccepta = async () => {
+        const token = getToken()
         const data = await createWord(pairs,token)
         //return navigation.goBack()
         return data
