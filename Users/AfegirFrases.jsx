@@ -1,17 +1,29 @@
 import { View, Text, StyleSheet, Image, Button, ScrollView } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRoute, useNavigation } from '@react-navigation/native';
 import Header from '../navigation/header_back'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Alert, TextInput, TouchableOpacity } from 'react-native'
 import { COLORS, SIZES } from '../constants/theme'
-import {createWord, getMatchPhrase} from '../api_service/API_ServeiExtern'
+import {createWord, getMatchPhrase,loginInService} from '../api_service/API_ServeiExtern'
 
 const AfegirFrases = () => {
     const route = useRoute();
     const {item} = route.params
     const navigation = useNavigation();
     const [pairs, setPairs] = useState([{ keys: '', phrase: '' }]);
+    const [token,setToken] = useState('')
+
+    useEffect(() => {
+      if (token == '') {
+        const login = async() => {
+            const data = await loginInService()
+            console.log(data.token)
+            setToken(data.token)
+        }
+        login()
+      }
+    },[])
 
     const handleKeyChange = (index, value) => {
         const newPairs = [...pairs];
@@ -30,7 +42,7 @@ const AfegirFrases = () => {
       };
 
       const handleAccepta = async () => {
-        const data = await createWord(pairs)
+        const data = await createWord(pairs,token)
         //return navigation.goBack()
         return data
       }

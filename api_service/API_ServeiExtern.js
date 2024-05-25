@@ -2,7 +2,7 @@ import {userId} from '../informacion/User'
 import {url_get_service,url_post_service,url_login_service} from '../informacion/Constants'
 
 
-export const createWord = async (list) => {
+export const createWord = async (list,token) => {
     const user_id = userId()
     console.log(user_id)
     console.log(list)
@@ -21,7 +21,7 @@ export const createWord = async (list) => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    // 'Authorization' : //aqui va el token
+                    'Authorization' : token
                 },
                 body: JSON.stringify({
                     "frase": phrase,
@@ -54,7 +54,7 @@ export const getMatchPhrase = async (phrase) => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                // 'Authorization' : //aqui va el token
+                'Authorization' : token
             },
         });
         console.log(response.ok)
@@ -71,7 +71,7 @@ export const getMatchPhrase = async (phrase) => {
 }
 
 
-export const login = async () => {
+export const loginInService = async () => {
     try {
         const url = url_login_service
         console.log(url)
@@ -79,7 +79,6 @@ export const login = async () => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                // 'Authorization' : //aqui va el token
             },
         });
         console.log(response.ok)
