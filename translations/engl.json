@@ -30,8 +30,6 @@
     "Productor is not registered as User": "Productor is not registered as User",
     "restaurant": "Restaurant",
     "market": "Market",
-    "market_type": "Id of your market",
-    "restaurant_type": "Name of your restaurant",
     "retail": "Retail",
     "service_type": "Service type",
     "service_name": "Your service name",
