@@ -127,5 +127,6 @@
     "confirmeliminar": "Confirm deletion",
     "segeliminar": "Are you sure you want to delete this chat?",
     "you": "You",
-    "from_you": "from you"
+    "from_you": "from you",
+    "logout": "Logout"
 }

@@ -126,5 +126,6 @@
     "confirmeliminar": "Confirmar eliminación",
     "segeliminar": "¿Estás seguro de que deseas eliminar este chat?",
     "you": "Tú",
-    "from_you": "de tu posición"
+    "from_you": "de tu posición",
+    "logout": "Cerrar sesión"
 }

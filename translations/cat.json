@@ -125,5 +125,6 @@
     "confirmeliminar": "Confirmar eliminació",
     "segeliminar": "Estàs segur que vols eliminar aquest xat?",
     "you": "Tú",
-    "from_you": "de la teva posició"
+    "from_you": "de la teva posició",
+    "logout": "Tancar sessió"
 }
