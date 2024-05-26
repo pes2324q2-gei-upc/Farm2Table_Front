@@ -23,6 +23,16 @@ const ProfileScreen = ({ navigation, route }) => {
         typeUser = userType();
     }
 
+    const handleAddFavourite = async () => {
+        try {
+          const tipo = userType().toLowerCase() + 's';
+          const type = routeTypeUser.toLowerCase() + 's';
+          const response = await addFavourite(activeUser, type, tipo, routeIdUser);
+        } catch (error) {
+          console.error("Failed to add favourite:", error);
+        }
+    };
+
 
     useEffect(() => {
         const userLoad = async () => {
