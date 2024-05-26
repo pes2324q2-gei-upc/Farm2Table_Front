@@ -123,7 +123,6 @@ export const logout = () => {
     id = null;
     user_type = null;
     correo = null;
-    console.log("De putos locos")
 }
 
 const User = () => {
