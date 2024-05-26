@@ -25,7 +25,8 @@ import EditProfile from './Users/EditProfile';
 import ChatStackScreen from './navigation/ChatStackScreen';
 import { COLORS, SIZES } from './constants/theme';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { userId, userType } from './informacion/User';
+import { getPalabra, logout, userId, userType } from './informacion/User';
+import Logout from './Users/Logout';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -40,6 +41,7 @@ function DrawerNavigator() {
     }}>
       <Drawer.Screen name="Home" component={Footer} options={{ headerShown: false }} />
       <Drawer.Screen name="Perfil" component={CheckUser} options={{ headerShown: false }} initialParams={{ idUser: userId(), typeUser: userType() }}/>
+      <Drawer.Screen name={getPalabra("logout")} component={Logout} options={{ headerShown: false }}/>
       {/*<Drawer.Screen name="Perfil" component={CheckUser} options={{ headerShown: false }} />*/}
     </Drawer.Navigator>
   );
