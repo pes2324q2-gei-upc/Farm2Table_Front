@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, SafeAreaView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, Image, TouchableOpacity, SafeAreaView } from 'react-native';
 import logo from '../assets/Farm2Table.png';
-import { TIPUS_IDIOMA, getIdioma, getPalabra, renderFlagImage, setIdioma } from '../informacion/User';
+import { getPalabra, renderFlagImage } from '../informacion/User';
 import { useNavigation } from '@react-navigation/native';
 import STYLES from '../styles/inici_registre.style';
-import { SelectList } from 'react-native-dropdown-select-list';
 import SeleccioIdioma from '../components/seleccioIdioma';
 
 
@@ -12,6 +11,15 @@ const EscollirUsuari = () => {
   const NAVIGATOR = useNavigation();
   const [refresh, setRefresh] = useState(false);
   const [cambioIdioma, setCambioIdioma] = useState(false);
+
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCount(prevCount => prevCount + 1);
+    }, 500);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   const handleProductor = () => {
     NAVIGATOR.navigate("Productor");

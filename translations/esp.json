@@ -30,8 +30,6 @@
     "Productor is not registered as User": "El productor no ha sido registrado",
     "restaurant": "Restaurante",
     "market": "Mercado",
-    "market_type": "Id del mercado",
-    "restaurant_type": "Nombre del restaurante",
     "retail": "Minorista",
     "service_type": "Tipo de servicio",
     "service_name": "Nombre de tu servicio",

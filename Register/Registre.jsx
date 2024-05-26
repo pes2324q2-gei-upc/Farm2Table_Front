@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Image, TouchableOpacity, SafeAreaView } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import logo from '../assets/Farm2Table.png';
@@ -17,6 +17,15 @@ const Registre = () => {
   const [error_message, setError] = useState('');
   const NAVIGATOR = useNavigation();
   const [cambioIdioma, setCambioIdioma] = useState(false);
+
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCount(prevCount => prevCount + 1);
+    }, 2000);
+
+    return () => clearInterval(intervalId);
+  }, []);
   
   const handleRegister = async () => {
 
