@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, ScrollView, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, Image, ScrollView, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
 import { COLORS, SIZES } from '../constants/theme';
 import Header from '../navigation/header_back';
 import { Ionicons } from '@expo/vector-icons';
 import { fetchUser } from '../api_service/ApiConsultar_Usuario';
 import { userId, getPalabra, userType } from '../informacion/User';
+import { addFavourite } from '../api_service/APIFavoritos';
 
 import ConsumerCheck from './consumerCheck';
 import ProductorCheck from './productorCheck';
@@ -27,7 +28,8 @@ const ProfileScreen = ({ navigation, route }) => {
     const handleAddFavourite = async () => {
         try {
           const tipo = userType().toLowerCase() + 's';
-          const type = routeTypeUser.toLowerCase() + 's';
+          const type = typeUser.toLowerCase() + 's';
+          const routeIdUser = idUser;
           const response = await addFavourite(activeUser, type, tipo, routeIdUser);
         } catch (error) {
           console.error("Failed to add favourite:", error);
@@ -100,6 +102,17 @@ const styles = StyleSheet.create({
         borderWidth: 5,
         borderColor: COLORS.tertiary,
     },
+    addButton: {
+        backgroundColor: COLORS.secondary,
+        padding: 10,
+        marginVertical: 10,
+        borderRadius: 5,
+    },
+    buttonFavouriteText: {
+        color: 'white',
+        fontSize: 20,
+        fontWeight: 'bold',
+    },
     usernameLarge: {
         fontSize: 24,
         fontWeight: 'bold',
@@ -152,11 +165,11 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: 'bold',
     },
-    addButton: {
-        backgroundColor: COLORS.primary,
-        padding: 10,
-        borderRadius: 5,
-        marginTop: 10,
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: COLORS.secondary,
     },
 });
 
