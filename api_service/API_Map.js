@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { URL } from "../constants/theme";
-import { userId } from "../informacion/User";
 
-export const informacionUsuario = () => {
+export const informacionUsuario = (id) => {
 
     return new Promise ((resolve, reject) => {
         
@@ -17,7 +16,7 @@ export const informacionUsuario = () => {
               },
         };
         
-        const url = 'http://'+URL+'/users/profile/'+userId();
+        const url = 'http://'+URL+'/users/profile/'+id;
         
         fetch(url, requestOptions)
             .then(response => {
@@ -174,6 +173,38 @@ export const calculoDistancias = (latitude1, longitude1, latitude2, longitude2) 
             });
     })
     
+}
+
+export const infoVendedor = (id) => {
+    return new Promise ((resolve, reject) => {
+
+        const csrfToken = '';
+        
+        const requestOptions = {
+            method: 'GET',
+            headers: {
+                'accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
+              }
+        };
+        
+        const url = 'http://'+URL+'/users/users/'+id+'/getSpecificInfo';
+
+        fetch(url, requestOptions)
+            .then(response => {
+              
+            return response.json();
+            })
+            .then(data => {
+            resolve(data);
+    
+            })
+            .catch(error => {
+            console.error('There was a problem with your fetch operation:', error);
+            reject(new Error(error));
+            });
+    })
 }
 
 const ApiMap = () => {
