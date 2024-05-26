@@ -17,6 +17,7 @@ const ProfileScreen = ({ navigation, route }) => {
 
 
     const [userData, setUserData] = useState([]);
+    const activeUser = userId();
 
     if (typeUser === undefined) {
         console.log("buenastardes");
@@ -63,6 +64,11 @@ const ProfileScreen = ({ navigation, route }) => {
                             <Ionicons name="call" size={18} color="white" />
                             <Text style={styles.telephone}>{userData.telephone}</Text>
                         </View>
+                    )}
+                    {activeUser !== idUser && (
+                        <TouchableOpacity style={styles.addButton} onPress={handleAddFavourite}>
+                            <Text style={styles.buttonFavouriteText}>{getPalabra("Add_favorite")}</Text>
+                        </TouchableOpacity>
                     )}
                 </View>
                 {typeUser === 'Consumer' ? (
@@ -145,6 +151,12 @@ const styles = StyleSheet.create({
     tabTitle: {
         fontSize: 22,
         fontWeight: 'bold',
+    },
+    addButton: {
+        backgroundColor: COLORS.primary,
+        padding: 10,
+        borderRadius: 5,
+        marginTop: 10,
     },
 });
 
