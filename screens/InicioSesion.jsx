@@ -17,6 +17,15 @@ const InicioSesion = () => {
   const [error_message, setError] = useState('');
   const [cambioIdioma, setCambioIdioma] = useState(false);
 
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCount(prevCount => prevCount + 1);
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
   const handleLogin = async () => {
 
     try {
