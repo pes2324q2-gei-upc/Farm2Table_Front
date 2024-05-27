@@ -5,11 +5,14 @@ import Header from '../navigation/header_back';
 import { Ionicons } from '@expo/vector-icons';
 import { fetchUser } from '../api_service/ApiConsultar_Usuario';
 import { userId, getPalabra, userType } from '../informacion/User';
-import { addFavourite } from '../api_service/APIFavoritos';
+import { addFavourite, isUserFavourite, removeFavourite } from '../api_service/APIFavoritos';
 
 import ConsumerCheck from './consumerCheck';
 import ProductorCheck from './productorCheck';
 import MinoristaCheck from './minoristaCheck';
+import { is } from 'date-fns/locale';
+
+
 
 
 const ProfileScreen = ({ navigation, route }) => {
@@ -18,6 +21,7 @@ const ProfileScreen = ({ navigation, route }) => {
 
 
     const [userData, setUserData] = useState([]);
+    const [isFavourite, setIsFavourite] = useState(false);
     const activeUser = userId();
 
     if (typeUser === undefined) {
@@ -31,11 +35,23 @@ const ProfileScreen = ({ navigation, route }) => {
           const type = typeUser.toLowerCase() + 's';
           const routeIdUser = idUser;
           const response = await addFavourite(activeUser, type, tipo, routeIdUser);
+          setIsFavourite(true);
         } catch (error) {
           console.error("Failed to add favourite:", error);
         }
     };
 
+    const handleRemoveFavourite = async () => {
+        try {
+          const tipo = userType().toLowerCase() + 's';
+          const type = typeUser.toLowerCase() + 's';
+          const routeIdUser = idUser;
+          const response = await removeFavourite(activeUser, type, tipo, routeIdUser);
+            setIsFavourite(false);
+        } catch (error) {
+          console.error("Failed to remove favourite:", error);
+        }
+    }
 
     useEffect(() => {
         const userLoad = async () => {
@@ -49,6 +65,18 @@ const ProfileScreen = ({ navigation, route }) => {
                 console.error("Failed to fetch user data: ", error);
             }
         };
+        const isFavourite = async () => {
+            try {
+                const tipo = userType().toLowerCase() + 's';
+                const type = typeUser.toLowerCase() + 's';
+                const routeIdUser = idUser;
+                const response = await isUserFavourite(activeUser, type, tipo, routeIdUser);
+                setIsFavourite(response.data.some(obj => obj.id === routeIdUser));
+            } catch (error) {
+                console.error("Failed to check if user is favourite:", error);
+            }
+        }
+        if(activeUser !== idUser) isFavourite();
         userLoad();
     }, []); 
 
@@ -67,9 +95,14 @@ const ProfileScreen = ({ navigation, route }) => {
                             <Text style={styles.telephone}>{userData.telephone}</Text>
                         </View>
                     )}
-                    {activeUser !== idUser && (
+                    {activeUser !== idUser && isFavourite === false && (
                         <TouchableOpacity style={styles.addButton} onPress={handleAddFavourite}>
                             <Text style={styles.buttonFavouriteText}>{getPalabra("Add_favorite")}</Text>
+                        </TouchableOpacity>
+                    )}
+                    {activeUser !== idUser && isFavourite === true && (
+                        <TouchableOpacity style={styles.addButton} onPress={handleRemoveFavourite}>
+                            <Text style={styles.buttonFavouriteText}>{getPalabra("Remove_favorite")}</Text>
                         </TouchableOpacity>
                     )}
                 </View>

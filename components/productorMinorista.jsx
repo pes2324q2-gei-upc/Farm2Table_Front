@@ -3,9 +3,15 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { COLORS, SIZES } from "../constants/theme";
 import { Ionicons } from '@expo/vector-icons';
 
-const ProductorMinoristaItem = ({ name, username }) => {
+const ProductorMinoristaItem = ({ navigation, name, username, type, id }) => {
+
+    const handlePress = () => {
+            navigation.navigate("CheckUser", { idUser: id, typeUser: type });
+    };
+
+
     return (
-        <TouchableOpacity onPress={() => { /* Perform no action yet */ }}>
+        <TouchableOpacity onPress={handlePress}>
                 <View style={styles.itemContainer}>
                     <Text style={styles.name}>{name}</Text>
                     <Text style={styles.username}>{username}</Text>

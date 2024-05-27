@@ -175,7 +175,8 @@ const styles = StyleSheet.create({
     buttonLove: {
         backgroundColor: COLORS.tertiary,
         borderRadius: 10,
-        padding: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 15,
         width: SIZES.width*0.7,
         height: 50,
         alignItems: "center",
