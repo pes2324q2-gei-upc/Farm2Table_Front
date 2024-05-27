@@ -6,21 +6,23 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { Alert, TextInput, TouchableOpacity } from 'react-native'
 import { COLORS, SIZES } from '../constants/theme'
 import {createWord, getMatchPhrase,loginInService} from '../api_service/API_ServeiExtern'
-import {getToken,setToken} from '../informacion/Constants'
+//import {getToken,setToken} from '../informacion/Constants'
 
 const AfegirFrases = () => {
     const route = useRoute();
-    const {item} = route.params
     const navigation = useNavigation();
     const [pairs, setPairs] = useState([{ keys: '', phrase: '' }]);
-    //const [token,setToken] = useState('')
+    const [token,setToken] = useState('')
 
     useEffect(() => {
-      if (getToken() == '') {
+      if (token == '') {
+        console.log("me logeo")
         const login = async() => {
             const data = await loginInService()
-            console.log(data.token)
+            //console.log("token substring: " + data.token.substring(7))
+            //setToken(data.token.substring(7))
             setToken(data.token)
+            console.log(token)
         }
         login()
       }
@@ -43,8 +45,12 @@ const AfegirFrases = () => {
       };
 
       const handleAccepta = async () => {
-        const token = getToken()
+        //const token = getToken()
+        console.log("token: " + token)
         const data = await createWord(pairs,token)
+        //console.log(data)
+        //const data = await getMatchPhrase("disponibilidad",token)
+        //console.log(data)
         //return navigation.goBack()
         return data
       }
