@@ -144,63 +144,71 @@ const ProductDetails = ({ navigation, route }) => {
       <ScrollView>
         {product && (
           <>
-          <SafeAreaView style={styles.container}>
-        
-            <Image source={{ uri: product.image }} style={styles.image} />
-
-            <View style={styles.card}>
-              <View style={styles.name_price}>
-                <Text style={styles.name}>{product.name}</Text>
-                <View style={styles.priceStyle}>
-                  <Text style={styles.price}>{product.price} €/{product.unit}</Text>
+            <SafeAreaView style={styles.container}>
+              <View style={styles.imageContainer}>
+                <Image source={{ uri: product.image }} style={styles.image} />
+                <View style={styles.quantityPill}>
+                  <Text style={styles.quantityPillText}>{product.quantity} kg {getPalabra("in_stock")}</Text>
                 </View>
               </View>
 
-              <ScrollView style={styles.description_row}>
-                <Text style={styles.description}>{product.description}</Text>
-              </ScrollView>
-
-              <View style={styles.quanity_row}>
-                <View style={styles.user_info_container}>
-                  <View style={styles.userrow}>
-                    {userAvatar && <Image source={{ uri: userAvatar }} style={styles.user_image} />}
-                    <Text style={styles.user_name}>{product.productor_info.username}</Text>
-                  </View>
-
-                  <View style={styles.rating_row}>
-                    <TouchableOpacity style={styles.quantity_button} onPress={decrement}>
-                      <Ionicons name="remove" size={20} color="black" />
-                    </TouchableOpacity>
-                    <Text style={styles.quantity}>{count}</Text>
-                    <TouchableOpacity style={styles.quantity_button} onPress={increment}>
-                      <Ionicons name="add" size={20} color="black" />
-                    </TouchableOpacity>
+              <View style={styles.card}>
+                <View style={styles.name_price}>
+                  <Text style={styles.name}>{product.name}</Text>
+                  <View style={styles.priceStyle}>
+                    <Text style={styles.price}>{product.price} €/{product.unit}</Text>
                   </View>
                 </View>
-              </View>
 
-              <View style={styles.button_row}>
-                <TouchableOpacity style={styles.button} onPress={addToCart}>
-                  <Text style={styles.button_text}>Afegir {count} a la cistella</Text>
-                </TouchableOpacity>
-              </View>
+                <ScrollView style={styles.description_row}>
+                  <Text style={styles.description}>{product.description}</Text>
+                </ScrollView>
 
-              <View style={styles.button_bottom_row}>
-                {user !== product.productor_info.id && (
+                <View style={styles.quanity_row}>
+                  <View style={styles.user_info_container}>
+                    <View style={styles.userrow}>
+                      {userAvatar && <Image source={{ uri: userAvatar }} style={styles.user_image} />}
+                      <Text style={styles.user_name}>{product.productor_info.username}</Text>
+                    </View>
+
+                    <View style={styles.rating_row}>
+                      <TouchableOpacity style={styles.quantity_button} onPress={decrement}>
+                        <Ionicons name="remove" size={20} color="black" />
+                      </TouchableOpacity>
+                      <Text style={styles.quantity}>{count}</Text>
+                      <TouchableOpacity style={styles.quantity_button} onPress={increment}>
+                        <Ionicons name="add" size={20} color="black" />
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+
+                <View style={styles.button_row}>
+                  <TouchableOpacity style={styles.button} onPress={addToCart}>
+                    <Text style={styles.button_text}>Afegir {count} a la cistella</Text>
+                  </TouchableOpacity>
+                </View>
+
+                <View style={styles.button_bottom_row}>
+                  {user !== product.productor_info.id && (
                     <OpenChat onPress={handleOpenChatPress} />
-                )}
-                {isFavourite === false && (<TouchableOpacity style={styles.buttonLove} onPress={handleAddFavourite}>
-                  <Text style={styles.button_text}>{getPalabra("Add_favorite")}</Text>
-                  <Ionicons name="heart" size={20} color={COLORS.primary} />
-                </TouchableOpacity>)}
-                {isFavourite === true && (<TouchableOpacity style={styles.buttonLove} onPress={handleRemoveFavourite}>
-                  <Text style={styles.button_text}>{getPalabra("Remove_favorite")}</Text>
-                  <Ionicons name="heart" size={20} color={COLORS.primary} />
-                </TouchableOpacity>)}
-              </View>
+                  )}
+                  {!isFavourite && (
+                    <TouchableOpacity style={styles.buttonLove} onPress={handleAddFavourite}>
+                      <Text style={styles.button_text}>{getPalabra("Add_favorite")}</Text>
+                      <Ionicons name="heart-outline" size={20} color={COLORS.primary} />
+                    </TouchableOpacity>
+                  )}
+                  {isFavourite && (
+                    <TouchableOpacity style={styles.buttonLove} onPress={handleRemoveFavourite}>
+                      <Text style={styles.button_text}>{getPalabra("Remove_favorite")}</Text>
+                      <Ionicons name="heart" size={20} color={COLORS.primary} />
+                    </TouchableOpacity>
+                  )}
+                </View>
 
-            </View>
-          </SafeAreaView>
+              </View>
+            </SafeAreaView>
           </>
         )}
       </ScrollView>

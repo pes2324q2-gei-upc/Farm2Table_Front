@@ -132,5 +132,6 @@
     "Types": "Tipus",
     "Products": "Productes",
     "Productors": "Productors",
-    "Minoristas": "Minoristes"
+    "Minoristas": "Minoristes",
+    "in_stock": "en estoc"
 }
