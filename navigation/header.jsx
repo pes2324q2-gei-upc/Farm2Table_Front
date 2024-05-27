@@ -27,9 +27,10 @@ const Header = () => {
         <View style={styles.container}>
             <View style={styles.innerContainer}>
                 <TouchableOpacity onPress={() => navigation.openDrawer()}>
-                    <Image
-                        source={require('../assets/images/149071.png')}
-                        style={styles.profileImage}
+                    <Ionicons
+                        name="menu-outline" 
+                        size={35} 
+                        color={COLORS.primary}
                     />
                 </TouchableOpacity>
                 <FontAwesome5 name="tractor" size={44} color="white" />
