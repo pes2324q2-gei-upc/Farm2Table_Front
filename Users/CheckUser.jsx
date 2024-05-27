@@ -67,7 +67,7 @@ const ProfileScreen = ({ navigation, route }) => {
                 console.error("Failed to check if user is favourite:", error);
             }
         };
-        if (activeUser !== idUser) checkIfFavourite();
+        if (activeUser !== idUser && userType() !== typeUser) checkIfFavourite();
         userLoad();
     }, [activeUser, idUser, typeUser]);
 
@@ -81,7 +81,7 @@ const ProfileScreen = ({ navigation, route }) => {
                     ) : null}
                     <View style={styles.usernameRow}>
                         <Text style={styles.usernameLarge}>{userData.username}</Text>
-                        {activeUser !== idUser && (
+                        {activeUser !== idUser && userType() !== typeUser && (
                             <TouchableOpacity onPress={isFavourite ? handleRemoveFavourite : handleAddFavourite}>
                                 <Ionicons
                                     name={isFavourite ? "heart" : "heart-outline"}
