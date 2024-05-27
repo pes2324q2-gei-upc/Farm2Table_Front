@@ -128,5 +128,11 @@
     "segeliminar": "Are you sure you want to delete this chat?",
     "you": "You",
     "from_you": "from you",
-    "logout": "Logout"
+    "logout": "Logout",
+    "no_selection": "You haven't selected any",
+    "yet": "yet",
+    "Types": "Types",
+    "Products": "Products",
+    "Productors": "Productors",
+    "Minoristas": "Commerces"
 }

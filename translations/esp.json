@@ -127,5 +127,11 @@
     "segeliminar": "¿Estás seguro de que deseas eliminar este chat?",
     "you": "Tú",
     "from_you": "de tu posición",
-    "logout": "Cerrar sesión"
+    "logout": "Cerrar sesión",
+    "no_selection": "No has seleccionado ningún",
+    "yet": "aún",
+    "Types": "Tipos",
+    "Products": "Productos",
+    "Productors": "Productores",
+    "Minoristas": "Minoristas"
 }

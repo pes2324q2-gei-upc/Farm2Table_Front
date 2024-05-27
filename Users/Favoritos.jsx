@@ -7,6 +7,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import ProductorMinoristaItem from "../components/productorMinorista";
 import ProductItem from "../components/productItem";
 import TypeItem from "../components/typeItem";
+import { getPalabra } from "../informacion/User";
 
 const Favoritos = ({ navigation, userId, userType }) => {
     const [searchParty, setSearchParty] = useState([]);
@@ -70,7 +71,8 @@ const Favoritos = ({ navigation, userId, userType }) => {
         let favourites = favouriteData[selectedType.toLowerCase()];
 
         if (!Array.isArray(favourites) || favourites.length === 0) {
-            return <Text style={styles.noItemsText}>You haven't selected any {selectedType.toLowerCase()} yet.</Text>;
+            const tipo = selectedType.toLowerCase().slice(0, -1);
+            return <Text style={styles.noItemsText}>{getPalabra("no_selection")} {tipo} {getPalabra("yet")}.</Text>;
         }
 
         if (selectedType === "Productors") {
@@ -115,7 +117,7 @@ const Favoritos = ({ navigation, userId, userType }) => {
                         ]}
                     >
                         <Text style={styles.white}>
-                            {party}
+                            {getPalabra(party)}
                         </Text>
                     </TouchableOpacity>
                 ))}

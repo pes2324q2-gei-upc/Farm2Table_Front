@@ -126,5 +126,11 @@
     "segeliminar": "Estàs segur que vols eliminar aquest xat?",
     "you": "Tú",
     "from_you": "de la teva posició",
-    "logout": "Tancar sessió"
+    "logout": "Tancar sessió",
+    "no_selection": "No has seleccionat cap",
+    "yet": "encara",
+    "Types": "Tipus",
+    "Products": "Productes",
+    "Productors": "Productors",
+    "Minoristas": "Minoristes"
 }
