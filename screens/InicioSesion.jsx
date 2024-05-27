@@ -8,6 +8,9 @@ import { useNavigation } from '@react-navigation/native';
 import { loginService } from '../api_service/ApiInicioSesion';
 import STYLES from '../styles/inici_registre.style';
 import SeleccioIdioma from '../components/seleccioIdioma';
+import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+import { googleSignIn } from '../api_service/API_GoogleSignIn';
+
 
 const InicioSesion = () => {
   const [username, setUsername] = useState('');
@@ -51,8 +54,38 @@ const InicioSesion = () => {
     setSecureTextEntry(!secure_text_entry);
   };
 
-  const inicioConGoogle = () => {
-    
+  const inicioConGoogle = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      try {
+        const response = await googleSignIn(userInfo.idToken);
+        if (response.error) {
+          setError(response.error)
+          console.log(error_message);
+        }
+        else {
+          setUserId(response.data.user_id);
+          if (response.data.user_type === null || response.data.user_type == undefined) { NAVIGATOR.navigate("EscollirUsuari"); }
+          else {
+            setUserType(response.data.user_type);
+            console.log("ID = ", response.data.user_id);
+            console.log("TYPE = ", response.data.user_type);
+            NAVIGATOR.navigate('Footer');
+          }
+        }
+      } catch (err) {console.log(err.message);}
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        console.log('User Cancelled the Sign-In Process');
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        console.log('Sign-In is already in progress');
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        console.log('Play Services not available');
+      } else {
+        console.log('Error', error);
+      }
+    }
   };
 
   const registrarse = () => {
