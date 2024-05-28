@@ -17,6 +17,7 @@ const ProfileScreen = ({ navigation, route }) => {
 
 
     const [userData, setUserData] = useState([]);
+    const avatarUri = userData.avatar ? { uri: userData.avatar } : require('../assets/images/149071.png');
 
     if (typeUser === undefined) {
         console.log("buenastardes");
@@ -44,9 +45,7 @@ const ProfileScreen = ({ navigation, route }) => {
             <Header />
             <View style={{ flex: 1, backgroundColor: COLORS.secondary }}>
                 <View style={styles.profileContainer}>
-                    {userData.avatar ? (
-                        <Image source={userData.avatar} style={styles.avatar} />
-                    ) : null}
+                        <Image source={avatarUri} style={styles.avatar} />
                     <Text style={styles.usernameLarge}>{userData.username}</Text>
                     {userData.telephone && (
                         <View style={styles.telephoneContainer}>
