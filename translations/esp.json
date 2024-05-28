@@ -132,8 +132,10 @@
     "decline_offer": "Oferta rechazada",
     "decline_message": "Has rechazado la oferta",
     "borrar_mensaje": "No se pudo borrar el mensaje",
-    "offer_price": "Precio Oferta (€)",
-    "offer_quantity": "Cantidad Oferta (kg)",
+    "offer_price": "Precio (€)",
+    "offer_quantity": "Cantidad (kg)",
     "accept": "Aceptar",
-    "decline": "Rechazar"
+    "decline": "Rechazar",
+    "enviar_oferta": "Enviar Oferta",
+    "enviar_missatge": "Enviar Mensaje"
 }

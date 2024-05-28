@@ -16,6 +16,7 @@ const MensajesChat = ({ navigation }) => {
     const [socket, setSocket] = useState(null);
     const route = useRoute();
     const { chatId, productId, authorId, receiverId, receiverUsername } = route.params;
+    const [isSendingMessage, setIsSendingMessage] = useState(true);
 
     useEffect(() => {
         const cleanupWebSocket = initializeWebSocket(
@@ -54,7 +55,7 @@ const MensajesChat = ({ navigation }) => {
                 setOfferPrice('');
                 setOfferQuantity('');
             } else {
-                Alert.alert("Error", "Debe llenar solo los campos de mensaje o de oferta, no ambos.");
+                Alert.alert("Error", "Error");
             }
         }
     };
@@ -159,28 +160,36 @@ const MensajesChat = ({ navigation }) => {
                     ))}
                 </ScrollView>
                 <View style={styles.inputContainer}>
-                    <TextInput
-                        style={styles.input}
-                        placeholder={getPalabra("type_message")}
-                        onChangeText={setMessage}
-                        value={message}
-                        multiline
-                        autoFocus
-                    />
-                    <TextInput
-                        style={styles.input}
-                        placeholder={getPalabra("offer_price")}
-                        onChangeText={setOfferPrice}
-                        value={offerPrice}
-                        keyboardType="numeric"
-                    />
-                    <TextInput
-                        style={styles.input}
-                        placeholder={getPalabra("offer_quantity")}
-                        onChangeText={setOfferQuantity}
-                        value={offerQuantity}
-                        keyboardType="numeric"
-                    />
+                    {isSendingMessage ? (
+                        <TextInput
+                            style={styles.input}
+                            placeholder={getPalabra("type_message")}
+                            onChangeText={setMessage}
+                            value={message}
+                            multiline
+                            autoFocus
+                        />
+                    ) : (
+                        <>
+                            <TextInput
+                                style={styles.input}
+                                placeholder={getPalabra("offer_price")}
+                                onChangeText={setOfferPrice}
+                                value={offerPrice}
+                                keyboardType="numeric"
+                            />
+                            <TextInput
+                                style={styles.input}
+                                placeholder={getPalabra("offer_quantity")}
+                                onChangeText={setOfferQuantity}
+                                value={offerQuantity}
+                                keyboardType="numeric"
+                            />
+                        </>
+                    )}
+                    <TouchableOpacity onPress={() => setIsSendingMessage(!isSendingMessage)} style={styles.toggleButton}>
+                        <Text>{isSendingMessage ? getPalabra("enviar_oferta") : getPalabra("enviar_missatge")}</Text>
+                    </TouchableOpacity>
                     <TouchableOpacity onPress={sendMessage} style={styles.sendButton}>
                         <Entypo name="paper-plane" size={24} color="#245414" />
                     </TouchableOpacity>
