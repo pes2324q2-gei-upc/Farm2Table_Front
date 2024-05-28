@@ -45,7 +45,6 @@ const CartScreen = () => {
     };
 
     const handleBuyNow = (storeId, items) => {
-        console.log('Buy now', storeId, items);
         if (!storeId || !items || items.length === 0) {
             console.error("Datos inválidos: Store ID o Items están vacíos");
             // Aquí puedes optar por mostrar un mensaje al usuario, manejar el error o simplemente no navegar.

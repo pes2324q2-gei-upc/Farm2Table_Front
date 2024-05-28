@@ -49,7 +49,6 @@ const Buscador = () => {
         fetchData2(API_ENDPOINT, 0, setData1);
         fetchData2(API_PRODUCTES, 1,setData2);
         fetchData2(API_MERCATS, 3,setData4);
-        console.log(data2);
         if(v == 1) setSelectedIndex(1); v =2;
     }, [])
 );
@@ -58,7 +57,6 @@ const Buscador = () => {
 
 
     const handleItemPress = (index) => {
-        console.log(index)
         setSelectedIndex(index);
     };
 

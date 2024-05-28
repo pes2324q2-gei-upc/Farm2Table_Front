@@ -28,19 +28,13 @@ const Consultar_Usuario = () => {
                 .catch(error => {
                     console.error('Error fetching data:', error);
                 });
-            console.log("buenas");
             fetchProductorComments(item.id)
             .then(data => {
                 setComments(data);
-                console.log("hola");
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
-            //console.log(comments);
-            console.log(shopData)
-            const v = userId();
-            console.log(v);
         }, [item])
     );
 

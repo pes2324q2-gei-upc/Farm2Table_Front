@@ -10,7 +10,6 @@ export const fetchUserFunds = async(userId) => {
         const response = await fetch(`${API_URL}/users/funds/${userId}`);
         const data = await response.json();
         if (response.ok) {
-            console.log(data.data);
             return data.data;
         } else {
             throw new Error(data.message);
@@ -45,7 +44,6 @@ export const buyProduct = async (productId, quantity) => {
             }
         });
         const data = await response.json();
-        console.log(data);
         if (response.ok) {
             return data;
         } else {
@@ -59,7 +57,6 @@ export const buyProduct = async (productId, quantity) => {
 
 export const processPurchase = async (data) => {
     try {
-        console.log('Data:', JSON.stringify(data));
         const response = await fetch(`${API_URL}/users/pay/cart`, {
             method: 'PUT',
             headers: {
@@ -70,7 +67,6 @@ export const processPurchase = async (data) => {
             body: JSON.stringify(data)
         });
         const result = await response.json();
-        console.log(result);
         if (!response.ok) {
             throw new Error(result.message);
         }

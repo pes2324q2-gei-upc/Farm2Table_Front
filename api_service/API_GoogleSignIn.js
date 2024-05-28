@@ -5,7 +5,6 @@ const API_URL = `http://${getIP()}`;
 
 
 export const googleSignIn = async (idToken) => {
-    console.log("ID Token: ", idToken);
     try {
         const response = await fetch(`${API_URL}/users/googleLoginRegister/`, {
             method: 'POST',
@@ -15,9 +14,7 @@ export const googleSignIn = async (idToken) => {
             body: JSON.stringify({"id_token": idToken})
         });
         const response_json = await response.json();
-        console.log('response: ', response_json);
         if (response.ok) {
-            console.log('response data: ', response_json.data);
             return response_json;
         } else {
             throw new Error(response_json.message);

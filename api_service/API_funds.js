@@ -9,7 +9,6 @@ export const fetchUserFunds = async(userId) => {
         const response = await fetch(`${API_URL}/users/funds/${userId}`);
         const data = await response.json();
         if (response.ok) {
-            console.log('response data: ',data.data);
             return data.data;
         } else {
             throw new Error(data.message);
@@ -21,7 +20,6 @@ export const fetchUserFunds = async(userId) => {
 }
 
 export const fetchAddFunds = async(userId, amount) => {
-    console.log("Adding funds: ", amount);
     try {
         const response = await fetch(`${API_URL}/users/funds/${userId}/add`, {
             method: "PUT",
@@ -32,7 +30,6 @@ export const fetchAddFunds = async(userId, amount) => {
         });
         const data = await response.json();
         if (response.ok) {
-            console.log('Successfully added coins: ',data.data);
             return data.data;
         } else {
             throw new Error(data.message);
