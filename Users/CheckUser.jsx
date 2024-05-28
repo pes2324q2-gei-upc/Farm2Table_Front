@@ -15,8 +15,11 @@ const ProfileScreen = ({ navigation, route }) => {
     let { idUser, typeUser } = route.params;
 
     const [userData, setUserData] = useState([]);
+    const avatarUri = userData.avatar ? { uri: userData.avatar } : require('../assets/images/149071.png');
+
     const [isFavourite, setIsFavourite] = useState(false);
     const activeUser = userId();
+
 
     if (typeUser === undefined) {
         typeUser = userType();
@@ -76,9 +79,9 @@ const ProfileScreen = ({ navigation, route }) => {
             <Header />
             <View style={{ flex: 1, backgroundColor: COLORS.secondary }}>
                 <View style={styles.profileContainer}>
-                    {userData.avatar ? (
-                        <Image source={{ uri: userData.avatar }} style={styles.avatar} />
-                    ) : null}
+                        <Image source={avatarUri} style={styles.avatar} />
+                    <Text style={styles.usernameLarge}>{userData.username}</Text>
+
                     <View style={styles.usernameRow}>
                         <Text style={styles.usernameLarge}>{userData.username}</Text>
                         {activeUser !== idUser && userType() !== typeUser && (
@@ -92,6 +95,7 @@ const ProfileScreen = ({ navigation, route }) => {
                             </TouchableOpacity>
                         )}
                     </View>
+
                     {userData.telephone && (
                         <View style={styles.telephoneContainer}>
                             <Ionicons name="call" size={18} color="white" />
