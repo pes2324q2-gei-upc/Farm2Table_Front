@@ -6,12 +6,10 @@ import Header from '../navigation/header_back';
 import { fetchUser } from '../api_service/ApiConsultar_Usuario';
 import { userId, getPalabra, userType } from '../informacion/User';
 import { addFavourite, isUserFavourite, removeFavourite } from '../api_service/APIFavoritos';
-
 import ConsumerCheck from './consumerCheck';
 import ProductorCheck from './productorCheck';
 import MinoristaCheck from './minoristaCheck';
-import Restaurante from '../Restaurants/Restaurante';
-import Valorar from '../Restaurants/Valorar';
+
 const ProfileScreen = ({ navigation, route }) => {
     let { idUser, typeUser } = route.params;
 
@@ -81,11 +79,6 @@ const ProfileScreen = ({ navigation, route }) => {
             <View style={{ flex: 1, backgroundColor: COLORS.secondary }}>
                 <View style={styles.profileContainer}>
                         <Image source={avatarUri} style={styles.avatar} />
-                    <TouchableOpacity onPress={navigation.navigate('Valorar',{ restaurantId: idUser, nomRestaurant: userData.username, tipus: 'Productor'})}>
-                        <Text>
-                            Valorar
-                        </Text>
-                    </TouchableOpacity>
                     <View style={styles.usernameRow}>
                         <Text style={styles.usernameLarge}>{userData.username}</Text>
                         {activeUser !== idUser && userType() !== typeUser && (
