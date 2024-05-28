@@ -15,7 +15,7 @@ import { googleSignIn } from '../api_service/API_GoogleSignIn';
 const InicioSesion = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [secure_text_entry, setSecureTextEntry] = useState(true); 
+  const [secure_text_entry, setSecureTextEntry] = useState(true);
   const NAVIGATOR = useNavigation();
   const [error_message, setError] = useState('');
   const [cambioIdioma, setCambioIdioma] = useState(false);
@@ -55,9 +55,7 @@ const InicioSesion = () => {
   const inicioConGoogle = async () => {
     try {
       await GoogleSignin.hasPlayServices();
-      console.log('Pedo');
       const userInfo = await GoogleSignin.signIn();
-      console.log('Pedo2');
       try {
         const response = await googleSignIn(userInfo.idToken);
         if (response.error) {
@@ -83,7 +81,6 @@ const InicioSesion = () => {
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
         console.log('Play Services not available');
       } else {
-        console.log('Fuck');
         console.log('Error', error);
       }
     }
@@ -102,7 +99,7 @@ const InicioSesion = () => {
 
       <Image source={logo} style={STYLES.logo} />
 
-      { cambioIdioma && <SeleccioIdioma handleCambioIdioma={handleCambioIdioma} />}      
+      { cambioIdioma && <SeleccioIdioma handleCambioIdioma={handleCambioIdioma} />}
 
       <TouchableOpacity style={STYLES.cambio_idioma} onPress={handleCambioIdioma}>
         <Image source={renderFlagImage()} style={STYLES.bandera} />
@@ -122,7 +119,7 @@ const InicioSesion = () => {
 
       <View style={STYLES.contrasenya}>
         <Icon name="lock" size={20} color ="black" style={{marginRight: 7}}/>
-        <TextInput 
+        <TextInput
           style={STYLES.texto_contrasenya}
           placeholder={getPalabra("password")}
           secureTextEntry={secure_text_entry}

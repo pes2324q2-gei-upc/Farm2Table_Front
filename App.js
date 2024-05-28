@@ -65,6 +65,7 @@ export default function App() {
   // Initialize GoogleSignin
   GoogleSignin.configure({
    webClientId: '967477216126-or0g8ip52dqordmc5hn2urtqh69la74f.apps.googleusercontent.com',
+   prompt: 'select_account', // Force account selection prompt
   });
 
   if (!fontsLoaded) return null;
