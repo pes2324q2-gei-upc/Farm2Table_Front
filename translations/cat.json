@@ -149,5 +149,8 @@
     "edit_product": "Editar Producte",
     "delete_product": "Eliminar Producte",
     "updated_product": "Producte actualitzat correctament",
-    "deleted_product": "Producte eliminat correctament"
+    "deleted_product": "Producte eliminat correctament",
+    "addRow": "Afegir fila",
+    "keys": "Claus (',' entre elles)",
+    "phrase": "Frase"
 }

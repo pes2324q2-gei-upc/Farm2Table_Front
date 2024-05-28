@@ -8,6 +8,7 @@ import styles from '../styles/userCard.styles';
 import { fetchUser } from '../api_service/ApiConsultar_Usuario';
 import { userId } from '../informacion/User';
 import { getPalabra } from '../informacion/User';
+import {userType} from '../informacion/User'
 
 
 const UserProfile = ({navigation, idUser}) => {
@@ -56,6 +57,13 @@ const UserProfile = ({navigation, idUser}) => {
                     </TouchableOpacity>
                 </View>
             )}
+            {userType() == "Productor" ? 
+                (<View style={styles.buttonContainer}>
+                    <TouchableOpacity style={styles.boton} onPress={() => navigation.navigate('AfegirFrases')}>
+                        <Text style={styles.botonEditar}>Afegir frases predefinides</Text>
+                    </TouchableOpacity>
+                </View>) : ""
+            }
         </View>
     );
 };
