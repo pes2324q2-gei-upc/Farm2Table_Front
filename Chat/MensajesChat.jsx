@@ -8,6 +8,7 @@ import styles from "../styles/mensajesChat.style";
 import { getPalabra } from '../informacion/User';
 import { URL } from "../constants/theme";
 import { fetchInitialMessages, initializeWebSocket, deleteChat, deleteMessage } from '../api_service/ApiChat';
+
 const MensajesChat = ({ navigation }) => {
     const [message, setMessage] = useState('');
     const [offerPrice, setOfferPrice] = useState('');
@@ -76,6 +77,10 @@ const MensajesChat = ({ navigation }) => {
                         }
                         navigation.goBack();
                     }
+                },
+                {
+                    text: getPalabra("cancel"),
+                    style: "cancel"
                 }
             ]
         );
@@ -96,6 +101,10 @@ const MensajesChat = ({ navigation }) => {
                             Alert.alert("Error", getPalabra("borrar_mensaje"));
                         }
                     }
+                },
+                {
+                    text: getPalabra("cancel"),
+                    style: "cancel"
                 }
             ]
         );
