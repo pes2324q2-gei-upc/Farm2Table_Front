@@ -8,8 +8,8 @@ import { useNavigation } from '@react-navigation/native';
 import { loginService } from '../api_service/ApiInicioSesion';
 import STYLES from '../styles/inici_registre.style';
 import SeleccioIdioma from '../components/seleccioIdioma';
-import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
-import { googleSignIn } from '../api_service/API_GoogleSignIn';
+//import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+//import { googleSignIn } from '../api_service/API_GoogleSignIn';
 
 
 const InicioSesion = () => {
@@ -54,6 +54,10 @@ const InicioSesion = () => {
     setSecureTextEntry(!secure_text_entry);
   };
 
+    const inicioConGoogle = async () => {
+      
+    }
+  /*
   const inicioConGoogle = async () => {
     try {
       await GoogleSignin.hasPlayServices();
@@ -86,7 +90,7 @@ const InicioSesion = () => {
         console.log('Error', error);
       }
     }
-  };
+  };*/
 
   const registrarse = () => {
     NAVIGATOR.navigate('Registre');
