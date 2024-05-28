@@ -81,6 +81,39 @@ const styles = StyleSheet.create({
         textAlign: 'right',
         marginTop: 4,
     },
+    offerContainer: {
+        backgroundColor: '#f0f0f0',
+        borderRadius: 10,
+        padding: 10,
+        marginVertical: 5,
+    },
+    offerText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    offerButtons: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        marginTop: 10,
+    },
+    acceptButton: {
+        backgroundColor: 'green',
+        padding: 10,
+        borderRadius: 5,
+    },
+    declineButton: {
+        backgroundColor: 'red',
+        padding: 10,
+        borderRadius: 5,
+    },
+    acceptButtonText: {
+        color: 'white',
+        fontWeight: 'bold',
+    },
+    declineButtonText: {
+        color: 'white',
+        fontWeight: 'bold',
+    },
 });
 
 export default styles;

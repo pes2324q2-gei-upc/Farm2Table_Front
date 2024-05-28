@@ -1,36 +1,120 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollView, Text, TextInput, TouchableOpacity, View, SafeAreaView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { Entypo } from '@expo/vector-icons';
+import { Ionicons, Entypo } from '@expo/vector-icons';
 import { useRoute } from '@react-navigation/native';
 import { format, parseISO } from 'date-fns';
+import PropTypes from 'prop-types';
 import styles from "../styles/mensajesChat.style";
 import { getPalabra } from '../informacion/User';
 import { URL } from "../constants/theme";
-import { fetchInitialMessages, initializeWebSocket } from '../api_service/ApiChat';
+import { fetchInitialMessages, initializeWebSocket, deleteChat } from '../api_service/ApiChat';
+
+const deleteMessage = async (messageId) => {
+    try {
+        const response = await fetch(`http://${URL}/chats/messages/${messageId}`, {
+            method: 'DELETE',
+        });
+
+        if (!response.ok) {
+            throw new Error('Error deleting message');
+        }
+
+        return await response.json();
+    } catch (error) {
+        throw new Error('Error deleting message');
+    }
+};
 
 const MensajesChat = ({ navigation }) => {
     const [message, setMessage] = useState('');
+    const [offerPrice, setOfferPrice] = useState('');
+    const [offerQuantity, setOfferQuantity] = useState('');
     const [messages, setMessages] = useState([]);
     const [socket, setSocket] = useState(null);
     const route = useRoute();
     const { chatId, productId, authorId, receiverId, receiverUsername } = route.params;
 
     useEffect(() => {
-        const cleanupWebSocket = initializeWebSocket(URL, authorId, () => fetchInitialMessages(chatId, authorId).then(setMessages), setMessages, setSocket);
+        const cleanupWebSocket = initializeWebSocket(
+            URL,
+            authorId,
+            () => fetchInitialMessages(chatId, authorId).then(setMessages),
+            setMessages,
+            setSocket
+        );
         return cleanupWebSocket;
     }, [authorId, chatId]);
 
     const sendMessage = () => {
-        if (message.trim() && socket) {
-            socket.send(JSON.stringify({
-                product_id: productId,
-                author_id: authorId,
-                message_text: message,
-                receiver_id: receiverId,
-            }));
-            setMessage('');
+        if (socket) {
+            if (message.trim() && !offerPrice && !offerQuantity) {
+                socket.send(JSON.stringify({
+                    product_id: productId,
+                    author_id: authorId,
+                    message_text: message,
+                    receiver_id: receiverId,
+                    oferta: false,
+                    offer_price: "",
+                    offer_quantity: ""
+                }));
+                setMessage('');
+            } else if (offerPrice.trim() && offerQuantity.trim() && !message) {
+                socket.send(JSON.stringify({
+                    product_id: productId,
+                    author_id: authorId,
+                    message_text: `Oferta: ${offerPrice}€ por ${offerQuantity}kg`,
+                    receiver_id: receiverId,
+                    oferta: true,
+                    offer_price: offerPrice,
+                    offer_quantity: offerQuantity,
+                }));
+                setOfferPrice('');
+                setOfferQuantity('');
+            } else {
+                Alert.alert("Error", "Debe llenar solo los campos de mensaje o de oferta, no ambos.");
+            }
         }
+    };
+
+    const handleAcceptOffer = (offerId) => {
+        Alert.alert(
+            "Oferta aceptada",
+            `Has aceptado la oferta`,
+            [
+                {
+                    text: "OK",
+                    onPress: async () => {
+                        try {
+                            await deleteChat(chatId);
+                        } catch (error) {
+                            Alert.alert("Error", "No se pudo borrar el chat.");
+                            return;
+                        }
+                        navigation.goBack();
+                    }
+                }
+            ]
+        );
+    };
+
+    const handleDeclineOffer = (messageId) => {
+        Alert.alert(
+            "Oferta rechazada",
+            `Has rechazado la oferta`,
+            [
+                {
+                    text: "OK",
+                    onPress: async () => {
+                        try {
+                            await deleteMessage(messageId);
+                            setMessages(prevMessages => prevMessages.filter(msg => msg.id !== messageId));
+                        } catch (error) {
+                            Alert.alert("Error", "No se pudo borrar el mensaje.");
+                        }
+                    }
+                }
+            ]
+        );
     };
 
     const groupedMessages = messages.reduce((acc, message) => {
@@ -45,6 +129,30 @@ const MensajesChat = ({ navigation }) => {
         }
         return acc;
     }, {});
+
+    const renderMessage = (msg, index) => (
+        <View key={index} style={[styles.messageBubble, msg.sender === 'user' ? styles.userMessage : styles.otherMessage]}>
+            {msg.offer && msg.sender === 'server' ? (
+                <View style={styles.offerContainer}>
+                    <Text style={styles.offerText}>{msg.text}</Text>
+                    <Text style={styles.timestamp}>{format(parseISO(msg.timestamp), 'p')}</Text>
+                    <View style={styles.offerButtons}>
+                        <TouchableOpacity onPress={() => handleAcceptOffer(msg.id)} style={styles.acceptButton}>
+                            <Text style={styles.acceptButtonText}>Accept</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => handleDeclineOffer(msg.id)} style={styles.declineButton}>
+                            <Text style={styles.declineButtonText}>Decline</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            ) : (
+                <>
+                    <Text style={styles.messageText}>{msg.text}</Text>
+                    <Text style={styles.timestamp}>{format(parseISO(msg.timestamp), 'p')}</Text>
+                </>
+            )}
+        </View>
+    );
 
     return (
         <SafeAreaView style={styles.container}>
@@ -63,12 +171,7 @@ const MensajesChat = ({ navigation }) => {
                     {Object.entries(groupedMessages).map(([date, dateMessages]) => (
                         <View key={date}>
                             <Text style={styles.dateHeader}>{format(parseISO(date), 'PPP')}</Text>
-                            {dateMessages.map((msg, index) => (
-                                <View key={index} style={[styles.messageBubble, msg.sender === 'user' ? styles.userMessage : styles.otherMessage]}>
-                                    <Text style={styles.messageText}>{msg.text}</Text>
-                                    <Text style={styles.timestamp}>{format(parseISO(msg.timestamp), 'p')}</Text>
-                                </View>
-                            ))}
+                            {dateMessages.map((msg, index) => renderMessage(msg, index))}
                         </View>
                     ))}
                 </ScrollView>
@@ -81,6 +184,20 @@ const MensajesChat = ({ navigation }) => {
                         multiline
                         autoFocus
                     />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Offer Price"
+                        onChangeText={setOfferPrice}
+                        value={offerPrice}
+                        keyboardType="numeric"
+                    />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Offer Quantity"
+                        onChangeText={setOfferQuantity}
+                        value={offerQuantity}
+                        keyboardType="numeric"
+                    />
                     <TouchableOpacity onPress={sendMessage} style={styles.sendButton}>
                         <Entypo name="paper-plane" size={24} color="#245414" />
                     </TouchableOpacity>
@@ -88,6 +205,10 @@ const MensajesChat = ({ navigation }) => {
             </KeyboardAvoidingView>
         </SafeAreaView>
     );
+};
+
+MensajesChat.propTypes = {
+    navigation: PropTypes.object.isRequired,
 };
 
 export default MensajesChat;
