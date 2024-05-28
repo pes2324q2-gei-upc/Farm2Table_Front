@@ -9,6 +9,7 @@ import { addFavourite, isUserFavourite, removeFavourite } from '../api_service/A
 import { userId, setUserId, userType, getPalabra } from '../informacion/User';
 import CartPopUp from '../PopUps/addedCart';
 import OpenChat from "../components/openChat";
+import addToCart from '../api_service/CartService';
 
 const ProductDetails = ({ navigation, route }) => {
   const [product, setProduct] = useState(null);
@@ -95,35 +96,10 @@ const ProductDetails = ({ navigation, route }) => {
   };
     
 
-
-  const addToCart = async () => {
-
-    let cart = []
-
-    if (!loadCart(userId())) {
-      console.log('No cart found for user:', userId());
-      saveCart(userId(), []);
-    }
-    else {
-      const loadedCart = await loadCart(userId());
-      cart = loadedCart;
-    }
-
-    const newCartItem = {
-      productId: product.id,
-      name: product.name,
-      quantity: count,
-      price: product.price,
-    };
-
-    if (cartIconRef.current) {
-      cartIconRef.current.triggerCartAnimation();
-      Vibration.vibrate(200);
-    }
-
-    const updatedCart = addProductToCart(cart, product.productor_info.id, newCartItem, product.productor_info.username, product.productor_info.avatar);
-    await saveCart(userId(), updatedCart);
+  const addtoCart = async () => {
+    addToCart(product.id, product.name, product.price, count, product.productor_info.id, product.productor_info.username, product.productor_info.avatar);
   }
+
   return (
     <SafeAreaView style={styles.container}>
       <HeaderBack ref={cartIconRef} />
@@ -170,7 +146,7 @@ const ProductDetails = ({ navigation, route }) => {
                 </View>
 
                 <View style={styles.button_row}>
-                  <TouchableOpacity style={styles.button} onPress={addToCart}>
+                  <TouchableOpacity style={styles.button} onPress={addtoCart}>
                     <Text style={styles.button_text}>Afegir {count} a la cistella</Text>
                   </TouchableOpacity>
                 </View>
