@@ -22,8 +22,6 @@ const ProductDetails = ({ navigation, route }) => {
 
   const { id } = route.params;
 
-  console.log('Product ID:', id);
-
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
@@ -32,9 +30,7 @@ const ProductDetails = ({ navigation, route }) => {
           throw new Error('Failed to fetch product details');
         }
         const productData = await response.json();
-        console.log('Product data:', productData);
         setProduct(productData);
-        console.log('Product:', product);
 
         // Fetch user avatar
         const userResponse = await fetch(`http://` + URL + `/users/profile/${productData.productor_info.id}`);
@@ -44,7 +40,6 @@ const ProductDetails = ({ navigation, route }) => {
         const userData = await userResponse.json();
         setUserAvatar(userData.data.avatar);
       } catch (error) {
-        console.error('Error fetching product details:', error);
       }
     };
     const isFavourite = async () => {
@@ -58,7 +53,6 @@ const ProductDetails = ({ navigation, route }) => {
     }
     fetchProductDetails();
     isFavourite();
-    console.log('Product:', product)
   }, []);
 
   const increment = () => {
@@ -84,9 +78,7 @@ const ProductDetails = ({ navigation, route }) => {
   const handleAddFavourite = async () => {
     try {
       const typeUser = userType().toLowerCase() + 's';
-      console.log('User type:', typeUser);
       const response = await addFavourite(user, 'products', typeUser, product.id);
-      console.log('Add favourite response:', response);
       setIsFavourite(!isFavourite);
     } catch (error) {
       console.error('Failed to add favourite:', error);
@@ -96,49 +88,13 @@ const ProductDetails = ({ navigation, route }) => {
   const handleRemoveFavourite = async () => {
     try {
       const typeUser = userType().toLowerCase() + 's';
-      console.log('User type:', typeUser);
       const response = await removeFavourite(user, 'products', typeUser, product.id);
-      console.log('Remove favourite response:', response);
       setIsFavourite(!isFavourite);
     } catch (error) {
       console.error('Failed to remove favourite:', error);
     }
   };
     
-
-
-  // const addToCart = async () => {
-
-  //   let cart = []
-
-  //   if (!loadCart(userId())) {
-  //     console.log('No cart found for user:', userId());
-  //     saveCart(userId(), []);
-  //   }
-  //   else {
-  //     console.log('Cart found for user:', userId());
-  //     const loadedCart = await loadCart(userId());
-  //     console.log('Loaded cart:', loadedCart);
-  //     cart = loadedCart;
-  //   }
-
-  //   const newCartItem = {
-  //     productId: product.id,
-  //     name: product.name,
-  //     quantity: count,
-  //     price: product.price,
-  //   };
-
-  //   if (cartIconRef.current) {
-  //     cartIconRef.current.triggerCartAnimation();
-  //     Vibration.vibrate(200);
-  //   }
-
-  //   console.log('Cart Items:', cart);
-  //   const updatedCart = addProductToCart(cart, product.productor_info.id, newCartItem, product.productor_info.username, product.productor_info.avatar);
-  //   console.log('Updated cart:', updatedCart);
-  //   await saveCart(userId(), updatedCart);
-  // }
 
   const addtoCart = async () => {
     addToCart(product.id, product.name, product.price, count, product.productor_info.id, product.productor_info.username, product.productor_info.avatar);

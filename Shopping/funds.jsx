@@ -13,7 +13,6 @@ const AddCoinsScreen = ({ navigation, route }) => {
 
   const addCoins = async (amount) => {
     const nowFunds = await fetchAddFunds(userId(), amount);
-    console.log(nowFunds);
     setCurrentCoins(nowFunds);
   };
 

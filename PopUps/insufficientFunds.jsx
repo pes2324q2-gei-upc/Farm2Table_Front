@@ -6,7 +6,6 @@ import styles from '../styles/popUpCart.style'; // Make sure the path is correct
 import { COLORS } from '../constants/theme'; // Make sure the path is correct
 
 const AddFundsModal = ({ modalVisible, setModalVisible, navigation, actualfunds }) => {
-    console.log(actualfunds);
     return (
         <Modal
             animationType="slide"

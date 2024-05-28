@@ -2,169 +2,74 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image, FlatList } from "react-native";
 import { COLORS, SIZES } from "../constants/theme";
 
+import { userId, userType } from "../informacion/User";
 
-const ProductList = ({navigation, shopData }) => {
+const ProductList = ({ navigation, shopData, idUser, typeUser }) => {
 
-    const handlePress = () => {
+    const handlePress = (id) => {
         console.log("ProductList handlePress");
-        navigation.navigate("ProductDetails", { id });
+        if (typeUser === "Productor" && userId() === idUser) {
+            navigation.navigate("EditProduct", { productId: id });
+        } else {
+            navigation.navigate("ProductDetails", { id: id });
+        }
     }
 
-    console.log("ProductList shopData: ", shopData);
-
     return (
-        <FlatList   
-        data={shopData}
-        keyExtractor={(item) => item.id}
-        renderItem={({item}) => (     
-            <View style={styles.lista}>
-                <TouchableOpacity onPress={handlePress}>
-                <View style={styles.capsule}>
-                    <View style={styles.vista_imagen}>
-                        <Image source = {{uri: item.image}} style={styles.image} />
-                    </View>
-                    <View style={styles.infoProducto}>
-                    <Text style={styles.productName}>{item.name}</Text>
-                    <Text style={styles.productPrice}>{item.price} €/kg</Text>
-                    </View>
+        <FlatList
+            data={shopData}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+                <View style={styles.lista}>
+                    <TouchableOpacity onPress={() => handlePress(item.id)}>
+                        <View style={styles.capsule}>
+                            <Image source={{ uri: item.image }} style={styles.image} />
+                            <View style={styles.infoContainer}>
+                                <Text style={styles.productName}>{item.name}</Text>
+                                <Text style={styles.productPrice}>{item.price} €/kg</Text>
+                            </View>
+                        </View>
+                    </TouchableOpacity>
                 </View>
-                </TouchableOpacity>
-            </View>
-        )}
-    />
+            )}
+        />
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: COLORS.secondary,
-        flex: 1, 
-        paddingTop: (SIZES.height/100) * 8, 
+    lista: {
+        marginVertical: 10,
+        alignItems: 'center',
     },
-    container2: {
-        height: (SIZES.height/100)*64.5,
-        backgroundColor: COLORS.primary,
-        width:'100%',
+    capsule: {
+        borderWidth: 2,
+        borderRadius: 10,
+        borderColor: COLORS.secondary,
+        backgroundColor: COLORS.white,
+        overflow: 'hidden',
+        alignItems: 'center',
+        width: SIZES.width * 0.9, // adjust the width as needed
     },
-    buttonContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between', 
-        paddingHorizontal: SIZES.padding,
-        backgroundColor: 'transparent'
-    },
-    button: {
-        alignItems: "center",
-        height: 40,
-        borderBottomWidth: 2,
-    },
-    buttonText: {
-        textAlign: 'center',
-        textAlignVertical: 'center',
-        fontWeight: 'bold',
-        fontSize: SIZES.xlarge
-    },
-    imageContainer: {
-        width: 100, 
-        height: 100,
-        borderRadius: 75,
-        overflow: 'hidden', 
-        borderWidth: 5, 
-        borderColor: COLORS.tertiary, 
-        position: 'absolute',
-    },
-    image_profile: {
+    image: {
         width: '100%',
-        height: '100%',
+        height: 150,
         resizeMode: 'cover',
     },
     infoContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center',
-        height: (SIZES.height/100) * 14,
-    },
-    info: {
-        position: 'absolute',
-        right: 20,
-        width: '60%',
-        height: '100%',
-        backgroundColor: 'transparent',
-    },
-    ajustes: {
-        position: 'absolute',
-        right:(SIZES.width/100) * 7,
-        top: (SIZES.height/100) * -1,
-        width: '10%',
-        height: '35%',
-        backgroundColor: 'transparent',
-    },
-    nombre: {
-        color: 'white',
-        fontSize:  (SIZES.height/100) * 2,
-        fontWeight: 'bold',
-        paddingBottom:  (SIZES.height/100) * 1,
-    },
-    locationInfo: {
-        flexDirection: 'row',
-        alignItems: 'center', 
-    },
-    locationText: {
-        color: 'white',
-        fontSize:  (SIZES.height/100) * 2, 
-        marginLeft: 1,
-    },
-    width:{
-        width: SIZES.width - 20,
-    },
-    lista:{
-        marginTop: 12,
-        width:(SIZES.width/100)*100,
-        height: (SIZES.height/100)*20,  
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    image: {
-        width: 135, 
-        height: 135,
-        resizeMode: 'contain',
-        position: 'absolute', 
-    },
-    capsule: {
-        maxWidth: '75%',
-        maxHeight: '95%',
-        justifyContent: 'center',
-        borderColor: COLORS.secondary,
-        borderWidth: 3,
-        backgroundColor: 'white',
-        alignItems: 'center',
-        borderRadius: 20,
-    },
-    infoProducto: {
+        padding: 10,
         width: '100%',
-        height: '25%',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        bottom: 0,
     },
     productName: {
         fontSize: 16,
         fontWeight: 'bold',
         color: COLORS.secondary,
-        paddingHorizontal: 10
     },
     productPrice: {
         fontSize: 16,
         fontWeight: 'bold',
-        textAlign: 'right',
-        color: COLORS.secondary, 
-        paddingHorizontal: 10
-    },
-    vista_imagen: {
-        width: '75px',
-        height: '75%',
-        alignItems: 'center',
-        justifyContent: 'center'
+        color: COLORS.secondary,
     },
 });
 

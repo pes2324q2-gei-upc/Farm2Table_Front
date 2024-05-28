@@ -43,7 +43,6 @@ const ProductorCheck = ({ navigation, userData, id }) => {
                 fetchProductorComments(id,"productor")
                 .then(data => {
                     setComments(data);
-                    console.log("hola");
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
@@ -95,7 +94,7 @@ const ProductorCheck = ({ navigation, userData, id }) => {
 
             {activeTab === 'Productos' && (
                 <View style={styles.tabContent}>
-                    <ProductList navigation={navigation} shopData={shopData} />
+                    <ProductList navigation={navigation} shopData={shopData} idUser={id} typeUser="Productor" />
                 </View>
             )}
 

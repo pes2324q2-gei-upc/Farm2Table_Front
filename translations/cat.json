@@ -145,5 +145,9 @@
     "accept": "Acceptar",
     "decline": "Rebutjar",
     "enviar_oferta": "Enviar Oferta",
-    "enviar_missatge": "Enviar Missatge"
+    "enviar_missatge": "Enviar Missatge",
+    "edit_product": "Editar Producte",
+    "delete_product": "Eliminar Producte",
+    "updated_product": "Producte actualitzat correctament",
+    "deleted_product": "Producte eliminat correctament"
 }

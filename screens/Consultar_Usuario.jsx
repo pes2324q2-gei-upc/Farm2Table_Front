@@ -17,7 +17,6 @@ const Consultar_Usuario = () => {
     const { item } = route.params;
     useFocusEffect(
         useCallback(() => {
-            console.log("llega a consultar");
             fetchData(API_ENDPOINT + item.id + "/products")
                 .then(data => {
                     setShopData(data);
@@ -25,9 +24,7 @@ const Consultar_Usuario = () => {
                 .catch(error => {
                     console.error('Error fetching data:', error);
                 });
-            console.log(item.avatar)
             const v = userId();
-            console.log(v);
         }, [item])
     );
 

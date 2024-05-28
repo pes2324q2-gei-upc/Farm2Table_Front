@@ -22,12 +22,13 @@ import CheckUser from './Users/CheckUser';
 import OrderSummary from './Users/orderSummary';
 import Orders from './Users/orderedProduct';
 import EditProfile from './Users/EditProfile';
+import EditProduct from './Products/EditProduct';
 import ChatStackScreen from './navigation/ChatStackScreen';
 import { COLORS, SIZES } from './constants/theme';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { getPalabra, logout, userId, userType } from './informacion/User';
 import Logout from './Users/Logout';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+//import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -62,9 +63,9 @@ export default function App() {
   });
 
   // Initialize GoogleSignin
-  GoogleSignin.configure({
-    webClientId: '744430174588-uak4bb4p9bh2c4moh3pifk6b58nn278i.apps.googleusercontent.com',
-  });
+  //GoogleSignin.configure({
+  //  webClientId: '744430174588-uak4bb4p9bh2c4moh3pifk6b58nn278i.apps.googleusercontent.com',
+  //});
 
   if (!fontsLoaded) return null;
 
@@ -91,6 +92,7 @@ export default function App() {
             <Stack.Screen name="OrderSummary" component={OrderSummary} options={{ headerShown: false }} />
             <Stack.Screen name="ChatStackScreen" component={ChatStackScreen} options={{ headerShown: false }} />
             <Stack.Screen name="EditProfile" component={EditProfile} options={{headerShown: false}} />
+            <Stack.Screen name="EditProduct" component={EditProduct} options={{headerShown: false}} />
           </Stack.Navigator>
         </NavigationContainer>
       </GestureHandlerRootView>

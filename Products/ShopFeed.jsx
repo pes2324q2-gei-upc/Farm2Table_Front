@@ -6,11 +6,6 @@ import {COLORS,  SIZES} from "../constants/theme";
 
 const ShopFeed = ({ navigation, data }) => {
 
-  console.log(data);
-  console.log(data.products_info)
-  console.log(data.productor_id)
-  console.log(data.productor_name)
-
   const handleProductor = () => {
     navigation.navigate('CheckUser', { idUser: data.id, typeUser: 'Productor' });
   };

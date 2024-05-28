@@ -35,8 +35,6 @@ const MinoristaCheck = ({ navigation, userData, id }) => {
 
     const handleProducts = async () => {
         try {
-            console.log("llega a consultar");
-            console.log(API_URL + "/users/" + userData.id + "/bought");
             const data = await fetchUserBoughtProducts(userData.id);
             setShopData(data);
             onPress('Productos');
@@ -50,7 +48,6 @@ const MinoristaCheck = ({ navigation, userData, id }) => {
                 fetchProductorComments(id,"minorista")
                 .then(data => {
                     setComments(data);
-                    console.log("hola");
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
@@ -115,7 +112,7 @@ const MinoristaCheck = ({ navigation, userData, id }) => {
 
             {activeTab === 'Productos' && (
                 <View style={styles.tabContent}>
-                    <ProductList navigation={navigation} shopData={shopData} />
+                    <ProductList navigation={navigation} shopData={shopData} idUser={id}  typeUser="Minorista" />
                 </View>
             )}
 
