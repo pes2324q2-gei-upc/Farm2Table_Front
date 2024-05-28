@@ -95,7 +95,7 @@ const ProductorCheck = ({ navigation, userData, id }) => {
 
             {activeTab === 'Productos' && (
                 <View style={styles.tabContent}>
-                    <ProductList navigation={navigation} shopData={shopData} />
+                    <ProductList navigation={navigation} shopData={shopData} idUser={id} typeUser="Productor" />
                 </View>
             )}
 
