@@ -22,10 +22,8 @@ const MainFeed = () => {
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }
-      console.log("hola");
       const data = await response.json();
       setShopData(data.data);
-      console.log("adios");
     } catch (error) {
       setError(error.message);
     }

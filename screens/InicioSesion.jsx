@@ -42,8 +42,6 @@ const InicioSesion = () => {
         if (data.data.user_type === null) { NAVIGATOR.navigate("EscollirUsuari"); }
         else {
           setUserType(data.data.user_type);
-          console.log("ID = ", data.data.user_id);
-          console.log("TYPE = ", data.data.user_type);
           NAVIGATOR.navigate('Footer');
         }
       }
