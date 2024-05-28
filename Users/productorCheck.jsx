@@ -43,7 +43,6 @@ const ProductorCheck = ({ navigation, userData, id }) => {
                 fetchProductorComments(id,"productor")
                 .then(data => {
                     setComments(data);
-                    console.log("hola");
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);

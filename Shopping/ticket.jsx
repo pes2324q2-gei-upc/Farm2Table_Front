@@ -12,7 +12,6 @@ import { fetchUserFunds, fetchProductStock, buyProduct, processPurchase } from '
 import { saveCart } from '../informacion/cartInfo';
 
 const Ticket = ({ navigation, route }) => {
-    console.log(route.params);
     const USERID = userId();
     const { items, storeId } = route.params; // Asegúrate de que los nombres de las propiedades coincidan con los que se pasan desde la pantalla de carrito
     const storeName = "Best Store Ever"; // Este valor debería ser dinámico si tienes varios almacenes
@@ -24,20 +23,16 @@ const Ticket = ({ navigation, route }) => {
     const [userAccountFunds, setUserFunds] = useState(0);
 
     useEffect(() => {
-        console.log('User account funds have been updated to:', userAccountFunds);
+
     }, [userAccountFunds]);
 
     const handlePurchase = async () => {
         // Verificar si hay suficientes fondos
         const userId = USERID;
-        console.log('user id antes de purchase:', userId);
         const userFunds = await fetchUserFunds(userId);
-        console.log(userFunds);
         const total = items.reduce((acc, item) => acc + (item.quantity * item.price), 0).toFixed(2); 
         if (userFunds < total) {
-            console.log('Insufficient funds', userFunds);
             setUserFunds(userFunds);
-            console.log('user accoutnfunds ticket: ',userAccountFunds);
             setTimeout(() => {
                 setFundsModalVisible(true);
             }, 0);
@@ -71,11 +66,8 @@ const Ticket = ({ navigation, route }) => {
             ];
             
             
-            console.log('ProductID antes de proceder a comprar: ', product.productId);
-            console.log('PurchaseData antes de proceder a comprar: ', purchaseData);
             const buy = await buyProduct(product.productId, product.quantity);
             const pay = await processPurchase(purchaseData);
-            console.log(pay); console.log('pagado');
         }
         // Mostrar modal de confirmación
         setConfirmModalVisible(true);
@@ -84,8 +76,6 @@ const Ticket = ({ navigation, route }) => {
         let cart = await loadCart(userId);
         cart = removeStoreFromCart(cart, storeId);
         await saveCart(userId, cart);
-
-        console.log('Cart after purchase:', cart);
     }
     
 

@@ -6,11 +6,8 @@ import { COLORS, SIZES } from "../constants/theme";
 const ProductList = ({navigation, shopData }) => {
 
     const handlePress = () => {
-        console.log("ProductList handlePress");
         navigation.navigate("ProductDetails", { id });
     }
-
-    console.log("ProductList shopData: ", shopData);
 
     return (
         <FlatList   

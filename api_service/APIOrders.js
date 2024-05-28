@@ -9,9 +9,7 @@ export const fetchUserOrders = async(userId) => {
         const response = await fetch(`${API_URL}/users/${userId}/bought`);
         const data = await response.json();
         if (response.ok) {
-            console.log(data.data);
             const groupedData = groupOrdersBySellerAndTime(data.data);
-            console.log(groupedData);
             return groupedData;
         } else {
             throw new Error(data.message);
@@ -67,10 +65,8 @@ export const fetchUserBoughtProducts = async (userId) => {
     try {
         const response = await fetch(`${API_URL}/users/${userId}/bought`);
         const data = await response.json();
-        console.log(data);
         if (response.ok) {
             const latestPurchases = getLatestPurchases(data.data);
-            console.log('latestPurchases: ', latestPurchases);
             return latestPurchases;
         } else {
             throw new Error(data.message);

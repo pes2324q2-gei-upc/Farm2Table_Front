@@ -7,7 +7,6 @@ const ProductItem = ({ navigation, item }) => {
     const id = item.id;
 
     const handlePress = () => {
-        console.log("ProductItem handlePress");
         navigation.navigate("ProductDetails", { id });
     }
 

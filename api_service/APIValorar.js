@@ -24,16 +24,13 @@ export const submitComment = async (id, comment, tipus) => {
       body: JSON.stringify(commentData),
     });
     const data = await response.json();
-    console.log(data);
-    console.log("va")
     if (!response.ok) {
         console.log("peta");
         throw new Error('Something went wrong');
     }else{
-        console.log('Product added successfully:', data); 
+        //console.log('Product added successfully:', data); 
     }
     }catch (error) {
-      console.log("NO VA COMMENT");
       console.log(error.message);
     }
 }
@@ -57,15 +54,14 @@ export const submitRating = async(id, stars) => {
     });
 
     const data = await response.json();
-    console.log(data);
+    
     if (!response.ok) {
         console.log("peta");
         throw new Error('Something went wrong');
     }else{
-        console.log('Product added successfully:', data);    
+        // console.log('Product added successfully:', data);    
     }
     }catch (error) {
-        console.log("NO VA RATING");
         console.log(error.message);
     }
 }
