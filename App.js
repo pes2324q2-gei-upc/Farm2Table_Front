@@ -22,6 +22,7 @@ import CheckUser from './Users/CheckUser';
 import OrderSummary from './Users/orderSummary';
 import Orders from './Users/orderedProduct';
 import EditProfile from './Users/EditProfile';
+import EditProduct from './Products/EditProduct';
 import ChatStackScreen from './navigation/ChatStackScreen';
 import { COLORS, SIZES } from './constants/theme';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -91,6 +92,7 @@ export default function App() {
             <Stack.Screen name="OrderSummary" component={OrderSummary} options={{ headerShown: false }} />
             <Stack.Screen name="ChatStackScreen" component={ChatStackScreen} options={{ headerShown: false }} />
             <Stack.Screen name="EditProfile" component={EditProfile} options={{headerShown: false}} />
+            <Stack.Screen name="EditProduct" component={EditProduct} options={{headerShown: false}} />
           </Stack.Navigator>
         </NavigationContainer>
       </GestureHandlerRootView>
