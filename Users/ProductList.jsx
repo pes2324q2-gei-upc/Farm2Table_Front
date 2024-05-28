@@ -13,6 +13,7 @@ const ProductList = ({ navigation, shopData, idUser, typeUser }) => {
         } else {
             navigation.navigate("ProductDetails", { id: id });
         }
+    }
 
     return (
         <FlatList
