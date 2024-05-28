@@ -145,11 +145,11 @@ const ProductDetails = ({ navigation, route }) => {
                   </View>
                 </View>
 
-                <View style={styles.button_row}>
+                {userType() !== "Productor" && (<View style={styles.button_row}>
                   <TouchableOpacity style={styles.button} onPress={addtoCart}>
                     <Text style={styles.button_text}>Afegir {count} a la cistella</Text>
                   </TouchableOpacity>
-                </View>
+                </View>)}
 
                 <View style={styles.button_bottom_row}>
                   {user !== product.productor_info.id && (
