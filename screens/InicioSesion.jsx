@@ -8,8 +8,8 @@ import { useNavigation } from '@react-navigation/native';
 import { loginService } from '../api_service/ApiInicioSesion';
 import STYLES from '../styles/inici_registre.style';
 import SeleccioIdioma from '../components/seleccioIdioma';
-//import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
-//import { googleSignIn } from '../api_service/API_GoogleSignIn';
+import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+import { googleSignIn } from '../api_service/API_GoogleSignIn';
 
 
 const InicioSesion = () => {
@@ -52,14 +52,12 @@ const InicioSesion = () => {
     setSecureTextEntry(!secure_text_entry);
   };
 
-    const inicioConGoogle = async () => {
-      
-    }
-  /*
   const inicioConGoogle = async () => {
     try {
       await GoogleSignin.hasPlayServices();
+      console.log('Pedo');
       const userInfo = await GoogleSignin.signIn();
+      console.log('Pedo2');
       try {
         const response = await googleSignIn(userInfo.idToken);
         if (response.error) {
@@ -85,10 +83,11 @@ const InicioSesion = () => {
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
         console.log('Play Services not available');
       } else {
+        console.log('Fuck');
         console.log('Error', error);
       }
     }
-  };*/
+  };
 
   const registrarse = () => {
     NAVIGATOR.navigate('Registre');
