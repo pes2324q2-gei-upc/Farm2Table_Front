@@ -87,5 +87,9 @@
     "farmers": "Pagesos",
     "products": "Productes",
     "search_by_name": "Busca per nom",
-    "no_markets": "No hi han mercats disponibles"
+    "no_markets": "No hi han mercats disponibles",
+    "accept": "Acceptar",
+    "addRow": "Afegir fila",
+    "keys": "Claus (',' entre elles)",
+    "phrase": "Frase"
 }

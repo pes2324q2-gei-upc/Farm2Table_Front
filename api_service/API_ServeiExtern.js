@@ -76,7 +76,7 @@ export const getMatchPhrase = async (phrase,token) => {
             console.log(data)
             throw new Error('No se encontró ninguna frase');
          }
-        const data = await response.json();
+        const data = await response.text();
         return data;
     }
     catch (error) {

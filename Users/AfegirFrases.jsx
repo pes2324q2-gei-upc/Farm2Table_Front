@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { Alert, TextInput, TouchableOpacity } from 'react-native'
 import { COLORS, SIZES } from '../constants/theme'
 import {createWord, getMatchPhrase,loginInService} from '../api_service/API_ServeiExtern'
+import {getPalabra} from '../informacion/User'
 //import {getToken,setToken} from '../informacion/Constants'
 
 const AfegirFrases = () => {
@@ -46,11 +47,11 @@ const AfegirFrases = () => {
 
       const handleAccepta = async () => {
         //const token = getToken()
-        console.log("token: " + token)
-        const data = await createWord(pairs,token)
+        //console.log("token: " + token)
+        //const data = await createWord(pairs,token)
         //console.log(data)
-        //const data = await getMatchPhrase("disponibilidad",token)
-        //console.log(data)
+        const data = await getMatchPhrase("Haces envio por cataluña ?",token)
+        console.log(data)
         //return navigation.goBack()
         return data
       }
@@ -80,7 +81,7 @@ const AfegirFrases = () => {
                 </View>
                 ))}
                 <TouchableOpacity style={styles.button} onPress={addPair}>
-                    <Text style={styles.buttontext}>Afegir fila</Text>
+                    <Text style={styles.buttontext}>{getPalabra("addRow")}</Text>
                 </TouchableOpacity>
                 {/* <Button title="Add Pair" style={styles.button} onPress={addPair} /> */}
             </View>
@@ -88,7 +89,7 @@ const AfegirFrases = () => {
             <View style ={styles.bottom}>
                 <TouchableOpacity style={styles.button} onPress={handleAccepta}> 
                 {/* <TouchableOpacity style={styles.button}> */}
-                    <Text style={styles.buttontext}>Accepta</Text>
+                    <Text style={styles.buttontext}>{getPalabra("accept")}</Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>

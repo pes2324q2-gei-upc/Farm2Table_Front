@@ -88,6 +88,10 @@
     "farmers": "Farmers",
     "products": "Products",
     "search_by_name": "Search by name",
-    "no_markets": "No markets available"
+    "no_markets": "No markets available",
+    "accept": "Accept",
+    "addRow": "Add row",
+    "keys": "Keys (',' between them)",
+    "phrase": "Phrase"
 
 }
