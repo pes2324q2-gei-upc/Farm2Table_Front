@@ -134,5 +134,15 @@
     "Products": "Productos",
     "Productors": "Productores",
     "Minoristas": "Minoristas",
-    "in_stock": "en estoc"
+    "in_stock": "en estoc",
+    "accept_offer": "Oferta aceptada",
+    "accept_message": "Has aceptado la oferta",
+    "borrar_xat": "No se ha podido borrar el chat",
+    "decline_offer": "Oferta rechazada",
+    "decline_message": "Has rechazado la oferta",
+    "borrar_mensaje": "No se pudo borrar el mensaje",
+    "offer_price": "Precio Oferta (€)",
+    "offer_quantity": "Cantidad Oferta (kg)",
+    "accept": "Aceptar",
+    "decline": "Rechazar"
 }

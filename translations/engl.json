@@ -135,5 +135,15 @@
     "Products": "Products",
     "Productors": "Productors",
     "Minoristas": "Commerces",
-    "in_stock": "in stock"
+    "in_stock": "in stock",
+    "accept_offer": "Accepted offer",
+    "accept_message": "You have accepted the offer",
+    "borrar_xat": "Chat could not be deleted",
+    "decline_offer": "Declined offer",
+    "decline_message": "You have declined the offer",
+    "borrar_mensaje": "Message could not be deleted",
+    "offer_price": "Offer Price (€)",
+    "offer_quantity": "Offer Quantity (kg)",
+    "accept": "Accept",
+    "decline": "Decline"
 }
