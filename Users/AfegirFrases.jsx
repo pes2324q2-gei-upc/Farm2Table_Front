@@ -7,16 +7,17 @@ import { Alert, TextInput, TouchableOpacity } from 'react-native'
 import { COLORS, SIZES } from '../constants/theme'
 import {createWord, getMatchPhrase,loginInService} from '../api_service/API_ServeiExtern'
 import {getPalabra} from '../informacion/User'
-//import {getToken,setToken} from '../informacion/Constants'
+import {getToken,setToken} from '../informacion/Constants'
 
 const AfegirFrases = () => {
     const route = useRoute();
     const navigation = useNavigation();
     const [pairs, setPairs] = useState([{ keys: '', phrase: '' }]);
-    const [token,setToken] = useState('')
+    //const [token,setToken] = useState('')
 
     useEffect(() => {
-      if (token == '') {
+      //if (token == '') {
+        setToken('')
         console.log("me logeo")
         const login = async() => {
             const data = await loginInService()
@@ -26,7 +27,7 @@ const AfegirFrases = () => {
             console.log(token)
         }
         login()
-      }
+      //}
     },[])
 
     const handleKeyChange = (index, value) => {
@@ -46,13 +47,9 @@ const AfegirFrases = () => {
       };
 
       const handleAccepta = async () => {
-        //const token = getToken()
-        //console.log("token: " + token)
+        const token = getToken()
         const data = await createWord(pairs,token)
-        console.log(data)
-        //const data = await getMatchPhrase("Haces envio por cataluña ?",token)
-        //console.log(data)
-        //return navigation.goBack()
+        // aqui debo de mostrar un pop-up
         return data
       }
 

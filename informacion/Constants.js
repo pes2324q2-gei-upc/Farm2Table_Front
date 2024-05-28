@@ -7,7 +7,7 @@ export const url_post_service = "http://nattech.fib.upc.edu:40390/api/v1/adj/cha
 export const url_get_service = "http://nattech.fib.upc.edu:40390/api/v1/adj/chatbot/consultaExterna"
 export const url_login_service = "http://nattech.fib.upc.edu:40390/api/v1/adj/usuari/login?email=extern@gmail.com&password=3c9201d40e322d208e49058c471454627c956f82e4ec0d73ab3d"
 
-const token = ''
+let token = ''
 
 export const getIP = () => {
     return IP;

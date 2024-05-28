@@ -48,14 +48,14 @@ export const createWord = async (list,token) => {
     }
 };
 
-export const getMatchPhrase = async (phrase,token) => {
+export const getMatchPhrase = async (phrase,token,id_user) => {
     console.log("entro buscar frase")
     console.log("frase que le entra: " + phrase)
     const user_id = userId()
     phrase = phrase.split(" ")
     let frase = ""
     for (let i = 0; i < phrase.length; ++i) {
-        frase += phrase[i] + `_${user_id} `
+        frase += phrase[i] + `_${id_user} `
     }
     frase = frase.slice(0, -1)
     console.log("frase final: " + frase)
@@ -71,9 +71,6 @@ export const getMatchPhrase = async (phrase,token) => {
             },
         });
          if (!response.ok) {
-            console.log(response)
-            const data = await response.text()
-            console.log(data)
             throw new Error('No se encontró ninguna frase');
          }
         const data = await response.text();
