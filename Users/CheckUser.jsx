@@ -80,7 +80,6 @@ const ProfileScreen = ({ navigation, route }) => {
             <View style={{ flex: 1, backgroundColor: COLORS.secondary }}>
                 <View style={styles.profileContainer}>
                         <Image source={avatarUri} style={styles.avatar} />
-                    <Text style={styles.usernameLarge}>{userData.username}</Text>
 
                     <View style={styles.usernameRow}>
                         <Text style={styles.usernameLarge}>{userData.username}</Text>
