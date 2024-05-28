@@ -13,7 +13,8 @@ export const fetchInitialMessages = async (chatId, authorId) => {
         return data.map(msg => ({
             ...msg,
             sender: msg.author.id === authorId ? 'user' : 'server',
-            timestamp: msg.sent_date
+            timestamp: msg.sent_date,
+            offer: msg.offer,
         }));
     } catch (error) {
         console.error('Fetch error:', error);
