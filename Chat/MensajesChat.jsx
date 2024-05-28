@@ -7,7 +7,23 @@ import PropTypes from 'prop-types';
 import styles from "../styles/mensajesChat.style";
 import { getPalabra } from '../informacion/User';
 import { URL } from "../constants/theme";
-import { fetchInitialMessages, initializeWebSocket } from '../api_service/ApiChat';
+import { fetchInitialMessages, initializeWebSocket, deleteChat } from '../api_service/ApiChat';
+
+const deleteMessage = async (messageId) => {
+    try {
+        const response = await fetch(`http://${URL}/chats/messages/${messageId}`, {
+            method: 'DELETE',
+        });
+
+        if (!response.ok) {
+            throw new Error('Error deleting message');
+        }
+
+        return await response.json();
+    } catch (error) {
+        throw new Error('Error deleting message');
+    }
+};
 
 const MensajesChat = ({ navigation }) => {
     const [message, setMessage] = useState('');
@@ -46,7 +62,7 @@ const MensajesChat = ({ navigation }) => {
                 socket.send(JSON.stringify({
                     product_id: productId,
                     author_id: authorId,
-                    message_text: `Oferta: $${offerPrice} por ${offerQuantity}`,
+                    message_text: `Oferta: ${offerPrice}€ por ${offerQuantity}kg`,
                     receiver_id: receiverId,
                     oferta: true,
                     offer_price: offerPrice,
@@ -61,13 +77,44 @@ const MensajesChat = ({ navigation }) => {
     };
 
     const handleAcceptOffer = (offerId) => {
-        Alert.alert("Oferta aceptada", `Has aceptado la oferta: ${offerId}`);
-        // Handle offer acceptance logic
+        Alert.alert(
+            "Oferta aceptada",
+            `Has aceptado la oferta`,
+            [
+                {
+                    text: "OK",
+                    onPress: async () => {
+                        try {
+                            await deleteChat(chatId);
+                        } catch (error) {
+                            Alert.alert("Error", "No se pudo borrar el chat.");
+                            return;
+                        }
+                        navigation.goBack();
+                    }
+                }
+            ]
+        );
     };
 
-    const handleDeclineOffer = (offerId) => {
-        Alert.alert("Oferta rechazada", `Has rechazado la oferta: ${offerId}`);
-        // Handle offer decline logic
+    const handleDeclineOffer = (messageId) => {
+        Alert.alert(
+            "Oferta rechazada",
+            `Has rechazado la oferta`,
+            [
+                {
+                    text: "OK",
+                    onPress: async () => {
+                        try {
+                            await deleteMessage(messageId);
+                            setMessages(prevMessages => prevMessages.filter(msg => msg.id !== messageId));
+                        } catch (error) {
+                            Alert.alert("Error", "No se pudo borrar el mensaje.");
+                        }
+                    }
+                }
+            ]
+        );
     };
 
     const groupedMessages = messages.reduce((acc, message) => {
@@ -87,7 +134,7 @@ const MensajesChat = ({ navigation }) => {
         <View key={index} style={[styles.messageBubble, msg.sender === 'user' ? styles.userMessage : styles.otherMessage]}>
             {msg.offer && msg.sender === 'server' ? (
                 <View style={styles.offerContainer}>
-                    <Text style={styles.offerText}>Offer: ${msg.offer_price}</Text>
+                    <Text style={styles.offerText}>{msg.text}</Text>
                     <Text style={styles.timestamp}>{format(parseISO(msg.timestamp), 'p')}</Text>
                     <View style={styles.offerButtons}>
                         <TouchableOpacity onPress={() => handleAcceptOffer(msg.id)} style={styles.acceptButton}>
