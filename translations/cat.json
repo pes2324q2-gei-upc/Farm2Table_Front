@@ -124,5 +124,15 @@
     "write_your_comment": "Escriu el teu comentari",
     "type_message": "Escriu un missatge",
     "confirmeliminar": "Confirmar eliminació",
-    "segeliminar": "Estàs segur que vols eliminar aquest xat?"
+    "segeliminar": "Estàs segur que vols eliminar aquest xat?",
+    "accept_offer": "Oferta acceptada",
+    "accept_message": "Has acceptat l'oferta",
+    "borrar_xat": "No s'ha pogut esborrar el xat",
+    "decline_offer": "Oferta rebutjada",
+    "decline_message": "Has rebutjat la oferta",
+    "borrar_mensaje": "No s'ha pogut esborrar el missatge",
+    "offer_price": "Preu Oferta (€)",
+    "offer_quantity": "Quantita Oferta (kg)",
+    "accept": "Acceptar",
+    "decline": "Rebutjar"
 }

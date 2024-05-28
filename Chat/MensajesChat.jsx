@@ -7,24 +7,7 @@ import PropTypes from 'prop-types';
 import styles from "../styles/mensajesChat.style";
 import { getPalabra } from '../informacion/User';
 import { URL } from "../constants/theme";
-import { fetchInitialMessages, initializeWebSocket, deleteChat } from '../api_service/ApiChat';
-
-const deleteMessage = async (messageId) => {
-    try {
-        const response = await fetch(`http://${URL}/chats/messages/${messageId}`, {
-            method: 'DELETE',
-        });
-
-        if (!response.ok) {
-            throw new Error('Error deleting message');
-        }
-
-        return await response.json();
-    } catch (error) {
-        throw new Error('Error deleting message');
-    }
-};
-
+import { fetchInitialMessages, initializeWebSocket, deleteChat, deleteMessage } from '../api_service/ApiChat';
 const MensajesChat = ({ navigation }) => {
     const [message, setMessage] = useState('');
     const [offerPrice, setOfferPrice] = useState('');
@@ -78,8 +61,8 @@ const MensajesChat = ({ navigation }) => {
 
     const handleAcceptOffer = (offerId) => {
         Alert.alert(
-            "Oferta aceptada",
-            `Has aceptado la oferta`,
+            getPalabra("accept_offer"),
+            getPalabra("accept_message"),
             [
                 {
                     text: "OK",
@@ -87,7 +70,7 @@ const MensajesChat = ({ navigation }) => {
                         try {
                             await deleteChat(chatId);
                         } catch (error) {
-                            Alert.alert("Error", "No se pudo borrar el chat.");
+                            Alert.alert("Error", getPalabra("borrar_xat"));
                             return;
                         }
                         navigation.goBack();
@@ -99,8 +82,8 @@ const MensajesChat = ({ navigation }) => {
 
     const handleDeclineOffer = (messageId) => {
         Alert.alert(
-            "Oferta rechazada",
-            `Has rechazado la oferta`,
+            getPalabra("decline_offer"),
+            getPalabra("decline_message"),
             [
                 {
                     text: "OK",
@@ -109,7 +92,7 @@ const MensajesChat = ({ navigation }) => {
                             await deleteMessage(messageId);
                             setMessages(prevMessages => prevMessages.filter(msg => msg.id !== messageId));
                         } catch (error) {
-                            Alert.alert("Error", "No se pudo borrar el mensaje.");
+                            Alert.alert("Error", getPalabra("borrar_mensaje"));
                         }
                     }
                 }
@@ -138,10 +121,10 @@ const MensajesChat = ({ navigation }) => {
                     <Text style={styles.timestamp}>{format(parseISO(msg.timestamp), 'p')}</Text>
                     <View style={styles.offerButtons}>
                         <TouchableOpacity onPress={() => handleAcceptOffer(msg.id)} style={styles.acceptButton}>
-                            <Text style={styles.acceptButtonText}>Accept</Text>
+                            <Text style={styles.acceptButtonText}>{getPalabra("accept")}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => handleDeclineOffer(msg.id)} style={styles.declineButton}>
-                            <Text style={styles.declineButtonText}>Decline</Text>
+                            <Text style={styles.declineButtonText}>{getPalabra("decline")}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -186,14 +169,14 @@ const MensajesChat = ({ navigation }) => {
                     />
                     <TextInput
                         style={styles.input}
-                        placeholder="Offer Price"
+                        placeholder={getPalabra("offer_price")}
                         onChangeText={setOfferPrice}
                         value={offerPrice}
                         keyboardType="numeric"
                     />
                     <TextInput
                         style={styles.input}
-                        placeholder="Offer Quantity"
+                        placeholder={getPalabra("offer_quantity")}
                         onChangeText={setOfferQuantity}
                         value={offerQuantity}
                         keyboardType="numeric"

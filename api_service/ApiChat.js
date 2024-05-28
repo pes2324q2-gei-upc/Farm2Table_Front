@@ -1,6 +1,8 @@
+import { Alert } from 'react-native';
 import { URL } from '../constants/theme';
 import { getPalabra } from '../informacion/User';
-import { Alert } from 'react-native';
+
+// Existing functions
 
 export const fetchInitialMessages = async (chatId, authorId) => {
     const url = `http://${URL}/chats/rooms/${chatId}`;
@@ -104,5 +106,21 @@ export const deleteChat = async (chatId) => {
         return await response.json();
     } catch (error) {
         throw error;
+    }
+};
+
+export const deleteMessage = async (messageId) => {
+    try {
+        const response = await fetch(`http://${URL}/chats/messages/${messageId}`, {
+            method: 'DELETE',
+        });
+
+        if (!response.ok) {
+            throw new Error('Error deleting message');
+        }
+
+        return await response.json();
+    } catch (error) {
+        throw new Error('Error deleting message');
     }
 };
