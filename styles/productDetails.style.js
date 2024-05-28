@@ -175,13 +175,31 @@ const styles = StyleSheet.create({
     buttonLove: {
         backgroundColor: COLORS.tertiary,
         borderRadius: 10,
-        padding: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 15,
         width: SIZES.width*0.7,
         height: 50,
         alignItems: "center",
         flexDirection: "row",
         justifyContent: "space-between",
     },
+    imageContainer: {
+        position: 'relative',
+      },
+      quantityPill: {
+        position: 'absolute',
+        top: 10,
+        right: 10,
+        backgroundColor: COLORS.tertiary,
+        borderRadius: 15,
+        paddingVertical: 5,
+        paddingHorizontal: 10,
+      },
+      quantityPillText: {
+        color: 'white',
+        fontSize: 14,
+        fontWeight: 'bold',
+      },
 
 
     

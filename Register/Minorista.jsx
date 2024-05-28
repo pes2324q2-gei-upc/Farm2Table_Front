@@ -19,7 +19,6 @@ const Minorista = () => {
   const [favourite_prod, setFavourite] = useState([]);
   const NAVIGATOR = useNavigation();
   const [cambioIdioma, setCambioIdioma] = useState(false);
-  const [placeholderNombre, setPlaceholder] = useState(getPalabra("restaurant_type"));
 
   const handleGoBack = () => {
     NAVIGATOR.goBack();
@@ -43,17 +42,12 @@ const Minorista = () => {
 
   const setServiceType = (val) => {
     setTipus(val)
-    if (getRestaurantOrMercat(val) === "Restaurant") setPlaceholder(getPalabra("restaurant_type"))
-    else setPlaceholder(getPalabra("market_type"))
   }
 
   //useEffect()
 
   const handleCambioIdioma = () => {
     setCambioIdioma(!cambioIdioma)
-
-    if (getRestaurantOrMercat(tipus) === "Restaurant") setPlaceholder(getPalabra("restaurant_type"))
-    else setPlaceholder(getPalabra("market_type"))
   };
 
   return (
@@ -85,7 +79,7 @@ const Minorista = () => {
 
             <View style={[STYLES.base_fondo_datos, STYLES.fondo_input_datos]}>
                 <TextInput 
-                    placeholder = {placeholderNombre}
+                    placeholder = {getPalabra("service_name")}
                     style={[STYLES.base_texto_datos, STYLES.texto_input_datos]}
                     value={servei}
                     onChangeText={setServei}

@@ -4,13 +4,21 @@ import { COLORS, SIZES } from "../constants/theme";
 
 
 const ProductList = ({navigation, shopData }) => {
+
+    const handlePress = () => {
+        console.log("ProductList handlePress");
+        navigation.navigate("ProductDetails", { id });
+    }
+
+    console.log("ProductList shopData: ", shopData);
+
     return (
         <FlatList   
         data={shopData}
         keyExtractor={(item) => item.id}
         renderItem={({item}) => (     
             <View style={styles.lista}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={handlePress}>
                 <View style={styles.capsule}>
                     <View style={styles.vista_imagen}>
                         <Image source = {{uri: item.image}} style={styles.image} />

@@ -5,6 +5,8 @@ import Consultar_Usuario from '../Users/Consultar_Usuario';
 import Restaurante from '../Restaurants/Restaurante';
 import Valorar from '../Restaurants/Valorar';
 import ProfileScreen from '../Users/CheckUser';
+import EditProfile from '../Users/EditProfile';
+
 const BuscadorStack = createNativeStackNavigator();
 
 const BuscadorStackScreen = () => {
