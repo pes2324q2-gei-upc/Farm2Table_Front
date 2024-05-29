@@ -12,7 +12,12 @@
     },
     "android": {
       "package": "com.rafiki6334.Farm2Table",
-      "googleServicesFile": "./google-services.json"
+      "googleServicesFile": "./google-services.json",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAdtDNNXQatvlUro44kfA2ezVlVtOHVryM"
+        }
+      }
     },
     "web": {
       "bundler": "metro",
