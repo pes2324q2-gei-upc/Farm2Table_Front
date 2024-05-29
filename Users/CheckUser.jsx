@@ -3,12 +3,13 @@ import { View, Text, Image, SafeAreaView, TouchableOpacity, StyleSheet } from 'r
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '../constants/theme';
 import Header from '../navigation/header_back';
-import { fetchUser } from '../api_service/ApiConsultar_Usuario';
+import { fetchUser, fetchSpecificInfo } from '../api_service/ApiConsultar_Usuario';
 import { userId, userType } from '../informacion/User';
 import { addFavourite, isUserFavourite, removeFavourite, getUsersBoughtList, getCommentsList } from '../api_service/APIFavoritos';
 import ConsumerCheck from './consumerCheck';
 import ProductorCheck from './productorCheck';
 import MinoristaCheck from './minoristaCheck';
+import { Rating } from 'react-native-ratings';
 
 const ProfileScreen = ({ navigation, route }) => {
     let { idUser, typeUser } = route.params;
@@ -19,6 +20,7 @@ const ProfileScreen = ({ navigation, route }) => {
     const [isFavourite, setIsFavourite] = useState(false);
     const [usersBoughtList, setUsersBoughtList] = useState([]);
     const [commentsList, setCommentsList] = useState([]);
+    const [rating, setRating] = useState(0);
     const activeUser = userId();
 
     if (typeUser === undefined) {
@@ -97,9 +99,19 @@ const ProfileScreen = ({ navigation, route }) => {
             }
         };
 
+        const fetchRating = async () => {
+            try {
+                const data = await fetchSpecificInfo(idUser);
+                setRating(data.rating);
+            } catch (error) {
+                console.error("Failed to fetch rating:", error);
+            }
+        };
+
         if (activeUser !== idUser && userType() !== typeUser) checkIfFavourite();
         userLoad();
         fetchComments();
+        fetchRating();
         if (userType().toLowerCase() === 'productor') fetchUsersBoughtList();
     }, [activeUser, idUser, typeUser]);
 
@@ -152,7 +164,14 @@ const ProfileScreen = ({ navigation, route }) => {
                             </>
                         )}
                     </View>
-
+                    {rating !== 0 && (
+                        <Rating
+                            startingValue={rating}
+                            imageSize={20}
+                            readonly
+                            style={styles.rating}
+                        />
+                    )}
                     {userData.telephone && (
                         <View style={styles.telephoneContainer}>
                             <Ionicons name="call" size={18} color="white" />
@@ -200,6 +219,9 @@ const styles = StyleSheet.create({
     },
     heartIcon: {
         marginLeft: 10,
+    },
+    rating: {
+        marginVertical: 10,
     },
     telephoneContainer: {
         flexDirection: 'row',

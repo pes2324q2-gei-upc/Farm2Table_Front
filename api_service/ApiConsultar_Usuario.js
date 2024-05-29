@@ -49,3 +49,16 @@ export const fetchProductorComments = async(userId, tipus) => {
         throw error;
     }
 };
+
+export const fetchSpecificInfo = async (userId) => {
+    try {
+        const response = await fetch(`${API_URL}/users/users/${userId}/getSpecificInfo`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch user');
+        }
+        const json = await response.json();
+        return json.data;
+    } catch (error) {
+        throw error;
+    }
+}
