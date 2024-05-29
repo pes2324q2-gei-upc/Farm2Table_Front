@@ -119,6 +119,12 @@ export const renderInglaterra = () => {
     return imagenesPorIdioma["eng"];
 };
 
+export const logout = () => {
+    id = null;
+    user_type = null;
+    correo = null;
+}
+
 const User = () => {
   
 }

@@ -6,12 +6,17 @@ import Restaurante from '../Restaurants/Restaurante';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { getPalabra } from '../informacion/User'
+import { Entypo } from '@expo/vector-icons';
 
 const MercatList = ({ data, searchQuery }) => {
+  const navigation = useNavigation();
+
+  const handlePress = (item) => {
+    navigation.navigate('ProfileScreen', { idUser: item.id, typeUser: "Productor" })  };
 
   const renderItem = ({ item }) => {    
     return (
-      <TouchableOpacity onPress={() => handlePressRestaurant(item, icon)}>
+      <TouchableOpacity onPress={() =>  handlePress(item)}>
         <View style={styles.lista}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             {/* Render the icon */}

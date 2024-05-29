@@ -19,14 +19,14 @@ import CartScreen from './Shopping/cart';
 import Ticket from './Shopping/ticket';
 import AddCoinsScreen from './Shopping/funds';
 import CheckUser from './Users/CheckUser';
-import EditarPerfil from './Users/EditarPerfil';
 import OrderSummary from './Users/orderSummary';
 import Orders from './Users/orderedProduct';
 import EditProfile from './Users/EditProfile';
 import ChatStackScreen from './navigation/ChatStackScreen';
 import { COLORS, SIZES } from './constants/theme';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { userId, userType } from './informacion/User';
+import { getPalabra, logout, userId, userType } from './informacion/User';
+import Logout from './Users/Logout';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -41,6 +41,7 @@ function DrawerNavigator() {
     }}>
       <Drawer.Screen name="Home" component={Footer} options={{ headerShown: false }} />
       <Drawer.Screen name="Perfil" component={CheckUser} options={{ headerShown: false }} initialParams={{ idUser: userId(), typeUser: userType() }}/>
+      <Drawer.Screen name={getPalabra("logout")} component={Logout} options={{ headerShown: false }}/>
       {/*<Drawer.Screen name="Perfil" component={CheckUser} options={{ headerShown: false }} />*/}
     </Drawer.Navigator>
   );
@@ -80,7 +81,6 @@ export default function App() {
             <Stack.Screen name="Ticket" component={Ticket} options={{ headerShown: false }} />
             <Stack.Screen name="AddCoinsScreen" component={AddCoinsScreen} options={{ headerShown: false }} />
             <Stack.Screen name="CheckUser" component={CheckUser} options={{ headerShown: false }} />
-            <Stack.Screen name="EditarPerfil" component={EditarPerfil} options={{ headerShown: false }} />
             <Stack.Screen name="Orders" component={Orders} options={{ headerShown: false }} />
             <Stack.Screen name="OrderSummary" component={OrderSummary} options={{ headerShown: false }} />
             <Stack.Screen name="ChatStackScreen" component={ChatStackScreen} options={{ headerShown: false }} />

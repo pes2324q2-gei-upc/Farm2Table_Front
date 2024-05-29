@@ -23,7 +23,7 @@ const API_URL = `http://${getIP()}`;
 
 
 const MinoristaCheck = ({ navigation, userData, id }) => {
-    const [activeTab, setActiveTab] = useState('Pedidos');
+    const [activeTab, setActiveTab] = useState('Datos');
     const [shopData, setShopData] = useState([]);
     const [activeUser, setActiveUser] = useState(userId());
     const [comments, setComments] = useState([]);
@@ -75,7 +75,7 @@ const MinoristaCheck = ({ navigation, userData, id }) => {
                         </Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity
+                    {activeUser === userData.id && (<TouchableOpacity
                         style={[styles.button, { borderColor: activeTab === 'Pedidos' ? 'orange' : '#1e4d2b' }]}
                         onPress={() => onPress('Pedidos')}
                     >
@@ -83,7 +83,7 @@ const MinoristaCheck = ({ navigation, userData, id }) => {
                             {getPalabra("my_orders")}
                         </Text>
                     </TouchableOpacity>
-
+)}
                     <TouchableOpacity
                         style={[styles.button, { borderColor: activeTab === 'Datos' ? 'orange' : '#1e4d2b' }]}
                         onPress={() => onPress('Datos')}

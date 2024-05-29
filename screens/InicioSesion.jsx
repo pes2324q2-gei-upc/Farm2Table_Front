@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Image, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Image, TouchableOpacity, SafeAreaView } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import logo from '../assets/Farm2Table.png';
 import google from '../assets/Google.png';
-import { setUserId, setUserType, getPalabra, setIdioma, TIPUS_IDIOMA, renderFlagImage, renderEspaña, renderCataluña, renderInglaterra, getIdioma } from '../informacion/User';
+import { setUserId, setUserType, getPalabra, renderFlagImage,  } from '../informacion/User';
 import { useNavigation } from '@react-navigation/native';
 import { loginService } from '../api_service/ApiInicioSesion';
 import STYLES from '../styles/inici_registre.style';
@@ -16,6 +16,15 @@ const InicioSesion = () => {
   const NAVIGATOR = useNavigation();
   const [error_message, setError] = useState('');
   const [cambioIdioma, setCambioIdioma] = useState(false);
+
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCount(prevCount => prevCount + 1);
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   const handleLogin = async () => {
 
@@ -30,6 +39,8 @@ const InicioSesion = () => {
         if (data.data.user_type === null) { NAVIGATOR.navigate("EscollirUsuari"); }
         else {
           setUserType(data.data.user_type);
+          console.log("ID = ", data.data.user_id);
+          console.log("TYPE = ", data.data.user_type);
           NAVIGATOR.navigate('Footer');
         }
       }
@@ -53,7 +64,7 @@ const InicioSesion = () => {
   };
 
   return (
-    <View style={STYLES.container}>
+    <SafeAreaView style={STYLES.container}>
 
       <Image source={logo} style={STYLES.logo} />
 
@@ -107,8 +118,7 @@ const InicioSesion = () => {
           <Text style={{fontSize: 14, color: "#bc6c25"}}>{getPalabra("create_account")}</Text>
         </TouchableOpacity>
       </View>
-
-    </View>
+    </SafeAreaView>
   );
 
 };

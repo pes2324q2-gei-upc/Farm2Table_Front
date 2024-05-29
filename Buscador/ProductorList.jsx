@@ -11,17 +11,24 @@ const ProductorList = ({ data, searchQuery }) => {
   const handlePress = (item) => {
     navigation.navigate('ProfileScreen', { idUser: item.id, typeUser: "Productor" })  };
 
-  const renderItem = ({ item }) => (
-    <TouchableOpacity onPress={() => handlePress(item)}>
-      <View style={styles.lista}>
-        <Image source={{ uri: item.avatar }} style={styles.image} />
-        <View>
-          <Text style={styles.textName}>{item.username}</Text>
-          <Text style={styles.textEmail}>{item.email}</Text>
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
+    const renderItem = ({ item }) => {
+      const avatarUri = item.avatar ? { uri: item.avatar } : require('../assets/images/149071.png');
+  
+      return (
+        <TouchableOpacity onPress={() => handlePress(item)}>
+          <View style={styles.lista}>
+            <Image
+              source={avatarUri}
+              style={styles.image}
+            />
+            <View>
+              <Text style={styles.textName}>{item.username}</Text>
+              <Text style={styles.textEmail}>{item.email}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+      );
+    };
 
   return (
     <FlatList

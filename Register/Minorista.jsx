@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, Image, TouchableOpacity, TextInput, SafeAreaView } from 'react-native';
 import logo from '../assets/Farm2Table.png';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { SelectList } from 'react-native-dropdown-select-list';
@@ -16,10 +16,9 @@ const Minorista = () => {
   const TIPUS = [getPalabra("restaurant"),getPalabra("market")];
   const [servei, setServei] = useState("");
   const [error_message, setError] = useState('');
-  const [favourite_prod, setFavourite] = useState("");
+  const [favourite_prod, setFavourite] = useState([]);
   const NAVIGATOR = useNavigation();
   const [cambioIdioma, setCambioIdioma] = useState(false);
-  const [placeholderNombre, setPlaceholder] = useState(getPalabra("restaurant_type"));
 
   const handleGoBack = () => {
     NAVIGATOR.goBack();
@@ -43,21 +42,16 @@ const Minorista = () => {
 
   const setServiceType = (val) => {
     setTipus(val)
-    if (getRestaurantOrMercat(val) === "Restaurant") setPlaceholder(getPalabra("restaurant_type"))
-    else setPlaceholder(getPalabra("market_type"))
   }
 
   //useEffect()
 
   const handleCambioIdioma = () => {
     setCambioIdioma(!cambioIdioma)
-
-    if (getRestaurantOrMercat(tipus) === "Restaurant") setPlaceholder(getPalabra("restaurant_type"))
-    else setPlaceholder(getPalabra("market_type"))
   };
 
   return (
-    <View style={STYLES.container}>
+    <SafeAreaView style={STYLES.container}>
 
         <Image source={logo} style={STYLES.logo} />
 
@@ -85,7 +79,7 @@ const Minorista = () => {
 
             <View style={[STYLES.base_fondo_datos, STYLES.fondo_input_datos]}>
                 <TextInput 
-                    placeholder = {placeholderNombre}
+                    placeholder = {getPalabra("service_name")}
                     style={[STYLES.base_texto_datos, STYLES.texto_input_datos]}
                     value={servei}
                     onChangeText={setServei}
@@ -130,7 +124,7 @@ const Minorista = () => {
                 />
             </View>
     
-    </View>
+    </SafeAreaView>
   );
 
 };

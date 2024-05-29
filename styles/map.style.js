@@ -28,7 +28,7 @@ const STYLES = StyleSheet.create({
     scroll: {
       position: 'absolute',
       //backgroundColor: 'blue',
-      top: '18%',
+      top: '10%',
       paddingHorizontal: 20
     },
     filtro: {

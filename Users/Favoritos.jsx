@@ -1,21 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { View, Text, TouchableOpacity, ScrollView, SafeAreaView, StyleSheet } from "react-native";
 import { getFavourites } from "../api_service/APIFavoritos";
 import { COLORS } from "../constants/theme";
+import { useFocusEffect } from "@react-navigation/native";
 
 import ProductorMinoristaItem from "../components/productorMinorista";
 import ProductItem from "../components/productItem";
 import TypeItem from "../components/typeItem";
-import { result } from "lodash";
+import { getPalabra } from "../informacion/User";
 
 const Favoritos = ({ navigation, userId, userType }) => {
     const [searchParty, setSearchParty] = useState([]);
-    const [dataFetched, setDataFetched] = useState({
-        types: false,
-        minoristas: false,
-        productors: false,
-        products: false,
-    });
     const [favouriteData, setFavouriteData] = useState({
         types: [],
         minoristas: [],
@@ -23,7 +18,6 @@ const Favoritos = ({ navigation, userId, userType }) => {
         products: [],
     });
     const [selectedType, setSelectedType] = useState("Products");
-
 
     useEffect(() => {
         if (userType === "Productors") {
@@ -34,60 +28,51 @@ const Favoritos = ({ navigation, userId, userType }) => {
         else {
             setSearchParty(["Types", "Minoristas", "Productors", "Products"]);
         }
-    }, []);
+    }, [userType]);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            if (selectedType === "Types" && !dataFetched.types) {
-                try {
-                    const data = await getFavourites(userId, "types", userType.toLowerCase());
-                    const result = data.data || [];
-                    setFavouriteData(prevState => ({ ...prevState, types: result }));
-                    setDataFetched(prevState => ({ ...prevState, types: true }));
-                } catch (error) {
-                    console.error("Failed to fetch types data: ", error);
-                }
-            } else if (selectedType === "Minoristas" && !dataFetched.minoristas) {
-                try {
-                    const data = await getFavourites(userId, "minoristas", userType.toLowerCase());
-                    const result = data.data || [];
-                    console.log(result);
-                    setFavouriteData(prevState => ({ ...prevState, minoristas: result }));
-                    setDataFetched(prevState => ({ ...prevState, minoristas: true }));
-                } catch (error) {
-                    console.error("Failed to fetch minoristas data: ", error);
-                }
-            } else if (selectedType === "Productors" && !dataFetched.productors) {
-                try {
-                    const data = await getFavourites(userId, "productors", userType.toLowerCase());
-                    const result = data.data || [];
-                    console.log(result);
-                    setFavouriteData(prevState => ({ ...prevState, productors: result }));
-                    setDataFetched(prevState => ({ ...prevState, productors: true }));
-                    console.log(favouriteData.productors);
-                } catch (error) {
-                    console.error("Failed to fetch productors data: ", error);
-                }
-            } else if (selectedType === "Products" && !dataFetched.products) {
-                try {
-                    const data = await getFavourites(userId, "products", userType.toLowerCase());
-                    const result = data.data || [];
-                    setFavouriteData(prevState => ({ ...prevState, products: result }));
-                    setDataFetched(prevState => ({ ...prevState, products: true }));
-                } catch (error) {
-                    console.error("Failed to fetch products data: ", error);
-                }
+    const fetchData = useCallback(async () => {
+        try {
+            if (selectedType === "Types") {
+                const data = await getFavourites(userId, "types", userType.toLowerCase());
+                const result = data.data || [];
+                setFavouriteData(prevState => ({ ...prevState, types: result }));
+            } else if (selectedType === "Minoristas") {
+                const data = await getFavourites(userId, "minoristas", userType.toLowerCase());
+                const result = data.data || [];
+                setFavouriteData(prevState => ({ ...prevState, minoristas: result }));
+            } else if (selectedType === "Productors") {
+                const data = await getFavourites(userId, "productors", userType.toLowerCase());
+                const result = data.data || [];
+                setFavouriteData(prevState => ({ ...prevState, productors: result }));
+            } else if (selectedType === "Products") {
+                const data = await getFavourites(userId, "products", userType.toLowerCase());
+                const result = data.data || [];
+                setFavouriteData(prevState => ({ ...prevState, products: result }));
             }
-        };
+        } catch (error) {
+            console.error(`Failed to fetch ${selectedType.toLowerCase()} data: `, error);
+        }
+    }, [selectedType, userId, userType]);
 
-        fetchData();
-    }, [selectedType, userId, userType, dataFetched]);
+    useFocusEffect(
+        useCallback(() => {
+            // Reset data when screen comes into focus
+            setFavouriteData({
+                types: [],
+                minoristas: [],
+                productors: [],
+                products: [],
+            });
+            fetchData();
+        }, [fetchData])
+    );
 
     const renderFavourites = () => {
         let favourites = favouriteData[selectedType.toLowerCase()];
 
         if (!Array.isArray(favourites) || favourites.length === 0) {
-            return <Text style={styles.noItemsText}>You haven't selected any {selectedType.toLowerCase()} yet.</Text>;
+            const tipo = selectedType.toLowerCase().slice(0, -1);
+            return <Text style={styles.noItemsText}>{getPalabra("no_selection")} {tipo} {getPalabra("yet")}.</Text>;
         }
 
         if (selectedType === "Productors") {
@@ -132,7 +117,7 @@ const Favoritos = ({ navigation, userId, userType }) => {
                         ]}
                     >
                         <Text style={styles.white}>
-                            {party}
+                            {getPalabra(party)}
                         </Text>
                     </TouchableOpacity>
                 ))}

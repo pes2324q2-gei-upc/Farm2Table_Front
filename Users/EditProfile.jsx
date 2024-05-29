@@ -11,8 +11,7 @@ import Header from "../navigation/header_back";
 import styles from "../styles/editProfile.style";
 
 const EditProfile = ({ route, navigation }) => {
-    const userData = route.params.userData
-    console.log(userData.reach);
+    const userData = route.params.userData;
     
     const [profileImage, setProfileImage] = useState(userData.avatar || null);
     const [username, setUsername] = useState(userData.username || '');
@@ -22,10 +21,7 @@ const EditProfile = ({ route, navigation }) => {
     const [reach, setReach] = useState(userData.reach.toString() || '');
     const [address, setAddress] = useState(userData.address || '');
 
-    console.log(profileImage, username, description, aboutMe, phone, reach, address);
-
     const pickImage = async () => {
-
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
@@ -33,17 +29,11 @@ const EditProfile = ({ route, navigation }) => {
             quality: 1,
         });
 
-        console.log(result.assets);
-        console.log("uri result: ", result.assets[0].uri);
-
-
-        if (!result.cancelled) {
-            console.log(result.assets[0].uri);
+        if (!result.canceled) {
             setProfileImage(result.assets[0].uri);
+        } else {
+            console.log('Image picking was canceled');
         }
-
-        console.log(result);
-        console.log(profileImage);
     };
 
     const resetFields = () => {
@@ -57,11 +47,10 @@ const EditProfile = ({ route, navigation }) => {
     };
 
     const handleSave = async () => {
-
-        if(!username.trim() || !description.trim() || !aboutMe.trim() || !phone.trim()) {
+        if (!username.trim() || !description.trim() || !aboutMe.trim() || !phone.trim()) {
             Alert.alert('Error', 'Omple tots els camps.');
             return;
-          }
+        }
 
         const formData = new FormData();
         formData.append('username', username);
@@ -70,7 +59,7 @@ const EditProfile = ({ route, navigation }) => {
         formData.append('telephone', phone);
         formData.append('reach', reach);
         formData.append('address', address);
-        
+
         if (profileImage) {
             const filename = profileImage.split('/').pop();
             const match = /\.(\w+)$/.exec(filename);
@@ -78,13 +67,12 @@ const EditProfile = ({ route, navigation }) => {
 
             formData.append('avatar', {
                 uri: profileImage,
-                name: `photo.${type}`,
-                type: `image/${type}`,
+                name: `photo.${match[1]}`,
+                type: `image/${match[1]}`,
             });
         }
 
         try {
-
             await submitPerfil(formData, userData.id);
             navigation.goBack();
         } catch (error) {
@@ -92,87 +80,86 @@ const EditProfile = ({ route, navigation }) => {
         }
     };
 
-
     return (
         <SafeAreaView style={styles.outercontainer}>
             <Header />
             <ScrollView style={styles.container}>
-            <View style={styles.profileContainer}>
-                {profileImage ? (
-                    <Image source={{ uri: profileImage }} style={styles.avatar} />
-                ) : (
-                    <TouchableOpacity onPress={pickImage} style={styles.avatarPlaceholder}>
-                        <Text style={styles.avatarPlaceholderText}>{getPalabra("add_Photo")}</Text>
+                <View style={styles.profileContainer}>
+                    {profileImage ? (
+                        <Image source={{ uri: profileImage }} style={styles.avatar} />
+                    ) : (
+                        <TouchableOpacity onPress={pickImage} style={styles.avatarPlaceholder}>
+                            <Text style={styles.avatarPlaceholderText}>{getPalabra("add_Photo")}</Text>
+                        </TouchableOpacity>
+                    )}
+                    <TouchableOpacity onPress={pickImage} style={styles.editButton}>
+                        <Text style={styles.editButtonText}>{getPalabra("edit_photo")}</Text>
                     </TouchableOpacity>
-                )}
-                <TouchableOpacity onPress={pickImage} style={styles.editButton}>
-                    <Text style={styles.editButtonText}>{getPalabra("edit_photo")}</Text>
-                </TouchableOpacity>
-            </View>
-            <View style={styles.fieldContainer}>
-                <Text style={styles.label}>{getPalabra("username")}</Text>
-                <TextInput
-                    style={styles.input}
-                    value={username}
-                    onChangeText={setUsername}
-                    placeholder={getPalabra("placeholder_username")}
-                />
-            </View>
-            <View style={styles.fieldContainer}>
-                <Text style={styles.label}>{getPalabra("description")}</Text>
-                <TextInput
-                    style={styles.input}
-                    value={description}
-                    onChangeText={setDescription}
-                    placeholder={getPalabra("placeholder_description")}
-                />
-            </View>
-            <View style={styles.fieldContainer}>
-                <Text style={styles.label}>{getPalabra("About_me")}</Text>
-                <TextInput
-                    style={styles.input}
-                    value={aboutMe}
-                    onChangeText={setAboutMe}
-                    placeholder={getPalabra("placeholder_about_me")}
-                />
-            </View>
-            <View style={styles.fieldContainer}>
-                <Text style={styles.label}>{getPalabra("phone")}</Text>
-                <TextInput
-                    style={styles.input}
-                    value={phone}
-                    onChangeText={setPhone}
-                    placeholder={getPalabra("placeholder_phone")}
-                    keyboardType="phone-pad"
-                />
-            </View>
-            <View style={styles.fieldContainer}>
-                <Text style={styles.label}>{getPalabra("Reached")}</Text>
-                <TextInput
-                    style={styles.input}
-                    value={reach}
-                    onChangeText={setReach}
-                    placeholder={getPalabra("placeholder_reached")}
-                />
-            </View>
-            <View style={styles.fieldContainer}>
-                <Text style={styles.label}>{getPalabra("Address")}</Text>
-                <TextInput
-                    style={styles.input}
-                    value={address}
-                    onChangeText={setAddress}
-                    placeholder={getPalabra("placeholder_address")}
-                />
-            </View>
-            <View style={styles.buttonsContainer}>
-                <TouchableOpacity onPress={resetFields} style={styles.button}>
-                    <Text style={styles.buttonText}>{getPalabra("Reset")}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={handleSave}>
-                    <Text style={styles.buttonText}>{getPalabra("save")}</Text>
-                </TouchableOpacity>
-            </View>
-        </ScrollView>
+                </View>
+                <View style={styles.fieldContainer}>
+                    <Text style={styles.label}>{getPalabra("username")}</Text>
+                    <TextInput
+                        style={styles.input}
+                        value={username}
+                        onChangeText={setUsername}
+                        placeholder={getPalabra("placeholder_username")}
+                    />
+                </View>
+                <View style={styles.fieldContainer}>
+                    <Text style={styles.label}>{getPalabra("description")}</Text>
+                    <TextInput
+                        style={styles.input}
+                        value={description}
+                        onChangeText={setDescription}
+                        placeholder={getPalabra("placeholder_description")}
+                    />
+                </View>
+                <View style={styles.fieldContainer}>
+                    <Text style={styles.label}>{getPalabra("About_me")}</Text>
+                    <TextInput
+                        style={styles.input}
+                        value={aboutMe}
+                        onChangeText={setAboutMe}
+                        placeholder={getPalabra("placeholder_about_me")}
+                    />
+                </View>
+                <View style={styles.fieldContainer}>
+                    <Text style={styles.label}>{getPalabra("phone")}</Text>
+                    <TextInput
+                        style={styles.input}
+                        value={phone}
+                        onChangeText={setPhone}
+                        placeholder={getPalabra("placeholder_phone")}
+                        keyboardType="phone-pad"
+                    />
+                </View>
+                <View style={styles.fieldContainer}>
+                    <Text style={styles.label}>{getPalabra("Reached")}</Text>
+                    <TextInput
+                        style={styles.input}
+                        value={reach}
+                        onChangeText={setReach}
+                        placeholder={getPalabra("placeholder_reached")}
+                    />
+                </View>
+                <View style={styles.fieldContainer}>
+                    <Text style={styles.label}>{getPalabra("Address")}</Text>
+                    <TextInput
+                        style={styles.input}
+                        value={address}
+                        onChangeText={setAddress}
+                        placeholder={getPalabra("placeholder_address")}
+                    />
+                </View>
+                <View style={styles.buttonsContainer}>
+                    <TouchableOpacity onPress={resetFields} style={styles.button}>
+                        <Text style={styles.buttonText}>{getPalabra("Reset")}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.button} onPress={handleSave}>
+                        <Text style={styles.buttonText}>{getPalabra("save")}</Text>
+                    </TouchableOpacity>
+                </View>
+            </ScrollView>
         </SafeAreaView>
     );
 };

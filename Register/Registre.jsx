@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Image, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, Image, TouchableOpacity, SafeAreaView } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import logo from '../assets/Farm2Table.png';
 import {  getPalabra, renderFlagImage, setEmail, setUserId } from '../informacion/User';
@@ -17,6 +17,15 @@ const Registre = () => {
   const [error_message, setError] = useState('');
   const NAVIGATOR = useNavigation();
   const [cambioIdioma, setCambioIdioma] = useState(false);
+
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCount(prevCount => prevCount + 1);
+    }, 2000);
+
+    return () => clearInterval(intervalId);
+  }, []);
   
   const handleRegister = async () => {
 
@@ -52,7 +61,7 @@ const Registre = () => {
   };
 
   return (
-    <View style={STYLES.container}>
+    <SafeAreaView style={STYLES.container}>
           
       <Image source={logo} style={STYLES.logo} />
 
@@ -110,7 +119,7 @@ const Registre = () => {
       <Text style={STYLES.inicio_registro_texto}>{getPalabra("register_button")}</Text>
       </TouchableOpacity>
 
-    </View>
+    </SafeAreaView>
   );
 
 };

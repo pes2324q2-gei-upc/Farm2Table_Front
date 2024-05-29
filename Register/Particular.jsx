@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, Image, TouchableOpacity, TextInput, SafeAreaView } from 'react-native';
 import logo from '../assets/Farm2Table.png';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { SelectList } from 'react-native-dropdown-select-list';
@@ -41,7 +41,7 @@ const Particular = () => {
   };
 
   return (
-    <View style={STYLES.container}>
+    <SafeAreaView style={STYLES.container}>
 
         <Image source={logo} style={STYLES.logo} />
 
@@ -99,7 +99,7 @@ const Particular = () => {
         </View>
 
         
-    </View>
+    </SafeAreaView>
   );
 
 };

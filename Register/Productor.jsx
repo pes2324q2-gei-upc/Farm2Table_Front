@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, TextInput, } from 'react-native';
+import { View, Text, Image, TouchableOpacity, TextInput, SafeAreaView } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import logo from '../assets/Farm2Table.png';
 import {  getPalabra, renderFlagImage } from '../informacion/User';
@@ -42,7 +42,7 @@ const Productor = () => {
   };
 
   return (
-    <View style={STYLES.container}>
+    <SafeAreaView style={STYLES.container}>
             
         <Image source={logo} style={STYLES.logo} />
 
@@ -108,7 +108,7 @@ const Productor = () => {
             />  
         </View>
         
-    </View>
+    </SafeAreaView>
   );
 
 };

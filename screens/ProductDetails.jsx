@@ -5,21 +5,23 @@ import styles from '../styles/productDetails.style';
 import HeaderBack from '../navigation/header_back';
 import { COLORS, URL } from '../constants/theme';
 import { addProductToCart, loadCart, saveCart } from '../informacion/cartInfo';
-import { addFavourite } from '../api_service/APIFavoritos';
-import { userId, setUserId, userType } from '../informacion/User';
+import { addFavourite, isUserFavourite, removeFavourite } from '../api_service/APIFavoritos';
+import { userId, setUserId, userType, getPalabra } from '../informacion/User';
 import CartPopUp from '../PopUps/addedCart';
 import OpenChat from "../components/openChat";
-import {ChatStackScreen} from "../navigation/footer"
 
 const ProductDetails = ({ navigation, route }) => {
   const [product, setProduct] = useState(null);
   const [userAvatar, setUserAvatar] = useState(null);
   const [count, setCount] = useState(1);
   const [modalVisible, setModalVisible] = useState(false);
+  const [isFavourite, setIsFavourite] = useState(false);
   const cartIconRef = useRef();
   const user = userId();
 
   const { id } = route.params;
+
+  console.log('Product ID:', id);
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -44,7 +46,17 @@ const ProductDetails = ({ navigation, route }) => {
         console.error('Error fetching product details:', error);
       }
     };
+    const isFavourite = async () => {
+      try {
+          const tipo = userType().toLowerCase() + 's';
+          const response = await isUserFavourite(userId(), "products", tipo, id);
+          setIsFavourite(response.data.some(obj => obj.id === id));
+      } catch (error) {
+          console.error("Failed to check if user is favourite:", error);
+      }
+    }
     fetchProductDetails();
+    isFavourite();
     console.log('Product:', product)
   }, []);
 
@@ -74,8 +86,21 @@ const ProductDetails = ({ navigation, route }) => {
       console.log('User type:', typeUser);
       const response = await addFavourite(user, 'products', typeUser, product.id);
       console.log('Add favourite response:', response);
+      setIsFavourite(!isFavourite);
     } catch (error) {
       console.error('Failed to add favourite:', error);
+    }
+  };
+
+  const handleRemoveFavourite = async () => {
+    try {
+      const typeUser = userType().toLowerCase() + 's';
+      console.log('User type:', typeUser);
+      const response = await removeFavourite(user, 'products', typeUser, product.id);
+      console.log('Remove favourite response:', response);
+      setIsFavourite(!isFavourite);
+    } catch (error) {
+      console.error('Failed to remove favourite:', error);
     }
   };
     
@@ -119,59 +144,71 @@ const ProductDetails = ({ navigation, route }) => {
       <ScrollView>
         {product && (
           <>
-          <SafeAreaView style={styles.container}>
-        
-            <Image source={{ uri: product.image }} style={styles.image} />
-
-            <View style={styles.card}>
-              <View style={styles.name_price}>
-                <Text style={styles.name}>{product.name}</Text>
-                <View style={styles.priceStyle}>
-                  <Text style={styles.price}>{product.price} €/{product.unit}</Text>
+            <SafeAreaView style={styles.container}>
+              <View style={styles.imageContainer}>
+                <Image source={{ uri: product.image }} style={styles.image} />
+                <View style={styles.quantityPill}>
+                  <Text style={styles.quantityPillText}>{product.quantity} kg {getPalabra("in_stock")}</Text>
                 </View>
               </View>
 
-              <ScrollView style={styles.description_row}>
-                <Text style={styles.description}>{product.description}</Text>
-              </ScrollView>
-
-              <View style={styles.quanity_row}>
-                <View style={styles.user_info_container}>
-                  <View style={styles.userrow}>
-                    {userAvatar && <Image source={{ uri: userAvatar }} style={styles.user_image} />}
-                    <Text style={styles.user_name}>{product.productor_info.username}</Text>
-                  </View>
-
-                  <View style={styles.rating_row}>
-                    <TouchableOpacity style={styles.quantity_button} onPress={decrement}>
-                      <Ionicons name="remove" size={20} color="black" />
-                    </TouchableOpacity>
-                    <Text style={styles.quantity}>{count}</Text>
-                    <TouchableOpacity style={styles.quantity_button} onPress={increment}>
-                      <Ionicons name="add" size={20} color="black" />
-                    </TouchableOpacity>
+              <View style={styles.card}>
+                <View style={styles.name_price}>
+                  <Text style={styles.name}>{product.name}</Text>
+                  <View style={styles.priceStyle}>
+                    <Text style={styles.price}>{product.price} €/{product.unit}</Text>
                   </View>
                 </View>
-              </View>
 
-              <View style={styles.button_row}>
-                <TouchableOpacity style={styles.button} onPress={addToCart}>
-                  <Text style={styles.button_text}>Afegir {count} a la cistella</Text>
-                </TouchableOpacity>
-              </View>
+                <ScrollView style={styles.description_row}>
+                  <Text style={styles.description}>{product.description}</Text>
+                </ScrollView>
 
-              <View style={styles.button_bottom_row}>
-                {user !== product.productor_info.id && (
+                <View style={styles.quanity_row}>
+                  <View style={styles.user_info_container}>
+                    <View style={styles.userrow}>
+                      {userAvatar && <Image source={{ uri: userAvatar }} style={styles.user_image} />}
+                      <Text style={styles.user_name}>{product.productor_info.username}</Text>
+                    </View>
+
+                    <View style={styles.rating_row}>
+                      <TouchableOpacity style={styles.quantity_button} onPress={decrement}>
+                        <Ionicons name="remove" size={20} color="black" />
+                      </TouchableOpacity>
+                      <Text style={styles.quantity}>{count}</Text>
+                      <TouchableOpacity style={styles.quantity_button} onPress={increment}>
+                        <Ionicons name="add" size={20} color="black" />
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+
+                <View style={styles.button_row}>
+                  <TouchableOpacity style={styles.button} onPress={addToCart}>
+                    <Text style={styles.button_text}>Afegir {count} a la cistella</Text>
+                  </TouchableOpacity>
+                </View>
+
+                <View style={styles.button_bottom_row}>
+                  {user !== product.productor_info.id && (
                     <OpenChat onPress={handleOpenChatPress} />
-                )}
-                <TouchableOpacity style={styles.buttonLove} onPress={handleAddFavourite}>
-                  <Text style={styles.button_text}>Add Favourite</Text>
-                  <Ionicons name="heart" size={20} color={COLORS.primary} />
-                </TouchableOpacity>
-              </View>
+                  )}
+                  {!isFavourite && (
+                    <TouchableOpacity style={styles.buttonLove} onPress={handleAddFavourite}>
+                      <Text style={styles.button_text}>{getPalabra("Add_favorite")}</Text>
+                      <Ionicons name="heart-outline" size={20} color={COLORS.primary} />
+                    </TouchableOpacity>
+                  )}
+                  {isFavourite && (
+                    <TouchableOpacity style={styles.buttonLove} onPress={handleRemoveFavourite}>
+                      <Text style={styles.button_text}>{getPalabra("Remove_favorite")}</Text>
+                      <Ionicons name="heart" size={20} color={COLORS.primary} />
+                    </TouchableOpacity>
+                  )}
+                </View>
 
-            </View>
-          </SafeAreaView>
+              </View>
+            </SafeAreaView>
           </>
         )}
       </ScrollView>

@@ -1,13 +1,12 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet } from 'react-native';
 import { COLORS } from '../constants/theme';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faComments } from '@fortawesome/free-solid-svg-icons';
+import { Entypo } from '@expo/vector-icons';
 
 const OpenChat = ({ onPress }) => {
     return (
         <TouchableOpacity style={styles.button} onPress={onPress}>
-            <FontAwesomeIcon icon={faComments} size={24} color="white" />
+            <Entypo name="chat" size={30} color={COLORS.primary} />
         </TouchableOpacity>
     );
 };
