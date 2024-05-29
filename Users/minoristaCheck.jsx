@@ -16,8 +16,10 @@ import UserProfile from "./userInfo";
 
 import { getIP } from "../informacion/Constants";
 import { userId } from "../informacion/User";
-import { fetchProductorComments } from "../api_service/ApiConsultar_Usuario";
+import { fetchCounterMedals, fetchMedals, fetchProductorComments, fetchUserMedals } from "../api_service/ApiConsultar_Usuario";
 import ValoracionsComponent from "../Restaurants/ValoracionsComponent";
+import Medallas from "./Medallas";
+import { count } from "firebase/firestore";
 const API_URL = `http://${getIP()}`;
 
 
@@ -27,7 +29,10 @@ const MinoristaCheck = ({ navigation, userData, id }) => {
     const [shopData, setShopData] = useState([]);
     const [activeUser, setActiveUser] = useState(userId());
     const [comments, setComments] = useState([]);
-
+    const [medals, setMedals] = useState([]);
+    const [userMedals, setUserMedals]  = useState([]);
+    const [counter, setcounter] = useState([]);
+    
     const onPress = (tabName) => {
         setActiveTab(tabName);
     };
@@ -48,6 +53,27 @@ const MinoristaCheck = ({ navigation, userData, id }) => {
                 fetchProductorComments(id,"minorista")
                 .then(data => {
                     setComments(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+                fetchMedals()
+                .then(data => {
+                    setMedals(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+                fetchCounterMedals(id)
+                .then(data => {
+                    setcounter(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+                fetchUserMedals(id)
+                .then(data => {
+                    setUserMedals(data);
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
@@ -107,6 +133,16 @@ const MinoristaCheck = ({ navigation, userData, id }) => {
                             Valoraciones
                         </Text>
                     </TouchableOpacity>
+
+                    <TouchableOpacity
+                    style={[styles.button, { borderColor: activeTab === 'Medallas' ? 'orange' : '#1e4d2b' }]}
+                    onPress={() => onPress('Medallas')}
+                    >
+                        <Text style={[styles.buttonText, { color: activeTab === 'Medallas' ? 'orange' : 'white' }]}>
+                            Medallas
+                        </Text>
+                    </TouchableOpacity>
+
                 </ScrollView>
             </View>
 
@@ -140,6 +176,12 @@ const MinoristaCheck = ({ navigation, userData, id }) => {
             {activeTab === 'Valoraciones' && (
                 <View style={styles.tabContent}>
                     <ValoracionsComponent comments={comments} />
+                </View>
+            )}
+
+            {activeTab === 'Medallas' && (
+                <View style={styles.tabContent}>
+                    <Medallas medals={medals} userMedals={userMedals} counter={counter} tipus={"minorista"}/>
                 </View>
             )}
         </View>

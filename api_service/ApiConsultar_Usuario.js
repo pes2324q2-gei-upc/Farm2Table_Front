@@ -62,3 +62,50 @@ export const fetchSpecificInfo = async (userId) => {
         throw error;
     }
 }
+
+const Get_API_Medals = 'http://'+getIP()+'/gamification/medal';
+const Get_API_Counter_Medals = 'http://'+getIP()+'/gamification/counter/';
+const Get_API_Medals_ID = 'http://'+getIP()+'/gamification/medal/';
+
+export const fetchMedals = async () => {
+    try {
+        const response = await fetch(Get_API_Medals);
+        if (!response.ok) {
+            throw new Error('Failed to fetch Medals');
+        }
+        const json = await response.json();
+        //console.log(json);
+        return json;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const fetchCounterMedals = async (id) => {
+    try {
+        const response = await fetch(Get_API_Counter_Medals+id);
+        if (!response.ok) {
+            throw new Error('Failed to fetch Counter');
+        }
+        const json = await response.json();
+        //console.log(json);
+        return json;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const fetchUserMedals = async (userId) => {
+    try {
+        const response = await fetch(Get_API_Medals_ID+userId);
+        //console.log(Get_API_Medals_ID+userId);
+        if (!response.ok) {
+            throw new Error('Failed to fetch User Medasl');
+        }
+        const json = await response.json();
+        //console.log(json);
+        return json;
+    } catch (error) {
+        throw error;
+    }
+}

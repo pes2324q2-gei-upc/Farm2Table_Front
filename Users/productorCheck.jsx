@@ -1,12 +1,12 @@
 import React, {useState, useCallback} from "react";
-import { View, Text, Image, TouchableOpacity, StyleSheet, SafeAreaView } from "react-native";
+import { View, Text, Image, TouchableOpacity, StyleSheet, SafeAreaView, ScrollView } from "react-native";
 
 import { useFocusEffect } from "@react-navigation/native";
 
 import { getPalabra } from "../informacion/User";
 
 import styles from "../styles/consultarUsuario.style";
-import { fetchData, fetchProductorComments } from '../api_service/ApiConsultar_Usuario';
+import { fetchData, fetchProductorComments, fetchCounterMedals, fetchMedals, fetchUserMedals } from '../api_service/ApiConsultar_Usuario';
 
 import ProductList from "./ProductList";
 
@@ -16,7 +16,7 @@ import UserProfile from "./userInfo";
 import { getIP } from "../informacion/Constants";
 import { userId } from "../informacion/User";
 import ValoracionsComponent from '../Restaurants/ValoracionsComponent';
-
+import Medallas from "./Medallas";
 
 const API_URL = "http://" +getIP();
 
@@ -27,6 +27,9 @@ const ProductorCheck = ({ navigation, userData, id }) => {
     const [shopData, setShopData] = useState([]);
     const [activeUser, setActiveUser] = useState(userId());
     const [comments, setComments] = useState([]);
+    const [medals, setMedals] = useState([]);
+    const [userMedals, setUserMedals]  = useState([]);
+    const [counter, setcounter] = useState([]);
     const onPress = (tabName) => {
         setActiveTab(tabName);
     };
@@ -47,6 +50,29 @@ const ProductorCheck = ({ navigation, userData, id }) => {
                 .catch(error => {
                     console.error('Error fetching data:', error);
                 });
+                fetchMedals()
+                .then(data => {
+                    setMedals(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+                fetchCounterMedals(id)
+                .then(data => {
+                    setcounter(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+                fetchUserMedals(id)
+                .then(data => {
+                    setUserMedals(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+                console.log(userMedals);
+                console.log(id);
         }, [userData])
     );
 
@@ -54,7 +80,12 @@ const ProductorCheck = ({ navigation, userData, id }) => {
 
     return (
         <View style={{ flex: 1 }}>
-            <View style={styles.buttonContainer}>
+            <View style={styles.header}>
+            <ScrollView 
+                    contentContainerStyle={styles.buttonContainer}
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                >
                 <TouchableOpacity
                     style={[styles.button, { borderColor: activeTab === 'Productos' ? 'orange' : '#1e4d2b' }]}
                     onPress={() => onPress('Productos')}
@@ -87,9 +118,19 @@ const ProductorCheck = ({ navigation, userData, id }) => {
                     onPress={() => onPress('Valoraciones')}
                 >
                     <Text style={[styles.buttonText, { color: activeTab === 'Valoraciones' ? 'orange' : 'white' }]}>
-                        Valoraciones
+                        {getPalabra("valorations")}
                     </Text>
                 </TouchableOpacity>
+
+                <TouchableOpacity
+                style={[styles.button, { borderColor: activeTab === 'Medallas' ? 'orange' : '#1e4d2b' }]}
+                onPress={() => onPress('Medallas')}
+                >
+                    <Text style={[styles.buttonText, { color: activeTab === 'Medallas' ? 'orange' : 'white' }]}>
+                        {getPalabra("medals")}
+                    </Text>
+                </TouchableOpacity>
+                </ScrollView>
             </View>
 
             {activeTab === 'Productos' && (
@@ -116,6 +157,12 @@ const ProductorCheck = ({ navigation, userData, id }) => {
             {activeTab === 'Valoraciones' && (
                 <View style={styles.tabContent}>
                     <ValoracionsComponent comments={comments} />
+                </View>
+            )}
+
+            {activeTab === 'Medallas' && (
+                <View style={styles.tabContent}>
+                    <Medallas medals={medals} userMedals={userMedals} counter={counter} tipus={"productor"}/>
                 </View>
             )}
         </View>
