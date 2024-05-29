@@ -8,7 +8,7 @@ import styles from "../styles/mensajesChat.style";
 import { getPalabra } from '../informacion/User';
 import { URL } from "../constants/theme";
 import { fetchInitialMessages, initializeWebSocket, deleteChat, deleteMessage } from '../api_service/ApiChat';
-
+import addToCart from "../api_service/CartService";
 const MensajesChat = ({ navigation }) => {
     const [message, setMessage] = useState('');
     const [offerPrice, setOfferPrice] = useState('');
@@ -16,7 +16,7 @@ const MensajesChat = ({ navigation }) => {
     const [messages, setMessages] = useState([]);
     const [socket, setSocket] = useState(null);
     const route = useRoute();
-    const { chatId, productId, authorId, receiverId, receiverUsername } = route.params;
+    const { chatId, productId, authorId, receiverId, receiverUsername, productName, productorId, productorName, productorAvatar } = route.params;
     const [isSendingMessage, setIsSendingMessage] = useState(true);
 
     useEffect(() => {
@@ -61,7 +61,7 @@ const MensajesChat = ({ navigation }) => {
         }
     };
 
-    const handleAcceptOffer = (offerId) => {
+    const handleAcceptOffer = (price, quantity) => {
         Alert.alert(
             getPalabra("accept_offer"),
             getPalabra("accept_message"),
@@ -70,6 +70,7 @@ const MensajesChat = ({ navigation }) => {
                     text: "OK",
                     onPress: async () => {
                         try {
+                            addToCart(productId, productName, price, quantity, productorId, productName, productorAvatar);
                             await deleteChat(chatId);
                         } catch (error) {
                             Alert.alert("Error", getPalabra("borrar_xat"));
@@ -130,7 +131,7 @@ const MensajesChat = ({ navigation }) => {
                     <Text style={styles.offerText}>{msg.text}</Text>
                     <Text style={styles.timestamp}>{format(parseISO(msg.timestamp), 'p')}</Text>
                     <View style={styles.offerButtons}>
-                        <TouchableOpacity onPress={() => handleAcceptOffer(msg.id)} style={styles.acceptButton}>
+                        <TouchableOpacity onPress={() => handleAcceptOffer(msg.offer_price, msg.offer_quantity)} style={styles.acceptButton}>
                             <Text style={styles.acceptButtonText}>{getPalabra("accept")}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => handleDeclineOffer(msg.id)} style={styles.declineButton}>
