@@ -155,5 +155,7 @@
     "addRow": "Add row",
     "keys": "Keys (',' between them)",
     "phrase": "Phrase",
-    "noChats": "No chats yet"
+    "noChats": "No chats yet",
+    "no_products": "No products available",
+    "empty_cart": "Your cart is empty"
 }

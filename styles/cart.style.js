@@ -93,7 +93,18 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 16, 
         fontWeight: 'bold'
-    }
+    },
+    emptyCartContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: COLORS.primary,
+    },
+    emptyCartText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: COLORS.secondary,
+    },
 });
 
 export default styles;

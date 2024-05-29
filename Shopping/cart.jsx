@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import HeaderHome from '../navigation/header_backHome';
 import { loadCart, saveCart, removeItemFromCart, clearAllData, changeQuantity } from '../informacion/cartInfo';
 import styles from '../styles/cart.style';
-import { userId } from '../informacion/User';
+import { getPalabra, userId } from '../informacion/User';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '../constants/theme';
@@ -62,6 +62,17 @@ const CartScreen = () => {
         setCartItems(updatedCart);
         saveCart(userId(), updatedCart);
     };
+
+    if (cartItems.length === 0) {
+        return (
+            <SafeAreaView style={styles.container}>
+                <HeaderHome />
+                <View style={styles.emptyCartContainer}>
+                    <Text style={styles.emptyCartText}>{getPalabra("empty_cart")}</Text>
+                </View>
+            </SafeAreaView>
+        );
+    }
 
     const calculateTotal = (items) => items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
 

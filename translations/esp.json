@@ -154,5 +154,7 @@
     "addRow": "Añadir fila",
     "keys": "Llaves (',' entre ellas)",
     "phrase": "Frase",
-    "noChats": "Todavía no tienes chats"
+    "noChats": "Todavía no tienes chats",
+    "no_products": "No hay productos disponibles",
+    "empty_cart": "Tu carrito está vacío"
 }
