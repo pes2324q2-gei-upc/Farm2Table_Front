@@ -17,7 +17,7 @@ const ConfirmModal = ({ modalVisible, setModalVisible, navigation }) => {
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <Text style={styles.modalText}>{getPalabra("processed_purchase")}do</Text>
+                    <Text style={styles.modalText}>{getPalabra("processed_purchase")}</Text>
                     <TouchableOpacity
                         style={[styles.button, styles.buttonCart]}
                         onPress={() => {

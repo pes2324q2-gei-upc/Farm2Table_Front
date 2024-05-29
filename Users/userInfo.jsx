@@ -36,7 +36,7 @@ const UserProfile = ({navigation, idUser}) => {
                 {userData.avatar ? (
                     <Image source={userData.avatar} style={styles.avatar} />
                 ) : null}
-                <Text style={styles.usernameLarge}>{userData.username}</Text>
+                <Text style={styles.usernameLarge}>{(userData.username != null)? userData.username : "loading..."}</Text>
                 {userData.telephone && (
                     <View style={styles.telephoneContainer}>
                         <Ionicons name="call" size={24} color="black" />

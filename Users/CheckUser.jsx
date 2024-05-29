@@ -63,8 +63,9 @@ const ProfileScreen = ({ navigation, route }) => {
         const userLoad = async () => {
             const user = idUser ? idUser : userId();
             try {
-                const data = await fetchUser(user);
+                const data = await fetchSpecificInfo(user);
                 setUserData(data);
+                setRating(data.rating)
             } catch (error) {
                 console.error("Failed to fetch user data: ", error);
             }
@@ -101,7 +102,7 @@ const ProfileScreen = ({ navigation, route }) => {
 
         if (activeUser !== idUser && userType() !== typeUser) checkIfFavourite();
         userLoad();
-        fetchRating();
+        //fetchRating();
         if (idUser !== activeUser) {
             const type = typeUser.toLowerCase();
             if (type === 'productor') {
@@ -136,7 +137,7 @@ const ProfileScreen = ({ navigation, route }) => {
                 <View style={styles.profileContainer}>
                     <Image source={avatarUri} style={styles.avatar} />
                     <View style={styles.usernameRow}>
-                        <Text style={styles.usernameLarge}>{userData.username}</Text>
+                        <Text style={styles.usernameLarge}>{(userData.service != null)? userData.service_name : (userData.productor_name != null) ? userData.productor_name : (userData.username != null)? userData.username : "loading..."}</Text>
                         {activeUser !== idUser && userType() !== typeUser && (
                             <>
                                 <TouchableOpacity onPress={isFavourite ? handleRemoveFavourite : handleAddFavourite}>
