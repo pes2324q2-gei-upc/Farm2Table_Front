@@ -47,8 +47,10 @@ const Particular = () => {
   const handleRegister = async () => {
 
     try {
-        const itemNames = items.map(item => item.name);
-        const data = await registerParticularService(abast, itemNames);
+        const selectedNames = items
+            .filter(item => selectedItems.includes(item.id))
+            .map(item => item.name);
+        const data = await registerParticularService(abast, selectedNames);
         if (data.error) {
           setError(data.error)
           console.log(error_message);
