@@ -1,30 +1,54 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Image, TouchableOpacity, TextInput, SafeAreaView } from 'react-native';
 import logo from '../assets/Farm2Table.png';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { SelectList } from 'react-native-dropdown-select-list';
 import { getPalabra, renderFlagImage } from '../informacion/User';
-import { getTipusProductes } from '../informacion/Constants';
 import { useNavigation } from '@react-navigation/native';
 import { registerParticularService } from '../api_service/ApiRegistroParticular';
 import STYLES from '../styles/inici_registre.style';
 import SeleccioIdioma from '../components/seleccioIdioma';
+import SectionedMultiSelect from 'react-native-sectioned-multi-select';
+import { typeProducts } from '../api_service/ApiTiposProductos';
 
 const Particular = () => {
   const [abast, setAbast] = useState("");
   const [error_message, setError] = useState('');
-  const [favourite_prod, setFavourite] = useState("");
   const NAVIGATOR = useNavigation();
   const [cambioIdioma, setCambioIdioma] = useState(false);
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [items, setItems] = useState([{ name: 'Loading...', id: 1}]);
 
   const handleGoBack = () => {
     NAVIGATOR.goBack();
   };
 
+  async function infoProductos() {
+    try {
+        const data = await typeProducts();
+        if (data.error) {
+            setError(data.error);
+            console.log(data.error);
+        } else {
+            setItems(data)
+        }
+    } catch (err) {
+        console.log(err.message);
+        setError(err.message);
+    }
+}
+
+  useEffect(() => {
+    async function fetchData() {
+        if (items.length === 1) await infoProductos();
+    }
+    fetchData();
+  }, [items])
+
   const handleRegister = async () => {
 
     try {
-        const data = await registerParticularService(abast, favourite_prod);
+        const itemNames = items.map(item => item.name);
+        const data = await registerParticularService(abast, itemNames);
         if (data.error) {
           setError(data.error)
           console.log(error_message);
@@ -85,17 +109,21 @@ const Particular = () => {
         </TouchableOpacity>
 
         <View style={[STYLES.base_fondo_datos, STYLES.fondo_servicio]}>
-            <SelectList 
-                placeholder = {getPalabra("favourite_products")}
-                boxStyles={STYLES.box_lista}
-                inputStyles={STYLES.texto_lista}
-                setSelected={ (val) => setFavourite(val)}
-                data={getTipusProductes} 
-                save="value"     
-                dropdownStyles={{backgroundColor: 'white' , maxHeight: 140, maxWidth: 280}}
-                dropdownTextStyles={STYLES.texto_lista}
-                search={false}
+            <View style={{width: 280, height: 80}}>
+            <SectionedMultiSelect
+            styles={STYLES.productos_favoritos}
+            items={items}
+            IconRenderer={Icon}
+            uniqueKey="id"
+            onSelectedItemsChange={setSelectedItems}
+            selectedItems={selectedItems}
+            selectText={getPalabra("select_product")}
+            searchPlaceholderText={getPalabra("search_products")}
+            hideSearch={false}
+            showChips={false}
+            alwaysShowSelectText={true}
             />
+            </View>    
         </View>
 
         

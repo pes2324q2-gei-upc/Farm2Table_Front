@@ -198,7 +198,13 @@ const STYLES = StyleSheet.create({
     },
     texto_input_datos: { width: 220, right: 20 },
     texto_recuadros_datos: { width: 280, right: 20 },
-
+    productos_favoritos: {
+        selectedItemText:{color: '#749969'},
+        selectToggleText:{color: '#749969', fontWeight:'bold'},
+        item:{backgroundColor: '#fefae0'},
+        selectedItem:{backgroundColor: '#fefae0'},
+        container:{backgroundColor: '#fefae0'}
+    },
     box_lista: { width: 280, height: 50 },
     texto_lista: { fontSize: 16, color: '#749969', fontWeight: 'bold' },
     fondo_boton_comensa: {
