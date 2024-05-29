@@ -110,18 +110,20 @@ const ProfileScreen = ({ navigation, route }) => {
 
         if (activeUser !== idUser && userType() !== typeUser) checkIfFavourite();
         userLoad();
-        fetchComments();
         fetchRating();
-        if (userType().toLowerCase() === 'productor') fetchUsersBoughtList();
+        if (idUser !== activeUser) {
+            fetchComments();
+            if (userType().toLowerCase() === 'productor') {
+                fetchUsersBoughtList();
+            }
+        }
     }, [activeUser, idUser, typeUser]);
 
     const userHasBoughtFromIdUser = usersBoughtList.some(user =>
         user.buyer.id === userId()
     );
 
-    const userHasComment = !commentsList.some(comment =>
-        comment.id === userId()
-    );
+    const userHasComment = commentsList.some(data => data.commentor.id === userId());
 
     return (
         <SafeAreaView style={styles.safecontainer}>
