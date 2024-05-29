@@ -52,7 +52,7 @@ const ProfileScreen = ({ navigation, route }) => {
     const addRating = async () => {
         try {
             const type = typeUser.toLowerCase();
-            navigation.navigate("Valorar", { restaurantId: idUser, nomRestaurant: userData.username, tipus: type });
+            navigation.navigate("Valorar", { restaurantId: idUser, nomResturant: userData.username, tipus: type });
         } catch (error) {
             console.error("Failed to do rating", error);
         }
@@ -171,8 +171,22 @@ const ProfileScreen = ({ navigation, route }) => {
                             startingValue={3}
                             imageSize={30}
                             readonly
+                            starStyle={'blue'}
                             tintColor ={COLORS.secondary}
                         />
+                        /**<Rating
+              type='custom'
+              startingValue={2}
+              count={5}
+              showRating={false}
+              defaultRating={rating}
+              size={20}
+              ratingColor={COLORS.secondary}
+              onFinishRating={handleRatingCompleted}
+              jumpValue={1}
+              minValue={1}
+              tintColor ={COLORS.primary}
+            /> */
                     )}
                     {userData.telephone && (
                         <View style={styles.telephoneContainer}>
