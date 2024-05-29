@@ -1,12 +1,12 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import { StyleSheet, View, ScrollView, SafeAreaView, Text } from 'react-native';
-import { COLORS, URL } from '../constants/theme';
+import { COLORS, SIZES, URL } from '../constants/theme';
 import Header from '../navigation/header';
 import ShopFeed from '../Products/ShopFeed';
 import AddButton from '../components/addButton';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 
-import { userType } from '../informacion/User';
+import { getPalabra, userType } from '../informacion/User';
 
 const MainFeed = () => {
   const [shopData, setShopData] = useState([]);
@@ -56,6 +56,19 @@ const MainFeed = () => {
     navigation.navigate("AddProduct");
   };
 
+  if (shopData.length === 0) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Header />
+        <SafeAreaView style={styles.containerIn}>
+          <View style={styles.errorContainer}>
+            <Text>{getPalabra("no_product")}</Text>
+          </View>
+        </SafeAreaView>
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <Header />
@@ -77,18 +90,18 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: COLORS.secondary,
     flex: 1,
-    paddingHorizontal: 20,
+    
   },
   containerIn: {
     backgroundColor: COLORS.primary,
     flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   feedContainer: {
     alignItems: 'center',
-    justifyContent: 'flex-start',
-    marginLeft: 29,
-    marginTop: 15,
     justifyContent: 'space-between',
+    paddingBottom: SIZES.height * 0.1,
   },
   loadingContainer: {
     flex: 1,

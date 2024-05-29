@@ -1,17 +1,22 @@
-import React, { useState, useRef } from 'react';
-import { StyleSheet, View, FlatList, TouchableOpacity, Image, Text } from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
+import { StyleSheet, View, Animated, FlatList, TouchableOpacity, Image, Text } from 'react-native';
 import { COLORS, SIZES } from '../constants/theme';
 import { useNavigation } from '@react-navigation/native';
 
 const SliderProducts = ({ productData }) => {
     const [activeIndex, setActiveIndex] = useState(0);
+    const scrollX = useRef(new Animated.Value(0)).current;
     const flatListRef = useRef(null);
 
-    const handleScroll = (event) => {
-        const contentOffsetX = event.nativeEvent.contentOffset.x;
-        const index = Math.floor(contentOffsetX / (SIZES.width - 60)); // Adjusted width considering padding
-        setActiveIndex(index);
-    };
+    useEffect(() => {
+        const listener = scrollX.addListener(({ value }) => {
+            const index = Math.round(value / (SIZES.width * 0.9)); // Ensure the index calculation matches the actual item width
+            setActiveIndex(index);
+        });
+        return () => {
+            scrollX.removeListener(listener);
+        };
+    }, [scrollX]);
 
     const scrollToIndex = (index) => {
         flatListRef.current.scrollToIndex({ animated: true, index });
@@ -20,36 +25,36 @@ const SliderProducts = ({ productData }) => {
 
     const navigation = useNavigation();
 
+    const handlePress = (id) => {
+        navigation.navigate('ProductDetails', { id });
+    };
+
     return (
-        <View style={styles.container}>
-            <FlatList
-                ref={flatListRef}
+        <View>
+            <Animated.FlatList
                 data={productData}
-                style={styles.flatlist}
+                keyExtractor={(item) => item.id.toString()}
                 horizontal
                 pagingEnabled
                 showsHorizontalScrollIndicator={false}
-                keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) => (
-                    <TouchableOpacity onPress={() => navigation.navigate('ProductDetails', { id: item.id })}>
-                        <View style={styles.page}>
+                    <View style={styles.lista}>
+                        <TouchableOpacity onPress={() => handlePress(item.id)}>
                             <View style={styles.capsule}>
-                                <View style={styles.imageContainer}>
-                                    <Image
-                                        source={{ uri: item.image }}
-                                        style={styles.image}
-                                    />
-                                </View>
-                                <View style={styles.textContainer}>
-                                    <Text style={styles.title}>{item.name}</Text>
-                                    <Text style={styles.price}>{item.price} €/kg</Text>
+                                <Image source={{ uri: item.image || 'https://via.placeholder.com/150' }} style={styles.image} />
+                                <View style={styles.infoContainer}>
+                                    <Text style={styles.productName}>{item.name}</Text>
+                                    <Text style={styles.productPrice}>{item.price} €/kg</Text>
                                 </View>
                             </View>
-                        </View>
-                    </TouchableOpacity>
+                        </TouchableOpacity>
+                    </View>
                 )}
-                onScroll={handleScroll}
-                scrollEventThrottle={16} // Adjust scroll event frequency
+                onScroll={Animated.event(
+                    [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+                    { useNativeDriver: false }
+                )}
+                ref={flatListRef}
             />
             <View style={styles.pagination}>
                 {productData.map((item, index) => (
@@ -65,19 +70,42 @@ const SliderProducts = ({ productData }) => {
             </View>
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
-    container: {
-        maxWidth: SIZES.width - 50,
-        padding: 10,
-        alignItems: "center",
-        justifyContent: "center"
-    },
-    page: {
-        width: SIZES.width - 60,
-        justifyContent: 'center',
+    lista: {
+        marginVertical: 10,
         alignItems: 'center',
+    },
+    capsule: {
+        borderWidth: 2,
+        borderRadius: 10,
+        borderColor: COLORS.secondary,
+        backgroundColor: COLORS.white,
+        overflow: 'hidden',
+        alignItems: 'center',
+        width: SIZES.width * 0.9,
+    },
+    image: {
+        width: '100%',
+        height: 150,
+        resizeMode: 'cover',
+    },
+    infoContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        padding: 10,
+        width: '100%',
+    },
+    productName: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: COLORS.secondary,
+    },
+    productPrice: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: COLORS.secondary,
     },
     pagination: {
         flexDirection: 'row',
@@ -94,45 +122,7 @@ const styles = StyleSheet.create({
     },
     activeDot: {
         backgroundColor: COLORS.secondary,
-    },
-    image: {
-        width: 100,
-        height: 100,
-    },
-    title: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: COLORS.secondary,
-    },
-    price: {
-        fontSize: 14,
-    },
-    imageContainer: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: 5,
-    },
-    textContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-    },
-    capsule: {
-        backgroundColor: 'white',
-        paddingHorizontal: 10,
-        paddingVertical: 10,
-        borderRadius: 20,
-        marginBottom: 5,
-        minWidth: SIZES.width - 75,
-        maxHeight: 175,
-        borderColor: COLORS.secondary,
-        borderRadius: 20,
-        borderWidth: 2,
-    },
-    flatlist: {
-        flex: 1,
-        width: SIZES.width - 60,
-    },
+    }
 });
 
 export default SliderProducts;

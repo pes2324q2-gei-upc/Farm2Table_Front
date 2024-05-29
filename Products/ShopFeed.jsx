@@ -24,7 +24,8 @@ const ShopFeed = ({ navigation, data }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 20,
+
+    marginVertical: 20,
   },
   shopName: {
     fontSize: 18,
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   width:{
-    width: SIZES.width - 20,
+    width: SIZES.width * 0.9,
   }
 });
 

@@ -155,5 +155,7 @@
     "addRow": "Afegir fila",
     "keys": "Claus (',' entre elles)",
     "phrase": "Frase",
-    "noChats": "Encara no tens xats"
+    "noChats": "Encara no tens xats",
+    "no_products": "No hi ha productes disponibles",
+    "empty_cart": "La cistella està buida"
 }
