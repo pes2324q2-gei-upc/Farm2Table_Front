@@ -5,8 +5,8 @@ node_modules/
 
 # Expo
 .expo/
-.ios/
-dist/
+cd ios
+fewfdist/
 web-build/
 expo-env.d.ts
 

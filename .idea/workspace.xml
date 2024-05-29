@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2c62d708-8ebc-49fc-9632-855ec1f91a3c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" afterDir="false" />
     </list>
@@ -45,7 +46,7 @@
     "RunOnceActivity.cidr.known.project.marker": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "dev",
+    "git-widget-placeholder": "FuncionaIOSGoogleYMapa",
     "last_opened_file_path": "C:/Users/peque/OneDrive/Escritorio/PES/FrontEnd/FrontEnd/android",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
