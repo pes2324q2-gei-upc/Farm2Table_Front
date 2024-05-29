@@ -168,10 +168,10 @@ const ProfileScreen = ({ navigation, route }) => {
                     </View>
                     {rating !== 0 && (
                         <Rating
-                            startingValue={rating}
-                            imageSize={20}
+                            startingValue={3}
+                            imageSize={30}
                             readonly
-                            style={styles.rating}
+                            tintColor ={COLORS.secondary}
                         />
                     )}
                     {userData.telephone && (
@@ -237,6 +237,9 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         marginLeft: 5,
+    },
+    starStyle: {
+        tintColor: 'blue', // Set the color of the stars
     },
 });
 
