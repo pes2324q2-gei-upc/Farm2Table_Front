@@ -8,10 +8,11 @@ import styles from "../styles/mensajesChat.style";
 import { getPalabra } from '../informacion/User';
 import { URL } from "../constants/theme";
 import { fetchInitialMessages, initializeWebSocket, deleteChat, deleteMessage } from '../api_service/ApiChat';
-import {getToken,setToken} from '../informacion/Constants'
+import { getToken, setToken } from '../informacion/Constants';
 import { getMatchPhrase, loginInService } from '../api_service/API_ServeiExtern';
 import { userType } from '../informacion/User';
 import addToCart from "../api_service/CartService";
+
 const MensajesChat = ({ navigation }) => {
     const [message, setMessage] = useState('');
     const [offerPrice, setOfferPrice] = useState('');
@@ -41,9 +42,6 @@ const MensajesChat = ({ navigation }) => {
                     author_id: authorId,
                     message_text: message,
                     receiver_id: receiverId,
-                    //oferta: false,
-                    //offer_price: "",
-                    //offer_quantity: ""
                 }));
                 setMessage('');
             } else if (offerPrice.trim() && offerQuantity.trim() && !message) {
@@ -62,15 +60,14 @@ const MensajesChat = ({ navigation }) => {
                 Alert.alert("Error", "Error");
             }
 
-            if (userType() != "Productor") {
+            if (userType() !== "Productor") {
                 try {
-                    const info_login = await loginInService()
-                    setToken(info_login.token)
-                    let tok = info_login.token
-                    const token = getToken()
-                    const data = await getMatchPhrase(message,tok,receiverId)
-                    console.log(data)
-                    if (data != "Error: Not Found") {
+                    const info_login = await loginInService();
+                    setToken(info_login.token);
+                    let tok = info_login.token;
+                    const token = getToken();
+                    const data = await getMatchPhrase(message, tok, receiverId);
+                    if (data !== "Error: Not Found") {
                         socket.send(JSON.stringify({
                             product_id: productId,
                             author_id: receiverId,
@@ -79,11 +76,9 @@ const MensajesChat = ({ navigation }) => {
                         }));
                         setMessage('');
                     }
+                } catch (error) {
+                    console.log("No existe la frase");
                 }
-                catch (error) {
-                    console.log("No existe la frase")
-                }
-
             }
         }
     };
@@ -97,7 +92,7 @@ const MensajesChat = ({ navigation }) => {
                     text: "OK",
                     onPress: async () => {
                         try {
-                            addToCart(productId, productName, price, quantity, productorId, productName, productorAvatar);
+                            addToCart(productId, productName, price, quantity, productorId, productorName, productorAvatar);
                             await deleteChat(chatId);
                         } catch (error) {
                             Alert.alert("Error", getPalabra("borrar_xat"));
@@ -153,7 +148,7 @@ const MensajesChat = ({ navigation }) => {
 
     const renderMessage = (msg, index) => (
         <View key={index} style={[styles.messageBubble, msg.sender === 'user' ? styles.userMessage : styles.otherMessage]}>
-            {msg.offer && msg.sender === 'server' ? (
+            { msg.offer && msg.sender === 'server' ? (
                 <View style={styles.offerContainer}>
                     <Text style={styles.offerText}>{msg.text}</Text>
                     <Text style={styles.timestamp}>{format(parseISO(msg.timestamp), 'p')}</Text>
@@ -197,7 +192,35 @@ const MensajesChat = ({ navigation }) => {
                     ))}
                 </ScrollView>
                 <View style={styles.inputContainer}>
-                    {isSendingMessage ? (
+                    {authorId === productorId ? (
+                        isSendingMessage ? (
+                            <TextInput
+                                style={styles.input}
+                                placeholder={getPalabra("type_message")}
+                                onChangeText={setMessage}
+                                value={message}
+                                multiline
+                                autoFocus
+                            />
+                        ) : (
+                            <>
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder={getPalabra("offer_price")}
+                                    onChangeText={setOfferPrice}
+                                    value={offerPrice}
+                                    keyboardType="numeric"
+                                />
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder={getPalabra("offer_quantity")}
+                                    onChangeText={setOfferQuantity}
+                                    value={offerQuantity}
+                                    keyboardType="numeric"
+                                />
+                            </>
+                        )
+                    ) : (
                         <TextInput
                             style={styles.input}
                             placeholder={getPalabra("type_message")}
@@ -206,27 +229,12 @@ const MensajesChat = ({ navigation }) => {
                             multiline
                             autoFocus
                         />
-                    ) : (
-                        <>
-                            <TextInput
-                                style={styles.input}
-                                placeholder={getPalabra("offer_price")}
-                                onChangeText={setOfferPrice}
-                                value={offerPrice}
-                                keyboardType="numeric"
-                            />
-                            <TextInput
-                                style={styles.input}
-                                placeholder={getPalabra("offer_quantity")}
-                                onChangeText={setOfferQuantity}
-                                value={offerQuantity}
-                                keyboardType="numeric"
-                            />
-                        </>
                     )}
-                    <TouchableOpacity onPress={() => setIsSendingMessage(!isSendingMessage)} style={styles.toggleButton}>
-                        <Text>{isSendingMessage ? getPalabra("enviar_oferta") : getPalabra("enviar_missatge")}</Text>
-                    </TouchableOpacity>
+                    {authorId === productorId && (
+                        <TouchableOpacity onPress={() => setIsSendingMessage(!isSendingMessage)} style={styles.toggleButton}>
+                            <Text>{isSendingMessage ? getPalabra("enviar_oferta") : getPalabra("enviar_missatge")}</Text>
+                        </TouchableOpacity>
+                    )}
                     <TouchableOpacity onPress={sendMessage} style={styles.sendButton}>
                         <Entypo name="paper-plane" size={24} color="#245414" />
                     </TouchableOpacity>
