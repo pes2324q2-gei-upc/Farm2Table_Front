@@ -16,7 +16,7 @@ export const submitComment = async (id, comment, tipus) => {
     date: getCurrentDate()
   };
   try {
-    const response = await fetch("http://"+URL+"/users/"+tipus+"/"+id +"/comment", {
+    const response = await fetch("http://"+ URL +"/users/"+tipus+"/"+ id +"/comment", {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -28,14 +28,13 @@ export const submitComment = async (id, comment, tipus) => {
         console.log("peta");
         throw new Error('Something went wrong');
     }else{
-        //console.log('Product added successfully:', data); 
+        //console.log('Product added successfully:', data);
     }
     }catch (error) {
       console.log(error.message);
     }
 }
-
-export const submitRating = async(id, stars) => {
+export const submitRating = async(id, stars, tipus) => {
 
   const rateData = {
     stars: stars
@@ -54,12 +53,12 @@ export const submitRating = async(id, stars) => {
     });
 
     const data = await response.json();
-    
+
     if (!response.ok) {
         console.log("peta");
         throw new Error('Something went wrong');
     }else{
-        // console.log('Product added successfully:', data);    
+        // console.log('Product added successfully:', data);
     }
     }catch (error) {
         console.log(error.message);

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, SafeAreaView, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { COLORS, SIZES } from '../constants/theme';
+import { COLORS } from '../constants/theme';
 import Header from '../navigation/header_back';
 import { fetchUser } from '../api_service/ApiConsultar_Usuario';
-import { userId, getPalabra, userType } from '../informacion/User';
-import { addFavourite, isUserFavourite, removeFavourite } from '../api_service/APIFavoritos';
+import { userId, userType } from '../informacion/User';
+import { addFavourite, isUserFavourite, removeFavourite, getUsersBoughtList } from '../api_service/APIFavoritos';
 import ConsumerCheck from './consumerCheck';
 import ProductorCheck from './productorCheck';
 import MinoristaCheck from './minoristaCheck';
@@ -17,8 +17,8 @@ const ProfileScreen = ({ navigation, route }) => {
     const avatarUri = userData.avatar ? { uri: userData.avatar } : require('../assets/images/149071.png');
 
     const [isFavourite, setIsFavourite] = useState(false);
+    const [usersBoughtList, setUsersBoughtList] = useState([]);
     const activeUser = userId();
-
 
     if (typeUser === undefined) {
         typeUser = userType();
@@ -48,6 +48,17 @@ const ProfileScreen = ({ navigation, route }) => {
         }
     };
 
+    const addRating = async () => {
+        try {
+            const type = typeUser.toLowerCase();
+            const routeIdUser = idUser;
+            navigation.navigate("Valorar", { restaurantId: routeIdUser, nomResturant: userData.username, tipus: type })
+
+        } catch (error) {
+            console.error("Failed to do rating", error);
+        }
+    }
+
     useEffect(() => {
         const userLoad = async () => {
             const user = idUser ? idUser : userId();
@@ -69,27 +80,52 @@ const ProfileScreen = ({ navigation, route }) => {
                 console.error("Failed to check if user is favourite:", error);
             }
         };
+        const fetchUsersBoughtList = async () => {
+            try {
+                const data = await getUsersBoughtList();
+                setUsersBoughtList(data.data);
+            } catch (error) {
+                console.error("Failed to fetch users bought list:", error);
+            }
+        };
         if (activeUser !== idUser && userType() !== typeUser) checkIfFavourite();
         userLoad();
+        fetchUsersBoughtList();
     }, [activeUser, idUser, typeUser]);
+
+    const userHasBoughtFromIdUser = usersBoughtList.some(user =>
+        user.purchases_info.some(purchase => purchase.seller.id === idUser)
+    );
 
     return (
         <SafeAreaView style={styles.safecontainer}>
             <Header />
             <View style={{ flex: 1, backgroundColor: COLORS.secondary }}>
                 <View style={styles.profileContainer}>
-                        <Image source={avatarUri} style={styles.avatar} />
+                    <Image source={avatarUri} style={styles.avatar} />
                     <View style={styles.usernameRow}>
                         <Text style={styles.usernameLarge}>{userData.username}</Text>
                         {activeUser !== idUser && userType() !== typeUser && (
-                            <TouchableOpacity onPress={isFavourite ? handleRemoveFavourite : handleAddFavourite}>
-                                <Ionicons
-                                    name={isFavourite ? "heart" : "heart-outline"}
-                                    size={30}
-                                    color={COLORS.tertiary}
-                                    style={styles.heartIcon}
-                                />
-                            </TouchableOpacity>
+                            <>
+                                <TouchableOpacity onPress={isFavourite ? handleRemoveFavourite : handleAddFavourite}>
+                                    <Ionicons
+                                        name={isFavourite ? "heart" : "heart-outline"}
+                                        size={30}
+                                        color={COLORS.tertiary}
+                                        style={styles.heartIcon}
+                                    />
+                                </TouchableOpacity>
+                                {userHasBoughtFromIdUser && (
+                                    <TouchableOpacity onPress={addRating}>
+                                        <Ionicons
+                                            name={"star"}
+                                            size={30}
+                                            color={COLORS.tertiary}
+                                            style={styles.heartIcon}
+                                        />
+                                    </TouchableOpacity>
+                                )}
+                            </>
                         )}
                     </View>
 
