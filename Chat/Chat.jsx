@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
-import { SafeAreaView, Alert, ScrollView } from 'react-native';
+import { SafeAreaView, Alert, ScrollView, View, Text, ActivityIndicator } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import Header from '../navigation/header';
 import { getPalabra, userId as fetchUserId } from '../informacion/User';
@@ -10,6 +10,7 @@ import styles from "../styles/chat.style";
 const Chat = ({ navigation }) => {
     const [chats, setChats] = useState([]);
     const [userId, setUserId] = useState(null);
+    const [loading, setLoading] = useState(true);
     const scrollViewRef = useRef(null);
 
     useEffect(() => {
@@ -21,6 +22,7 @@ const Chat = ({ navigation }) => {
 
     const loadData = useCallback(async () => {
         if (userId) {
+            setLoading(true);
             try {
                 const data = await fetchChats(userId);
                 const sortedData = data.sort((a, b) => new Date(b.last_message.sent_date) - new Date(a.last_message.sent_date));
@@ -30,6 +32,8 @@ const Chat = ({ navigation }) => {
                 }
             } catch (error) {
                 Alert.alert('Error', getPalabra("errorChat"));
+            } finally {
+                setLoading(false);
             }
         }
     }, [userId]);
@@ -90,12 +94,24 @@ const Chat = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
             <Header />
-            <ScrollView
-                style={styles.containerIn}
-                ref={scrollViewRef}
-            >
-                {chats.map((chat) => renderItem({ item: chat }))}
-            </ScrollView>
+            {loading ? (
+                <View style={styles.loadingContainer}>
+                    <ActivityIndicator size="large" color="#0000ff" />
+                </View>
+            ) : (
+                <ScrollView
+                    style={styles.containerIn}
+                    ref={scrollViewRef}
+                >
+                    {chats.length === 0 ? (
+                        <View style={styles.noChatsContainer}>
+                            <Text style={styles.noChat}>{getPalabra("noChats")}</Text>
+                        </View>
+                    ) : (
+                        chats.map((chat) => renderItem({ item: chat }))
+                    )}
+                </ScrollView>
+            )}
         </SafeAreaView>
     );
 };

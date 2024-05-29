@@ -54,6 +54,24 @@ const styles = StyleSheet.create({
         height: 1,
         backgroundColor: COLORS.black,
     },
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: COLORS.primary,
+    },
+    noChatsContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: COLORS.primary,
+    },
+    noChat: {
+        fontSize: 18,
+        color: '#555',
+        marginTop: 20,
+        textAlign: 'center',
+    },
 });
 
 export default styles;

@@ -154,5 +154,6 @@
     "deleted_product": "Product deleted successfully",
     "addRow": "Add row",
     "keys": "Keys (',' between them)",
-    "phrase": "Phrase"
+    "phrase": "Phrase",
+    "noChats": "No chats yet"
 }

@@ -152,5 +152,6 @@
     "deleted_product": "Producte eliminat correctament",
     "addRow": "Afegir fila",
     "keys": "Claus (',' entre elles)",
-    "phrase": "Frase"
+    "phrase": "Frase",
+    "noChats": "Encara no tens xats"
 }
