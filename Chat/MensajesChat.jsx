@@ -41,9 +41,9 @@ const MensajesChat = ({ navigation }) => {
                     author_id: authorId,
                     message_text: message,
                     receiver_id: receiverId,
-                    oferta: false,
-                    offer_price: "",
-                    offer_quantity: ""
+                    //oferta: false,
+                    //offer_price: "",
+                    //offer_quantity: ""
                 }));
                 setMessage('');
             } else if (offerPrice.trim() && offerQuantity.trim() && !message) {
