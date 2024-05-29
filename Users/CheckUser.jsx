@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import { View, Text, Image, SafeAreaView, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '../constants/theme';
@@ -10,6 +10,7 @@ import ConsumerCheck from './consumerCheck';
 import ProductorCheck from './productorCheck';
 import MinoristaCheck from './minoristaCheck';
 import { Rating } from 'react-native-ratings';
+import {useFocusEffect} from "@react-navigation/native";
 
 const ProfileScreen = ({ navigation, route }) => {
     let { idUser, typeUser } = route.params;
@@ -89,17 +90,6 @@ const ProfileScreen = ({ navigation, route }) => {
                 console.error("Failed to fetch users bought list:", error);
             }
         };
-
-        const fetchComments = async () => {
-            try {
-                const type = typeUser.toLowerCase();
-                const data = await getCommentsList(idUser, type);
-                setCommentsList(data.data);
-            } catch (error) {
-                console.error("Failed to fetch comments list:", error);
-            }
-        };
-
         const fetchRating = async () => {
             try {
                 const data = await fetchSpecificInfo(idUser);
@@ -113,13 +103,27 @@ const ProfileScreen = ({ navigation, route }) => {
         userLoad();
         fetchRating();
         if (idUser !== activeUser) {
-            fetchComments();
             const type = typeUser.toLowerCase();
             if (type === 'productor') {
                 fetchUsersBoughtList();
             }
         }
     }, [activeUser, idUser, typeUser]);
+
+    useFocusEffect(
+        useCallback(() => {
+            const fetchComments = async () => {
+                try {
+                    const type = typeUser.toLowerCase();
+                    const data = await getCommentsList(idUser, type);
+                    setCommentsList(data.data);
+                } catch (error) {
+                    console.error("Failed to fetch comments list:", error);
+                }
+            };
+            if (activeUser !== idUser) fetchComments();
+        }, [idUser, typeUser])
+    );
 
     const userHasBoughtFromIdUser = usersBoughtList.some(data => data.buyer.id === activeUser);
     const userHasComment = commentsList.some(data => data.commentor.id === activeUser);
