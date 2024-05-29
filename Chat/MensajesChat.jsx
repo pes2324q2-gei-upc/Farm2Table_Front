@@ -70,13 +70,15 @@ const MensajesChat = ({ navigation }) => {
                     const token = getToken()
                     const data = await getMatchPhrase(message,tok,receiverId)
                     console.log(data)
-                    socket.send(JSON.stringify({
-                        product_id: productId,
-                        author_id: receiverId,
-                        message_text: data,
-                        receiver_id: authorId,
-                    }));
-                    setMessage('');
+                    if (data != "Error: Not Found") {
+                        socket.send(JSON.stringify({
+                            product_id: productId,
+                            author_id: receiverId,
+                            message_text: data,
+                            receiver_id: authorId,
+                        }));
+                        setMessage('');
+                    }
                 }
                 catch (error) {
                     console.log("No existe la frase")
