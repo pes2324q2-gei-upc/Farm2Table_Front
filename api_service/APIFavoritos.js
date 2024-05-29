@@ -107,3 +107,41 @@ export const isUserFavourite = async (userId, favType, userType, favId) => {
         console.log(error);
     }
 }
+
+export const getUsersBoughtList = async (idUser) => {
+    try {
+        const response = await fetch(`${API_URL}/users/productor/${idUser}/sold`, {
+            method: 'GET',
+            headers: {
+                'accept': 'application/json',
+            },
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Failed to fetch users bought list:', error);
+        throw error;
+    }
+};
+
+export const getCommentsList = async (idUser, type) => {
+    try {
+        const response = await fetch(`${API_URL}/users/${type}/${idUser}/comments`, {
+            method: 'GET',
+            headers: {
+                'accept': 'application/json',
+            },
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Failed to fetch users bought list:', error);
+        throw error;
+    }
+};

@@ -1,9 +1,8 @@
-// ValorarScreen.js
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet,TouchableOpacity } from 'react-native';
 import styles from '../styles/restaurante.style'
 import { Rating, AirbnbRating } from 'react-native-ratings';
-import { SIZES, COLORS } from '../constants/theme'; 
+import { SIZES, COLORS } from '../constants/theme';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '../navigation/header_back';
 import { submitRating, submitComment } from '../api_service/APIValorar';
@@ -16,6 +15,7 @@ const Valorar = ({ route, navigation }) => {
         console.log(rating)
         submitComment(restaurantId, comment, tipus);
         submitRating(restaurantId, rating, tipus);
+        navigation.goBack();
     };
     const handleRatingCompleted = (rating) => {
       setRating(rating);
