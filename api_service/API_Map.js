@@ -2,46 +2,44 @@ import React, { useState } from "react";
 import { URL } from "../constants/theme";
 
 export const informacionUsuario = (id) => {
+    return new Promise((resolve, reject) => {
 
-    return new Promise ((resolve, reject) => {
-        
         const csrfToken = '';
-        
+
         const requestOptions = {
             method: 'GET',
             headers: {
                 'accept': 'application/json',
                 'Content-Type': 'application/json',
                 'X-CSRFToken': csrfToken
-              },
+            },
         };
-        
-        const url = 'http://'+URL+'/users/profile/'+id;
-        
+        const url = 'http://' + URL + '/users/profile/' + id;
+
         fetch(url, requestOptions)
             .then(response => {
-              
-            return response.json();
+                return response.json(); // Parse response as JSON
             })
             .then(data => {
-            resolve(data);
-    
+                console.log(data); // Log the JSON data
+                resolve(data); // Resolve the promise with JSON data
             })
             .catch(error => {
-            console.error('There was a problem with your fetch operation:', error);
-            reject(new Error(error));
+                console.error('There was a problem with your fetch operation:', error);
+                reject(new Error(error));
             });
-    })
-    
-} 
+    });
+};
 
-export const direccionCoordenadas = (addres) => {
-
+export const direccionCoordenadas = (address) => {
+     console.log("tatata")
+     console.log(address)
     return new Promise ((resolve, reject) => {
         const data = {
-            address: addres,
+            address: address,
         };
-
+        console.log(data)
+        console.log(JSON.stringify(data))
         const csrfToken = '';
         
         const requestOptions = {
@@ -55,26 +53,27 @@ export const direccionCoordenadas = (addres) => {
         };
         
         const url = 'http://'+URL+'/locations/address/coordinates';
+        console.log(url)
         
         fetch(url, requestOptions)
             .then(response => {
-              
-            return response.json();
+                return response.json();
             })
             .then(data => {
-            resolve(data);
+                 console.log(data);
+                resolve(data);
     
             })
             .catch(error => {
-            console.error('There was a problem with your fetch operation:', error);
-            reject(new Error(error));
+                console.error('There was a problem with your fetch operation:', error);
+                reject(new Error(error));
             });
     })
     
 }
 
 export const informacionMinorista = (id) => {
-
+     console.log("diaiai")
     return new Promise ((resolve, reject) => {
 
         const csrfToken = '';
@@ -108,7 +107,7 @@ export const informacionMinorista = (id) => {
 } 
 
 export const vendedoresEnRango = (type, reach, latitude, longitude) => {
-
+    console.log("nanit")
     return new Promise ((resolve, reject) => {
 
         const csrfToken = '';
@@ -142,7 +141,7 @@ export const vendedoresEnRango = (type, reach, latitude, longitude) => {
 }
 
 export const calculoDistancias = (latitude1, longitude1, latitude2, longitude2) => {
-
+    console.log("adios")
     return new Promise ((resolve, reject) => {
 
         const csrfToken = '';
@@ -176,6 +175,7 @@ export const calculoDistancias = (latitude1, longitude1, latitude2, longitude2) 
 }
 
 export const infoVendedor = (id) => {
+
     return new Promise ((resolve, reject) => {
 
         const csrfToken = '';
