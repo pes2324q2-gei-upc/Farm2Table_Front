@@ -82,7 +82,8 @@ const ProfileScreen = ({ navigation, route }) => {
 
         const fetchUsersBoughtList = async () => {
             try {
-                const data = await getUsersBoughtList(idUser);
+                const type = typeUser.toLowerCase();
+                const data = await getUsersBoughtList(idUser, type);
                 setUsersBoughtList(data.data);
             } catch (error) {
                 console.error("Failed to fetch users bought list:", error);
@@ -110,18 +111,19 @@ const ProfileScreen = ({ navigation, route }) => {
 
         if (activeUser !== idUser && userType() !== typeUser) checkIfFavourite();
         userLoad();
-        fetchComments();
         fetchRating();
-        if (userType().toLowerCase() === 'productor') fetchUsersBoughtList();
+        if (idUser !== activeUser) {
+            fetchComments();
+            const type = typeUser.toLowerCase();
+            if (type === 'productor') {
+                fetchUsersBoughtList();
+            }
+        }
     }, [activeUser, idUser, typeUser]);
 
-    const userHasBoughtFromIdUser = usersBoughtList.some(user =>
-        user.buyer.id === userId()
-    );
+    const userHasBoughtFromIdUser = usersBoughtList.some(data => data.buyer.id === activeUser);
+    const userHasComment = commentsList.some(data => data.commentor.id === activeUser);
 
-    const userHasComment = !commentsList.some(comment =>
-        comment.id === userId()
-    );
 
     return (
         <SafeAreaView style={styles.safecontainer}>
@@ -141,7 +143,7 @@ const ProfileScreen = ({ navigation, route }) => {
                                         style={styles.heartIcon}
                                     />
                                 </TouchableOpacity>
-                                {userHasBoughtFromIdUser && !userHasComment && (
+                                { typeUser.toLowerCase() === "productor" && userHasBoughtFromIdUser && !userHasComment && (
                                     <TouchableOpacity onPress={addRating}>
                                         <Ionicons
                                             name={"star"}

@@ -16,6 +16,7 @@ const Valorar = ({ route, navigation }) => {
         submitComment(restaurantId, comment, tipus);
         submitRating(restaurantId, rating, tipus);
         navigation.goBack();
+        navigation.goBack();
     };
     const handleRatingCompleted = (rating) => {
       setRating(rating);
