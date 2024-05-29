@@ -1,9 +1,7 @@
 import React from 'react';
-import { FlatList, View, Text, Image } from 'react-native';
+import { FlatList, View, Text } from 'react-native';
 import styles from '../styles/buscador.style';
 import { TouchableOpacity } from 'react-native'
-import Restaurante from '../Restaurants/Restaurante';
-import { MaterialIcons } from '@expo/vector-icons'; 
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { getPalabra } from '../informacion/User'
 import { Entypo } from '@expo/vector-icons';

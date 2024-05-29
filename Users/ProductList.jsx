@@ -7,7 +7,7 @@ import { userId, userType } from "../informacion/User";
 const ProductList = ({ navigation, shopData, idUser, typeUser }) => {
 
     const handlePress = (id) => {
-        console.log("ProductList handlePress");
+        console.log("ProductList handlePress:", id);
         if (typeUser === "Productor" && userId() === idUser) {
             navigation.navigate("EditProduct", { productId: id });
         } else {
@@ -18,10 +18,10 @@ const ProductList = ({ navigation, shopData, idUser, typeUser }) => {
     return (
         <FlatList
             data={shopData}
-            keyExtractor={(item) => item.id.toString()}
+            keyExtractor={(item) => item.product.id}
             renderItem={({ item }) => (
                 <View style={styles.lista}>
-                    <TouchableOpacity onPress={() => handlePress(item.id)}>
+                    <TouchableOpacity onPress={() => handlePress(item.product.id)}>
                         <View style={styles.capsule}>
                             <Image source={{ uri: item.image }} style={styles.image} />
                             <View style={styles.infoContainer}>

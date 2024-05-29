@@ -23,6 +23,7 @@ const API_URL = `http://${getIP()}`;
 export const fetchUser = async (userId) => {
     try {
         const response = await fetch(`${API_URL}/users/profile/${userId}`);
+        //const response = await fetch(`${API_URL}/users/users/${userId}/getSpecificInfo`);
         if (!response.ok) {
             throw new Error('Failed to fetch user');
         }
