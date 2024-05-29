@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import { StyleSheet, View, ScrollView, SafeAreaView, Text } from 'react-native';
-import { COLORS, URL } from '../constants/theme';
+import { COLORS, SIZES, URL } from '../constants/theme';
 import Header from '../navigation/header';
 import ShopFeed from '../Products/ShopFeed';
 import AddButton from '../components/addButton';
@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
   feedContainer: {
     alignItems: 'center',
     justifyContent: 'space-between',
+    paddingBottom: SIZES.height * 0.1,
   },
   loadingContainer: {
     flex: 1,
