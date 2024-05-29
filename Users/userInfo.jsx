@@ -57,12 +57,12 @@ const UserProfile = ({navigation, idUser}) => {
                     </TouchableOpacity>
                 </View>
             )}
-            {userType() == "Productor" ? 
-                (<View style={styles.buttonContainer}>
+            {userType() == "Productor" && activeUser === idUser &&  (
+                <View style={styles.buttonContainer}>
                     <TouchableOpacity style={styles.boton} onPress={() => navigation.navigate('AfegirFrases')}>
                         <Text style={styles.botonEditar}>Afegir frases predefinides</Text>
                     </TouchableOpacity>
-                </View>) : ""
+                </View>)
             }
         </View>
     );
