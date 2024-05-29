@@ -9,7 +9,6 @@ async function addToCart(productId, productName, productPrice, quantity, product
     }
     else cart = await loadCart(userId());
 
-    // Create a new product object
     const product = {
         productId: productId,
         name: productName,

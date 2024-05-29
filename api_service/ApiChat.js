@@ -17,6 +17,8 @@ export const fetchInitialMessages = async (chatId, authorId) => {
             sender: msg.author.id === authorId ? 'user' : 'server',
             timestamp: msg.sent_date,
             offer: msg.offer,
+            offer_price: msg.offer_price,
+            offer_quantity: msg.offer_quantity,
             text: msg.text,
             id: msg.id,
         }));

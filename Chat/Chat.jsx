@@ -77,7 +77,11 @@ const Chat = ({ navigation }) => {
                 productId: item.product.id,
                 authorId: userId,
                 receiverId: (userId !== item.user1.id ? item.user1.id : item.user2.id),
-                receiverUsername: (userId !== item.user1.id ? item.user1.username : item.user2.username)
+                receiverUsername: (userId !== item.user1.id ? item.user1.username : item.user2.username),
+                productName: item.product.name,
+                productorId: item.user2.id,
+                productorName: item.user2.username,
+                productorAvatar: item.user2.avatar,
             })}
             onDelete={(chatId) => confirmDelete(chatId)}
         />
