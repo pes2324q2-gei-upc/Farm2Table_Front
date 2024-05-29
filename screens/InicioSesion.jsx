@@ -112,7 +112,7 @@ const InicioSesion = () => {
           style={STYLES.texto_correo}
           placeholder={getPalabra("email")}
           value={username}
-          onChangeTex={setUsername}
+          onChangeText={setUsername}
         />
       </View>
 
