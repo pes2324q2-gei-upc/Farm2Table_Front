@@ -5,7 +5,7 @@ import { COLORS } from '../constants/theme';
 import Header from '../navigation/header_back';
 import { fetchUser } from '../api_service/ApiConsultar_Usuario';
 import { userId, userType } from '../informacion/User';
-import { addFavourite, isUserFavourite, removeFavourite, getUsersBoughtList } from '../api_service/APIFavoritos';
+import { addFavourite, isUserFavourite, removeFavourite, getUsersBoughtList, getCommentsList } from '../api_service/APIFavoritos';
 import ConsumerCheck from './consumerCheck';
 import ProductorCheck from './productorCheck';
 import MinoristaCheck from './minoristaCheck';
@@ -18,6 +18,7 @@ const ProfileScreen = ({ navigation, route }) => {
 
     const [isFavourite, setIsFavourite] = useState(false);
     const [usersBoughtList, setUsersBoughtList] = useState([]);
+    const [commentsList, setCommentsList] = useState([]);
     const activeUser = userId();
 
     if (typeUser === undefined) {
@@ -28,8 +29,7 @@ const ProfileScreen = ({ navigation, route }) => {
         try {
             const tipo = userType().toLowerCase() + 's';
             const type = typeUser.toLowerCase() + 's';
-            const routeIdUser = idUser;
-            await addFavourite(activeUser, type, tipo, routeIdUser);
+            await addFavourite(activeUser, type, tipo, idUser);
             setIsFavourite(true);
         } catch (error) {
             console.error("Failed to add favourite:", error);
@@ -40,8 +40,7 @@ const ProfileScreen = ({ navigation, route }) => {
         try {
             const tipo = userType().toLowerCase() + 's';
             const type = typeUser.toLowerCase() + 's';
-            const routeIdUser = idUser;
-            await removeFavourite(activeUser, type, tipo, routeIdUser);
+            await removeFavourite(activeUser, type, tipo, idUser);
             setIsFavourite(false);
         } catch (error) {
             console.error("Failed to remove favourite:", error);
@@ -51,13 +50,11 @@ const ProfileScreen = ({ navigation, route }) => {
     const addRating = async () => {
         try {
             const type = typeUser.toLowerCase();
-            const routeIdUser = idUser;
-            navigation.navigate("Valorar", { restaurantId: routeIdUser, nomResturant: userData.username, tipus: type })
-
+            navigation.navigate("Valorar", { restaurantId: idUser, nomResturant: userData.username, tipus: type });
         } catch (error) {
             console.error("Failed to do rating", error);
         }
-    }
+    };
 
     useEffect(() => {
         const userLoad = async () => {
@@ -69,32 +66,49 @@ const ProfileScreen = ({ navigation, route }) => {
                 console.error("Failed to fetch user data: ", error);
             }
         };
+
         const checkIfFavourite = async () => {
             try {
                 const tipo = userType().toLowerCase() + 's';
                 const type = typeUser.toLowerCase() + 's';
-                const routeIdUser = idUser;
-                const response = await isUserFavourite(activeUser, type, tipo, routeIdUser);
-                setIsFavourite(response.data.some(obj => obj.id === routeIdUser));
+                const response = await isUserFavourite(activeUser, type, tipo, idUser);
+                setIsFavourite(response.data.some(obj => obj.id === idUser));
             } catch (error) {
                 console.error("Failed to check if user is favourite:", error);
             }
         };
+
         const fetchUsersBoughtList = async () => {
             try {
-                const data = await getUsersBoughtList();
+                const data = await getUsersBoughtList(idUser);
                 setUsersBoughtList(data.data);
             } catch (error) {
                 console.error("Failed to fetch users bought list:", error);
             }
         };
+
+        const fetchComments = async () => {
+            try {
+                const type = typeUser.toLowerCase();
+                const data = await getCommentsList(idUser, type);
+                setCommentsList(data.data);
+            } catch (error) {
+                console.error("Failed to fetch comments list:", error);
+            }
+        };
+
         if (activeUser !== idUser && userType() !== typeUser) checkIfFavourite();
         userLoad();
-        fetchUsersBoughtList();
+        fetchComments();
+        if (userType().toLowerCase() === 'productor') fetchUsersBoughtList();
     }, [activeUser, idUser, typeUser]);
 
     const userHasBoughtFromIdUser = usersBoughtList.some(user =>
-        user.purchases_info.some(purchase => purchase.seller.id === idUser)
+        user.buyer.id === userId()
+    );
+
+    const userHasComment = !commentsList.some(comment =>
+        comment.id === userId()
     );
 
     return (
@@ -115,7 +129,17 @@ const ProfileScreen = ({ navigation, route }) => {
                                         style={styles.heartIcon}
                                     />
                                 </TouchableOpacity>
-                                {userHasBoughtFromIdUser && (
+                                {userHasBoughtFromIdUser && !userHasComment && (
+                                    <TouchableOpacity onPress={addRating}>
+                                        <Ionicons
+                                            name={"star"}
+                                            size={30}
+                                            color={COLORS.tertiary}
+                                            style={styles.heartIcon}
+                                        />
+                                    </TouchableOpacity>
+                                )}
+                                {typeUser.toLowerCase() === "minorista" && !userHasComment && (
                                     <TouchableOpacity onPress={addRating}>
                                         <Ionicons
                                             name={"star"}
