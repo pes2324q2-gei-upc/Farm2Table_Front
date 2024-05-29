@@ -108,9 +108,9 @@ export const isUserFavourite = async (userId, favType, userType, favId) => {
     }
 }
 
-export const getUsersBoughtList = async (idUser) => {
+export const getUsersBoughtList = async (idUser, type) => {
     try {
-        const response = await fetch(`${API_URL}/users/productor/${idUser}/sold`, {
+        const response = await fetch(`${API_URL}/users/${type}/${idUser}/sold`, {
             method: 'GET',
             headers: {
                 'accept': 'application/json',
