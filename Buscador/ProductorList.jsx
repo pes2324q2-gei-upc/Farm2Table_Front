@@ -22,7 +22,7 @@ const ProductorList = ({ data, searchQuery }) => {
               style={styles.image}
             />
             <View>
-              <Text style={styles.textName}>{item.username}</Text>
+              <Text style={styles.textName}>{item.productor_name}</Text>
               <Text style={styles.textEmail}>{item.email}</Text>
             </View>
           </View>

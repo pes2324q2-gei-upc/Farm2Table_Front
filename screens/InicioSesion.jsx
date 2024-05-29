@@ -8,8 +8,8 @@ import { useNavigation } from '@react-navigation/native';
 import { loginService } from '../api_service/ApiInicioSesion';
 import STYLES from '../styles/inici_registre.style';
 import SeleccioIdioma from '../components/seleccioIdioma';
-import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
-import { googleSignIn } from '../api_service/API_GoogleSignIn';
+//import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+//import { googleSignIn } from '../api_service/API_GoogleSignIn';
 
 
 const InicioSesion = () => {
@@ -51,7 +51,7 @@ const InicioSesion = () => {
   const contrasenyaVisible = () => {
     setSecureTextEntry(!secure_text_entry);
   };
-
+/*
  const inicioConGoogle = async () => {
      try {
        await GoogleSignin.hasPlayServices();
@@ -85,7 +85,7 @@ const InicioSesion = () => {
        }
      }
    };
-
+*/
   const registrarse = () => {
     NAVIGATOR.navigate('Registre');
   };
@@ -138,7 +138,7 @@ const InicioSesion = () => {
 
       <Text style={STYLES.o}>{getPalabra("or")}</Text>
 
-      <TouchableOpacity onPress={inicioConGoogle} style={STYLES.inicio_google}>
+      <TouchableOpacity /*onPress={inicioConGoogle}*/ style={STYLES.inicio_google}>
         <Image source={google} style={STYLES.google}/>
         <Text style={STYLES.inicio_google_texto}>{getPalabra("logging_google_button")}</Text>
       </TouchableOpacity>
