@@ -153,5 +153,6 @@
     "deleted_product": "Producto eliminado correctamente",
     "addRow": "Añadir fila",
     "keys": "Llaves (',' entre ellas)",
-    "phrase": "Frase"
+    "phrase": "Frase",
+    "noChats": "Todavía no tienes chats"
 }
