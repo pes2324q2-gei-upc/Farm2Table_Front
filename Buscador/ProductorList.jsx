@@ -13,7 +13,7 @@ const ProductorList = ({ data, searchQuery }) => {
 
     const renderItem = ({ item }) => {
       const avatarUri = item.avatar ? { uri: item.avatar } : require('../assets/images/149071.png');
-  
+      
       return (
         <TouchableOpacity onPress={() => handlePress(item)}>
           <View style={styles.lista}>
@@ -33,7 +33,7 @@ const ProductorList = ({ data, searchQuery }) => {
   return (
     <FlatList
       data={data.filter(item => item.username.toLowerCase().includes(searchQuery.toLowerCase()))}
-      keyExtractor={item => item.username.toString()}
+      keyExtractor={item => item}
       renderItem={renderItem}
     />
   );
