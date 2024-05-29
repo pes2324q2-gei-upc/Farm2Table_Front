@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Image, TouchableOpacity, TextInput, SafeAreaView } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import logo from '../assets/Farm2Table.png';
@@ -6,9 +6,9 @@ import {  getPalabra, renderFlagImage } from '../informacion/User';
 import { useNavigation } from '@react-navigation/native';
 import { registerProductorService } from '../api_service/ApiRegistroProductor';
 import STYLES from '../styles/inici_registre.style';
-import { SelectList } from 'react-native-dropdown-select-list';
-import { getTipusProductes } from '../informacion/Constants'
 import SeleccioIdioma from '../components/seleccioIdioma';
+import { typeProducts } from '../api_service/ApiTiposProductos';
+import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 
 const Productor = () => {
   const [num_acreditation, setAcreditation] = useState("");
@@ -17,10 +17,34 @@ const Productor = () => {
   const [favourite_prod, setFavourite] = useState("");
   const NAVIGATOR = useNavigation();
   const [cambioIdioma, setCambioIdioma] = useState(false);
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [items, setItems] = useState([{ name: 'Loading...', id: 1}]);
 
   const handleGoBack = () => {
     NAVIGATOR.goBack();
   };
+
+  async function infoProductos() {
+    try {
+        const data = await typeProducts();
+        if (data.error) {
+            setError(data.error);
+            console.log(data.error);
+        } else {
+            setItems(data)
+        }
+    } catch (err) {
+        console.log(err.message);
+        setError(err.message);
+    }
+}
+
+  useEffect(() => {
+    async function fetchData() {
+        if (items.length === 1) await infoProductos();
+    }
+    fetchData();
+  }, [items])
 
   const handleRegister = async () => {
 
@@ -94,18 +118,21 @@ const Productor = () => {
         </TouchableOpacity>
 
         <View style={[STYLES.base_fondo_datos, STYLES.fondo_favorits]}>
-            <SelectList 
-                boxStyles={STYLES.box_lista}
-                placeholder={getPalabra("favourite_products")}
-                inputStyles={STYLES.texto_lista}
-                onChangeText={setAcreditation}
-                setSelected={ (val) => setFavourite(val)}
-                data={getTipusProductes}
-                save="value"     
-                dropdownStyles={{backgroundColor: 'white' , maxHeight: 140, maxWidth: 280}}
-                dropdownTextStyles={STYLES.texto_lista}
-                search={false} 
-            />  
+        <View style={{width: 280, height: 80}}>
+            <SectionedMultiSelect
+            styles={STYLES.productos_favoritos}
+            items={items}
+            IconRenderer={Icon}
+            uniqueKey="id"
+            onSelectedItemsChange={setSelectedItems}
+            selectedItems={selectedItems}
+            selectText={getPalabra("select_product")}
+            searchPlaceholderText={getPalabra("search_products")}
+            hideSearch={false}
+            showChips={false}
+            alwaysShowSelectText={true}
+            />
+            </View>
         </View>
         
     </SafeAreaView>
