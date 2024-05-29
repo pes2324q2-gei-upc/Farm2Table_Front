@@ -17,7 +17,6 @@ const Minorista = () => {
   const TIPUS = [getPalabra("restaurant"),getPalabra("market")];
   const [servei, setServei] = useState("");
   const [error_message, setError] = useState('');
-  const [favourite_prod, setFavourite] = useState([]);
   const NAVIGATOR = useNavigation();
   const [cambioIdioma, setCambioIdioma] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
@@ -54,7 +53,10 @@ const Minorista = () => {
     const tipus_cat = getRestaurantOrMercat(tipus);
 
     try {
-        const data = await registerMinoristaService(tipus_cat, servei, favourite_prod);
+        const selectedNames = items
+            .filter(item => selectedItems.includes(item.id))
+            .map(item => item.name);
+        const data = await registerMinoristaService(tipus_cat, servei, selectedNames);
         if (data.error) {
           setError(data.error)
           console.log(error_message);
