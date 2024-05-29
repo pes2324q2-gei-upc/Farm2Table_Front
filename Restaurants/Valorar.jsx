@@ -12,11 +12,11 @@ const Valorar = ({ route, navigation }) => {
     const [comment, setComment] = useState('');
     const [rating, setRating] = useState(1); // Default rating is 2
     const handleCommentSubmit = () => {
-        console.log(rating)
+        console.log(rating*2)
         submitComment(restaurantId, comment, tipus);
-        submitRating(restaurantId, rating, tipus);
+        submitRating(restaurantId, (rating*2), tipus);
         navigation.goBack();
-        navigation.goBack();
+        // navigation.goBack();
     };
     const handleRatingCompleted = (rating) => {
       setRating(rating);
@@ -39,7 +39,8 @@ const Valorar = ({ route, navigation }) => {
               size={20}
               ratingColor={COLORS.secondary}
               onFinishRating={handleRatingCompleted}
-              jumpValue={1}
+              fractions={1}
+              jumpValue={0.5}
               minValue={1}
               tintColor ={COLORS.primary}
             />
