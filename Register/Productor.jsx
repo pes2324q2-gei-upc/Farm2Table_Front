@@ -14,7 +14,6 @@ const Productor = () => {
   const [num_acreditation, setAcreditation] = useState("");
   const [name, setName] = useState("");
   const [error_message, setError] = useState('');
-  const [favourite_prod, setFavourite] = useState("");
   const NAVIGATOR = useNavigation();
   const [cambioIdioma, setCambioIdioma] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
@@ -49,7 +48,10 @@ const Productor = () => {
   const handleRegister = async () => {
 
     try {
-        const data = await registerProductorService(num_acreditation, name, favourite_prod);
+        const selectedNames = items
+            .filter(item => selectedItems.includes(item.id))
+            .map(item => item.name);
+        const data = await registerProductorService(num_acreditation, name, selectedNames);
         if (data.error) {
           setError(data.error)
           console.log(error_message);
