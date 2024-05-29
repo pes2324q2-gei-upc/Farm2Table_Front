@@ -157,5 +157,7 @@
     "addRow": "Add row",
     "keys": "Keys (',' between them)",
     "phrase": "Phrase",
-    "noChats": "No chats yet"
+    "noChats": "No chats yet",
+    "valorations": "Valorations",
+    "medals": "Medals"
 }

@@ -12,7 +12,7 @@ const MercatList = ({ data, searchQuery }) => {
   const navigation = useNavigation();
 
   const handlePress = (item) => {
-    navigation.navigate('ProfileScreen', { idUser: item.id, typeUser: "Productor" })  };
+    navigation.navigate('ProfileScreen', { idUser: item.id, typeUser: "Minorista" })  };
 
   const renderItem = ({ item }) => {    
     return (

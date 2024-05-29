@@ -181,8 +181,7 @@ const MinoristaCheck = ({ navigation, userData, id }) => {
 
             {activeTab === 'Medallas' && (
                 <View style={styles.tabContent}>
-                    {/* <Medallas medals={medals} userMedals={userMedals} counter={counter} tipus={"minorista"}/>*/}
-                    <Text>Hola</Text>
+                    <Medallas medals={medals} userMedals={userMedals} counter={counter} tipus={"minorista"}/>
                 </View>
             )}
         </View>

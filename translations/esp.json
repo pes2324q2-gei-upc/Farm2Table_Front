@@ -156,5 +156,7 @@
     "addRow": "Añadir fila",
     "keys": "Llaves (',' entre ellas)",
     "phrase": "Frase",
-    "noChats": "Todavía no tienes chats"
+    "noChats": "Todavía no tienes chats",
+    "valorations": "Valoraciones",
+    "medals": "Medallas"
 }

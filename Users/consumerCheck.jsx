@@ -1,22 +1,52 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import styles from '../styles/consultarUsuario.style';
 
 
+import { useFocusEffect } from "@react-navigation/native";
 import Orders from './orderedProduct';
 import UserProfile from './userInfo';
 import Favoritos from './Favoritos';
-
+import Medallas from "./Medallas";
+import { fetchCounterMedals, fetchMedals, fetchUserMedals } from '../api_service/ApiConsultar_Usuario';
 import { getPalabra } from '../informacion/User';
 
 const ConsumerCheck = ({ navigation, userData }) => {
     const [activeTab, setActiveTab] = useState('Pedidos');
     const [dataUser, setUserData] = useState(userData);
+    const [medals, setMedals] = useState([]);
+    const [userMedals, setUserMedals]  = useState([]);
+    const [counter, setcounter] = useState([]);
 
     const onPress = (tabName) => {
         setActiveTab(tabName);
     };
 
+    useFocusEffect(
+        useCallback(() => {
+                fetchMedals()
+                .then(data => {
+                    setMedals(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+                fetchCounterMedals(id)
+                .then(data => {
+                    setcounter(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+                fetchUserMedals(id)
+                .then(data => {
+                    setUserMedals(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        }, [])
+    );
     return (
         <View style={{ flex: 1 }}>
             <View style={styles.buttonContainer}>
@@ -46,6 +76,15 @@ const ConsumerCheck = ({ navigation, userData }) => {
                         {getPalabra("my_favs")}
                     </Text>
                 </TouchableOpacity>
+
+                <TouchableOpacity
+                style={[styles.button, { borderColor: activeTab === 'Medallas' ? 'orange' : '#1e4d2b' }]}
+                onPress={() => onPress('Medallas')}
+                >
+                    <Text style={[styles.buttonText, { color: activeTab === 'Medallas' ? 'orange' : 'white' }]}>
+                        {getPalabra("medals")}
+                    </Text>
+                </TouchableOpacity>
             </View>
 
             {activeTab === 'Pedidos' && (
@@ -66,6 +105,11 @@ const ConsumerCheck = ({ navigation, userData }) => {
             {activeTab === 'Favoritos' && (
                 <View style={styles.tabContent}>
                     <Favoritos userId={userData.id} userType="Consumers" navigation={navigation} />
+                </View>
+            )}
+             {activeTab === 'Medallas' && (
+                <View style={styles.tabContent}>
+                    <Medallas medals={medals} userMedals={userMedals} counter={counter} tipus={"minorista"}/>
                 </View>
             )}
         </View>
