@@ -8,6 +8,9 @@ import styles from "../styles/mensajesChat.style";
 import { getPalabra } from '../informacion/User';
 import { URL } from "../constants/theme";
 import { fetchInitialMessages, initializeWebSocket, deleteChat, deleteMessage } from '../api_service/ApiChat';
+import {getToken,setToken} from '../informacion/Constants'
+import { getMatchPhrase, loginInService } from '../api_service/API_ServeiExtern';
+import { userType } from '../informacion/User';
 import addToCart from "../api_service/CartService";
 const MensajesChat = ({ navigation }) => {
     const [message, setMessage] = useState('');
@@ -30,7 +33,7 @@ const MensajesChat = ({ navigation }) => {
         return cleanupWebSocket;
     }, [authorId, chatId]);
 
-    const sendMessage = () => {
+    const sendMessage = async () => {
         if (socket) {
             if (message.trim() && !offerPrice && !offerQuantity) {
                 socket.send(JSON.stringify({
@@ -57,6 +60,28 @@ const MensajesChat = ({ navigation }) => {
                 setOfferQuantity('');
             } else {
                 Alert.alert("Error", "Error");
+            }
+
+            if (userType() != "Productor") {
+                try {
+                    const info_login = await loginInService()
+                    setToken(info_login.token)
+                    let tok = info_login.token
+                    const token = getToken()
+                    const data = await getMatchPhrase(message,tok,receiverId)
+                    console.log(data)
+                    socket.send(JSON.stringify({
+                        product_id: productId,
+                        author_id: receiverId,
+                        message_text: data,
+                        receiver_id: authorId,
+                    }));
+                    setMessage('');
+                }
+                catch (error) {
+                    console.log("No existe la frase")
+                }
+
             }
         }
     };

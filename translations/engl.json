@@ -151,5 +151,8 @@
     "edit_product": "Edit Product",
     "delete_product": "Delete Product",
     "updated_product": "Product updated successfully",
-    "deleted_product": "Product deleted successfully"
+    "deleted_product": "Product deleted successfully",
+    "addRow": "Add row",
+    "keys": "Keys (',' between them)",
+    "phrase": "Phrase"
 }

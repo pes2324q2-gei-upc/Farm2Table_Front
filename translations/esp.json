@@ -150,5 +150,8 @@
     "edit_product": "Editar Producto",
     "delete_product": "Eliminar Producto",
     "updated_product": "Producto actualizado correctamente",
-    "deleted_product": "Producto eliminado correctamente"
+    "deleted_product": "Producto eliminado correctamente",
+    "addRow": "Añadir fila",
+    "keys": "Llaves (',' entre ellas)",
+    "phrase": "Frase"
 }
