@@ -171,27 +171,14 @@ const ProfileScreen = ({ navigation, route }) => {
                             </>
                         )}
                     </View>
-                    {rating !== 0 && (
+                    {(rating !== 0 && (typeUser.toLowerCase() === "minorista" || typeUser.toLowerCase() === "productor")) && (
                         <Rating
                             startingValue={3}
                             imageSize={30}
                             readonly
                             starStyle={'blue'}
-                            tintColor ={COLORS.secondary}
+                            tintColor={COLORS.secondary}
                         />
-                        /**<Rating
-              type='custom'
-              startingValue={2}
-              count={5}
-              showRating={false}
-              defaultRating={rating}
-              size={20}
-              ratingColor={COLORS.secondary}
-              onFinishRating={handleRatingCompleted}
-              jumpValue={1}
-              minValue={1}
-              tintColor ={COLORS.primary}
-            /> */
                     )}
                     {userData.telephone && (
                         <View style={styles.telephoneContainer}>
@@ -258,7 +245,7 @@ const styles = StyleSheet.create({
         marginLeft: 5,
     },
     starStyle: {
-        tintColor: 'blue', // Set the color of the stars
+        tintColor: 'blue',
     },
 });
 
