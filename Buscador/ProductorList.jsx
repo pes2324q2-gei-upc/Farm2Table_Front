@@ -9,6 +9,7 @@ const ProductorList = ({ data, searchQuery }) => {
   const navigation = useNavigation();
 
   const handlePress = (item) => {
+    console.log("id es: "+item.id);
     navigation.navigate('ProfileScreen', { idUser: item.id, typeUser: "Productor" })  };
 
     const renderItem = ({ item }) => {
@@ -33,7 +34,7 @@ const ProductorList = ({ data, searchQuery }) => {
   return (
     <FlatList
       data={data.filter(item => item.username.toLowerCase().includes(searchQuery.toLowerCase()))}
-      keyExtractor={item => item}
+      keyExtractor={item => item.id}
       renderItem={renderItem}
     />
   );

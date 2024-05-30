@@ -29,7 +29,7 @@ import { COLORS, SIZES } from './constants/theme';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { getPalabra, logout, userId, userType } from './informacion/User';
 import Logout from './Users/Logout';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+//import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -64,9 +64,9 @@ export default function App() {
   });
 
  // Initialize GoogleSignin
-  GoogleSignin.configure({
-     webClientId: '967477216126-or0g8ip52dqordmc5hn2urtqh69la74f.apps.googleusercontent.com',
-    });
+  // GoogleSignin.configure({
+  //    webClientId: '967477216126-or0g8ip52dqordmc5hn2urtqh69la74f.apps.googleusercontent.com',
+  //   });
 
   if (!fontsLoaded) return null;
 

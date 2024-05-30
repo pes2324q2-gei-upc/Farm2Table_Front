@@ -57,7 +57,7 @@ const ProfileScreen = ({ navigation, route }) => {
         } catch (error) {
             console.error("Failed to do rating", error);
         }
-    };
+    }; // vi nicius balon de oro
 
     useEffect(() => {
         const userLoad = async () => {

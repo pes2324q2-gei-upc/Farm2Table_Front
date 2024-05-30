@@ -18,7 +18,7 @@ const ProductList = ({ navigation, shopData, idUser, typeUser }) => {
     return (
         <FlatList
             data={shopData}
-            keyExtractor={(item) => item.product.id}
+            keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
                 <View style={styles.lista}>
                     <TouchableOpacity onPress={() => handlePress(item.product.id)}>

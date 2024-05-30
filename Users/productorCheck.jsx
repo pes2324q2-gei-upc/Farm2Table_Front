@@ -17,6 +17,8 @@ import { getIP } from "../informacion/Constants";
 import { userId } from "../informacion/User";
 import ValoracionsComponent from '../Restaurants/ValoracionsComponent';
 import Medallas from "./Medallas";
+import Orders from './orderedProduct';
+
 
 const API_URL = "http://" +getIP();
 
@@ -130,6 +132,18 @@ const ProductorCheck = ({ navigation, userData, id }) => {
                         {getPalabra("medals")}
                     </Text>
                 </TouchableOpacity>
+                
+                {userId() === id && (
+                    <TouchableOpacity
+                        style={[styles.button, { borderColor: activeTab === 'Pedidos' ? 'orange' : '#1e4d2b' }]}
+                        onPress={() => onPress('Pedidos')}
+                    >
+                        <Text style={[styles.buttonText, { color: activeTab === 'Pedidos' ? 'orange' : 'white' }]}>
+                            {getPalabra("my_orders")}
+                        </Text>
+                    </TouchableOpacity>
+                )}
+
                 </ScrollView>
             </View>
 
@@ -163,6 +177,11 @@ const ProductorCheck = ({ navigation, userData, id }) => {
             {activeTab === 'Medallas' && (
                 <View style={styles.tabContent}>
                     <Medallas medals={medals} userMedals={userMedals} counter={counter} tipus={"productor"}/>
+                </View>
+            )}
+            {userId() === id && activeTab === 'Pedidos' && (
+                <View style={styles.tabContent}>
+                    <Orders navigation={navigation} iD={id} tipus={'productor'} />
                 </View>
             )}
         </View>
