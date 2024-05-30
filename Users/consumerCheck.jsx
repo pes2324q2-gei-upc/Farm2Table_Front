@@ -9,7 +9,7 @@ import UserProfile from './userInfo';
 import Favoritos from './Favoritos';
 import Medallas from "./Medallas";
 import { fetchCounterMedals, fetchMedals, fetchUserMedals } from '../api_service/ApiConsultar_Usuario';
-import { getPalabra } from '../informacion/User';
+import { getPalabra, userId } from '../informacion/User';
 
 const ConsumerCheck = ({ navigation, userData }) => {
     const [activeTab, setActiveTab] = useState('Pedidos');
@@ -89,7 +89,7 @@ const ConsumerCheck = ({ navigation, userData }) => {
 
             {activeTab === 'Pedidos' && (
                 <View style={styles.tabContent}>
-                    <Orders navigation={navigation} />
+                    <Orders navigation={navigation} iD={userId()} tipus={'consumidor'} />
                 </View>
             )}
 
